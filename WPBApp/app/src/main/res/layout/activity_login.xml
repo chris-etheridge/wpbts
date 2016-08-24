@@ -9,7 +9,8 @@
     android:layout_gravity="center_vertical"
     android:gravity="center"
     android:paddingLeft="50dp"
-    android:paddingRight="50dp">
+    android:paddingRight="50dp"
+    >
 
     <ImageView
         android:layout_width="match_parent"
