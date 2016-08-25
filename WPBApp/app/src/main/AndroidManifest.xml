@@ -64,11 +64,5 @@ xmlns:android="http://schemas.android.com/apk/res/android">
 
     </activity>
 
-    <activity android:name=".Activity.Info_Activity"
-              android:label="@string/title_activity_info"
-              android:theme="@style/AppTheme.NoActionBar"
-              android:screenOrientation="portrait">
-
-    </activity>
 </application>
    </manifest>
