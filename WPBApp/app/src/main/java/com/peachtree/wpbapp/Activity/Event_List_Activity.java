@@ -16,8 +16,8 @@ import com.peachtree.wpbapp.*;
 import com.peachtree.wpbapp.entities.Event;
 import com.peachtree.wpbapp.layout_Handlers.List_Adapter;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.ArrayList;
 
 public class Event_List_Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,9 +45,9 @@ public class Event_List_Activity extends AppCompatActivity
 
 	private ArrayList getListData(){
 		ArrayList<Event> results = new ArrayList<>();
-		Event event = new Event(0,new Date(2016,12,1),"Event1");
+		Event event = new Event(0,new Date(16,12,1),"Event1");
 		results.add(event);
-		event = new Event(1,new Date(2016,12,2),"Event2");
+		event = new Event(1,new Date(16,12,2),"Event2");
 		results.add(event);
 		return results;
 	}

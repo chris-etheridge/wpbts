@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity.Event_List_Activity"
-    tools:showIn="@layout/event_list_coordinator">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              app:layout_behavior="@string/appbar_scrolling_view_behavior"
+              tools:context=".activity.Event_List_Activity"
+              tools:showIn="@layout/event_list_coordinator"
+              android:background="#000000">
 
 
     <LinearLayout
@@ -31,13 +32,16 @@
 
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/imageButton6"
             android:src="@android:drawable/ic_menu_search"
             android:foregroundTintMode="add"
-            android:padding="10dp"
-            android:background="@drawable/search_bar_grad"
-            android:foregroundTint="@color/colorBG"/>
+            android:background="@color/colorPrimary"
+            android:foregroundTint="@color/colorBG"
+            android:paddingLeft="3dp"
+            android:paddingTop="10dp"
+            android:paddingRight="3dp"
+            android:paddingBottom="10dp"/>
     </LinearLayout>
 
     <ListView
@@ -45,5 +49,9 @@
         android:layout_height="match_parent"
         android:id="@+id/event_list"
         android:dividerHeight="5dp"
-        android:divider="@color/colorPrimary"/>
+        android:divider="#000000"
+        android:drawSelectorOnTop="false"
+        android:background="@color/colorBG"
+        android:paddingTop="0dp"
+        android:layout_marginTop="5dp"/>
 </LinearLayout>
