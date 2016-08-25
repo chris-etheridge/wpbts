@@ -8,7 +8,8 @@ import java.util.Date;
 public class Event {
 
     private enum EventType {
-
+        Donation,
+        Fundraiser
     }
 
     private int id;
