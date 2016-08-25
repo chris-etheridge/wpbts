@@ -1,6 +1,7 @@
 package com.peachtree.wpbapp.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -8,8 +9,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.peachtree.wpbapp.R;
+import com.peachtree.wpbapp.*;
+import com.peachtree.wpbapp.entities.Event;
+import com.peachtree.wpbapp.layout_Handlers.List_Adapter;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class Event_List_Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,7 +37,20 @@ public class Event_List_Activity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
+
+		ArrayList events=getListData();
+		ListView view = (ListView)findViewById(R.id.event_list);
+		view.setAdapter(new List_Adapter(events, this));
+	}
+
+	private ArrayList getListData(){
+		ArrayList<Event> results = new ArrayList<>();
+		Event event = new Event(0,new Date(2016,12,1),"Event1");
+		results.add(event);
+		event = new Event(1,new Date(2016,12,2),"Event2");
+		results.add(event);
+		return results;
+	}
 
     @Override
     public void onBackPressed() {

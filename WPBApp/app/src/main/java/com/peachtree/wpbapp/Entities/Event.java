@@ -21,6 +21,14 @@ public class Event {
     private EventType type;
     private int urgency;
 
+    public Event(){}
+
+    public Event(int id, Date date, String title){
+        this.id=id;
+        this.date=date;
+        this.title=title;
+    }
+
     public int getId() {
         return this.id;
     }

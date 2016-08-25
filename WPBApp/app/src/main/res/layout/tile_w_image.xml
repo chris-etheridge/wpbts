@@ -7,14 +7,16 @@
     >
 
     <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:src="@android:drawable/ic_menu_gallery" />
+        android:src="@android:drawable/ic_menu_gallery"
+        android:id="@+id/IMG_event"
+        android:background="#6b6b6b"
+        android:padding="10dp"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="1"
@@ -36,15 +38,17 @@
             android:id="@+id/TXT_date"
             android:layout_margin="10dp"
             android:textSize="20dp"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorPrimary"
+            android:layout_weight="1"/>
     </LinearLayout>
 
     <ImageButton
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical|right"
         android:src="@android:drawable/ic_menu_send"
-        android:background="@color/colorBG" />
+        android:background="@color/colorBG"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
 
 </LinearLayout>
