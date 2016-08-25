@@ -36,12 +36,6 @@ INSERT INTO TBL_CLINIC VALUES( 3, 3, '0847777777', '0217777777', 'clinic 3');
 INSERT INTO TBL_CLINIC VALUES( 4, 4, '0846666666', '0216666666', 'clinic 4');
 INSERT INTO TBL_CLINIC VALUES( 5, 5, '0725555555', '0215555555', 'clinic 5');
 
-/* TBL_ALERT */
-insert into TBL_ALERT
-(ALERT_ID,TYPE_ID, TITLE, DESCRIPTION)
-values
-(1,1,'Alert for low blood O-',2),
-(2,2,'Alert for low blood B+', 2);
 
 /* TBL_EVENT_TYPE */
 insert into TBL_EVENT_TYPE
@@ -53,6 +47,15 @@ values
 ('4','Mobile Outreach','1'),
 ('5','College Ourreach', '1'),
 ('6','Corpoate Event', '3');
+
+
+/* TBL_ALERT */
+insert into TBL_ALERT
+(ALERT_ID,TYPE_ID, TITLE, DESCRIPTION)
+values
+(1,1,'Alert for low blood O-',2),
+(2,2,'Alert for low blood B+', 2);
+
 
 /* TBL_EVENT */
 insert into TBL_EVENT
