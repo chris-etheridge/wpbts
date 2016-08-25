@@ -1,11 +1,15 @@
 package com.peachtree.wpbapp.Core;
 
+import android.app.Activity;
+
+import com.peachtree.wpbapp.R;
+
 /**
  * Created by chrisetheridge on 8/25/16.
  */
-public class Account {
+public class Account extends Activity {
 
-    private static String ACCOUNT_API_URL = "/api/account";
+    private String ACCOUNT_API_URL = getResources().getString(R.string.API_ACCOUNT_URL);
 
     // when creating an account object, we should try log that user in
     public Account(String email, String password) {
