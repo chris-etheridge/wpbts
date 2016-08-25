@@ -49,9 +49,7 @@ create table TBL_CLINIC(
 	ADDRESS_ID int,
 	CONTACT_1 varchar(15),
 	CONTACT_2 varchar(15),
-	DESCRIPTION varchar(255),
-	PICTURE_URL varchar(255),
-	
+	DESCRIPTION varchar(255),	
 	foreign key (ADDRESS_ID) references TBL_ADDRESS(ADDRESS_ID)
 );
 
