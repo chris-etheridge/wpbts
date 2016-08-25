@@ -2,17 +2,14 @@ package com.peachtree.wpbapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
 
-public class LoginActivity extends AppCompatActivity
+public class Register_Activity extends AppCompatActivity
 {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
-
+		setContentView(R.layout.register_activity);
 	}
 }

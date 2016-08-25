@@ -9,17 +9,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.peachtree.wpbapp.Event_List_Activity"
-    tools:showIn="@layout/content_event_list">
+    tools:context="com.peachtree.wpbapp.Clinic_Info_Activity"
+    tools:showIn="@layout/clinic_info_coordinator">
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
+
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/activity_event__list_layout_drawer" />
-
-
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>
