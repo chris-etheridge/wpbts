@@ -1,4 +1,4 @@
-package com.peachtree.wpbapp;
+package com.peachtree.wpbapp.Activity;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -9,13 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-public class Info_Activity extends AppCompatActivity
+import com.peachtree.wpbapp.R;
+
+public class About_Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.info_activity);
+        setContentView(R.layout.about_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="API_ACCOUNT_URL">/api/account</string>
+    <string name="API_EVENTS_STREAM_URL">/api/events</string>
+    <string name="API_EVENT_URL">/api/event</string>
+    <string name="API_CLINIC_URL">/api/clinic</string>
+    <string name="API_ALERTS_STREAM_URL">/api/alerts</string>
+</resources>
