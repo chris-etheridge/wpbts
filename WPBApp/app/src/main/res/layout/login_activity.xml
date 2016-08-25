@@ -2,14 +2,15 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.peachtree.wpbapp.LoginActivity"
+    tools:context=".Login_Activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center_vertical"
     android:gravity="center"
     android:paddingLeft="50dp"
-    android:paddingRight="50dp">
+    android:paddingRight="50dp"
+    >
 
     <ImageView
         android:layout_width="match_parent"
