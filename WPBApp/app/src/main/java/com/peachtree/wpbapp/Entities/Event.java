@@ -3,7 +3,7 @@ package com.peachtree.wpbapp.Entities;
 import java.util.Date;
 
 /**
- * Created by chrisetheridge on 8/25/16.
+ * Entity that models an Event.
  */
 public class Event {
 

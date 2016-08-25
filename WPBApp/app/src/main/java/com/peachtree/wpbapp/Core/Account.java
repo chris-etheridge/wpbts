@@ -5,7 +5,8 @@ import android.app.Activity;
 import com.peachtree.wpbapp.R;
 
 /**
- * Created by chrisetheridge on 8/25/16.
+ * Functions to manage the user account.
+ * Default constructor will try log the user in, or get the currently logged in user.
  */
 public class Account extends Activity {
 
@@ -16,14 +17,19 @@ public class Account extends Activity {
         LogIn(email, password);
     }
 
+    // log a new user in
     public void LogIn(String email, String password) {}
 
+    // log the current user out
     public void LogOut(String email) {}
 
+    // check if a user is logged in
     public void IsLoggedIn(String email) {}
 
-    public void UpdateAccountDetails(String email) {}
+    // update the user account profile
+    public void UpdateProfile(String email) {}
 
+    // register a new user
     public void Register(String email) {}
 
 }

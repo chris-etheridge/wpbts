@@ -14,6 +14,8 @@ import java.net.URL;
  */
 public class Networking {
 
+    // GET from URL
+    // returns json object
     public static JSONObject GetJsonFromUrl(String targetUrl) throws JSONException {
         StringBuffer buf = new StringBuffer("");
         JSONObject returnObj = new JSONObject();
@@ -41,6 +43,9 @@ public class Networking {
         return returnObj;
     }
 
+    // POST to url
+    // requires a json payload and url
+    // returns a json object
     public static JSONObject PostJsonToUrl(String url, JSONObject payload) {
         return new JSONObject();
     }

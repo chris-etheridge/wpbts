@@ -1,7 +1,7 @@
 package com.peachtree.wpbapp.Core;
 
 /**
- * Created by chrisetheridge on 8/25/16.
+ * General utilities.
  */
 public class Util {
 }

@@ -1,7 +1,7 @@
 package com.peachtree.wpbapp.Entities;
 
 /**
- * Created by chrisetheridge on 8/25/16.
+ * Entity that models a User.
  */
 public class User {
 
