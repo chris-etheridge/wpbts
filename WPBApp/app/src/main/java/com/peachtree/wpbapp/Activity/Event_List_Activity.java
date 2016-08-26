@@ -40,7 +40,7 @@ public class Event_List_Activity extends AppCompatActivity
 
 		ArrayList events=getListData();
 		ListView view = (ListView)findViewById(R.id.event_list);
-		view.setAdapter(new List_Adapter(events, this));
+		view.setAdapter(new List_Adapter(events, this, List_Adapter.Type.Event));
 	}
 
 	private ArrayList getListData(){
