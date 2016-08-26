@@ -1,7 +1,9 @@
-package com.peachtree.wpbapp.Activity;
+package com.peachtree.wpbapp.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.peachtree.wpbapp.R;
 
@@ -13,6 +15,13 @@ public class Login_Activity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_activity);
+
+	}
+
+	public void onLoginClick(View view){
+
+		Intent loginIntent = new Intent(this, Event_List_Activity.class);
+		startActivity(loginIntent);
 
 	}
 }

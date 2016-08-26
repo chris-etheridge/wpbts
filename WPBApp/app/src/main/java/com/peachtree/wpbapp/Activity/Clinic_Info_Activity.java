@@ -1,4 +1,4 @@
-package com.peachtree.wpbapp.Activity;
+package com.peachtree.wpbapp.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;

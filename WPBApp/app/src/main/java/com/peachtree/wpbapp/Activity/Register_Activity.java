@@ -1,4 +1,4 @@
-package com.peachtree.wpbapp.Activity;
+package com.peachtree.wpbapp.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

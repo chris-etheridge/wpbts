@@ -1,4 +1,4 @@
-package com.peachtree.wpbapp.Core;
+package com.peachtree.wpbapp.core;
 
 /**
  * Functions to access / save storage.
