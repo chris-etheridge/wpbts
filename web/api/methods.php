@@ -71,8 +71,8 @@ function getClinics($mysqli, $clinicid)
          $events[$rowid]['urgency'] = $Row['URGENCY'];
          $rowid++;
        }
-       echo "fuck";
-       var_dump($events);
+
+       //var_dump($events);
      }
      else
      {
