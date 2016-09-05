@@ -1,4 +1,4 @@
-<?php
+<chm></chm><?php
 //author = Kyle Burton
 	$ErrorMsgs = array();
 	$mysqli = new mysqli("localhost", "root", "", "WP_Blood");
