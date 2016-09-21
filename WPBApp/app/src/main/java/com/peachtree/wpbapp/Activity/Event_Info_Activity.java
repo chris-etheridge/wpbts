@@ -1,5 +1,6 @@
 package com.peachtree.wpbapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.peachtree.wpbapp.R;
+import com.peachtree.wpbapp.core.Util;
 
 public class Event_Info_Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,28 +46,17 @@ public class Event_Info_Activity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+		// Handle navigation view item clicks here.
+		Intent nav = Util.getNavIntent(item.getItemId(), this);
 
-        switch (id){
-			case R.id.nav_event_list:
-				break;
-			case R.id.nav_event_calender:
-				break;
-			case R.id.nav_event_map:
-				break;
-			case R.id.nav_clinics:
-				break;
-			case R.id.nav_about:
-				break;
-			case R.id.nav_logout:
-				break;
-			default:
-				break;
-        }
+		if(nav != null){
+			startActivity(nav);
+		}else if (item.getItemId() == R.id.nav_logout){
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+		}
+		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+		drawer.closeDrawer(GravityCompat.START);
+
+		return true;
     }
 }

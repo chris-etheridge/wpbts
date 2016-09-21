@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/colorBG">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblGroupTitle"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+        android:text="Title"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textIsSelectable="false"/>
+
+    <!--<ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:src="@android:drawable/arrow_down_float"
+        android:background="@color/colorBG"
+        android:layout_gravity="center_vertical"
+        android:tint="@color/colorAccent"
+        android:focusable="false"/>
+-->
+</LinearLayout>

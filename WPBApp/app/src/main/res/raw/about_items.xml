@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<startList>
+    <item>
+        <title>First Item</title>
+        <content>This is Test Content. Is it working.</content>
+    </item>
+    <item>
+        <title>Second Item</title>
+        <content><![CDATA[This is the second test item.
+Is it working.]]></content>
+    </item>
+</startList>
