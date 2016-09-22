@@ -44,6 +44,8 @@ public class Accordion_Handler extends BaseExpandableListAdapter
 			Toast.makeText(ctx, ex.toString(),
 					Toast.LENGTH_SHORT).show();
 		}
+
+
 	}
 
 	@Override
@@ -97,7 +99,9 @@ public class Accordion_Handler extends BaseExpandableListAdapter
 			LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = inflater.inflate(R.layout.list_group, null);
 		}
+		view.setTag("Group_"+i);
 		((TextView) view.findViewById(R.id.lblGroupTitle)).setText(headerTitle);
+
 		return view;
 	}
 
@@ -111,13 +115,14 @@ public class Accordion_Handler extends BaseExpandableListAdapter
 			view = layoutInflater.inflate(R.layout.list_item, null);
 		}
 		((TextView) view.findViewById(R.id.lbl_itemcontent)).setText(content);
+
 		return view;
 	}
 
 	@Override
 	public boolean isChildSelectable(int i, int i1)
 	{
-		return true;
+		return false;
 	}
 
 	public List parseXML() throws XmlPullParserException, IOException
@@ -224,4 +229,6 @@ public class Accordion_Handler extends BaseExpandableListAdapter
 			}
 		}
 	}
+
+
 }

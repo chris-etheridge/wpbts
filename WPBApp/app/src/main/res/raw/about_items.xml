@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <startList>
+    <!--Example Item
     <item>
-        <title>First Item</title>
-        <content>This is Test Content. Is it working.</content>
+        <title></title>
+        <content></content>
+    </item>
+    -->
+    <item>
+        <title>Are you already a donor?</title>
+        <content>Thank-you, and please keep on giving blood as often as you can. Check when the next clinic is happening in your area, and read through our list of things that might make you ineligible to give blood on any particular day.</content>
     </item>
     <item>
-        <title>Second Item</title>
-        <content><![CDATA[This is the second test item.
-Is it working.]]></content>
+        <title>Not a donor yet, but eager to become one?</title>
+        <content>If you've already made the decision to donate and can’t wait to get on with the business of saving lives, then contact us right now to find out where your nearest donation clinic is taking place. Make sure you meet our basic donor criteria, that you eat something within three hours before visiting us and that you bring your ID with you for identification purposes. See you soon!</content>
+    </item>
+    <item>
+        <title>Are you thinking of becoming a donor, but still aren’t convinced?</title>
+        <content>Research statistics show that although 75% of the population in the Western Cape might require blood transfusions in their lifetime, a mere 1.5% are blood donors. Doesn't add up, does it? If you’re otherwise healthy, it’s very likely that you can donate blood and help balance out these numbers. With a single donation you could save three lives – and it won’t cost you a cent. Find out more by reading through our donor criteria, and then check when the next clinic is happening in your area.</content>
+    </item>
+    <item>
+        <title>Or are you a nervous needle-hater?</title>
+        <content>If you've never done it before, blood donation can seem a little scary. The good news is that many people just like you have overcome their queasiness and discovered that giving blood really is no big deal. In the greater scheme of things, is a quick needle prick really enough to prevent you from saving lives? Find out exactly what you can expect, from registration and donor recognition, right through to cookies and cool-drink. We've also put together a list of the questions we hear most often, along with their answers, on our FAQ page.</content>
     </item>
 </startList>
