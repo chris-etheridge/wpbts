@@ -31,7 +31,7 @@ create table TBL_USER(
 	GENDER char(1),
 	LANGUAGE_PREF varchar(20),
 	PASSPORT_NUM varchar(20),
-	PASSWORD varchar(255)
+	PWD varchar(255),
 	
 	foreign key (ADDRESS_ID) references TBL_ADDRESS(ADDRESS_ID)
 );
