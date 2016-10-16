@@ -13,6 +13,7 @@ try {
     $dbConn = new PDO($dsn, $username, $password);
 } catch (PDOException $exc) {
     echo $exc->getMessage();
+    echo "113 - Database unavailable. Check server logs.";
     die();
 }
 
