@@ -109,11 +109,11 @@ INSERT INTO TBL_ADMIN VALUES( 4, 'lobortis@loremutaliquam.net', 'Zenaida', 'Fitz
 INSERT INTO TBL_ADMIN VALUES( 5, 'ut.lacus@sit.co.uk', 'Kitra', 'Bass', '81dc9bdb52d04dc20036dbd8313ed059');
 
 /* TBL_USER */
-INSERT INTO TBL_USER VALUES( 1, 'Kyle', 'Burton', '9999999999999', 'kyle@live.co.za', '0229999999', 'O-', 6, '1995-02-03', 'Mr', 'M', 'English', '', 'p4ssw0rd');
-INSERT INTO TBL_USER VALUES( 2, 'Chris', 'Etheridge', '8888888888888', 'chirs@live.co.za', '0228888888', 'AB+', 7, '1990-03-04', 'Mr', 'M', 'English', '','p4ssw0rd');
-INSERT INTO TBL_USER VALUES( 3, 'Tyron', 'deAndrade', '7777777777777', 'tyron@live.co.za', '0227777777', 'A+', 8, '1985-04-05', 'Mrs', 'F', 'Afrikaans', '','p4ssw0rd');
-INSERT INTO TBL_USER VALUES( 4, 'David', 'Abrahams', '6666666666666', 'david@live.co.za', '0225555555', 'B-', 9, '1980-05-06', 'Mrs', 'F', 'isiXhosa', '','p4ssw0rd');
-INSERT INTO TBL_USER VALUES( 5, 'Daniel', 'Erasmus', '', 'daniel@live.co.za', '0224444444', 'O+', 10, '1975-06-07', 'Mr', 'M', 'English', '3333333333333','p4ssw0rd');
+INSERT INTO TBL_USER VALUES( 1, 'Kyle', 'Burton', '9999999999999', 'kyle@live.co.za', '0229999999', 'O-', 6, '1995-02-03', 'Mr', 'M', 'English', '', 'e731a7b612ab389fcb7f973c452f33df3eb69c99');
+INSERT INTO TBL_USER VALUES( 2, 'Chris', 'Etheridge', '8888888888888', 'chirs@live.co.za', '0228888888', 'AB+', 7, '1990-03-04', 'Mr', 'M', 'English', '','e731a7b612ab389fcb7f973c452f33df3eb69c99');
+INSERT INTO TBL_USER VALUES( 3, 'Tyron', 'deAndrade', '7777777777777', 'tyron@live.co.za', '0227777777', 'A+', 8, '1985-04-05', 'Mrs', 'F', 'Afrikaans', '','e731a7b612ab389fcb7f973c452f33df3eb69c99');
+INSERT INTO TBL_USER VALUES( 4, 'David', 'Abrahams', '6666666666666', 'david@live.co.za', '0225555555', 'B-', 9, '1980-05-06', 'Mrs', 'F', 'isiXhosa', '','e731a7b612ab389fcb7f973c452f33df3eb69c99');
+INSERT INTO TBL_USER VALUES( 5, 'Daniel', 'Erasmus', '', 'daniel@live.co.za', '0224444444', 'O+', 10, '1975-06-07', 'Mr', 'M', 'English', '3333333333333','e731a7b612ab389fcb7f973c452f33df3eb69c99');
 
 /* TBL_CLINIC */
 INSERT INTO TBL_CLINIC VALUES( 1, 1, '0769999999', '0219999999', 'clinic 1');
