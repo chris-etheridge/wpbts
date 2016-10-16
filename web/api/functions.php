@@ -4,7 +4,7 @@ function getClinics($mysqli, $clinicid = 0)
     $SQLString = "SELECT * FROM VIEW_CLINICSWADDRESS";
     if (is_numeric($clinicid) && $clinicid != 0)
     {
-        $SQLString += " WHERE CLINIC_ID = " . $clinicid;
+        $SQLString .= " WHERE CLINIC_ID = " . $clinicid;
     }
 
     $QueryResult = $mysqli->query($SQLString);
@@ -42,7 +42,7 @@ function getEvents($mysqli, $eventid = 0)
     $SQLString = "SELECT * FROM VIEW_EVENTSWADDRESS";
     if (is_numeric($eventid) && $eventid != 0)
     {
-        $SQLString += " WHERE EVENT_ID = " . $eventid;
+        $SQLString .= " WHERE EVENT_ID = " . $eventid;
     }
 
     $QueryResult = $mysqli->query($SQLString);
