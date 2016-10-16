@@ -2,14 +2,11 @@
 
 header("content-type:application/json");
 require_once("../php/DBConn.php");
-require_once("methods.php");
+require_once("functions.php");
 
 $eventid = 0;
-$events = array();
-if (isset($_POST['eventid']))
-{
-  $eventid = $_POST['eventid'];
-}
+$eventid = $mysqli->real_escape_string($_POST['eventid']);
+
 $events = getEvents($mysqli, $eventid);
 
 // $_POST['page'] tells us which array of results to load.

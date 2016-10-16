@@ -2,14 +2,11 @@
 
 header("content-type:application/json");
 require_once("../php/DBConn.php");
-require_once("methods.php");
+require_once("functions.php");
 
 $clinicid = 0;
-$clinics = array();
-if (isset($_POST['clinicid']))
-{
-  $clinicid = $_POST['clinicid'];
-}
+$clinicid = $mysqli->real_escape_string($_POST['clinicid']);
+
 $clinics = getClinics($mysqli, $clinicid);
 
 // $_POST['page'] tells us which array of results to load.
@@ -17,5 +14,3 @@ $clinics = getClinics($mysqli, $clinicid);
 echo json_encode($clinics);
 
 exit();
-
-?>
