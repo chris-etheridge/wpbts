@@ -7,6 +7,7 @@
 $username = "root";
 $password = "dvrootz2020$!";
 $dsn = "mysql:host=localhost;dbname=sys";
+$dbConn;
 
 //Create a PDO database connection and output error if exists killing the script
 try {
@@ -16,5 +17,4 @@ try {
     echo "113 - Database unavailable. Check server logs.";
     die();
 }
-
 ?>
