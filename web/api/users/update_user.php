@@ -30,12 +30,11 @@ foreach ($jsonData as &$jsonObject) {
         }
     }
 }
-var_dump($jsonData);
-//
+
 $addressID = getAddressID($jsonData[0]['EMAIL']);
+//doesUserExist($jsonData[2]['LASTEMAIL']);
 $lastEmail = $jsonData[2]['LASTEMAIL'];
 updateAddress($addressID, $jsonData[1]);
 updateUser($addressID, $lastEmail, $jsonData[0]);
-//echo $addressID;
 
 ?>

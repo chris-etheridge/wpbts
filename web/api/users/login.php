@@ -18,8 +18,7 @@ if ($jsonData == null) {
 
 $jsonData = array_change_key_case($jsonData, CASE_UPPER);
 foreach ($jsonData as $key => &$values) {
-    $res = strcmp($key, "PWD");
-    if ($res != 'PWD') {
+    if (strcmp($key, 'PWD') != 0) {
         $jsonData[$key] = strtoupper($jsonData[$key]);
     }
 }
@@ -36,7 +35,7 @@ if ($isIUserExist == false) {
 }
 
 $savedPassword = getHashedPassword($email);
-var_dump($savedPassword);
+
 
 if (strcmp($password, $savedPassword['PWD']) == 0) {
     echo "112 - Login Accepted.";

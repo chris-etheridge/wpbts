@@ -14,9 +14,6 @@ function updateUser($addressID, $lastEmail, $userData)
 {
 
     global $dbConn;
-    var_dump($userData);
-
-    echo "Last email = " . $lastEmail;
 
     $sql = "UPDATE TBL_USER 
       SET FIRST_NAME = ?,
@@ -53,7 +50,10 @@ function updateUser($addressID, $lastEmail, $userData)
 
     if ($stmt->execute() == false) {
         print_r($stmt->errorInfo());
+        die();
     }
+
+    echo "112 - User updated successfully";
 
 }
 
