@@ -1,6 +1,5 @@
 <?php
 
-
 require_once("../../php/DBConn_Dave.php");
 require_once("functions.php");
 
@@ -17,17 +16,18 @@ if ($jsonData == null) {
     echo "155 - Paramaters must be in json string format";
 }
 
-//var_dump($jsonData);
 $jsonData = array_change_key_case($jsonData, CASE_UPPER);
 foreach ($jsonData as $key => &$values) {
-    $res = strcmp($key, "PASSWORD");
-    if ($res != 0) {
-        strtoupper($values);
+    $res = strcmp($key, "PWD");
+    if ($res != 'PWD') {
+        $jsonData[$key] = strtoupper($jsonData[$key]);
     }
 }
 
+//var_dump($jsonData);
 $email = $jsonData['EMAIL'];
-$password = sha1($jsonData['PASSWORD']);
+$password = sha1($jsonData['PWD']);
+
 
 $isIUserExist = doesEmailAddressExist($email);
 if ($isIUserExist == false) {
@@ -35,7 +35,13 @@ if ($isIUserExist == false) {
     die();
 }
 
+$savedPassword = getHashedPassword($email);
+var_dump($savedPassword);
 
-
+if (strcmp($password, $savedPassword['PWD']) == 0) {
+    echo "112 - Login Accepted.";
+} else {
+    echo "181 - Autentication Failed.";
+}
 
 ?>
