@@ -15,54 +15,11 @@ xmlns:android="http://schemas.android.com/apk/res/android">
     <activity android:name=".activity.Register_Activity" android:screenOrientation="portrait">
 
     </activity>
-    <activity
-        android:name=".activity.Event_List_Activity"
-        android:label="@string/title_activity_event_list_"
-        android:theme="@style/AppTheme.NoActionBar"
-        android:screenOrientation="portrait">
-    </activity>
 
-    <activity android:name=".activity.Event_Calendar_Activity"
-              android:label="@string/title_activity_event_calendar"
-              android:theme="@style/AppTheme.NoActionBar"
-              android:screenOrientation="portrait">
+    <activity android:name=".activity.Home_Activity" android:screenOrientation="portrait">
 
     </activity>
 
-    <activity android:name=".activity.Event_Map_Activity"
-              android:label="@string/title_activity_event_map"
-              android:theme="@style/AppTheme.NoActionBar"
-              android:screenOrientation="portrait">
-
-    </activity>
-
-    <activity android:name=".activity.Clinics_Activity"
-              android:label="@string/title_activity_clinics"
-              android:theme="@style/AppTheme.NoActionBar"
-              android:screenOrientation="portrait">
-
-    </activity>
-
-    <activity android:name=".activity.About_Activity"
-              android:label="@string/title_activity_about"
-              android:theme="@style/AppTheme.NoActionBar"
-              android:screenOrientation="portrait">
-
-    </activity>
-
-    <activity android:name=".activity.Event_Info_Activity"
-              android:label="@string/title_activity_event_info"
-              android:theme="@style/AppTheme.NoActionBar"
-              android:screenOrientation="portrait">
-
-    </activity>
-
-    <activity android:name=".activity.Clinic_Info_Activity"
-              android:label="@string/title_activity_event_info"
-              android:theme="@style/AppTheme.NoActionBar"
-              android:screenOrientation="portrait">
-
-    </activity>
 
 </application>
    </manifest>

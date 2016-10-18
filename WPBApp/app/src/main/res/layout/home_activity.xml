@@ -9,7 +9,7 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/event_list_coordinator"
+        layout="@layout/home_coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

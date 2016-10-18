@@ -6,7 +6,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               app:layout_behavior="@string/appbar_scrolling_view_behavior"
-              tools:context=".activity.Event_List_Activity"
+              tools:context=".activity.Event_List_Fragment"
               tools:showIn="@layout/event_list_coordinator"
               android:background="#000000">
 

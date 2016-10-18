@@ -32,7 +32,7 @@ public class Login_Activity extends AppCompatActivity
 			session_Account = new Account(user.getText().toString(), password.getText().toString());
 		}
 
-		Intent loginIntent = new Intent(this, Event_List_Activity.class);
+		Intent loginIntent = new Intent(this, Home_Activity.class);
 		startActivity(loginIntent);
 	}
 
