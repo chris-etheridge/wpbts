@@ -8,7 +8,7 @@
 
 
 header("content-type:application/json");
-require_once("../php/DBConn.php");
+require_once("../../php/DBConn.php");
 require_once("functions.php");
 
 $clinicid = $mysqli->real_escape_string($_POST['clinicid']);
