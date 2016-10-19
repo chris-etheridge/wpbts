@@ -16,8 +16,12 @@ p {
 	color: #777;
 }
 
-a, a:hover, a:focus {
+.nav li a, a:hover, a:focus {
 	color: #FA4242;
+}
+
+a, a:hover, a:focus {
+	color: #428bca;
 }
 
 h1, h2, h3, h4, h5, h6 {

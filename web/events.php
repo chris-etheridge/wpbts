@@ -44,10 +44,14 @@ require_once('php/DBConn.php');
                                 //$Row['EVENT_ID']
                                 ?>
                                 <tr class="<?php if($count%2 !== 0) echo "odd"; ?>">
-                                    <td class="text-center"><?php echo $Row['EVENT_ID'] ?></td>
-                                    <td class="text-center"><?php echo $Row['TITLE'] ?></td>
-                                    <td class="text-center"><?php echo $Row['EVENT_DATE'] ?></td>
-                                    <td class="text-center">[not implemented]</td>
+                                    <td class="text-center"><?php echo $Row['EVENT_ID']; ?></td>
+                                    <td class="text-center"><?php echo $Row['TITLE']; ?></td>
+                                    <td class="text-center"><?php echo $Row['EVENT_DATE']; ?></td>
+                                    <td class="text-center">
+                                        <a href="edit-event.php?eventid=<?php echo $Row['EVENT_ID']; ?>">[Edit]</a>
+                                        <a href="#">[Cancel]</a>
+                                        <a href="#">[View]</a>
+                                    </td>
                                 </tr>
                                 <?php
                                 $count++;
@@ -56,7 +60,6 @@ require_once('php/DBConn.php');
                         else
                         {
                             ?>
-                        
                             <tr>
                                 <td colspan="4">No Upcoming Events</td>
                             </tr>
@@ -73,7 +76,7 @@ require_once('php/DBConn.php');
         <div class="col-md-12">
             <h4>Available Alerts</h4>
             <div class="col-md-12">
-                <table class="table-bordered" width='100%'>
+                <table class="custom-table table-bordered" width='100%'>
                     <thead>
                         <th class="text-center">Alert ID</th>
                         <th class="text-center">Title</th>
@@ -83,7 +86,7 @@ require_once('php/DBConn.php');
                     <tbody>
                         <?php 
                             //get available alerts
-                        
+                            
                         ?>
                     </tbody>
                 </table>
@@ -94,13 +97,8 @@ require_once('php/DBConn.php');
 
 </div>	<!--/.main-->
 
-<script src="js/jquery-1.11.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/chart.min.js"></script>
-<script src="js/chart-data.js"></script>
-<script src="js/easypiechart.js"></script>
-<script src="js/easypiechart-data.js"></script>
-<script src="js/bootstrap-datepicker.js"></script>
+<?php require_once('footer.php'); ?>
+
 <script>
     $('#calendar').datepicker({
     });
