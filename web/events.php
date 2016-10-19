@@ -1,6 +1,7 @@
 <?php
 $_TITLE = "WPBTS - Event Management";
 require_once("header.php");
+require_once('php/DBConn.php');
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 
@@ -21,17 +22,46 @@ require_once("header.php");
         <div class="col-md-12">
             <h4>Upcoming Events</h4>
             <div class="col-md-12">
-                <table class="table-bordered" width='100%'>
+                <table class="custom-table table-bordered" width='100%'>
                     <thead>
-                        <th class="text-center">Event ID</th>
-                        <th class="text-center">Title</th>
-                        <th class="text-center">Event Date</th>
-                        <th class="text-center">Options</th>
+                        <tr>
+                            <th class="text-center">Event ID</th>
+                            <th class="text-center">Title</th>
+                            <th class="text-center">Event Date</th>
+                            <th class="text-center">Options</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <?php 
                             //get upcoming events
+                        $sql = "SELECT * FROM TBL_EVENT WHERE EVENT_DATE > NOW() ORDER BY EVENT_DATE ASC;";
+                        $QueryResult = $mysqli->query($sql);
+                        if ($QueryResult == TRUE) 
+                        {
+                            $count = 0;
+                            while (($Row = $QueryResult->fetch_assoc()) !== NULL) 
+                            {
+                                //$Row['EVENT_ID']
+                                ?>
+                                <tr class="<?php if($count%2 !== 0) echo "odd"; ?>">
+                                    <td class="text-center"><?php echo $Row['EVENT_ID'] ?></td>
+                                    <td class="text-center"><?php echo $Row['TITLE'] ?></td>
+                                    <td class="text-center"><?php echo $Row['EVENT_DATE'] ?></td>
+                                    <td class="text-center">[not implemented]</td>
+                                </tr>
+                                <?php
+                                $count++;
+                            }
+                        }
+                        else
+                        {
+                            ?>
                         
+                            <tr>
+                                <td colspan="4">No Upcoming Events</td>
+                            </tr>
+                            <?php
+                        }
                         ?>
                     </tbody>
                 </table>
