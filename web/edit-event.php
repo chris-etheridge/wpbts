@@ -31,11 +31,17 @@ require_once('php/DBConn.php');
                 <div class="row">
                     <div class="col-sm-6">
                         <h5>Event ID</h5>
-                        <input type="text" class="form-control" name="eventid">
+                        <input disabled type="text" class="form-control" name="eventid" value="<?php echo $_GET['eventid']; ?>">
                     </div>
                     <div class="col-sm-6">
                         <h5>Creator ID</h5>
-                        <input type="text" class="form-control" name="creatorid">
+                        <input disabled type="text" class="form-control" name="creatorid" value="<?php //echo $_GET['adminid']; ?>">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5>Title</h5>
+                        <input type="text" class="form-control" name="title">
                     </div>
                 </div>
                 <div class="row">
