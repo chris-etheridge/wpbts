@@ -1,6 +1,7 @@
 <?php
 $_TITLE = "WPBTS - Dashboard";
 require_once("header.php");
+require_once('php/DBConn.php');
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 
@@ -18,44 +19,92 @@ require_once("header.php");
     </div><!--/.row-->
 
     <div class="row">
-        <div class="col-xs-12 col-md-6 col-lg-3">
-            <div class="panel panel-red panel-widget ">
-                <div class="row no-padding">
-                    <div class="col-sm-3 col-lg-5 widget-left">
-                        <svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg>
-                    </div>
-                    <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large">120</div>
-                        <div class="text-muted">Events</div>
+        <div class="col-xs-12 col-md-6 col-lg-4">
+            <a href="events.php">
+                <div class="panel panel-red panel-widget ">
+                    <div class="row no-padding">
+                        <div class="col-sm-3 col-lg-5 widget-left">
+                            <svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg>
+                        </div>
+                        <div class="col-sm-9 col-lg-7 widget-right">
+                            <div class="large">
+                                <?php 
+                                    //get upcoming events
+                                $sql = "SELECT * FROM TBL_EVENT WHERE EVENT_DATE > NOW() ORDER BY EVENT_DATE ASC;";
+                                $QueryResult = $mysqli->query($sql);
+                                if ($QueryResult == TRUE) 
+                                {
+                                    echo $QueryResult->num_rows;
+                                }
+                                else
+                                {
+                                    echo "0";
+                                }
+                                ?>
+                            </div>
+                            <div class="text-muted">Upcoming Events</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-3">
-            <div class="panel panel-red panel-widget">
-                <div class="row no-padding">
-                    <div class="col-sm-3 col-lg-5 widget-left">
-                        <svg class="glyph stroked clipboard-with-paper"><use xlink:href="#stroked-clipboard-with-paper"></use></svg>
-                    </div>
-                    <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large">52</div>
-                        <div class="text-muted">Clinics</div>
+        <div class="col-xs-12 col-md-6 col-lg-4">
+            <a href="#">
+                <div class="panel panel-red panel-widget">
+                    <div class="row no-padding">
+                        <div class="col-sm-3 col-lg-5 widget-left">
+                            <svg class="glyph stroked clipboard-with-paper"><use xlink:href="#stroked-clipboard-with-paper"></use></svg>
+                        </div>
+                        <div class="col-sm-9 col-lg-7 widget-right">
+                            <div class="large">
+                                <?php 
+                                    //get upcoming events
+                                $sql = "SELECT * FROM TBL_CLINIC;";
+                                $QueryResult = $mysqli->query($sql);
+                                if ($QueryResult == TRUE) 
+                                {
+                                    echo $QueryResult->num_rows;
+                                }
+                                else
+                                {
+                                    echo "0";
+                                }
+                                ?>
+                            </div>
+                            <div class="text-muted">Clinics</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-3">
-            <div class="panel panel-teal panel-widget">
-                <div class="row no-padding">
-                    <div class="col-sm-3 col-lg-5 widget-left">
-                        <svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
-                    </div>
-                    <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large">24000</div>
-                        <div class="text-muted">Users</div>
+        <div class="col-xs-12 col-md-6 col-lg-4">
+            <a href="#">
+                <div class="panel panel-teal panel-widget">
+                    <div class="row no-padding">
+                        <div class="col-sm-3 col-lg-5 widget-left">
+                            <svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
+                        </div>
+                        <div class="col-sm-9 col-lg-7 widget-right">
+                            <div class="large">
+                                <?php 
+                                    //get upcoming events
+                                $sql = "SELECT * FROM TBL_USER;";
+                                $QueryResult = $mysqli->query($sql);
+                                if ($QueryResult == TRUE) 
+                                {
+                                    echo $QueryResult->num_rows;
+                                }
+                                else
+                                {
+                                    echo "0";
+                                }
+                                ?>
+                            </div>
+                            <div class="text-muted">Users</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div><!--/.row-->
 
