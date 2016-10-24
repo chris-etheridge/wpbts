@@ -1,0 +1,5 @@
+-Create a MySQL database in your local server environment named "wpbts".
+-Run the script db_complete.sql on the newly created database.
+-Create a directory inside of your local "www" or "public_html" webserver directory. 
+-Copy the contents of the "web/" directory to your local "www/wpbts/" or "public_html/wpbts/". 
+-Access admin interface by typing "localhost/wpbts" in your web browser.
