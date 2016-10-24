@@ -53,7 +53,7 @@ $event = getEvents($mysqli, $eventid)[0]; //first and only slot - 0
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="control-label">Description</label>
-                        <textarea required class="form-control" rows="6" name="description" value="<?php echo $event['description']; ?>"></textarea>
+                        <textarea required class="form-control" rows="6" name="description"><?php echo $event['description']; ?></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -66,9 +66,32 @@ $event = getEvents($mysqli, $eventid)[0]; //first and only slot - 0
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <label class="control-label">Alerts</label>
+                                <label class="control-label">Type</label>
                                 <select required type="text" class="form-control" name="alertid">
-                                    <option value='-1' disabled selected>Select one--</option>
+                                    <?php
+                                    {
+                                        $sql = "SELECT * FROM TBL_EVENT;";
+                                        $QueryResult = $mysqli->query($sql);
+                                        if ($QueryResult == TRUE)
+                                        {
+                                            ?>
+                                                <option value='-1' disabled>Select one--</option>
+                                            <?php
+                                            while (($Row = $QueryResult->fetch_assoc()) !== NULL)
+                                            {
+                                                ?>
+                                                    <option <?php if($event['type_id'] === $Row['TYPE_ID']){ echo "selected"; } ?> value='<?php echo $Row['TYPE_ID']; ?>'><?php echo $Row['URGENCY'] . $Row['DESCRIPTION']; ?></option>
+                                                <?php
+                                            }
+                                        }
+                                        else
+                                        {
+                                            ?>
+                                                <option selected disabled>Could not load list</option>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
                                 </select>
                             </div>                    
                         </div>
