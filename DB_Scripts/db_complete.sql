@@ -147,9 +147,9 @@ values
 insert into TBL_EVENT
 (EVENT_ID, EVENT_DATE, ADDRESS_ID, TYPE_ID, DESCRIPTION, TITLE, ACTIVE, CREATOR_ID)
 values
-(1,'2016-10-24',1,3,'Social Event, for all happening in Cape Town','CT Social Event',false,1),
-(2,'2016-08-31',2,4,'MObile blood drive event','Blood Drive',false,2),
-(3,'2016-10-25',3,5,'College outreach and educational','College Outreach',true,3),
+(1,'2017-10-24',1,3,'Social Event, for all happening in Cape Town','CT Social Event',false,1),
+(2,'2017-08-31',2,4,'MObile blood drive event','Blood Drive',false,2),
+(3,'2017-10-25',3,5,'College outreach and educational','College Outreach',true,3),
 (4,'2016-06-29',4,6,'Corporate Internal administrative meeting','Corporate Private Event',true,4);
 
 /* views */
