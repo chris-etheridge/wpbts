@@ -37,8 +37,8 @@ function getEvents($mysqli, $eventid = 0)
     }
     else
     {
-        echo "COULD NOT FETCH ITEMS";
-        echo $mysqli->error;
+        $errorMsg = array("code" => "222", "message" => $mysqli->error);
+        return $errorMsg;
     }
     return $events;
 }

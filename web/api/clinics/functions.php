@@ -31,8 +31,8 @@ function getClinics($mysqli, $clinicid = 0)
     }
     else
     {
-        echo "COULD NOT FETCH ITEMS";
-        echo $mysqli->error;
+        $errorMsg = array("code" => "332", "message" => $mysqli->error);
+        return $errorMsg;
     }
     return $clinics;
 }
