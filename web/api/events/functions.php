@@ -21,6 +21,7 @@ function getEvents($mysqli, $eventid = 0)
             $events[$rowid]['title'] = $Row['TITLE'];
             $events[$rowid]['active'] = $Row['ACTIVE'];
             $events[$rowid]['creator_id'] = $Row['CREATOR_ID'];
+            $events[$rowid]['event_admin'] = $Row['EVENT_ADMIN_ID'];
             
             $events[$rowid]['address_id'] = $Row['ADDRESS_ID'];
             $events[$rowid]['city'] = $Row['CITY'];

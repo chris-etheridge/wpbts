@@ -1,5 +1,6 @@
 <?php
 $_TITLE = "WPBTS - Create Event";
+session_start();
 $_POST['adminid'] = 1; //TODO FIX THIS AFTER AUTHENTICATION is implemented
 if(!isset($_POST['adminid']))
 {
@@ -19,6 +20,19 @@ require_once('php/DBConn.php');
             <li class="active">Create Event</li>
         </ol>
     </div><!--/.row-->
+    
+    <?php
+        if(isset($_SESSION['alert']))
+        {
+            ?>
+            <div class="alert <?php echo $_SESSION['alert']['message_type']; ?> alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong><?php echo $_SESSION['alert']["message_title"] ?></strong> <?php echo $_SESSION['alert']["message"] ?>
+            </div>
+            <?php
+            $_SESSION['alert'] = null;
+        }
+    ?>
 
     <div class="row">
         <div class="col-lg-12">
