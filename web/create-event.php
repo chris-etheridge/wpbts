@@ -1,8 +1,8 @@
 <?php
 $_TITLE = "WPBTS - Create Event";
 session_start();
-$_POST['adminid'] = 1; //TODO FIX THIS AFTER AUTHENTICATION is implemented
-if(!isset($_POST['adminid']))
+$_SESSION['adminid'] = 1; //TODO FIX THIS AFTER AUTHENTICATION is implemented
+if(!isset($_SESSION['adminid']))
 {
     header("Location: events.php");
 }
@@ -20,7 +20,7 @@ require_once('php/DBConn.php');
             <li class="active">Create Event</li>
         </ol>
     </div><!--/.row-->
-    
+    <br/>
     <?php
         if(isset($_SESSION['alert']))
         {
@@ -46,7 +46,7 @@ require_once('php/DBConn.php');
                 <div class="form-group">
                     <div class="col-sm-6">
                         <label class="control-label">Creator ID</label>
-                        <input disabled type="text" class="form-control" name="creatorid" value="<?php //echo $_GET['adminid']; ?>">
+                        <input disabled type="text" class="form-control" name="creatorid" value="<?php echo $_SESSION['adminid'] ?>">
                     </div>
                 </div>
                 <div class="form-group">

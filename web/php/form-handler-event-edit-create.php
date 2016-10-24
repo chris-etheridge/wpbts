@@ -11,7 +11,7 @@ require_once("../api/events/functions.php");
 
 session_start();
 
-if(!isset($_POST['eventid']) || !isset($_POST['creatorid']) || !isset($_POST['title'])
+if(        !isset($_POST['creatorid']) || !isset($_POST['title'])
         || !isset($_POST['description']) || !isset($_POST['date']) || !isset($_POST['typeid'])
         || !isset($_POST['eventadminid']) || !isset($_POST['streetno']) || !isset($_POST['street'])
         || !isset($_POST['suburb']) || !isset($_POST['city']) || !isset($_POST['zip']))
@@ -22,6 +22,9 @@ if(!isset($_POST['eventid']) || !isset($_POST['creatorid']) || !isset($_POST['ti
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit();
 }
+
+$action = (isset($_POST['eventid'])) ? "updating" : "creating"; //either create or update, used for alert message
+$actionPastTest = (isset($_POST['eventid'])) ? "updated" : "created"; //either create or update, used for alert message - past tense
 
 $eventid = $mysqli->real_escape_string($_POST['eventid']);
 $creatorid = $mysqli->real_escape_string($_POST['creatorid']);
@@ -53,7 +56,7 @@ $mysqli->query($sql);
 if($mysqli->error)
 {
     $_SESSION['alert']['message_type'] = "alert-danger";
-    $_SESSION['alert']['message_title'] = "Error inserting details!";
+    $_SESSION['alert']['message_title'] = "Error $action details!";
     $_SESSION['alert']['message'] = "Please review the address fields. If problem persists, contact system administrator!";
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit();
@@ -75,34 +78,19 @@ else //insert new event
 }
 $mysqli->query($sql);
 
-if($mysqli->error)
+if($mysqli->error) //redirect user to edit/create page
 {
     $_SESSION['alert']['message_type'] = "alert-danger";
-    $_SESSION['alert']['message_title'] = "Error inserting event!";
+    $_SESSION['alert']['message_title'] = "Error $action event!";
     $_SESSION['alert']['message'] = "Please review the event details. If problem persists, contact system administrator!";
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit();
 }
 
 
-
-$message_title;
-$message;
-
-if(isset($eventid))
-{
-    $message_title = "SUCCESS!";
-    $message = "Event updated successfully";
-}
-else
-{
-    $message_title = "SUCCESS!";
-    $message = "Event created successfully";
-}
-
 $_SESSION['alert']['message_type'] = "alert-success";
-$_SESSION['alert']['message_title'] = $message_title;
-$_SESSION['alert']['message'] = $message;
+$_SESSION['alert']['message_title'] = "Event $actionPastTest successfully";
+$_SESSION['alert']['message'] = "Event $actionPastTest successfully";
 
 header('Location: ../events.php');
 exit();

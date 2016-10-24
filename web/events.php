@@ -17,6 +17,7 @@ session_start();
             <li class="active">Event Management</li>
         </ol>
     </div><!--/.row-->
+    <br/>
     <?php
         if(isset($_SESSION['alert']))
         {
