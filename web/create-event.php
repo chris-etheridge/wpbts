@@ -1,6 +1,7 @@
 <?php
-$_TITLE = "WPBTS - Edit Event";
-if(!isset($_GET['eventid']))
+$_TITLE = "WPBTS - Create Event";
+$_POST['adminid'] = 1; //TODO FIX THIS AFTER AUTHENTICATION is implemented
+if(!isset($_POST['adminid']))
 {
     header("Location: events.php");
 }
@@ -15,24 +16,20 @@ require_once('php/DBConn.php');
         <ol class="breadcrumb">
             <li><a href="index.php"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
             <li><a href="events.php">Event Management</a></li>
-            <li class="active">Edit Event</li>
+            <li class="active">Create Event</li>
         </ol>
     </div><!--/.row-->
 
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Edit Event</h1>
+            <h1 class="page-header">Create Event</h1>
         </div>
     </div><!--/.row-->
 
     <div class="row">
         <div class="col-lg-12">            
-                <form role="form" action="#" method="POST" class="form-horizontal">
+            <form role="form" action="#" method="POST" class="form-horizontal">
                 <div class="form-group">
-                    <div class="col-sm-6">
-                        <label>Event ID</label>
-                        <input disabled type="text" class="form-control" name="eventid" value="<?php echo $_GET['eventid']; ?>">
-                    </div>
                     <div class="col-sm-6">
                         <label class="control-label">Creator ID</label>
                         <input disabled type="text" class="form-control" name="creatorid" value="<?php //echo $_GET['adminid']; ?>">

@@ -78,7 +78,7 @@ require_once('php/DBConn.php');
             </a>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-4">
-            <a href="#">
+            <a href="users.php">
                 <div class="panel panel-teal panel-widget">
                     <div class="row no-padding">
                         <div class="col-sm-3 col-lg-5 widget-left">
