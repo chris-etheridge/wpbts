@@ -89,8 +89,8 @@ if($mysqli->error) //redirect user to edit/create page
 
 
 $_SESSION['alert']['message_type'] = "alert-success";
-$_SESSION['alert']['message_title'] = "Event $actionPastTest successfully";
-$_SESSION['alert']['message'] = "Event $actionPastTest successfully";
+$_SESSION['alert']['message_title'] = "SUCCESS!";
+$_SESSION['alert']['message'] = "Event $actionPastTest successfully.";
 
 header('Location: ../events.php');
 exit();
