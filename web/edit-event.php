@@ -6,11 +6,17 @@ if(!isset($_GET['eventid']))
 }
 require_once("header.php");
 require_once('php/DBConn.php');
+require_once('api/events/functions.php');
+
+
+//get selected event info
+$eventid = filter_var($_GET['eventid'], FILTER_SANITIZE_STRING);
+$event = getEvents($mysqli, $eventid)[0]; //first and only slot - 0
 
 
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main"><!--.main-->
-
+    
     <div class="row">
         <ol class="breadcrumb">
             <li><a href="index.php"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
@@ -31,23 +37,23 @@ require_once('php/DBConn.php');
                 <div class="form-group">
                     <div class="col-sm-6">
                         <label>Event ID</label>
-                        <input disabled type="text" class="form-control" name="eventid" value="<?php echo $_GET['eventid']; ?>">
+                        <input required disabled type="text" class="form-control" name="eventid" value="<?php echo $event['event_id']; ?>">
                     </div>
                     <div class="col-sm-6">
                         <label class="control-label">Creator ID</label>
-                        <input disabled type="text" class="form-control" name="creatorid" value="<?php //echo $_GET['adminid']; ?>">
+                        <input required disabled type="text" class="form-control" name="creatorid" value="<?php echo $event['creator_id']; ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="control-label">Title</label>
-                        <input type="text" class="form-control" name="title">
+                        <input required type="text" class="form-control" name="title" value="<?php echo $event['title']; ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="control-label">Description</label>
-                        <textarea class="form-control" rows="6" name="description"></textarea>
+                        <textarea required class="form-control" rows="6" name="description" value="<?php echo $event['description']; ?>"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -55,13 +61,13 @@ require_once('php/DBConn.php');
                         <div class="row">
                             <div class="col-sm-12">
                                 <label class="control-label">Date</label>
-                                <input type="text" class="form-control daterange" id="eventdate" name="date">    
+                                <input required type="text" class="form-control daterange" id="eventdate" name="date" value="<?php echo $event['event_date']; ?>">    
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <label class="control-label">Alerts</label>
-                                <select type="text" class="form-control" name="alertid">
+                                <select required type="text" class="form-control" name="alertid">
                                     <option value='-1' disabled selected>Select one--</option>
                                 </select>
                             </div>                    
@@ -69,7 +75,7 @@ require_once('php/DBConn.php');
                         <div class="row">
                             <div class="col-sm-12">
                                 <label class="control-label">Available Admins</label>
-                                <select type="text" class="form-control" name="adminid">
+                                <select required type="text" class="form-control" name="adminid">
                                     <option value='-1' disabled selected>Select one--</option>
                                 </select>
                             </div>
@@ -79,23 +85,23 @@ require_once('php/DBConn.php');
                         <label class="control-label">Address</label>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Street Number</label>
-                            <div class="col-sm-9"><input type="text" class="form-control" name="streetno"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="streetno" value="<?php echo $event['street_no']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Street</label>
-                            <div class="col-sm-9"><input type="text" class="form-control" name="street"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="street" value="<?php echo $event['street']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Suburb</label>
-                            <div class="col-sm-9"><input type="text" class="form-control" name="suburb"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="suburb" value="<?php echo $event['area']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">City</label>
-                            <div class="col-sm-9"><input type="text" class="form-control" name="city"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="city" value="<?php echo $event['city']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Zip Code</label>
-                            <div class="col-sm-9"><input type="text" class="form-control" name="zip"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="zip" value="<?php echo $event['area_code']; ?>"></div>
                         </div>
                     </div>
                 </div>
@@ -116,7 +122,7 @@ require_once('php/DBConn.php');
 
 <script>
     
-    $("#eventdate").datepicker({dateFormat: "yy-mm-dd"}); //sets date picker format
+    $("#eventdate").datepicker({dateFormat: "dd-mm-yy"}); //sets date picker format
     
 </script>	
 </body>

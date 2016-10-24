@@ -9,6 +9,7 @@ TBL_ADDRESS;
 
 create table TBL_ADDRESS(
 	ADDRESS_ID int primary key,
+	STREET_NO INT,
 	CITY varchar(50),
 	OFFICE varchar(50),
 	STREET varchar(50),
@@ -85,21 +86,21 @@ create table TBL_ALERT(
 
 /* inserts */
 /* TBL_ADDRESS */
-INSERT INTO TBL_ADDRESS VALUES( 1, 'Berlin', '6', 'P.O. Box 622, 1849 Eu St.', 'BE', '78059', 6);
-INSERT INTO TBL_ADDRESS VALUES( 2, 'Vico del Gargano', '1', 'P.O. Box 138, 3534 Risus Avenue', 'Puglia', '25737', 4);
-INSERT INTO TBL_ADDRESS VALUES( 3, 'Istanbul', '2', 'P.O. Box 760, 5466 Pharetra St.', 'Ist', '5669', 9);
-INSERT INTO TBL_ADDRESS VALUES( 4, 'Shivapuri', '9', '4473 In, Rd.', 'Madhya Pradesh', '53958', 7);
-INSERT INTO TBL_ADDRESS VALUES( 5, 'Northumberland', '3', 'P.O. Box 290, 3201 Libero St.', 'ON', '454052', 8);
-INSERT INTO TBL_ADDRESS VALUES( 6, 'Motueka', '4', 'P.O. Box 590, 9381 Nunc Rd.', 'South Island', '41009', 7);
-INSERT INTO TBL_ADDRESS VALUES( 7, 'Whitby', '2', 'P.O. Box 169, 971 Netus Avenue', 'Ontario', '9034', 2);
-INSERT INTO TBL_ADDRESS VALUES( 8, 'Mildura', '8', '228 Congue St.', 'Victoria', '179', 2);
-INSERT INTO TBL_ADDRESS VALUES( 9, 'Southaven', '1', '349-1319 Amet Avenue', 'Mississippi', '26958', 7);
-INSERT INTO TBL_ADDRESS VALUES( 10, 'Bida', '6', '609-4202 Vestibulum Road', 'NI', '5458', 5);
-INSERT INTO TBL_ADDRESS VALUES( 11, 'San Miguel', '4', '3541 Ridiculus Avenue', 'San José', '826706', 1);
-INSERT INTO TBL_ADDRESS VALUES( 12, 'Uddevalla', '10', 'Ap #402-1440 Dignissim Street', 'Västra Götalands län', '79251', 5);
-INSERT INTO TBL_ADDRESS VALUES( 13, 'Caledon', '1', 'Ap #216-9016 Euismod Rd.', 'ON', '82160-383', 1);
-INSERT INTO TBL_ADDRESS VALUES( 14, 'Bandırma', '1', 'Ap #421-8024 Consectetuer Rd.', 'Bal', '26918', 4);
-INSERT INTO TBL_ADDRESS VALUES( 15, 'Codognè', '3', '350-7576 Tincidunt Rd.', 'Veneto', 'XW7C 3HC', 2);
+INSERT INTO TBL_ADDRESS VALUES( 1, 10, 'Berlin', '6', 'P.O. Box 622, 1849 Eu St.', 'BE', '78059', 6);
+INSERT INTO TBL_ADDRESS VALUES( 2, 10, 'Vico del Gargano', '1', 'P.O. Box 138, 3534 Risus Avenue', 'Puglia', '25737', 4);
+INSERT INTO TBL_ADDRESS VALUES( 3, 10, 'Istanbul', '2', 'P.O. Box 760, 5466 Pharetra St.', 'Ist', '5669', 9);
+INSERT INTO TBL_ADDRESS VALUES( 4, 10, 'Shivapuri', '9', '4473 In, Rd.', 'Madhya Pradesh', '53958', 7);
+INSERT INTO TBL_ADDRESS VALUES( 5, 10, 'Northumberland', '3', 'P.O. Box 290, 3201 Libero St.', 'ON', '454052', 8);
+INSERT INTO TBL_ADDRESS VALUES( 6, 10, 'Motueka', '4', 'P.O. Box 590, 9381 Nunc Rd.', 'South Island', '41009', 7);
+INSERT INTO TBL_ADDRESS VALUES( 7, 10, 'Whitby', '2', 'P.O. Box 169, 971 Netus Avenue', 'Ontario', '9034', 2);
+INSERT INTO TBL_ADDRESS VALUES( 8, 10, 'Mildura', '8', '228 Congue St.', 'Victoria', '179', 2);
+INSERT INTO TBL_ADDRESS VALUES( 9, 10, 'Southaven', '1', '349-1319 Amet Avenue', 'Mississippi', '26958', 7);
+INSERT INTO TBL_ADDRESS VALUES( 10, 10, 'Bida', '6', '609-4202 Vestibulum Road', 'NI', '5458', 5);
+INSERT INTO TBL_ADDRESS VALUES( 11, 10, 'San Miguel', '4', '3541 Ridiculus Avenue', 'San José', '826706', 1);
+INSERT INTO TBL_ADDRESS VALUES( 12, 10, 'Uddevalla', '10', 'Ap #402-1440 Dignissim Street', 'Västra Götalands län', '79251', 5);
+INSERT INTO TBL_ADDRESS VALUES( 13, 10, 'Caledon', '1', 'Ap #216-9016 Euismod Rd.', 'ON', '82160-383', 1);
+INSERT INTO TBL_ADDRESS VALUES( 14, 10, 'Bandırma', '1', 'Ap #421-8024 Consectetuer Rd.', 'Bal', '26918', 4);
+INSERT INTO TBL_ADDRESS VALUES( 15, 10, 'Codognè', '3', '350-7576 Tincidunt Rd.', 'Veneto', 'XW7C 3HC', 2);
 
 /* TBL_ADMIN */
 INSERT INTO TBL_ADMIN VALUES( 1, 'eu.metus@nonhendreritid.ca', 'Timon', 'Oliver', '81dc9bdb52d04dc20036dbd8313ed055');
@@ -159,8 +160,7 @@ FROM TBL_CLINIC
 JOIN TBL_ADDRESS ON TBL_ADDRESS.ADDRESS_ID = TBL_CLINIC.ADDRESS_ID;
 
 CREATE OR REPLACE VIEW VIEW_EVENTSWADDRESS AS
-SELECT TBL_EVENT.*, CITY, OFFICE, STREET, AREA, AREA_CODE, BUILDING_NUMBER, TBL_EVENT_TYPE.DESCRIPTION AS TYPE_DESCRIPTION, URGENCY
+SELECT TBL_EVENT.`EVENT_ID`, DATE_FORMAT(TBL_EVENT.`EVENT_DATE`, '%d-%m-%Y') AS EVENT_DATE, TBL_EVENT.`ADDRESS_ID`, TBL_EVENT.`TYPE_ID`, TBL_EVENT.`DESCRIPTION`, TBL_EVENT.`TITLE`, TBL_EVENT.`ACTIVE`, TBL_EVENT.`CREATOR_ID`, CITY, OFFICE, STREET, AREA, AREA_CODE, BUILDING_NUMBER, TBL_EVENT_TYPE.DESCRIPTION AS TYPE_DESCRIPTION, URGENCY
 FROM TBL_EVENT
 JOIN TBL_ADDRESS ON TBL_ADDRESS.ADDRESS_ID = TBL_EVENT.ADDRESS_ID
 JOIN TBL_EVENT_TYPE ON TBL_EVENT_TYPE.TYPE_ID = TBL_EVENT.TYPE_ID;
-
