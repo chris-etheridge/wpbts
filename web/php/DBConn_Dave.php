@@ -5,8 +5,8 @@
 
 //Local vars for connecting to the database.
 $username = "root";
-$password = "dvrootz2020$!";
-$dsn = "mysql:host=localhost;dbname=sys";
+$password = "";
+$dsn = "mysql:host=localhost;dbname=wpbts";
 $dbConn;
 
 //Create a PDO database connection and output error if exists killing the script

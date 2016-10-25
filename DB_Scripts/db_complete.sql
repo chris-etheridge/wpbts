@@ -101,7 +101,7 @@ INSERT INTO TBL_ADDRESS VALUES( 10, 10, 'Bida', '6', '609-4202 Vestibulum Road',
 INSERT INTO TBL_ADDRESS VALUES( 11, 10, 'San Miguel', '4', '3541 Ridiculus Avenue', 'San José', '826706', 1);
 INSERT INTO TBL_ADDRESS VALUES( 12, 10, 'Uddevalla', '10', 'Ap #402-1440 Dignissim Street', 'Västra Götalands län', '79251', 5);
 INSERT INTO TBL_ADDRESS VALUES( 13, 10, 'Caledon', '1', 'Ap #216-9016 Euismod Rd.', 'ON', '82160-383', 1);
-INSERT INTO TBL_ADDRESS VALUES( 14, 10, 'Bandırma', '1', 'Ap #421-8024 Consectetuer Rd.', 'Bal', '26918', 4);
+INSERT INTO TBL_ADDRESS VALUES( 14, 10, 'Bandrma', '1', 'Ap #421-8024 Consectetuer Rd.', 'Bal', '26918', 4);
 INSERT INTO TBL_ADDRESS VALUES( 15, 10, 'Codognè', '3', '350-7576 Tincidunt Rd.', 'Veneto', 'XW7C 3HC', 2);
 
 /* TBL_ADMIN */
