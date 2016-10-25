@@ -6,7 +6,7 @@
 *.dex
 
 #Ignore DB Conn Files
-*DBConn*
+./php/DBConn*
 
 # Java class files
 *.class
