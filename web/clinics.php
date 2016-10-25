@@ -1,14 +1,14 @@
 <?php
-$_TITLE = "WPBTS - Event Management";
-$_PARENT['events'] = time();
+$_TITLE = "WPBTS - Clinic Management";
+$_PARENT['clinics'] = time();
 require_once("header.php");
 require_once('php/DBConn.php');
-require_once('api/events/functions.php');
+require_once('api/clinics/functions.php');
 session_start();
 
 
-//get upcoming events
-$arrEvents = getAllUpcommingEvents($mysqli);
+//get all clinics
+$arrClinics = getAllClinics($mysqli);
 ?>
 
 
@@ -21,7 +21,7 @@ $arrEvents = getAllUpcommingEvents($mysqli);
                         <use xlink:href="#stroked-home"></use>
                     </svg>
                 </a></li>
-            <li class="active">Event Management</li>
+            <li class="active">Clinic Management</li>
         </ol>
     </div><!--/.row-->
     <br/>
@@ -40,69 +40,54 @@ $arrEvents = getAllUpcommingEvents($mysqli);
 
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Event Management</h1>
+            <h1 class="page-header">Clinic Management</h1>
         </div>
     </div><!--/.row-->
 
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
-            <h4>Upcoming Events</h4>
-            <a href="create-event.php" class="btn btn-default btn-md">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Event
+            <h4>All Clinics</h4>
+            <a href="create-clinic.php" class="btn btn-default btn-md">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create Clinic
             </a>
             <div class="row">
                 <div class="col-md-12">
                     <table class="custom-table table-bordered" width='100%'>
                         <thead>
                         <tr>
-                            <th class="text-center">Event ID</th>
-                            <th class="text-center">Title</th>
-                            <th class="text-center">Event Date</th>
-                            <th class="text-center">Status</th>
+                            <th class="text-center">Clinic ID</th>
+                            <th class="text-center">Description</th>
+                            <th class="text-center">Primary Contact No.</th>
+                            <th class="text-center">Secondary Contact No.</th>
                             <th class="text-center">Options</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
                         //var_dump($arrEvents);
-                        foreach($arrEvents as $Row)
+                        foreach($arrClinics as $Row)
                         {
                             //$Row['EVENT_ID']
                             ?>
                             <tr class="<?php if ($count % 2 !== 0) echo "odd"; ?>">
-                                <td class="text-center"><?php echo $Row['event_id']; ?></td>
-                                <td class="text-center"><?php echo $Row['title']; ?></td>
-                                <td class="text-center"><?php echo $Row['event_date']; ?></td>
+                                <td class="text-center"><?php echo $Row['clinic_id']; ?></td>
+                                <td class="text-center"><?php echo $Row['description']; ?></td>
+                                <td class="text-center"><?php echo $Row['contact_1']; ?></td>
+                                <td class="text-center"><?php echo $Row['contact_2']; ?></td>
                                 <td class="text-center">
-                                    <?php 
-                                        if((int)$Row['active'] === 1)
-                                        {
-                                            ?> 
-                                                <span class="label label-success">Active</span>
-                                            <?php
-                                        }
-                                        else
-                                        {
-                                            ?>
-                                                <span class="label label-warning">Canceled</span>
-                                            <?php
-                                        }
-                                    ?>
-                                </td>
-                                <td class="text-center">
-                                    <a href="edit-event.php?eventid=<?php echo $Row['event_id']; ?>" class="btn btn-xs btn-primary">Edit</a>
-                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="cancelevent btn btn-xs btn-warning">Toggle Cancel</a>
-                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewevent btn btn-xs btn-info">View</a>
+                                    <a href="edit-clinic.php?clinic=<?php echo $Row['clinic_id']; ?>" class="btn btn-xs btn-primary">Edit</a>
+                                    <a href="#;" data-id="<?php echo $Row['clinic_id']; ?>" class="removeclinic btn btn-xs btn-warning">Remove</a>
+                                    <a href="#;" data-id="<?php echo $Row['clinic_id']; ?>" class="viewclinic btn btn-xs btn-info">View</a>
                                 </td>
                             </tr>
                             <?php
                             $count++;
                         }
-                        if(sizeof($arrEvents) === 0) 
+                        if(sizeof($arrClinics) === 0) 
                         {
                             ?>
                             <tr>
-                                <td colspan="4">No Upcoming Events</td>
+                                <td colspan="4">No Clinics to display</td>
                             </tr>
                             <?php
                         }
@@ -118,7 +103,7 @@ $arrEvents = getAllUpcommingEvents($mysqli);
 
 </div>    <!--/.main-->
 
-<div class="modal fade" id="modal-view-event" role="dialog">
+<div class="modal fade" id="modal-view-clinic" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -132,10 +117,10 @@ $arrEvents = getAllUpcommingEvents($mysqli);
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-3">
-                                <label class="control-label">Title</label>
+                                <label class="control-label">Clinic ID</label>
                             </div>
                             <div class="col-md-9">
-                                <span id="moEventTitle"></span>
+                                <span id="moClinicID"></span>
                             </div>
                         </div>
                         <div class="row">
@@ -143,39 +128,23 @@ $arrEvents = getAllUpcommingEvents($mysqli);
                                 <label class="control-label">Description</label>
                             </div>
                             <div class="col-md-9">
-                                <span id="moEventDescription"></span>
+                                <span id="moClinicDescription"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <label class="control-label">Date</label>
+                                <label class="control-label">Contact No. 1</label>
                             </div>
                             <div class="col-md-9">
-                                <span id="moEventDate"></span>
+                                <span id="moClinicContact1"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <label class="control-label">Type</label>
+                                <label class="control-label">Contact No. 1</label>
                             </div>
                             <div class="col-md-9">
-                                <span id="moEventType"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label class="control-label">Urgency</label>
-                            </div>
-                            <div class="col-md-9">
-                                <span id="moEventUrgency"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label class="control-label">Event Admin</label>
-                            </div>
-                            <div class="col-md-9">
-                                <span id="moEventAdmin"></span>
+                                <span id="moClinicContact2"></span>
                             </div>
                         </div>
                         <div class="row">
@@ -183,7 +152,7 @@ $arrEvents = getAllUpcommingEvents($mysqli);
                                 <label class="control-label">Street No.</label>
                             </div>
                             <div class="col-md-9">
-                                <span id="moEventStreetNo"></span>
+                                <span id="moClinicStreetNo"></span>
                             </div>
                         </div>
                         <div class="row">
@@ -191,7 +160,7 @@ $arrEvents = getAllUpcommingEvents($mysqli);
                                 <label class="control-label">Street</label>
                             </div>
                             <div class="col-md-9">
-                                <span id="moEventStreet"></span>
+                                <span id="moClinicStreet"></span>
                             </div>
                         </div>
                         <div class="row">
@@ -199,7 +168,7 @@ $arrEvents = getAllUpcommingEvents($mysqli);
                                 <label class="control-label">Area</label>
                             </div>
                             <div class="col-md-9">
-                                <span id="moEventArea"></span>
+                                <span id="moClinicArea"></span>
                             </div>
                         </div>
                         <div class="row">
@@ -207,7 +176,7 @@ $arrEvents = getAllUpcommingEvents($mysqli);
                                 <label class="control-label">City</label>
                             </div>
                             <div class="col-md-9">
-                                <span id="moEventCity"></span>
+                                <span id="moClinicCity"></span>
                             </div>
                         </div>
                         <div class="row">
@@ -215,7 +184,7 @@ $arrEvents = getAllUpcommingEvents($mysqli);
                                 <label class="control-label">Area Code</label>
                             </div>
                             <div class="col-md-9">
-                                <span id="moEventAreaCode"></span>
+                                <span id="moClinicAreaCode"></span>
                             </div>
                         </div>
                     </div>
@@ -228,30 +197,30 @@ $arrEvents = getAllUpcommingEvents($mysqli);
     </div>
 </div>
 
-<div class="modal fade" id="modal-cancel-event" role="dialog">
+<div class="modal fade" id="modal-remove-clinic" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"></h4>
+                <h4 class="modal-title">Are you sure you want to permanently delete this clinic?</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-3">
-                        <label class="control-label">Event</label>
+                        <label class="control-label">Clinic</label>
                     </div>
                     <div class="col-md-9">
-                        <span id="moEventTitle"></span>
+                        <span id="moClinicDescription"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <label class="control-label">Date</label>
+                        <label class="control-label">Clinic ID</label>
                     </div>
                     <div class="col-md-9">
-                        <span id="moEventDate"></span>
+                        <span id="moClinicID"></span>
                     </div>
                 </div>
             </div>
@@ -284,103 +253,73 @@ $arrEvents = getAllUpcommingEvents($mysqli);
             $('#sidebar-collapse').collapse('hide')
     })
     
-    var jsonEvents = <?php echo json_encode(getAllUpcommingEvents($mysqli)); ?>;
-    
-    var jsonAdmins = 
-    <?php 
-
-        //get admins
-        $sql = "SELECT * FROM TBL_ADMIN;";
-        $admins = array();
-        $QueryResult = $mysqli->query($sql);
-        if ($QueryResult == TRUE)
-        {
-            while (($Row = $QueryResult->fetch_assoc()) !== NULL)
-            {
-                $admins[$Row['ADMIN_ID']] = array();
-                $admins[$Row['ADMIN_ID']]['admin_id'] = $Row['ADMIN_ID'];
-                $admins[$Row['ADMIN_ID']]['first_name'] = $Row['FIRST_NAME'];
-                $admins[$Row['ADMIN_ID']]['last_name'] = $Row['LAST_NAME'];
-            }
-        }
-        echo json_encode($admins);    
-    ?>
-    
+    var jsonClinics = <?php echo json_encode(getAllClinics($mysqli)); ?>;
+      
     //view event modal
     jQuery(function($){
-         $('a.viewevent').click(function(ev){
+         $('a.viewclinic').click(function(ev){
             ev.preventDefault();
+            window.console&&console.log('button clicked');
             var uid = $(this).data('id');
             
             //get json object
 
-            var objEvent;
-            $.each(jsonEvents, function (i, item)
+            var objClinic;
+            $.each(jsonClinics, function (i, item)
             {
                 if (typeof item == 'object')
                 {
-                    if(item.event_id === uid.toString())
+                    if(item.clinic_id === uid.toString())
                     {
-                        objEvent = item;
+                        objClinic = item;
                     }
                 }
             });
             
-            $('#modal-view-event .modal-header .modal-title').html("Viewing: " + objEvent.title);
+            $('#modal-view-clinic .modal-header .modal-title').html("Viewing: " + objClinic.clinic_id);
             
-            $('#modal-view-event .modal-body #moEventTitle').html(objEvent.title);
-            $('#modal-view-event .modal-body #moEventDescription').html(objEvent.description);
-            $('#modal-view-event .modal-body #moEventDate').html(objEvent.event_date);
-            $('#modal-view-event .modal-body #moEventType').html(objEvent.type_description);
-            $('#modal-view-event .modal-body #moEventUrgency').html(objEvent.urgency);
-            $('#modal-view-event .modal-body #moEventAdmin').html(jsonAdmins[objEvent.event_admin].first_name + " " + jsonAdmins[objEvent.event_admin].last_name);
-            $('#modal-view-event .modal-body #moEventStreetNo').html(objEvent.street_no);
-            $('#modal-view-event .modal-body #moEventStreet').html(objEvent.street);
-            $('#modal-view-event .modal-body #moEventArea').html(objEvent.area);
-            $('#modal-view-event .modal-body #moEventCity').html(objEvent.city);
-            $('#modal-view-event .modal-body #moEventAreaCode').html(objEvent.area_code);
+            $('#modal-view-clinic .modal-body #moClinicID').html(objClinic.clinic_id);
+            $('#modal-view-clinic .modal-body #moClinicDescription').html(objClinic.description);
+            $('#modal-view-clinic .modal-body #moClinicContact1').html(objClinic.contact_1);
+            $('#modal-view-clinic .modal-body #moClinicContact2').html(objClinic.contact_2);
+            $('#modal-view-clinic .modal-body #moClinicDescription').html(objClinic.description);
+            $('#modal-view-clinic .modal-body #moClinicStreetNo').html(objClinic.street_no);
+            $('#modal-view-clinic .modal-body #moClinicStreet').html(objClinic.street);
+            $('#modal-view-clinic .modal-body #moClinicArea').html(objClinic.area);
+            $('#modal-view-clinic .modal-body #moClinicCity').html(objClinic.city);
+            $('#modal-view-clinic .modal-body #moClinicAreaCode').html(objClinic.area_code);
             
-            $('#modal-view-event').modal('show', {backdrop: 'static'});
+            $('#modal-view-clinic').modal('show', {backdrop: 'static'});
 
          });
     });
     
     //cancel event confirmation dialog
     jQuery(function($){
-         $('a.cancelevent').click(function(ev){
+         $('a.removeclinic').click(function(ev){
             ev.preventDefault();
             var uid = $(this).data('id');
             
             //get json object
 
-            var objEvent;
-            $.each(jsonEvents, function (i, item)
+            var objClinic;
+            $.each(jsonClinics, function (i, item)
             {
                 if (typeof item == 'object')
                 {
-                    if(item.event_id === uid.toString())
+                    if(item.clinic_id === uid.toString())
                     {
-                        objEvent = item;
+                        objClinic = item;
                     }
                 }
             });
-            var status = (parseInt(objEvent.active) === 0) ? 1 : 0;
-            var cancelBtnTxt = "Cancel Event";
-            var cancelTitleTxt = "Are You Sure You Want To Cancel This Event?";
-            if(status === 1)
-            {
-                cancelBtnTxt = "Uncancel Event";
-                cancelTitleTxt = "Are You Sure You Want To Uncancel This Event?";
-            }
-            
-            $('#modal-cancel-event .modal-header .modal-title').html(cancelTitleTxt); 
                     
-            $('#modal-cancel-event .modal-body #moEventTitle').html(objEvent.title);
-            $('#modal-cancel-event .modal-body #moEventDate').html(objEvent.event_date);
-            $('#modal-cancel-event .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/cancel-event.php?eventid=" + objEvent.event_id + "&cancel=" + status + "'>" + cancelBtnTxt +"</a>");
+            $('#modal-remove-clinic .modal-body #moClinicID').html(objClinic.clinic_id);
+            $('#modal-remove-clinic .modal-body #moClinicDescription').html(objClinic.description);
+            $('#modal-remove-clinic .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/delete-clinic.php?clinic=" + objClinic.clinic_id + "'>Delete Clinic</a>");
             
             
-            $('#modal-cancel-event').modal('show', {backdrop: 'static'});
+            $('#modal-remove-clinic').modal('show', {backdrop: 'static'});
 
          });
     });

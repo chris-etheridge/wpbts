@@ -24,15 +24,17 @@ function getClinics($mysqli, $SQLString)
         {
             $clinics[$rowid] = array();
             $clinics[$rowid]['clinic_id'] = $Row['CLINIC_ID'];
-            $clinics[$rowid]['address_id'] = $Row['ADDRESS_ID'];
+            $clinics[$rowid]['description'] = $Row['DESCRIPTION'];
             $clinics[$rowid]['contact_1'] = $Row['CONTACT_1'];
             $clinics[$rowid]['contact_2'] = $Row['CONTACT_2'];
-            $clinics[$rowid]['description'] = $Row['DESCRIPTION'];
-            $clinics[$rowid]['city'] = $Row['CITY'];
-            $clinics[$rowid]['office'] = $Row['OFFICE'];
+            
+            $clinics[$rowid]['address_id'] = $Row['ADDRESS_ID'];
+            $clinics[$rowid]['street_no'] = $Row['STREET_NO'];
             $clinics[$rowid]['street'] = $Row['STREET'];
             $clinics[$rowid]['area'] = $Row['AREA'];
             $clinics[$rowid]['area_code'] = $Row['AREA_CODE'];
+            $clinics[$rowid]['city'] = $Row['CITY'];
+            $clinics[$rowid]['office'] = $Row['OFFICE'];
             $clinics[$rowid]['building_number'] = $Row['BUILDING_NUMBER'];
             $rowid++;
         }

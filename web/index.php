@@ -3,6 +3,7 @@ $_TITLE = "WPBTS - Dashboard";
 require_once("header.php");
 require_once('php/DBConn.php');
 require_once('api/events/functions.php');
+require_once('api/clinics/functions.php');
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 
@@ -40,7 +41,7 @@ require_once('api/events/functions.php');
             </a>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-4">
-            <a href="#">
+            <a href="clinics.php">
                 <div class="panel panel-red panel-widget">
                     <div class="row no-padding">
                         <div class="col-sm-3 col-lg-5 widget-left">
@@ -49,17 +50,7 @@ require_once('api/events/functions.php');
                         <div class="col-sm-9 col-lg-7 widget-right">
                             <div class="large">
                                 <?php 
-                                    //get upcoming events
-                                $sql = "SELECT * FROM TBL_CLINIC;";
-                                $QueryResult = $mysqli->query($sql);
-                                if ($QueryResult == TRUE) 
-                                {
-                                    echo $QueryResult->num_rows;
-                                }
-                                else
-                                {
-                                    echo "0";
-                                }
+                                    echo sizeof(getAllClinics($mysqli));
                                 ?>
                             </div>
                             <div class="text-muted">Clinics</div>
