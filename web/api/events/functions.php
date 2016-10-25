@@ -7,13 +7,13 @@ function getEvent($mysqli, $eventid)
 
 function getUpcommingEvents($mysqli) //returns only events that are active
 {
-    $sql = "SELECT * FROM VIEW_EVENTSWADDRESS WHERE STR_TO_DATE(EVENT_DATE, '%d-%m-%Y') > NOW() AND ACTIVE = 1 ORDER BY EVENT_DATE ASC;";
+    $sql = "SELECT * FROM VIEW_EVENTSWADDRESS WHERE STR_TO_DATE(EVENT_DATE, '%d-%m-%Y') > NOW() AND ACTIVE = 1;";
     return getEvents($mysqli, $sql);
 }
 
 function getAllUpcommingEvents($mysqli) //returns ALL future dated events
 {
-    $sql = "SELECT * FROM VIEW_EVENTSWADDRESS WHERE STR_TO_DATE(EVENT_DATE, '%d-%m-%Y') > NOW() ORDER BY EVENT_DATE ASC;";
+    $sql = "SELECT * FROM VIEW_EVENTSWADDRESS WHERE STR_TO_DATE(EVENT_DATE, '%d-%m-%Y') > NOW();";
     return getEvents($mysqli, $sql);
 }
 
