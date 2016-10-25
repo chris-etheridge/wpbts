@@ -1,5 +1,6 @@
 <?php
 $_TITLE = "WPBTS - Create Event";
+$_PARENT['events'] = time();
 session_start();
 $_SESSION['adminid'] = 1; //TODO FIX THIS AFTER AUTHENTICATION is implemented
 if(!isset($_SESSION['adminid']))

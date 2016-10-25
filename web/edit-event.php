@@ -1,5 +1,6 @@
 <?php
 $_TITLE = "WPBTS - Edit Event";
+$_PARENT['events'] = time();
 if(!isset($_GET['eventid']))
 {
     header("Location: events.php");

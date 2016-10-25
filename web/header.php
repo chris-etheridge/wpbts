@@ -47,9 +47,9 @@
 		
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<ul class="nav menu">
-			<li><a href="events.php"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Event Management</a></li>
-			<li><a href="clinics.php"><svg class="glyph stroked clipboard-with-paper"><use xlink:href="#stroked-clipboard-with-paper"></use></svg> Clinic Management</a></li>
-			<li><a href="users.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> User Management</a></li>
+                        <li class="<?php if(isset($_PARENT['events'])){ echo "active"; } ?>"><a href="events.php"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Event Management</a></li>
+			<li class="<?php if(isset($_PARENT['clinics'])){ echo "active"; } ?>"><a href="clinics.php"><svg class="glyph stroked clipboard-with-paper"><use xlink:href="#stroked-clipboard-with-paper"></use></svg> Clinic Management</a></li>
+			<li class="<?php if(isset($_PARENT['users'])){ echo "active"; } ?>"><a href="users.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> User Management</a></li>
 			
 			<li role="presentation" class="divider"></li>
 			<li><a href="login.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
