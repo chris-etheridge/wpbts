@@ -8,28 +8,6 @@ session_start();
 
 //get upcoming events
 $arrEvents = getUpcommingEvents($mysqli);
-$sql = "SELECT * FROM VIEW_EVENTSWADDRESS WHERE STR_TO_DATE(EVENT_DATE, '%d-%m-%Y') > NOW() AND ACTIVE = 1 ORDER BY EVENT_DATE ASC;";
-/*$QueryResult = $mysqli->query($sql);
-if ($QueryResult == TRUE) {
-    $count = 0;
-    while (($Row = $QueryResult->fetch_assoc()) !== NULL) 
-    {
-        $arrEvents[$count]['event_id'] = $Row['EVENT_ID'];
-        $arrEvents[$count]['title'] = $Row['TITLE'];
-        $arrEvents[$count]['description'] = $Row['DESCRIPTION'];
-        $arrEvents[$count]['event_date'] = $Row['EVENT_DATE'];
-        $arrEvents[$count]['type_id'] = $Row['TYPE_ID'];
-        $arrEvents[$count]['event_admin'] = $Row['EVENT_ADMIN'];
-        $arrEvents[$count]['street_no'] = $Row['STREET_NO'];
-        $arrEvents[$count]['street'] = $Row['STREET'];
-        $arrEvents[$count]['area'] = $Row['AREA'];
-        $arrEvents[$count]['city'] = $Row['CITY'];
-        $arrEvents[$count]['area_code'] = $Row['AREA_CODE'];
-        $arrEvents[$count]['creator_id'] = $Row['CREATOR_ID'];
-        $arrEvents[$count]['address_id'] = $Row['ADDRESS_ID'];
-        $count++;
-    }
-}*/
 ?>
 
 
@@ -94,9 +72,9 @@ if ($QueryResult == TRUE) {
                                 <td class="text-center"><?php echo $Row['title']; ?></td>
                                 <td class="text-center"><?php echo $Row['event_date']; ?></td>
                                 <td class="text-center">
-                                    <a href="edit-event.php?eventid=<?php echo $Row['event_id']; ?>">[Edit]</a>
-                                    <a href="#">[Cancel]</a>
-                                    <a href="#">[View]</a>
+                                    <a href="edit-event.php?eventid=<?php echo $Row['event_id']; ?>" class="btn btn-xs btn-primary">Edit</a>
+                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="cancelevent btn btn-xs btn-warning">Cancel</a>
+                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewevent btn btn-xs btn-info">View</a>
                                 </td>
                             </tr>
                             <?php
@@ -122,6 +100,151 @@ if ($QueryResult == TRUE) {
 
 </div>    <!--/.main-->
 
+<div class="modal fade" id="modal-view-event" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">Title</label>
+                            </div>
+                            <div class="col-md-9">
+                                <span id="moEventTitle"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">Description</label>
+                            </div>
+                            <div class="col-md-9">
+                                <span id="moEventDescription"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">Date</label>
+                            </div>
+                            <div class="col-md-9">
+                                <span id="moEventDate"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">Type</label>
+                            </div>
+                            <div class="col-md-9">
+                                <span id="moEventType"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">Urgency</label>
+                            </div>
+                            <div class="col-md-9">
+                                <span id="moEventUrgency"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">Event Admin</label>
+                            </div>
+                            <div class="col-md-9">
+                                <span id="moEventAdmin"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">Street No.</label>
+                            </div>
+                            <div class="col-md-9">
+                                <span id="moEventStreetNo"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">Street</label>
+                            </div>
+                            <div class="col-md-9">
+                                <span id="moEventStreet"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">Area</label>
+                            </div>
+                            <div class="col-md-9">
+                                <span id="moEventArea"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">City</label>
+                            </div>
+                            <div class="col-md-9">
+                                <span id="moEventCity"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">Area Code</label>
+                            </div>
+                            <div class="col-md-9">
+                                <span id="moEventAreaCode"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-cancel-event" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Are You Sure You Want To Cancel This Event?</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="control-label">Event</label>
+                    </div>
+                    <div class="col-md-9">
+                        <span id="moEventTitle"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="control-label">Date</label>
+                    </div>
+                    <div class="col-md-9">
+                        <span id="moEventDate"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <span id="confirmationBtns"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php require_once('footer.php'); ?>
 
 <script>
@@ -143,7 +266,97 @@ if ($QueryResult == TRUE) {
             $('#sidebar-collapse').collapse('hide')
     })
     
+    var jsonEvents = <?php echo json_encode(getUpcommingEvents($mysqli)); ?>;
     
+    var jsonAdmins = 
+    <?php 
+
+        //get admins
+        $sql = "SELECT * FROM TBL_ADMIN;";
+        $admins = array();
+        $QueryResult = $mysqli->query($sql);
+        if ($QueryResult == TRUE)
+        {
+            while (($Row = $QueryResult->fetch_assoc()) !== NULL)
+            {
+                $admins[$Row['ADMIN_ID']] = array();
+                $admins[$Row['ADMIN_ID']]['admin_id'] = $Row['ADMIN_ID'];
+                $admins[$Row['ADMIN_ID']]['first_name'] = $Row['FIRST_NAME'];
+                $admins[$Row['ADMIN_ID']]['last_name'] = $Row['LAST_NAME'];
+            }
+        }
+        echo json_encode($admins);    
+    ?>
+    
+    //view event modal
+    jQuery(function($){
+         $('a.viewevent').click(function(ev){
+            ev.preventDefault();
+            var uid = $(this).data('id');
+            
+            //get json object
+
+            var objEvent;
+            $.each(jsonEvents, function (i, item)
+            {
+                if (typeof item == 'object')
+                {
+                    if(item.event_id === uid.toString())
+                    {
+                        objEvent = item;
+                    }
+                }
+            });
+            
+            $('#modal-view-event .modal-header h4').html("Viewing: " + objEvent.title);
+            
+            $('#modal-view-event .modal-body #moEventTitle').html(objEvent.title);
+            $('#modal-view-event .modal-body #moEventDescription').html(objEvent.description);
+            $('#modal-view-event .modal-body #moEventDate').html(objEvent.event_date);
+            $('#modal-view-event .modal-body #moEventType').html(objEvent.type_description);
+            $('#modal-view-event .modal-body #moEventUrgency').html(objEvent.urgency);
+            $('#modal-view-event .modal-body #moEventAdmin').html(jsonAdmins[objEvent.event_admin].first_name + " " + jsonAdmins[objEvent.event_admin].last_name);
+            $('#modal-view-event .modal-body #moEventStreetNo').html(objEvent.street_no);
+            $('#modal-view-event .modal-body #moEventStreet').html(objEvent.street);
+            $('#modal-view-event .modal-body #moEventArea').html(objEvent.area);
+            $('#modal-view-event .modal-body #moEventCity').html(objEvent.city);
+            $('#modal-view-event .modal-body #moEventAreaCode').html(objEvent.area_code);
+            
+            $('#modal-view-event').modal('show', {backdrop: 'static'});
+
+         });
+    });
+    
+    //cancel event confirmation dialog
+    jQuery(function($){
+         $('a.cancelevent').click(function(ev){
+            ev.preventDefault();
+            var uid = $(this).data('id');
+            
+            //get json object
+
+            var objEvent;
+            $.each(jsonEvents, function (i, item)
+            {
+                if (typeof item == 'object')
+                {
+                    if(item.event_id === uid.toString())
+                    {
+                        objEvent = item;
+                    }
+                }
+            });
+                    
+            $('#modal-cancel-event .modal-body #moEventTitle').html(objEvent.title);
+            $('#modal-cancel-event .modal-body #moEventDate').html(objEvent.event_date);
+            $('#modal-cancel-event .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/cancel-event.php?eventid=" + objEvent.event_id + "'>Cancel Event</a>");
+            
+            
+            $('#modal-cancel-event').modal('show', {backdrop: 'static'});
+
+         });
+    });
+
     
 </script>
 </body>

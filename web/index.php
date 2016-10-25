@@ -2,6 +2,7 @@
 $_TITLE = "WPBTS - Dashboard";
 require_once("header.php");
 require_once('php/DBConn.php');
+require_once('api/events/functions.php');
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 
@@ -29,17 +30,7 @@ require_once('php/DBConn.php');
                         <div class="col-sm-9 col-lg-7 widget-right">
                             <div class="large">
                                 <?php 
-                                    //get upcoming events
-                                $sql = "SELECT * FROM TBL_EVENT WHERE EVENT_DATE > NOW() ORDER BY EVENT_DATE ASC;";
-                                $QueryResult = $mysqli->query($sql);
-                                if ($QueryResult == TRUE) 
-                                {
-                                    echo $QueryResult->num_rows;
-                                }
-                                else
-                                {
-                                    echo "0";
-                                }
+                                    echo sizeof(getUpcommingEvents($mysqli));
                                 ?>
                             </div>
                             <div class="text-muted">Upcoming Events</div>
