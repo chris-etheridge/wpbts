@@ -82,10 +82,7 @@ include_once("users_functions.php");
                                 <td><?php echo $value['DATE_OF_BIRTH'] ?></td>
                                 <td><?php echo $value['BLOOD_TYPE'] ?></td>
                                 <td class="text-center">
-                                    <form action="users_viewuser.php" method="get">
-                                        <input type="text" name="userID" value="<?php echo $value['USER_ID'] ?>" hidden>
-                                        <input type="submit" class="btn btn-xs btn-primary" value="View User">
-                                    </form>
+                                    <a href="users_viewuser.php?userID=<?php echo $value['USER_ID'] ?>">[View/Edit]</a>
                                 </td>
                             </tr>
                             <?php

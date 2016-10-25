@@ -72,8 +72,10 @@ function registerUser($userData)
     $addresCheck = doesAddressExist($userData[1]);
     if ($addresCheck != false) {
 //        echo "address exists";
+        echo "creating user";
         createUser($userData[0], $addresCheck[1]);
     } else {
+        echo "creating address and user";
 //        echo "addres does not exist:";
         $lastID = createAddress($userData[1]);
         //echo $lastID;

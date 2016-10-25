@@ -49,6 +49,7 @@ function updateUser($addressID, $lastEmail, $userData)
     $stmt->bindParam(13, $userData['PWD']);
 
     if ($stmt->execute() == false) {
+        echo "Ensure you are passing the last know email address with this query.";
         print_r($stmt->errorInfo());
         die();
     }
@@ -61,7 +62,9 @@ function updateAddress($addresID, $addressInfo)
 {
     global $dbConn;
     $sql = "UPDATE TBL_ADDRESS
-        SET CITY = ?,
+        SET 
+        STREET_NO = ?,
+        CITY = ?,
         OFFICE = ?,
         STREET = ?,
         AREA = ?,
@@ -74,13 +77,16 @@ function updateAddress($addresID, $addressInfo)
     $blgNum = (int)$addressInfo['BUILDING_NUMBER'];
 
     $stmt = $dbConn->prepare($sql);
-    $stmt->bindParam(1, $addressInfo['CITY']);
-    $stmt->bindParam(2, $addressInfo['OFFICE']);
-    $stmt->bindParam(3, $addressInfo['STREET']);
-    $stmt->bindParam(4, $addressInfo['AREA']);
-    $stmt->bindParam(5, $addressInfo['AREA_CODE']);
-    $stmt->bindParam(6, $blgNum);
+
+    $stmt->bindParam(1, $addressInfo['STREET_NO']);
+    $stmt->bindParam(2, $addressInfo['CITY']);
+    $stmt->bindParam(3, $addressInfo['OFFICE']);
+    $stmt->bindParam(4, $addressInfo['STREET']);
+    $stmt->bindParam(5, $addressInfo['AREA']);
+    $stmt->bindParam(6, $addressInfo['AREA_CODE']);
+    $stmt->bindParam(7, $blgNum);
     if ($stmt->execute() == false) {
+        echo "Ensure you are passing the last know email address with this query.";
         print_r($stmt->errorInfo());
     }
 }
@@ -93,7 +99,9 @@ function getAddressID($email)
     $stmt = $dbConn->prepare($sql);
     $stmt->bindParam(1, $email);
     if ($stmt->execute() == false) {
+        echo "Ensure u have passed the correct LAST email with the new user details, even if the address remains the same.";
         print_r($stmt->errorInfo());
+
     }
     $res = $stmt->fetch();
     return $res['ADDRESS_ID'];
@@ -144,29 +152,41 @@ function getUserEmailAddress($emailAddress)
 function createAddress($address)
 {
     global $dbConn;
-    $sql = "INSERT INTO TBL_ADDRESS(ADDRESS_ID, CITY, OFFICE, STREET, AREA, AREA_CODE, BUILDING_NUMBER) 
-          VALUES(?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO TBL_ADDRESS(ADDRESS_ID,
+        STREET_NO, 
+        CITY,   
+        OFFICE, 
+        STREET, 
+        AREA, 
+        AREA_CODE, 
+        BUILDING_NUMBER) 
+          VALUES(?,?,?,?,?,?,?,?)";
 
     $lastID = getLastIDForTable("TBL_ADDRESS", "ADDRESS_ID");
     $lastID = (int)$lastID + 1;
 
+    var_dump($address);
+
     $stmt = $dbConn->prepare($sql);
     $stmt->bindParam(1, $lastID);
-    $stmt->bindParam(2, $address['CITY']);
-    $stmt->bindParam(3, $address['OFFICE']);
-    $stmt->bindParam(4, $address['STREET']);
-    $stmt->bindParam(5, $address['AREA']);
-    $stmt->bindParam(6, $address['AREA_CODE']);
+    $stmt->bindParam(2, $address['STREET_NO']);
+    $stmt->bindParam(3, $address['CITY']);
+    $stmt->bindParam(4, $address['OFFICE']);
+    $stmt->bindParam(5, $address['STREET']);
+    $stmt->bindParam(6, $address['AREA']);
+    $stmt->bindParam(7, $address['AREA_CODE']);
     if ($address["BUILDING_NUMBER"] = "") {
         $address["BUILDING_NUMBER"] = 0;
     } else {
         $address["BUILDING_NUMBER"] = (int)$address["BUILDING_NUMBER"];
     }
-    $stmt->bindParam(7, $address["BUILDING_NUMBER"]);
+    $stmt->bindParam(8, $address["BUILDING_NUMBER"]);
+
     if ($stmt->execute() == false) {
         print_r($stmt->errorInfo());
         issueError('113');
     }
+    echo "address created/";
     return $lastID;
 }
 

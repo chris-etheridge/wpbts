@@ -25,6 +25,7 @@ $addressData = getAddress($userData[1][0]['ADDRESS_ID']);
                         <use xlink:href="#stroked-home"></use>
                     </svg>
                 </a></li>
+            <li class="active"><a href="users.php">User Management</a></li>
             <li class="active">View User</li>
         </ol>
     </div><!--/.row-->
@@ -43,7 +44,7 @@ $addressData = getAddress($userData[1][0]['ADDRESS_ID']);
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">
-                User:<?php echo $userData[1][0]['FIRST_NAME'] . " " . $userData[1][0]['LAST_NAME'] . "" . $userData[1][0]['ADDRESS_ID'] ?></h1>
+                User:<?php echo $userData[1][0]['FIRST_NAME'] . " " . $userData[1][0]['LAST_NAME'] ?></h1>
         </div>
     </div><!--/.row-->
 
@@ -60,6 +61,70 @@ $addressData = getAddress($userData[1][0]['ADDRESS_ID']);
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
             <h4>User Details:</h4>
+
+            <form>
+                <div class="col-md-6">
+                    <label>User ID</label>
+                    <input required readonly type="text" class="form-control" name="USER_ID" style="margin-bottom:2%">
+
+                    <label>Title:</label>
+                    <input required type="text" class="form-control" name="TITLE" style="margin-bottom:2%">
+
+                    <label>First Name:</label>
+                    <input required type="text" class="form-control" name="FIRST_NAME"
+                           style="margin-bottom:2%">
+
+                    <label>Last Name:</label>
+                    <input required type="text" class="form-control" name="LAST_NAME"
+                           style="margin-bottom:2%">
+
+                    <label>National ID:</label>
+                    <input required type="text" class="form-control" name="NATIONAL_ID"
+                           style="margin-bottom:2%">
+
+                    <label>Email:</label>
+                    <input required type="text" class="form-control" name="EMAIL"
+                           style="margin-bottom:2%">
+
+
+                </div>
+                <div class="col-md-6">
+
+                    <label>Date of Birth:</label>
+                    <input required type="text" class="form-control" name="DATE_OF_BIRTH"
+                           style="margin-bottom:2%">
+
+                    <label class="control-label">Date</label>
+                    <input required type="text" class="form-control daterange" id="DATE_OF_BIRTH" name="date" value="">
+
+
+                    <label>Blood Type::</label>
+                    <input required type="text" class="form-control" name="BLOOD_TYPE"
+                           style="margin-bottom:2%">
+
+
+                    <label>Gender:</label>
+                    <input required type="text" class="form-control" name="GENDER"
+                           style="margin-bottom:2%">
+
+
+                    <label>Language:</label>
+                    <input required type="text" class="form-control" name="Language"
+                           style="margin-bottom:2%">
+
+
+                    <label>Passport:</label>
+                    <input required type="text" class="form-control" name="PASSPORT_NUM"
+                           style="margin-bottom:2%">
+
+                    <label>Phone:</label>
+                    <input required type="text" class="form-control" name="PHONE"
+                           style="margin-bottom:2%">
+
+                </div>
+
+            </form>
+
             <form>
                 <div class="col-md-6">
 

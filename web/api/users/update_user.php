@@ -14,6 +14,7 @@ $userData = file_get_contents('php://input');
 $jsonData = json_decode($userData, true);
 if ($jsonData == null) {
     echo "Error with JSON string, could not parse: $userData";
+    die();
 }
 
 foreach ($jsonData as &$jsonObject) {
@@ -31,9 +32,13 @@ foreach ($jsonData as &$jsonObject) {
     }
 }
 
-$addressID = getAddressID($jsonData[0]['EMAIL']);
+$addressID = getAddressID($jsonData[2]['LASTEMAIL']);
+echo $addressID;
 //doesUserExist($jsonData[2]['LASTEMAIL']);
 $lastEmail = $jsonData[2]['LASTEMAIL'];
+
+//echo $lastEmail;
+
 updateAddress($addressID, $jsonData[1]);
 updateUser($addressID, $lastEmail, $jsonData[0]);
 

@@ -23,9 +23,12 @@ foreach ($jsonData as $key => &$values) {
     }
 }
 
-//var_dump($jsonData);
+var_dump($jsonData);
 $email = $jsonData['EMAIL'];
 $password = sha1($jsonData['PWD']);
+
+echo $jsonData['PWD'];
+echo $password;
 
 
 $isIUserExist = doesEmailAddressExist($email);
@@ -33,6 +36,7 @@ if ($isIUserExist == false) {
     echo "111 - User does not exist";
     die();
 }
+
 
 $savedPassword = getHashedPassword($email);
 
