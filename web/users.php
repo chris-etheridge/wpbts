@@ -26,8 +26,8 @@ include_once("users_functions.php");
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
             <h4>User Functions:</h4>
-            <button type="button" class="btn btn-xs btn-success">Create New User</button>
-            <button type="button" class="btn btn-xs btn-warning">Refresh User List</button>
+            <button type="button" class="btn btn-xs btn-primary">Create New User</button>
+            <button type="button" class="btn btn-xs btn-primary">Refresh User List</button>
         </div>
     </div>
 
