@@ -2,19 +2,13 @@ package com.peachtree.wpbapp.activity;
 
 import android.app.Activity;
 import android.app.DialogFragment;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.peachtree.wpbapp.R;
-import com.peachtree.wpbapp.core.Util;
 import com.peachtree.wpbapp.layout_Handlers.Accordion_Handler;
 
 public class About_Fragment extends DialogFragment
@@ -48,7 +42,7 @@ public class About_Fragment extends DialogFragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		super.onCreateView(inflater,container,savedInstanceState);
-		View view = inflater.inflate(R.layout.about_content, container, false);
+		View view = inflater.inflate(R.layout.about_layout, container, false);
 
 		accordion_handler = new Accordion_Handler(parent, ABOUT_SRC_FILE);
 
