@@ -1,16 +1,19 @@
 package com.peachtree.wpbapp.core;
 
-import android.content.Context;
-import android.content.Intent;
+import android.graphics.drawable.Drawable;
 
-import com.peachtree.wpbapp.R;
-import com.peachtree.wpbapp.activity.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * General utilities.
  */
 public class Util {
 
+	public static String getDateString(Date date){
+		DateFormat format = new SimpleDateFormat("dd MMMM yyyy");
 
-
+		return format.format(date);
+	}
 }

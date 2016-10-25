@@ -75,7 +75,7 @@ public class Home_Activity extends AppCompatActivity
 						transaction.commit();
 						break;
 					case R.id.nav_clinics:
-						fragment = Clinics_Fragment.init(stackNum);
+						fragment = List_Fragment.init(stackNum, List_Fragment.CLINIC);
 						transaction.add(R.id.content, fragment, "embed");
 						transaction.commit();
 						break;
@@ -85,7 +85,7 @@ public class Home_Activity extends AppCompatActivity
 						transaction.commit();
 						break;
 					case R.id.nav_event_list:
-						fragment = Event_List_Fragment.init(stackNum);
+						fragment = List_Fragment.init(stackNum, List_Fragment.EVENT);
 						transaction.add(R.id.content, fragment, "embed");
 						transaction.commit();
 						break;

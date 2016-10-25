@@ -9,22 +9,24 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.peachtree.wpbapp.R;
+import com.peachtree.wpbapp.entities.Clinic;
 import com.peachtree.wpbapp.entities.Event;
 import com.peachtree.wpbapp.layout_Handlers.List_Adapter;
 
-import java.util.Date;
 import java.util.ArrayList;
 
-public class Event_List_Fragment extends DialogFragment{
+public class List_Fragment extends DialogFragment{
 
 	private Activity parent;
-	private int stackNum;
+	private int stackNum, type;
+	public static final int CLINIC = 1, EVENT = 2;
 
-	public static Event_List_Fragment init(int stackNum){
-		Event_List_Fragment fragment = new Event_List_Fragment();
+	public static List_Fragment init(int stackNum, int type){
+		List_Fragment fragment = new List_Fragment();
 
 		Bundle args = new Bundle();
 		args.putInt("stackNum", stackNum);
+		args.putInt("type", type);
 		fragment.setArguments(args);
 
 		return fragment;
@@ -36,14 +38,24 @@ public class Event_List_Fragment extends DialogFragment{
 
 		parent = getActivity();
 		stackNum = getArguments().getInt("stackNum");
+		type = getArguments().getInt("type");
 	}
 
 	private ArrayList getListData(){
-		ArrayList<Event> results = new ArrayList<>();
-		Event event = new Event(0,new Date(16,12,1),"Event1");
-		results.add(event);
-		event = new Event(1,new Date(16,12,2),"Event2");
-		results.add(event);
+		ArrayList results;
+		switch(type){
+			case CLINIC:
+				ArrayList<Clinic> clinics = new ArrayList<>(); //TO-DO Replace with DB call.
+				results = clinics;
+				break;
+			case EVENT:
+				ArrayList<Event> events = new ArrayList<>();  //TO-DO Replace with DB call.
+				results = events;
+				break;
+			default:
+				results = null;
+				break;
+		}
 		return results;
 	}
 
@@ -52,9 +64,20 @@ public class Event_List_Fragment extends DialogFragment{
 		super.onCreateView(inflater, container, savedInstanceState);
 		View view = inflater.inflate(R.layout.event_list_layout, container, false);
 
-		ArrayList events=getListData();
-		ListView list = (ListView)view.findViewById(R.id.event_list);
-		list.setAdapter(new List_Adapter(events, parent, List_Adapter.Type.Event));
+		ArrayList data=getListData();
+		if(data != null)
+		{
+			ListView list = (ListView) view.findViewById(R.id.list);
+			switch (type)
+			{
+				case CLINIC:
+					list.setAdapter(new List_Adapter(data, parent, List_Adapter.Type.Clinic));
+					break;
+				case EVENT:
+					list.setAdapter(new List_Adapter(data, parent, List_Adapter.Type.Event));
+					break;
+			}
+		}
 
 		return view;
 	}

@@ -8,6 +8,7 @@ import java.net.URL;
 public class Clinic {
 
 	private int id;
+	private String name;
 	private Address address;
 	private String contact1;
 	private String contact2;
@@ -19,6 +20,7 @@ public class Clinic {
 	public Clinic(int id, Address address ){
 		this.id=id;
 		this.address=address;
+		name = address.getArea() + "Clinic";
 	}
 
 	public int getId() {
@@ -39,4 +41,8 @@ public class Clinic {
 	public String getContact2(){return this.contact2;}
 
 	public URL getImg_url(){return this.img_url;}
+
+	public String getName(){
+		return name;
+	}
 }

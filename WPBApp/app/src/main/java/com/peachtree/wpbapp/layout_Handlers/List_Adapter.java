@@ -1,5 +1,8 @@
 package com.peachtree.wpbapp.layout_Handlers;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.peachtree.wpbapp.R;
+import com.peachtree.wpbapp.activity.Clinic_Info_Fragment;
+import com.peachtree.wpbapp.activity.Event_Info_Fragment;
 import com.peachtree.wpbapp.entities.*;
 
 
@@ -61,14 +66,10 @@ public class List_Adapter extends BaseAdapter
 		return id;
 	}
 
-	public View getView(int pos, View convertView, ViewGroup parent){
+	public View getView(int pos, View convertView, final ViewGroup parent){
 		if(convertView == null){
 			LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			if(type==Type.Event) {
-				convertView = inflater.inflate(R.layout.tile_w_image, parent, false);
-			}else if (type==Type.Clinic){
-				convertView=inflater.inflate(R.layout.tile_1line, parent, false);
-			}
+			convertView = inflater.inflate(R.layout.tile_w_image, parent, false);
 		}
 
 		if(type== Type.Event) {
@@ -78,13 +79,37 @@ public class List_Adapter extends BaseAdapter
 
 			name.setText(event.getTitle());
 			date.setText(new SimpleDateFormat("dd-MM-yyyy").format(event.getDate()));
+			convertView.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View view)
+				{
+					FragmentManager manager = ((Activity)context).getFragmentManager();
+					FragmentTransaction transaction = manager.beginTransaction();
+					Event_Info_Fragment event_dialog = Event_Info_Fragment.init(1);
+					event_dialog.show(transaction, "event_dialog");
+				}
+			});
 
 
 		}else if(type==Type.Clinic){
 			TextView name = (TextView) convertView.findViewById(R.id.TXT_name);
-			Event event = (Event)list.get(pos);
+			TextView date = (TextView) convertView.findViewById(R.id.TXT_date);
+			Clinic clinic = (Clinic)list.get(pos);
 
-			name.setText(event.getTitle());
+			name.setText(clinic.getName());
+			date.setVisibility(View.GONE);
+			convertView.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View view)
+				{
+					FragmentManager manager = ((Activity)context).getFragmentManager();
+					FragmentTransaction transaction = manager.beginTransaction();
+					Clinic_Info_Fragment clinic_dialog = Clinic_Info_Fragment.init(1);
+					clinic_dialog.show(transaction, "clinic_dialog");
+				}
+			});
 		}
 		return convertView;
 	}

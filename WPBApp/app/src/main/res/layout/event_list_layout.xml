@@ -6,48 +6,52 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               app:layout_behavior="@string/appbar_scrolling_view_behavior"
-              tools:context=".activity.Event_List_Fragment"
+              tools:context=".activity.List_Fragment"
               tools:showIn="@layout/event_list_coordinator"
               android:background="#000000">
 
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/search_bar_grad">
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/colorBG"
+		android:elevation="5dp">
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/TXT_search"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/colorBG"
-            android:hint="Search"
-            android:drawableTint="@color/colorPrimary"
-            android:backgroundTint="@color/colorPrimary"
-            android:backgroundTintMode="multiply"
-            android:layout_weight="1"
-            android:padding="10dp"/>
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:id="@+id/TXT_search"
+			android:layout_gravity="center_horizontal"
+			android:textColor="@color/colorBG"
+			android:hint="Search"
+			android:drawableTint="@color/colorPrimary"
+			android:backgroundTint="@color/colorPrimary"
+			android:backgroundTintMode="multiply"
+			android:layout_weight="1"
+			android:padding="10dp"
+			/>
 
         <ImageButton
 			android:layout_width="wrap_content"
 			android:layout_height="match_parent"
-			android:id="@+id/imageButton6"
+			android:id="@+id/BTN_Search"
 			android:src="@android:drawable/ic_menu_search"
-			android:foregroundTintMode="add"
-			android:foregroundTint="@color/colorBG"
 			android:paddingLeft="3dp"
 			android:paddingTop="10dp"
 			android:paddingRight="3dp"
 			android:paddingBottom="10dp"
-			android:background="#00FFFFFF"/>
+			android:background="#00000000"
+			android:tint="@color/colorPrimary"
+			android:tintMode="multiply"
+			android:focusable="false"
+			android:elevation="3dp"/>
     </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/event_list"
+        android:id="@+id/list"
         android:dividerHeight="1dp"
         android:divider="@color/colorPrimaryDark"
         android:drawSelectorOnTop="false"
