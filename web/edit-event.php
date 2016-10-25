@@ -12,7 +12,8 @@ session_start();
 
 //get selected event info
 $eventid = filter_var($_GET['eventid'], FILTER_SANITIZE_STRING);
-$event = getEvents($mysqli, $eventid)[0]; //first and only slot - 0
+if(!isset($_SESSION['event']))
+    $_SESSION['event'] = getEvents($mysqli, $eventid)[0]; //first and only slot - 0
 
 
 ?>
@@ -51,23 +52,23 @@ $event = getEvents($mysqli, $eventid)[0]; //first and only slot - 0
                 <div class="form-group">
                     <div class="col-sm-6">
                         <label>Event ID</label>
-                        <input required readonly type="text" class="form-control" name="eventid" value="<?php echo $event['event_id']; ?>">
+                        <input required readonly type="text" class="form-control" name="event_id" value="<?php echo $_SESSION['event']['event_id']; ?>">
                     </div>
                     <div class="col-sm-6">
                         <label class="control-label">Creator ID</label>
-                        <input required readonly type="text" class="form-control" name="creatorid" value="<?php echo $event['creator_id']; ?>">
+                        <input required readonly type="text" class="form-control" name="creator_id" value="<?php echo $_SESSION['event']['creator_id']; ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="control-label">Title</label>
-                        <input required type="text" class="form-control" name="title" value="<?php echo $event['title']; ?>">
+                        <input required type="text" class="form-control" name="title" value="<?php echo $_SESSION['event']['title']; ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="control-label">Description</label>
-                        <textarea required class="form-control" rows="6" name="description"><?php echo $event['description']; ?></textarea>
+                        <textarea required class="form-control" rows="6" name="description"><?php echo $_SESSION['event']['description']; ?></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -75,13 +76,13 @@ $event = getEvents($mysqli, $eventid)[0]; //first and only slot - 0
                         <div class="row">
                             <div class="col-sm-12">
                                 <label class="control-label">Date</label>
-                                <input required type="text" class="form-control daterange" id="eventdate" name="date" value="<?php echo $event['event_date']; ?>">    
+                                <input required type="text" class="form-control daterange" id="eventdate" name="event_date" value="<?php echo $_SESSION['event']['event_date']; ?>">    
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <label class="control-label">Type</label>
-                                <select required type="text" class="form-control" name="typeid">
+                                <select required type="text" class="form-control" name="type_id">
                                     <?php
                                     {
                                         $sql = "SELECT * FROM TBL_EVENT_TYPE;";
@@ -89,12 +90,12 @@ $event = getEvents($mysqli, $eventid)[0]; //first and only slot - 0
                                         if ($QueryResult == TRUE)
                                         {
                                             ?>
-                                                <option value='-1' disabled>Select one--</option>
+                                                <option value='' disabled>Select one--</option>
                                             <?php
                                             while (($Row = $QueryResult->fetch_assoc()) !== NULL)
                                             {
                                                 ?>
-                                                    <option <?php if($event['type_id'] === $Row['TYPE_ID']){ echo "selected"; } ?> value='<?php echo $Row['TYPE_ID']; ?>'><?php echo $Row['URGENCY'] . " - " . $Row['DESCRIPTION']; ?></option>
+                                                    <option <?php if($_SESSION['event']['type_id'] === $Row['TYPE_ID']){ echo "selected"; } ?> value='<?php echo $Row['TYPE_ID']; ?>'><?php echo $Row['URGENCY'] . " - " . $Row['DESCRIPTION']; ?></option>
                                                 <?php
                                             }
                                         }
@@ -112,7 +113,7 @@ $event = getEvents($mysqli, $eventid)[0]; //first and only slot - 0
                         <div class="row">
                             <div class="col-sm-12">
                                 <label class="control-label">Event Admin</label>
-                                <select required type="text" class="form-control" name="eventadminid">
+                                <select required type="text" class="form-control" name="event_admin">
                                     <?php
                                     {
                                         $sql = "SELECT * FROM TBL_ADMIN;";
@@ -120,12 +121,12 @@ $event = getEvents($mysqli, $eventid)[0]; //first and only slot - 0
                                         if ($QueryResult == TRUE)
                                         {
                                             ?>
-                                                <option value='-1' disabled>Select one--</option>
+                                                <option value='' disabled>Select one--</option>
                                             <?php
                                             while (($Row = $QueryResult->fetch_assoc()) !== NULL)
                                             {
                                                 ?>
-                                                    <option <?php if($event['event_admin'] === $Row['ADMIN_ID']){ echo "selected"; } ?> value='<?php echo $Row['ADMIN_ID']; ?>'><?php echo $Row['FIRST_NAME'] . " " . $Row['LAST_NAME']; ?></option>
+                                                    <option <?php if($_SESSION['event']['event_admin'] === $Row['ADMIN_ID']){ echo "selected"; } ?> value='<?php echo $Row['ADMIN_ID']; ?>'><?php echo $Row['FIRST_NAME'] . " " . $Row['LAST_NAME']; ?></option>
                                                 <?php
                                             }
                                         }
@@ -143,26 +144,26 @@ $event = getEvents($mysqli, $eventid)[0]; //first and only slot - 0
                     </div>
                     <div class="col-sm-6">
                         <label class="control-label">Address</label>
-                        <input type="hidden" name="address_id" value="<?php echo $event['address_id']; ?>">
+                        <input type="hidden" name="address_id" value="<?php echo $_SESSION['event']['address_id']; ?>">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Street Number</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="streetno" value="<?php echo $event['street_no']; ?>"></div>
+                            <div class="col-sm-9"><input onkeypress="validateNumberIn(event)" required type="number" class="form-control" name="street_no" value="<?php echo $_SESSION['event']['street_no']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Street</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="street" value="<?php echo $event['street']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="street" value="<?php echo $_SESSION['event']['street']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Suburb</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="suburb" value="<?php echo $event['area']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="area" value="<?php echo $_SESSION['event']['area']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">City</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="city" value="<?php echo $event['city']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="city" value="<?php echo $_SESSION['event']['city']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Zip Code</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="zip" value="<?php echo $event['area_code']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="area_code" value="<?php echo $_SESSION['event']['area_code']; ?>"></div>
                         </div>
                     </div>
                 </div>
@@ -185,7 +186,20 @@ $event = getEvents($mysqli, $eventid)[0]; //first and only slot - 0
     
     $("#eventdate").datepicker({dateFormat: "dd-mm-yy"}); //sets date picker format
     
+    function validateNumberIn(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode( key );
+        var regex = /[0-9]/;
+        if( !regex.test(key) ) {
+          theEvent.returnValue = false;
+          if(theEvent.preventDefault) theEvent.preventDefault();
+        }
+    }
+    
 </script>	
 </body>
 
 </html>
+
+<?php $_SESSION['event'] = null; ?>

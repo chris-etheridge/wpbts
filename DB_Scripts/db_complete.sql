@@ -8,7 +8,7 @@ TBL_ADDRESS;
 
 
 create table TBL_ADDRESS(
-	ADDRESS_ID int primary key,
+	ADDRESS_ID int primary key AUTO_INCREMENT,
 	STREET_NO INT,
 	CITY varchar(50),
 	OFFICE varchar(50),
@@ -38,7 +38,7 @@ create table TBL_USER(
 );
 
 create table TBL_CLINIC(
-	CLINIC_ID int primary key,
+	CLINIC_ID int primary key AUTO_INCREMENT,
 	ADDRESS_ID int,
 	CONTACT_1 varchar(15),
 	CONTACT_2 varchar(15),
@@ -61,7 +61,7 @@ create table TBL_EVENT_TYPE(
 );
 
 create table TBL_EVENT(
-	EVENT_ID int primary key,
+	EVENT_ID int primary key AUTO_INCREMENT, 
 	EVENT_DATE datetime,
 	ADDRESS_ID int,
 	TYPE_ID int,

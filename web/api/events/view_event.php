@@ -11,11 +11,11 @@ if(!isset($_POST['eventid']))
 }
 $eventid = $mysqli->real_escape_string($_POST['eventid']);
 
-$event = getEvents($mysqli, $eventid);
+$_SESSION['event'] = getEvents($mysqli, $eventid);
 
 // $_POST['page'] tells us which array of results to load.
 // this can be more complex once you implement a functional database.
-echo json_encode($event[0]);
+echo json_encode($_SESSION['event'][0]);
 
 exit();
 

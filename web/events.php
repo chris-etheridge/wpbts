@@ -40,49 +40,54 @@ session_start();
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
             <h4>Upcoming Events</h4>
-            <div class="col-md-12">
-                <table class="custom-table table-bordered" width='100%'>
-                    <thead>
-                    <tr>
-                        <th class="text-center">Event ID</th>
-                        <th class="text-center">Title</th>
-                        <th class="text-center">Event Date</th>
-                        <th class="text-center">Options</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    //get upcoming events
-                    $sql = "SELECT * FROM TBL_EVENT WHERE EVENT_DATE > NOW() ORDER BY EVENT_DATE ASC;";
-                    $QueryResult = $mysqli->query($sql);
-                    if ($QueryResult == TRUE) {
-                        $count = 0;
-                        while (($Row = $QueryResult->fetch_assoc()) !== NULL) {
-                            //$Row['EVENT_ID']
+            <a href="create-event.php" class="btn btn-default btn-md">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Event
+            </a>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="custom-table table-bordered" width='100%'>
+                        <thead>
+                        <tr>
+                            <th class="text-center">Event ID</th>
+                            <th class="text-center">Title</th>
+                            <th class="text-center">Event Date</th>
+                            <th class="text-center">Options</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        //get upcoming events
+                        $sql = "SELECT EVENT_ID, TITLE, DATE_FORMAT(EVENT_DATE, '%d-%m-%Y') AS EVENT_DATE FROM TBL_EVENT WHERE EVENT_DATE > NOW() ORDER BY EVENT_DATE ASC;";
+                        $QueryResult = $mysqli->query($sql);
+                        if ($QueryResult == TRUE) {
+                            $count = 0;
+                            while (($Row = $QueryResult->fetch_assoc()) !== NULL) {
+                                //$Row['EVENT_ID']
+                                ?>
+                                <tr class="<?php if ($count % 2 !== 0) echo "odd"; ?>">
+                                    <td class="text-center"><?php echo $Row['EVENT_ID']; ?></td>
+                                    <td class="text-center"><?php echo $Row['TITLE']; ?></td>
+                                    <td class="text-center"><?php echo $Row['EVENT_DATE']; ?></td>
+                                    <td class="text-center">
+                                        <a href="edit-event.php?eventid=<?php echo $Row['EVENT_ID']; ?>">[Edit]</a>
+                                        <a href="#">[Cancel]</a>
+                                        <a href="#">[View]</a>
+                                    </td>
+                                </tr>
+                                <?php
+                                $count++;
+                            }
+                        } else {
                             ?>
-                            <tr class="<?php if ($count % 2 !== 0) echo "odd"; ?>">
-                                <td class="text-center"><?php echo $Row['EVENT_ID']; ?></td>
-                                <td class="text-center"><?php echo $Row['TITLE']; ?></td>
-                                <td class="text-center"><?php echo $Row['EVENT_DATE']; ?></td>
-                                <td class="text-center">
-                                    <a href="edit-event.php?eventid=<?php echo $Row['EVENT_ID']; ?>">[Edit]</a>
-                                    <a href="#">[Cancel]</a>
-                                    <a href="#">[View]</a>
-                                </td>
+                            <tr>
+                                <td colspan="4">No Upcoming Events</td>
                             </tr>
                             <?php
-                            $count++;
                         }
-                    } else {
                         ?>
-                        <tr>
-                            <td colspan="4">No Upcoming Events</td>
-                        </tr>
-                        <?php
-                    }
-                    ?>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
