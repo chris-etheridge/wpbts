@@ -5,6 +5,9 @@
 # Files for the ART/Dalvik VM
 *.dex
 
+#Ignore DB Conn Files
+*DBConn*
+
 # Java class files
 *.class
 
