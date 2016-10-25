@@ -69,10 +69,11 @@ include_once("users_functions.php");
                     </thead>
 
                     <?php
+                    $count = 0;
                     if ($userData[0] == true) {
                         foreach ($userData[1] as $value) {
                             ?>
-                            <tr class="<?php if (sizeof($userData[1]) % 2 == 0) echo "odd" ?>">
+                            <tr class="<?php if ($count % 2 == 0) echo "odd" ?>">
                                 <td><?php echo $value['USER_ID'] ?></td>
                                 <td><?php echo $value['FIRST_NAME'] ?></td>
                                 <td><?php echo $value['LAST_NAME'] ?></td>
@@ -80,9 +81,15 @@ include_once("users_functions.php");
                                 <td><?php echo $value['PHONE'] ?></td>
                                 <td><?php echo $value['DATE_OF_BIRTH'] ?></td>
                                 <td><?php echo $value['BLOOD_TYPE'] ?></td>
-                                <td>Options</td>
+                                <td class="text-center">
+                                    <form action="users_viewuser.php" method="get">
+                                        <input type="text" name="userID" value="<?php echo $value['USER_ID'] ?>" hidden>
+                                        <input type="submit" class="btn btn-xs btn-primary" value="View User">
+                                    </form>
+                                </td>
                             </tr>
                             <?php
+                            $count++;
                         }
                     }
                     ?>
