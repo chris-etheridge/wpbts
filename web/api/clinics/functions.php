@@ -3,7 +3,7 @@
 function getClinic($mysqli, $clinicid)
 {
     $SQLString = "SELECT * FROM VIEW_CLINICSWADDRESS WHERE CLINIC_ID = $clinicid;";
-    return getClinic($mysqli, $SQLString);
+    return getClinics($mysqli, $SQLString);
 }
 
 function getAllClinics($mysqli)

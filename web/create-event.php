@@ -46,7 +46,7 @@ require_once('php/DBConn.php');
 
     <div class="row">
         <div class="col-lg-12">            
-            <form role="form" action="php/form-handler-event-edit-create.php" method="POST" class="form-horizontal">
+            <form role="form" action="php/form-handler-event-create.php" method="POST" class="form-horizontal">
                 <div class="form-group">
                     <div class="col-sm-6">
                         <label class="control-label">Creator ID</label>

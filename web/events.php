@@ -390,3 +390,5 @@ $arrEvents = getAllUpcommingEvents($mysqli);
 </body>
 
 </html>
+
+<?php $_SESSION['event'] = null; ?>

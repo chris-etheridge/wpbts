@@ -14,9 +14,10 @@ session_start();
 //get selected event info
 $eventid = filter_var($_GET['eventid'], FILTER_SANITIZE_STRING);
 if(!isset($_SESSION['event']))
+{
     $_SESSION['event'] = getEvent($mysqli, $eventid)[0]; //first and only slot - 0
-
-
+}
+    
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main"><!--.main-->
     
@@ -50,7 +51,7 @@ if(!isset($_SESSION['event']))
 
     <div class="row">
         <div class="col-lg-12">            
-                <form role="form" action="php/form-handler-event-edit-create.php" method="POST" class="form-horizontal">
+                <form role="form" action="php/form-handler-event-edit.php" method="POST" class="form-horizontal">
                 <div class="form-group">
                     <div class="col-sm-6">
                         <label>Event ID</label>

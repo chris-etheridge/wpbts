@@ -75,7 +75,7 @@ $arrClinics = getAllClinics($mysqli);
                                 <td class="text-center"><?php echo $Row['contact_1']; ?></td>
                                 <td class="text-center"><?php echo $Row['contact_2']; ?></td>
                                 <td class="text-center">
-                                    <a href="edit-clinic.php?clinic=<?php echo $Row['clinic_id']; ?>" class="btn btn-xs btn-primary">Edit</a>
+                                    <a href="edit-clinic.php?clinicid=<?php echo $Row['clinic_id']; ?>" class="btn btn-xs btn-primary">Edit</a>
                                     <a href="#;" data-id="<?php echo $Row['clinic_id']; ?>" class="removeclinic btn btn-xs btn-warning">Remove</a>
                                     <a href="#;" data-id="<?php echo $Row['clinic_id']; ?>" class="viewclinic btn btn-xs btn-info">View</a>
                                 </td>
@@ -329,3 +329,5 @@ $arrClinics = getAllClinics($mysqli);
 </body>
 
 </html>
+
+<?php $_SESSION['clinic'] = null; ?>
