@@ -7,7 +7,7 @@ session_start();
 
 
 //get upcoming events
-$arrEvents = getUpcommingEvents($mysqli);
+$arrEvents = getAllUpcommingEvents($mysqli);
 ?>
 
 
@@ -57,6 +57,7 @@ $arrEvents = getUpcommingEvents($mysqli);
                             <th class="text-center">Event ID</th>
                             <th class="text-center">Title</th>
                             <th class="text-center">Event Date</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center">Options</th>
                         </tr>
                         </thead>
@@ -72,8 +73,24 @@ $arrEvents = getUpcommingEvents($mysqli);
                                 <td class="text-center"><?php echo $Row['title']; ?></td>
                                 <td class="text-center"><?php echo $Row['event_date']; ?></td>
                                 <td class="text-center">
+                                    <?php 
+                                        if((int)$Row['active'] === 1)
+                                        {
+                                            ?> 
+                                                <span class="label label-success">Active</span>
+                                            <?php
+                                        }
+                                        else
+                                        {
+                                            ?>
+                                                <span class="label label-warning">Canceled</span>
+                                            <?php
+                                        }
+                                    ?>
+                                </td>
+                                <td class="text-center">
                                     <a href="edit-event.php?eventid=<?php echo $Row['event_id']; ?>" class="btn btn-xs btn-primary">Edit</a>
-                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="cancelevent btn btn-xs btn-warning">Cancel</a>
+                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="cancelevent btn btn-xs btn-warning">Toggle Cancel</a>
                                     <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewevent btn btn-xs btn-info">View</a>
                                 </td>
                             </tr>
@@ -217,7 +234,7 @@ $arrEvents = getUpcommingEvents($mysqli);
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Are You Sure You Want To Cancel This Event?</h4>
+                <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -266,7 +283,7 @@ $arrEvents = getUpcommingEvents($mysqli);
             $('#sidebar-collapse').collapse('hide')
     })
     
-    var jsonEvents = <?php echo json_encode(getUpcommingEvents($mysqli)); ?>;
+    var jsonEvents = <?php echo json_encode(getAllUpcommingEvents($mysqli)); ?>;
     
     var jsonAdmins = 
     <?php 
@@ -346,10 +363,20 @@ $arrEvents = getUpcommingEvents($mysqli);
                     }
                 }
             });
+            var status = (parseInt(objEvent.active) === 0) ? 1 : 0;
+            var cancelBtnTxt = "Cancel Event";
+            var cancelTitleTxt = "Are You Sure You Want To Cancel This Event?";
+            if(status === 1)
+            {
+                cancelBtnTxt = "Uncancel Event";
+                cancelTitleTxt = "Are You Sure You Want To Uncancel This Event?";
+            }
+            
+            $('#modal-cancel-event .modal-header h4').html(cancelTitleTxt); 
                     
             $('#modal-cancel-event .modal-body #moEventTitle').html(objEvent.title);
             $('#modal-cancel-event .modal-body #moEventDate').html(objEvent.event_date);
-            $('#modal-cancel-event .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/cancel-event.php?eventid=" + objEvent.event_id + "'>Cancel Event</a>");
+            $('#modal-cancel-event .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/cancel-event.php?eventid=" + objEvent.event_id + "&cancel=" + status + "'>" + cancelBtnTxt +"</a>");
             
             
             $('#modal-cancel-event').modal('show', {backdrop: 'static'});

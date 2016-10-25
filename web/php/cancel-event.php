@@ -5,7 +5,7 @@ require_once("DBConn.php");
 
 session_start();
 
-if(!isset($_GET['eventid']))
+if(!isset($_GET['eventid']) || !isset($_GET['cancel']))
 {
     $_SESSION['alert']['message_type'] = "alert-warning";
     $_SESSION['alert']['message_title'] = "Warning!";
@@ -15,9 +15,9 @@ if(!isset($_GET['eventid']))
 }
 
 $eventid = $mysqli->real_escape_string($_GET['eventid']);
+$status = $mysqli->real_escape_string($_GET['cancel']);
 
-
-$sql = "UPDATE TBL_EVENT SET ACTIVE = 0 WHERE EVENT_ID = $eventid;";
+$sql = "UPDATE TBL_EVENT SET ACTIVE = $status WHERE EVENT_ID = $eventid;";
 $mysqli->query($sql);
 
 if($mysqli->error) //redirect user to edit/create page
