@@ -18,7 +18,7 @@ if(!isset($_POST['clinicid']))
 
 $clinicid = $mysqli->real_escape_string($_POST['clinicid']);
 
-$clinic = getClinics($mysqli, $clinicid);
+$clinic = getClinic($mysqli, $clinicid);
 
 // $_POST['page'] tells us which array of results to load.
 // this can be more complex once you implement a functional database.

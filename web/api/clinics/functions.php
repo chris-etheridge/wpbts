@@ -1,12 +1,20 @@
 <?php
-function getClinics($mysqli, $clinicid = 0)
-{
-    $SQLString = "SELECT * FROM VIEW_CLINICSWADDRESS";
-    if (is_numeric($clinicid) && $clinicid != 0)
-    {
-        $SQLString .= " WHERE CLINIC_ID = " . $clinicid;
-    }
 
+function getClinic($mysqli, $clinicid)
+{
+    $SQLString = "SELECT * FROM VIEW_CLINICSWADDRESS WHERE CLINIC_ID = $clinicid;";
+    return getClinic($mysqli, $SQLString);
+}
+
+function getAllClinics($mysqli)
+{
+    $SQLString = "SELECT * FROM VIEW_CLINICSWADDRESS;";
+    return getClinics($mysqli, $SQLString);
+}
+
+
+function getClinics($mysqli, $SQLString)
+{
     $QueryResult = $mysqli->query($SQLString);
     $clinics = array();
     if ($QueryResult == TRUE)
