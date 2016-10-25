@@ -11,7 +11,7 @@ if(!isset($_POST['eventid']))
 }
 $eventid = $mysqli->real_escape_string($_POST['eventid']);
 
-$_SESSION['event'] = getEvents($mysqli, $eventid);
+$_SESSION['event'] = getEvent($mysqli, $eventid);
 
 // $_POST['page'] tells us which array of results to load.
 // this can be more complex once you implement a functional database.

@@ -13,7 +13,7 @@ session_start();
 //get selected event info
 $eventid = filter_var($_GET['eventid'], FILTER_SANITIZE_STRING);
 if(!isset($_SESSION['event']))
-    $_SESSION['event'] = getEvents($mysqli, $eventid)[0]; //first and only slot - 0
+    $_SESSION['event'] = getEvent($mysqli, $eventid)[0]; //first and only slot - 0
 
 
 ?>
@@ -27,6 +27,7 @@ if(!isset($_SESSION['event']))
         </ol>
     </div><!--/.row-->
     <br/>
+    <div class="col-lg-10 col-lg-offset-1">
     <?php
         if(isset($_SESSION['alert']))
         {
@@ -176,7 +177,7 @@ if(!isset($_SESSION['event']))
             </form>
         </div>
     </div>
-    
+    </div>
 
 </div>	<!--/.main-->
 

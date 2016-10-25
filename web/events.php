@@ -2,9 +2,37 @@
 $_TITLE = "WPBTS - Event Management";
 require_once("header.php");
 require_once('php/DBConn.php');
-
+require_once('api/events/functions.php');
 session_start();
+
+
+//get upcoming events
+$arrEvents = getUpcommingEvents($mysqli);
+$sql = "SELECT * FROM VIEW_EVENTSWADDRESS WHERE STR_TO_DATE(EVENT_DATE, '%d-%m-%Y') > NOW() AND ACTIVE = 1 ORDER BY EVENT_DATE ASC;";
+/*$QueryResult = $mysqli->query($sql);
+if ($QueryResult == TRUE) {
+    $count = 0;
+    while (($Row = $QueryResult->fetch_assoc()) !== NULL) 
+    {
+        $arrEvents[$count]['event_id'] = $Row['EVENT_ID'];
+        $arrEvents[$count]['title'] = $Row['TITLE'];
+        $arrEvents[$count]['description'] = $Row['DESCRIPTION'];
+        $arrEvents[$count]['event_date'] = $Row['EVENT_DATE'];
+        $arrEvents[$count]['type_id'] = $Row['TYPE_ID'];
+        $arrEvents[$count]['event_admin'] = $Row['EVENT_ADMIN'];
+        $arrEvents[$count]['street_no'] = $Row['STREET_NO'];
+        $arrEvents[$count]['street'] = $Row['STREET'];
+        $arrEvents[$count]['area'] = $Row['AREA'];
+        $arrEvents[$count]['city'] = $Row['CITY'];
+        $arrEvents[$count]['area_code'] = $Row['AREA_CODE'];
+        $arrEvents[$count]['creator_id'] = $Row['CREATOR_ID'];
+        $arrEvents[$count]['address_id'] = $Row['ADDRESS_ID'];
+        $count++;
+    }
+}*/
 ?>
+
+
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 
     <div class="row">
@@ -56,28 +84,26 @@ session_start();
                         </thead>
                         <tbody>
                         <?php
-                        //get upcoming events
-                        $sql = "SELECT EVENT_ID, TITLE, DATE_FORMAT(EVENT_DATE, '%d-%m-%Y') AS EVENT_DATE FROM TBL_EVENT WHERE EVENT_DATE > NOW() ORDER BY EVENT_DATE ASC;";
-                        $QueryResult = $mysqli->query($sql);
-                        if ($QueryResult == TRUE) {
-                            $count = 0;
-                            while (($Row = $QueryResult->fetch_assoc()) !== NULL) {
-                                //$Row['EVENT_ID']
-                                ?>
-                                <tr class="<?php if ($count % 2 !== 0) echo "odd"; ?>">
-                                    <td class="text-center"><?php echo $Row['EVENT_ID']; ?></td>
-                                    <td class="text-center"><?php echo $Row['TITLE']; ?></td>
-                                    <td class="text-center"><?php echo $Row['EVENT_DATE']; ?></td>
-                                    <td class="text-center">
-                                        <a href="edit-event.php?eventid=<?php echo $Row['EVENT_ID']; ?>">[Edit]</a>
-                                        <a href="#">[Cancel]</a>
-                                        <a href="#">[View]</a>
-                                    </td>
-                                </tr>
-                                <?php
-                                $count++;
-                            }
-                        } else {
+                        //var_dump($arrEvents);
+                        foreach($arrEvents as $Row)
+                        {
+                            //$Row['EVENT_ID']
+                            ?>
+                            <tr class="<?php if ($count % 2 !== 0) echo "odd"; ?>">
+                                <td class="text-center"><?php echo $Row['event_id']; ?></td>
+                                <td class="text-center"><?php echo $Row['title']; ?></td>
+                                <td class="text-center"><?php echo $Row['event_date']; ?></td>
+                                <td class="text-center">
+                                    <a href="edit-event.php?eventid=<?php echo $Row['event_id']; ?>">[Edit]</a>
+                                    <a href="#">[Cancel]</a>
+                                    <a href="#">[View]</a>
+                                </td>
+                            </tr>
+                            <?php
+                            $count++;
+                        }
+                        if(sizeof($arrEvents) === 0) 
+                        {
                             ?>
                             <tr>
                                 <td colspan="4">No Upcoming Events</td>
@@ -116,6 +142,9 @@ session_start();
         if ($(window).width() <= 767)
             $('#sidebar-collapse').collapse('hide')
     })
+    
+    
+    
 </script>
 </body>
 

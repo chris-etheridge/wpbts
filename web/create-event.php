@@ -13,7 +13,6 @@ require_once('php/DBConn.php');
 
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main"><!--.main-->
-
     <div class="row">
         <ol class="breadcrumb">
             <li><a href="index.php"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
@@ -22,6 +21,9 @@ require_once('php/DBConn.php');
         </ol>
     </div><!--/.row-->
     <br/>
+    <div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+    
     <?php
         if(isset($_SESSION['alert']))
         {
@@ -166,8 +168,8 @@ require_once('php/DBConn.php');
             </form>
         </div>
     </div>
-    
-
+    </div>
+    </div>
 </div>	<!--/.main-->
 
 <?php require_once('footer.php'); ?>

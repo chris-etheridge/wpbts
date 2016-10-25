@@ -38,8 +38,8 @@ if(        !isset($_POST['creator_id']) || !isset($_POST['title'])
     exit();
 }
 
-$action = (isset($_POST['eventid'])) ? "updating" : "creating"; //either create or update, used for alert message
-$actionPastTense = (isset($_POST['eventid'])) ? "updated" : "created"; //either create or update, used for alert message - past tense
+$action = (isset($_POST['event_id'])) ? "updating" : "creating"; //either create or update, used for alert message
+$actionPastTense = (isset($_POST['event_id'])) ? "updated" : "created"; //either create or update, used for alert message - past tense
 
 $eventid = $mysqli->real_escape_string($_POST['event_id']);
 $creatorid = $mysqli->real_escape_string($_POST['creator_id']);

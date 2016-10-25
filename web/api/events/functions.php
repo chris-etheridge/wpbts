@@ -1,12 +1,24 @@
 <?php
-function getEvents($mysqli, $eventid = 0)
+function getEvent($mysqli, $eventid)
 {
-    $SQLString = "SELECT * FROM VIEW_EVENTSWADDRESS";
-    if (is_numeric($eventid) && $eventid != 0)
-    {
-        $SQLString .= " WHERE EVENT_ID = " . $eventid;
-    }
+    $sql = "SELECT * FROM VIEW_EVENTSWADDRESS WHERE EVENT_ID = $eventid;";
+    return getEvents($mysqli, $sql);
+}
 
+function getUpcommingEvents($mysqli)
+{
+    $sql = "SELECT * FROM VIEW_EVENTSWADDRESS WHERE STR_TO_DATE(EVENT_DATE, '%d-%m-%Y') > NOW() AND ACTIVE = 1 ORDER BY EVENT_DATE ASC;";
+    return getEvents($mysqli, $sql);
+}
+
+function getAllEvents($mysqli)
+{
+    $sql = "SELECT * FROM VIEW_EVENTSWADDRESS;";
+    return getEvents($mysqli, $sql);
+}
+
+function getEvents($mysqli, $SQLString)
+{
     $QueryResult = $mysqli->query($SQLString);
     $events = array();
     if ($QueryResult == TRUE)
