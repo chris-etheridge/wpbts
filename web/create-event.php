@@ -1,7 +1,8 @@
 <?php
 $_TITLE = "WPBTS - Create Event";
-$_POST['adminid'] = 1; //TODO FIX THIS AFTER AUTHENTICATION is implemented
-if(!isset($_POST['adminid']))
+session_start();
+$_SESSION['adminid'] = 1; //TODO FIX THIS AFTER AUTHENTICATION is implemented
+if(!isset($_SESSION['adminid']))
 {
     header("Location: events.php");
 }
@@ -19,6 +20,19 @@ require_once('php/DBConn.php');
             <li class="active">Create Event</li>
         </ol>
     </div><!--/.row-->
+    <br/>
+    <?php
+        if(isset($_SESSION['alert']))
+        {
+            ?>
+            <div class="alert <?php echo $_SESSION['alert']['message_type']; ?> alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong><?php echo $_SESSION['alert']["message_title"] ?></strong> <?php echo $_SESSION['alert']["message"] ?>
+            </div>
+            <?php
+            $_SESSION['alert'] = null;
+        }
+    ?>
 
     <div class="row">
         <div class="col-lg-12">
@@ -32,7 +46,7 @@ require_once('php/DBConn.php');
                 <div class="form-group">
                     <div class="col-sm-6">
                         <label class="control-label">Creator ID</label>
-                        <input disabled type="text" class="form-control" name="creatorid" value="<?php //echo $_GET['adminid']; ?>">
+                        <input disabled type="text" class="form-control" name="creatorid" value="<?php echo $_SESSION['adminid'] ?>">
                     </div>
                 </div>
                 <div class="form-group">

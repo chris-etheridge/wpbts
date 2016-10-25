@@ -2,6 +2,8 @@
 $_TITLE = "WPBTS - Event Management";
 require_once("header.php");
 require_once('php/DBConn.php');
+
+session_start();
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 
@@ -15,6 +17,19 @@ require_once('php/DBConn.php');
             <li class="active">Event Management</li>
         </ol>
     </div><!--/.row-->
+    <br/>
+    <?php
+        if(isset($_SESSION['alert']))
+        {
+            ?>
+            <div class="alert <?php echo $_SESSION['alert']['message_type']; ?> alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong><?php echo $_SESSION['alert']["message_title"] ?></strong> <?php echo $_SESSION['alert']["message"] ?>
+            </div>
+            <?php
+            $_SESSION['alert'] = null;
+        }
+    ?>
 
     <div class="row">
         <div class="col-lg-12">
@@ -72,27 +87,6 @@ require_once('php/DBConn.php');
         </div>
     </div>
 
-    <div class="row"> <!-- available alerts -->
-        <div class="col-md-12">
-            <h4>Available Alerts</h4>
-            <div class="col-md-12">
-                <table class="custom-table table-bordered" width='100%'>
-                    <thead>
-                    <th class="text-center">Alert ID</th>
-                    <th class="text-center">Title</th>
-                    <th class="text-center">Description</th>
-                    <th class="text-center">Options</th>
-                    </thead>
-                    <tbody>
-                    <?php
-                    //get available alerts
-
-                    ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
 
 
 </div>    <!--/.main-->

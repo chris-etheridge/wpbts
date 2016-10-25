@@ -17,12 +17,13 @@ function getEvents($mysqli, $eventid = 0)
             $events[$rowid] = array();
             $events[$rowid]['event_id'] = $Row['EVENT_ID'];
             $events[$rowid]['event_date'] = $Row['EVENT_DATE'];
-            $events[$rowid]['address_id'] = $Row['ADDRESS_ID'];
-            $events[$rowid]['type_id'] = $Row['TYPE_ID'];
             $events[$rowid]['description'] = $Row['DESCRIPTION'];
             $events[$rowid]['title'] = $Row['TITLE'];
             $events[$rowid]['active'] = $Row['ACTIVE'];
             $events[$rowid]['creator_id'] = $Row['CREATOR_ID'];
+            $events[$rowid]['event_admin'] = $Row['EVENT_ADMIN_ID'];
+            
+            $events[$rowid]['address_id'] = $Row['ADDRESS_ID'];
             $events[$rowid]['city'] = $Row['CITY'];
             $events[$rowid]['office'] = $Row['OFFICE'];
             $events[$rowid]['street_no'] = $Row['STREET_NO'];
@@ -30,6 +31,8 @@ function getEvents($mysqli, $eventid = 0)
             $events[$rowid]['area'] = $Row['AREA'];
             $events[$rowid]['area_code'] = $Row['AREA_CODE'];
             $events[$rowid]['building_number'] = $Row['BUILDING_NUMBER'];
+            
+            $events[$rowid]['type_id'] = $Row['TYPE_ID'];
             $events[$rowid]['type_description'] = $Row['TYPE_DESCRIPTION'];
             $events[$rowid]['urgency'] = $Row['URGENCY'];
             $rowid++;
