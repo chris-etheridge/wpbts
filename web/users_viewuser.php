@@ -189,12 +189,12 @@ $addressData = getAddress($userData[1][0]['ADDRESS_ID']);
 
 
                     <label>Passport:</label>
-                    <input required type="text" value="<?php echo $userData[1][0]['PASSPORT_NO'] ?>"
+                    <input required type="text" value="<?php echo $userData[1][0]['PASSPORT_NUM'] ?>"
                            class="form-control" name="PASSPORT_NO"
                            style="margin-bottom:2%">
 
                     <label>Phone:</label>
-                    <input required type="text" value=<?php echo $userData[1][0]['PHONE'] ?>"" class="form-control"
+                    <input required type="text" value="<?php echo $userData[1][0]['PHONE'] ?>" class="form-control"
                            name="PHONE"
                            style="margin-bottom:2%">
 

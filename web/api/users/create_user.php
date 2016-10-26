@@ -19,7 +19,7 @@ function createUser($userData, $addressID = null)
         registerUser($userData);
     }
     $lastUserID = (int)getLastIDForTable("TBL_USER", "USER_ID") + 1;
-    $userData['PWD'] = md5($userData['PWD']);
+    $userData['PWD'] = sha1($userData['PWD']);
     $userData['ADDRESS_ID'] = $addressID;
 
     $sql = "INSERT INTO TBL_USER (USER_ID, FIRST_NAME, LAST_NAME, NATIONAL_ID, EMAIL,

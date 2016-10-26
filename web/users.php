@@ -30,9 +30,6 @@ include_once("users_functions.php");
             <a href="users_createuser.php" class="btn btn-default btn-md">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add User
             </a>
-            <a href="create-event.php" class="btn btn-default btn-md">
-                <span class="glyphicon-refresh" aria-hidden="true"></span> Refresh List
-            </a>
         </div>
     </div>
 
@@ -79,13 +76,13 @@ include_once("users_functions.php");
                         foreach ($userData[1] as $value) {
                             ?>
                             <tr class="<?php if ($count % 2 == 0) echo "odd" ?>">
-                                <td><?php echo $value['USER_ID'] ?></td>
-                                <td><?php echo $value['FIRST_NAME'] ?></td>
-                                <td><?php echo $value['LAST_NAME'] ?></td>
-                                <td><?php echo $value['EMAIL'] ?></td>
-                                <td><?php echo $value['PHONE'] ?></td>
-                                <td><?php echo $value['DATE_OF_BIRTH'] ?></td>
-                                <td><?php echo $value['BLOOD_TYPE'] ?></td>
+                                <td class="text-center"><?php echo $value['USER_ID'] ?></td>
+                                <td class="text-center"><?php echo $value['FIRST_NAME'] ?></td>
+                                <td class="text-center"><?php echo $value['LAST_NAME'] ?></td>
+                                <td class="text-center"><?php echo $value['EMAIL'] ?></td>
+                                <td class="text-center"><?php echo $value['PHONE'] ?></td>
+                                <td class="text-center"><?php echo $value['DATE_OF_BIRTH'] ?></td>
+                                <td class="text-center"><?php echo $value['BLOOD_TYPE'] ?></td>
                                 <td class="text-center">
                                     <a href="users_viewuser.php?userID=<?php echo $value['USER_ID'] ?>"
                                        class="btn btn-xs btn-primary">View / Edit User Record</a>

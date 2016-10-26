@@ -10,7 +10,6 @@ require_once("php/DBConn_Dave.php");
 
 function getAddress($addressID)
 {
-
     echo "in address";
     global $dbConn;
     $sql = "SELECT * FROM TBL_ADDRESS WHERE ADDRESS_ID = ?";
@@ -28,5 +27,60 @@ function getAddress($addressID)
     }
 }
 
+function createAddress($address)
+{
+    global $dbConn;
+    $sql = "INSERT INTO TBL_ADDRESS(ADDRESS_ID,
+        STREET_NO, 
+        CITY,   
+        OFFICE, 
+        STREET, 
+        AREA, 
+        AREA_CODE, 
+        BUILDING_NUMBER) 
+          VALUES(?,?,?,?,?,?,?,?)";
+
+    $lastID = getLastID("TBL_ADDRESS", "ADDRESS_ID");
+    $lastID = (int)$lastID + 1;
+
+    //echo $lastID;
+
+    //var_dump($address);
+
+    $stmt = $dbConn->prepare($sql);
+    $stmt->bindParam(1, $lastID);
+    $stmt->bindParam(2, $address['STREET_NO']);
+    $stmt->bindParam(3, $address['CITY']);
+    $stmt->bindParam(4, $address['OFFICE']);
+    $stmt->bindParam(5, $address['STREET']);
+    $stmt->bindParam(6, $address['AREA']);
+    $stmt->bindParam(7, $address['AREA_CODE']);
+    if ($address["BUILDING_NUMBER"] = "") {
+        $address["BUILDING_NUMBER"] = 0;
+    } else {
+        $address["BUILDING_NUMBER"] = (int)$address["BUILDING_NUMBER"];
+    }
+    $stmt->bindParam(8, $address["BUILDING_NUMBER"]);
+
+    if ($stmt->execute() == false) {
+        print_r($stmt->errorInfo());
+        return false;
+        //issueError('113');
+    }
+    echo "address created";
+    return $lastID;
+}
+
+function getLastID($tableName, $column)
+{
+
+    global $dbConn;
+    $sql = "select $column from $tableName ORDER BY $column DESC LIMIT 1";
+    $stmt = $dbConn->prepare($sql);
+    $stmt->execute();
+    $res = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $res[$column];
+
+}
 
 ?>

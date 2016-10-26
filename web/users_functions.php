@@ -75,4 +75,48 @@ function getLastIDForTable($tableName = 'TBL_USER', $column = 'USER_ID')
 }
 
 
+function createUser($userData, $addressID)
+{
+    global $dbConn;
+
+    $lastUserID = (int)getLastIDForTable("TBL_USER", "USER_ID") + 1;
+    $userData['PWD'] = sha1($userData['PWD']);
+    $userData['ADDRESS_ID'] = $addressID;
+
+    $sql = "INSERT INTO TBL_USER (USER_ID, FIRST_NAME, LAST_NAME, NATIONAL_ID, EMAIL,
+        PHONE, BLOOD_TYPE, ADDRESS_ID, DATE_OF_BIRTH, TITLE,
+        GENDER, LANGUAGE_PREF, PASSPORT_NUM, PWD)
+      VALUES(?,?,?,?,?,
+            ?,?,?,?,?,
+            ?,?,?,?)";
+
+    $stmt = $dbConn->prepare($sql);
+
+    echo $userData['PWD'];
+
+    $stmt->bindParam(1, $userData['USER_ID']);
+    $stmt->bindParam(2, $userData['FIRST_NAME']);
+    $stmt->bindParam(3, $userData['LAST_NAME']);
+    $stmt->bindParam(4, $userData['NATIONAL_ID']);
+    $stmt->bindParam(5, $userData['EMAIL']);
+    $stmt->bindParam(6, $userData['PHONE']);
+    $stmt->bindParam(7, $userData['BLOOD_TYPE']);
+    $stmt->bindParam(8, $userData['ADDRESS_ID']);
+    $stmt->bindParam(9, $userData['DATE_OF_BIRTH']);
+    $stmt->bindParam(10, $userData['TITLE']);
+    $stmt->bindParam(11, $userData['GENDER']);
+    $stmt->bindParam(12, $userData['LANGUAGE_PREF']);
+    $stmt->bindParam(13, $userData['PASSPORT_NUM']);
+    $stmt->bindParam(14, $userData['PWD']);
+
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
+
+
+}
+
+
 ?>

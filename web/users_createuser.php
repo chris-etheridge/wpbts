@@ -39,6 +39,18 @@ include_once("address_functions.php");
     //get the latest ID from the users table and use this for the new user. (+1)
     $userKey = getLastIDForTable() + 1;
     echo $userKey;
+
+    if (isset($_SESSION['ALERT'])) {
+        ?>
+        <div class="alert <?php echo $_SESSION['alert']['message_type']; ?> alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <strong><?php echo $_SESSION['alert']["message_title"] ?></strong> <?php echo $_SESSION['alert']["message"] ?>
+        </div>
+        <?php
+        $_SESSION['ALERT'] = null;
+    }
+
     ?>
 
 
@@ -64,7 +76,7 @@ include_once("address_functions.php");
 
                     <label>National ID</label>
                     <input required type="text"
-                           class="form-control" name="NATIONAL_ID" value="<?php $_SESSION['NATIONAL_ID'] ?>"
+                           class="form-control" name="NATIONAL_ID" value="<?php echo $_SESSION['NATIONAL_ID'] ?>"
                            style="margin-bottom:2%">
 
                     <label>Email</label>
@@ -93,12 +105,23 @@ include_once("address_functions.php");
                            class="form-control" name="BUILDING_NUMBER"
                            value="<?php echo $_SESSION['BUILDING_NUMBER'] ?>" style="margin-bottom:2%">
 
+                    <label>Password</label>
+                    <input required type="text"
+                           class="form-control" name="PASSWORD"
+                           value="<?php echo $_SESSION['PASSWORD'] ?>" style="margin-bottom:2%">
+
                 </div>
 
                 <div class="col-md-6">
+
+                    <label>Title</label>
+                    <input required type="text"
+                           class="form-control" name="TITLE"
+                           value="<?php echo $_SESSION['TITLE'] ?>" style="margin-bottom:2%">
+
                     <label>Date of Birth</label>
                     <input required="" type="date" class="form-control daterange hasDatepicker" id="DATE_OF_BIRTH"
-                           name="date"
+                           name="DATE_OF_BIRTH"
                            value="<?php echo date_format(date_create($_SESSION['DATE_OF_BIRTH']), 'Y-m-d') ?>"
                            style="margin-bottom: 2%">
 
@@ -174,46 +197,93 @@ include_once("address_functions.php");
                         </option>
                     </select>
 
-                    <label>Gender:</label>
+                    <label>Gender: <?php echo $_SESSION['GENDER'] ?></label>
                     <select required type="text" value="<?php echo $_SESSION['GENDER'] ?>" class="form-control"
                             name="GENDER"
                             style="margin-bottom:2%">
                         <option value="-1" disabled>Select one--</option>
-                        <option value="M">Male</option>
-                        <option value="F">Female</option>
+                        <option value="M"
+                            <?php
+                            if ($_SESSION['GENDER'] == "M") {
+                                echo "selected";
+                            }
+                            ?>
+                        >Male
+                        </option>
+                        <option value="F"
+                            <?php
+                            if ($_SESSION['GENDER'] == "F") {
+                                echo "selected";
+                            }
+                            ?>
+                        >Female
+                        </option>
                     </select>
 
 
-                    <label>Language:</label>
+                    <label>Language:<?php echo $_SESSION['LANGUAGE_PREF'] ?></label>
                     <select required type="text" value="<?php echo $_SESSION['LANGUAGE_PREF'] ?>"
-                            class="form-control" name="Language"
+                            class="form-control" name="LANGUAGE_PREF"
                             style="margin-bottom:2%">
                         <option value="-1" disabled>Select one--</option>
-                        <option value="English">English</option>
-                        <option value="Afrikaans">Afrikaans</option>
-                        <option value="Xhosa">Xhosa</option>
-                        <option value="Zulu">Zulu</option>
+                        <option value="English"
+                            <?php
+                            if ($_SESSION['LANGUAGE_PREF'] == "English") {
+                                echo "selected";
+                            }
+                            ?>
+                        >English
+                        </option>
+                        <option value="Afrikaans"
+                            <?php
+                            if ($_SESSION['LANGUAGE_PREF'] == "Afrikaans") {
+                                echo "selected";
+                            }
+                            ?>
+                        >Afrikaans
+                        </option>
+                        <option value="Xhosa"
+                            <?php
+                            if ($_SESSION['LANGUAGE_PREF'] == "Xhosa") {
+                                echo "selected";
+                            }
+                            ?>
+                        >Xhosa
+                        </option>
+                        <option value="Zulu"
+                            <?php
+                            if ($_SESSION['LANGUAGE_PREF'] == "Zulu") {
+                                echo "selected";
+                            }
+                            ?>
+                        >Zulu
+                        </option>
                     </select>
 
                     <label>Phone</label>
                     <input required type="text"
-                           class="form-control" name="PHONE" value="" style="margin-bottom:2%">
+                           class="form-control" name="PHONE" value="<?php echo $_SESSION['PHONE'] ?>"
+                           style="margin-bottom:2%">
 
                     <label>Passport</label>
                     <input required type="text"
-                           class="form-control" name="PASSPORT_NO" value="" style="margin-bottom:2%">
+                           class="form-control" name="PASSPORT_NO" value="<?php echo $_SESSION['PASSPORT_NO'] ?>"
+                           style="margin-bottom:2%">
 
                     <label>Area</label>
                     <input required type="text"
-                           class="form-control" name="AREA" value="" style="margin-bottom:2%">
+                           class="form-control" name="AREA" value="<?php echo $_SESSION['AREA'] ?>"
+                           style="margin-bottom:2%">
 
                     <label>Area Code</label>
                     <input required type="text"
-                           class="form-control" name="AREA_CODE" value="" style="margin-bottom:2%">
+                           class="form-control" name="AREA_CODE" value="<?php echo $_SESSION['AREA_CODE'] ?>"
+                           style="margin-bottom:2%">
 
                     <label>City</label>
                     <input required type="text"
-                           class="form-control" name="CITY" value="" style="margin-bottom:7%">
+                           class="form-control" name="CITY" value="<?php echo $_SESSION['CITY'] ?>"
+                           style="margin-bottom:7%">
 
                     <div class="col-md-12" align="right" style="margin-bottom: 5%">
                         <button type="submit" class="btn btn-info">Save User</button>
