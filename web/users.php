@@ -74,14 +74,16 @@ if (isset($_SESSION['USER'])) {
             ?>
             <table data-toggle="table" data-search="true" data-pagination="true">
                 <thead>
-                <th class="text-center">User ID</th>
-                <th class="text-center">Name</th>
-                <th class="text-center">Surname</th>
-                <th class="text-center">Email</th>
-                <th class="text-center">Phone</th>
-                <th class="text-center">DOB</th>
-                <th class="text-center">Blood Type</th>
-                <th class="text-center">Options</th>
+                <tr>
+                    <th class="text-center">User ID</th>
+                    <th class="text-center" data-sortable="true">Name</th>
+                    <th class="text-center" data-sortable="true">Surname</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Phone</th>
+                    <th class="text-center" data-sortable="true">DOB</th>
+                    <th class="text-center">Blood Type</th>
+                    <th class="text-center">Options</th>
+                </tr>
                 </thead>
 
                 <?php
@@ -102,7 +104,8 @@ if (isset($_SESSION['USER'])) {
                                    class="btn btn-xs btn-primary">Edit</a>
                                 <a href="php/form-handler-user-remove.php?userID=<?php echo $value['USER_ID'] . "&addressID=" . $value['ADDRESS_ID'] ?>"
                                    class=" btn btn-xs btn-warning">Remove</a>
-                                <a href="#;" data-id="1" class="viewclinic btn btn-xs btn-info">View</a>
+                                <a href="#;" data-id="<?php echo $value['USER_ID'] ?>"
+                                   class="viewclinic btn btn-xs btn-info">View</a>
                             </td>
                         </tr>
                         <?php
@@ -122,25 +125,25 @@ if (isset($_SESSION['USER'])) {
 </div>    <!--/.main-->
 
 <?php require_once('footer.php'); ?>
-<script>
-    $('#calendar').datepicker({});
-
-    !function ($) {
-        $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
-            $(this).find('em:first').toggleClass("glyphicon-minus");
-        });
-        $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
-    }(window.jQuery);
-
-    $(window).on('resize', function () {
-        if ($(window).width() > 768)
-            $('#sidebar-collapse').collapse('show')
-    })
-    $(window).on('resize', function () {
-        if ($(window).width() <= 767)
-            $('#sidebar-collapse').collapse('hide')
-    })
-</script>
+<!--<script>-->
+<!--    $('#calendar').datepicker({});-->
+<!---->
+<!--    !function ($) {-->
+<!--        $(document).on("click", "ul.nav li.parent > a > span.icon", function () {-->
+<!--            $(this).find('em:first').toggleClass("glyphicon-minus");-->
+<!--        });-->
+<!--        $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");-->
+<!--    }(window.jQuery);-->
+<!---->
+<!--    $(window).on('resize', function () {-->
+<!--        if ($(window).width() > 768)-->
+<!--            $('#sidebar-collapse').collapse('show')-->
+<!--    })-->
+<!--    $(window).on('resize', function () {-->
+<!--        if ($(window).width() <= 767)-->
+<!--            $('#sidebar-collapse').collapse('hide')-->
+<!--    })-->
+<!--</script>-->
 
 <script>
     function filterSName() {
@@ -211,6 +214,94 @@ if (isset($_SESSION['USER'])) {
             }
         }
     }
+</script>
+
+
+<script>
+    $('#calendar').datepicker({});
+
+    !function ($) {
+        $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
+            $(this).find('em:first').toggleClass("glyphicon-minus");
+        });
+        $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+    }(window.jQuery);
+
+    $(window).on('resize', function () {
+        if ($(window).width() > 768)
+            $('#sidebar-collapse').collapse('show')
+    })
+    $(window).on('resize', function () {
+        if ($(window).width() <= 767)
+            $('#sidebar-collapse').collapse('hide')
+    })
+
+    var jsonClinics = <?php echo json_encode(getAllClinics($mysqli)); ?>;
+
+    //view event modal
+    jQuery(function ($) {
+        $('a.viewclinic').click(function (ev) {
+            ev.preventDefault();
+            window.console && console.log('button clicked');
+            var uid = $(this).data('id');
+
+            //get json object
+
+            var objClinic;
+            $.each(jsonClinics, function (i, item) {
+                if (typeof item == 'object') {
+                    if (item.clinic_id === uid.toString()) {
+                        objClinic = item;
+                    }
+                }
+            });
+
+            $('#modal-view-clinic .modal-header .modal-title').html("Viewing: " + objClinic.clinic_id);
+
+            $('#modal-view-clinic .modal-body #moClinicID').html(objClinic.clinic_id);
+            $('#modal-view-clinic .modal-body #moClinicDescription').html(objClinic.description);
+            $('#modal-view-clinic .modal-body #moClinicContact1').html(objClinic.contact_1);
+            $('#modal-view-clinic .modal-body #moClinicContact2').html(objClinic.contact_2);
+            $('#modal-view-clinic .modal-body #moClinicDescription').html(objClinic.description);
+            $('#modal-view-clinic .modal-body #moClinicStreetNo').html(objClinic.street_no);
+            $('#modal-view-clinic .modal-body #moClinicStreet').html(objClinic.street);
+            $('#modal-view-clinic .modal-body #moClinicArea').html(objClinic.area);
+            $('#modal-view-clinic .modal-body #moClinicCity').html(objClinic.city);
+            $('#modal-view-clinic .modal-body #moClinicAreaCode').html(objClinic.area_code);
+
+            $('#modal-view-clinic').modal('show', {backdrop: 'static'});
+
+        });
+    });
+
+    //cancel event confirmation dialog
+    jQuery(function ($) {
+        $('a.removeclinic').click(function (ev) {
+            ev.preventDefault();
+            var uid = $(this).data('id');
+
+            //get json object
+
+            var objClinic;
+            $.each(jsonClinics, function (i, item) {
+                if (typeof item == 'object') {
+                    if (item.clinic_id === uid.toString()) {
+                        objClinic = item;
+                    }
+                }
+            });
+
+            $('#modal-remove-clinic .modal-body #moClinicID').html(objClinic.clinic_id);
+            $('#modal-remove-clinic .modal-body #moClinicDescription').html(objClinic.description);
+            $('#modal-remove-clinic .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/delete-clinic.php?clinic=" + objClinic.clinic_id + "'>Delete Clinic</a>");
+
+
+            $('#modal-remove-clinic').modal('show', {backdrop: 'static'});
+
+        });
+    });
+
+
 </script>
 
 </body>
