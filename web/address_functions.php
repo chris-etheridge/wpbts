@@ -83,20 +83,15 @@ function getLastID($tableName, $column)
 
 function removeAddress($addrID)
 {
-
-    echo $addrID;
-
-//    global $dbConn;
-//    $sql = "DELETE FROM TBL_ADDRESS WHERE ADDRESS_ID = ?";
-//    $stmt = $dbConn->prepare($sql);
-//    $stmt->bindParam(1, $addrID);
-//    if ($stmt->execute()) {
-//        return true;
-//    } else {
-//        return false;
-//    }
-
-
+    global $dbConn;
+    $sql = "DELETE FROM TBL_ADDRESS WHERE ADDRESS_ID = ?";
+    $stmt = $dbConn->prepare($sql);
+    $stmt->bindParam(1, $addrID);
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 ?>

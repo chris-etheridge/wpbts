@@ -114,19 +114,15 @@ function createUser($userData)
 
 function deleteUser($userID)
 {
-
-    echo $userID;
-//    global $dbConn;
-//    $sql = "DELETE FROM TBL_USER WHERE USER_ID = ?";
-//    $stmt = $dbConn->prepare($sql);
-//    $stmt->bindParam(1, $userID);
-//    if ($stmt->execute()) {
-//        return true;
-//    } else {
-//        return false;
-//    }
-
-
+    global $dbConn;
+    $sql = "DELETE FROM TBL_USER WHERE USER_ID = ?";
+    $stmt = $dbConn->prepare($sql);
+    $stmt->bindParam(1, $userID);
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
