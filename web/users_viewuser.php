@@ -15,8 +15,6 @@ session_start();
 //Lets get the user details from the database via the GET variable passed in from user management:
 $userData = getUser($_GET['userID']);
 
-var_dump($userData[1][0]);
-
 $addressData = getAddress($userData[1][0]['ADDRESS_ID']);
 
 
