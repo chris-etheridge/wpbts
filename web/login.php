@@ -2,6 +2,10 @@
 
 session_start();
 
+if (isset($_COOKIE['EMAIL_COOKIE'])) {
+    $storedEmail = $_COOKIE['EMAIL_COOKIE'];
+}
+
 ?>
 
 
@@ -47,7 +51,8 @@ session_start();
                 <form action="php/form-handler-login.php" method="post">
                     <fieldset>
                         <div class="form-group">
-                            <input class="form-control" placeholder="username" name="USERNAME" type="username"
+                            <input class="form-control" placeholder="username" name="USERNAME"
+                                   value="<?php echo $storedEmail ?>" type="username"
                                    autofocus="">
                         </div>
                         <div class="form-group">
@@ -55,7 +60,7 @@ session_start();
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                <input name="COOKIE" type="checkbox" value="STASH_COOKIE">Remember Me
                             </label>
                         </div>
                         <button type="submit" class="btn btn-info">Login</button>

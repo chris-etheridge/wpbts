@@ -11,7 +11,7 @@ session_start();
 $userID = $_SESSION['AUTH_USER_ID'];
 if ($userID == null) {
     $_SESSION['alert']['message_type'] = "alert-danger";
-    $_SESSION['alert']['message_title'] = "Session has timed out.";
+    $_SESSION['alert']['message_title'] = "Not logged in..";
     $_SESSION['alert']['message'] = " Please authenticate to regain access";
     header('Location: login.php');
     exit();

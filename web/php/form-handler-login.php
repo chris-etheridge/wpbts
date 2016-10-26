@@ -47,6 +47,12 @@ if ($stmt->execute() == false) {
 
         //LOGIN SUCCESS
         $_SESSION['AUTH_USER_ID'] = $res['USER_ID'];
+
+        if (isset($_POST['COOKKIE'])) {
+            $cookie_name = 'EMAIL_COOKIE';
+            setcookie($cookie_name, $userEmail, time() + (86400 * 365), "/"); // 86400 = 1 day
+        }
+
         header('Location: ../index.php');
 
 
