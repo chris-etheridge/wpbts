@@ -47,6 +47,7 @@ function getAllUsers()
 
 function doesUserExist($userEmail)
 {
+    echo $userEmail;
     global $dbConn;
     $sql = "SELECT * FROM TBL_USER WHERE EMAIL = ?";
     $stmt = $dbConn->prepare($sql);
@@ -54,6 +55,7 @@ function doesUserExist($userEmail)
     if ($stmt->execute()) {
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($res != null) {
+            var_dump($res);
             return true;
         } else {
             return false;

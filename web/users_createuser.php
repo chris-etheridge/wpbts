@@ -11,7 +11,6 @@ require_once('php/DBConn_Dave.php');
 include_once("users_functions.php");
 include_once("address_functions.php");
 
-
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
@@ -25,6 +24,24 @@ include_once("address_functions.php");
             <li class="active">Create User</li>
         </ol>
     </div><!--/.row-->
+
+    <?php
+    if (isset($_SESSION['alert'])) {
+        ?>
+        <div class="alert <?php echo $_SESSION['alert']['message_type']; ?> alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <strong><?php echo $_SESSION['alert']["message_title"] ?></strong> <?php echo $_SESSION['alert']["message"] ?>
+        </div>
+        <?php
+        if ($_SESSION['alert']["message_title"] == "Email exists!") {
+            $wasEmailError = true;
+        } elseif ($_SESSION['alert']["message_title"] == "Address write error!") {
+            $wasAddressError = true;
+        }
+        $_SESSION['alert'] = null;
+    }
+    ?>
 
     <div class="row">
         <div class="col-lg-12">
@@ -63,13 +80,19 @@ include_once("address_functions.php");
                            class="form-control" name="NATIONAL_ID" value="<?php echo $_SESSION['NATIONAL_ID'] ?>"
                            style="margin-bottom:2%">
 
-                    <label>Email</label>
+                    <label style="color:<?php if ($wasEmailError) {
+                        echo "darkred";
+                    } ?>">Email</label>
                     <input required type="email"
                            class="form-control" name="EMAIL" value="<?php echo $_SESSION['EMAIL'] ?>"
                            style="margin-bottom:2%">
 
 
-                    <label>Street Number</label>
+                    <label style="color:<?php if ($wasAddressError) {
+                        echo "darkred";
+                    } ?>">Street Number<?php if ($wasAddressError) {
+                            echo " (Numeric Only)";
+                        } ?></label>
                     <input required type="text"
                            class="form-control" name="STREET_NO" value="<?php echo $_SESSION['STREET_NO'] ?>"
                            style="margin-bottom:2%">
@@ -84,7 +107,12 @@ include_once("address_functions.php");
                            class="form-control" name="OFFICE" value="<?php echo $_SESSION['OFFICE'] ?>"
                            style="margin-bottom:2%">
 
-                    <label>Building Number</label>
+
+                    <label style="color:<?php if ($wasAddressError) {
+                        echo "darkred";
+                    } ?>">Building Number<?php if ($wasAddressError) {
+                            echo " (Numeric Only)";
+                        } ?></label>
                     <input required type="text"
                            class="form-control" name="BUILDING_NUMBER"
                            value="<?php echo $_SESSION['BUILDING_NUMBER'] ?>" style="margin-bottom:2%">

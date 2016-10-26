@@ -27,6 +27,11 @@ function getAddress($addressID)
     }
 }
 
+function isAddressExist($userAddressFromWeb)
+{
+
+}
+
 function createAddress($address)
 {
     global $dbConn;
@@ -63,7 +68,7 @@ function createAddress($address)
     $stmt->bindParam(8, $address["BUILDING_NUMBER"]);
 
     if ($stmt->execute() == false) {
-        print_r($stmt->errorInfo());
+        //print_r($stmt->errorInfo());
         return false;
     }
     echo "address created";

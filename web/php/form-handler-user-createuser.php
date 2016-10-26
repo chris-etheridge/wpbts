@@ -28,8 +28,43 @@ $_SESSION['USER']['CITY'] = $_POST['CITY'];
 $_SESSION['USER']['PASSWORD'] = $_POST['PASSWORD'];
 $_SESSION['USER']['TITLE'] = $_POST['TITLE'];
 
-echo $_SESSION['USER']['FIRST_NAME'];
-echo $_SESSION['USER']['LAST_NAME'];
-echo $_SESSION['USER']['EMAIL'];
+//we need to validate that the user is not existing and
+//if the user exists, return to the page with the session variables.
+$isExistsUser = doesUserExist($_SESSION['USER']['EMAIL']);
+if ($isExistsUser) {
+    $_SESSION['alert']['message_type'] = "alert-danger";
+    $_SESSION['alert']['message_title'] = "Email exists!";
+    $_SESSION['alert']['message'] = "The user email already exists, this use alerady exists";
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit();
+}
+
+//NEED TO UPDATE WITH CORRECTIONS.
+//if the user does not exist, we need to create the address
+//get the ID of the address
+
+$_SESSION['USER']['BUILDING_NUMBER'];
+$_POST['BUILDING_NUMBER'];
+
+//$addressData = array(
+//    'STREET_NO' => $_SESSION['USER']['STREET_NO'],
+//    'CITY' => $_SESSION['USER']['CITY'],
+//    'OFFICE' => $_SESSION['USER']['OFFICE'],
+//    'STREET' => $_SESSION['USER']['STREET'],
+//    'AREA' => $_SESSION['USER']['AREA'],
+//    'AREA_CODE' => $_SESSION['USER']['AREA_CODE'],
+//    'BUILDING_NUMBER' => $_SESSION['USER']['BUILDING_NUMBER'],
+//);
+//
+//$addressResult = createAddress($addressData);
+//
+//if ($addressResult == false) {
+//    $_SESSION['alert']['message_type'] = "alert-danger";
+//    $_SESSION['alert']['message_title'] = "Address write error!";
+//    $_SESSION['alert']['message'] = "The address data was incorrect, ensure correct data types . ";
+//    header('Location: ' . $_SERVER['HTTP_REFERER']);
+//    exit();
+//}
+
 
 ?>
