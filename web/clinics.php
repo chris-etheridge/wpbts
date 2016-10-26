@@ -52,11 +52,11 @@ $arrClinics = getAllClinics($mysqli);
             </a>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="custom-table table-bordered" width='100%'>
+                    <table data-toggle="table" data-search="true" data-pagination="true">
                         <thead>
                         <tr>
-                            <th class="text-center">Clinic ID</th>
-                            <th class="text-center">Description</th>
+                            <th class="text-center" data-sortable="true">Clinic ID</th>
+                            <th class="text-center" data-sortable="true">Description</th>
                             <th class="text-center">Primary Contact No.</th>
                             <th class="text-center">Secondary Contact No.</th>
                             <th class="text-center">Options</th>
