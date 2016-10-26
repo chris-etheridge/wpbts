@@ -112,6 +112,30 @@ function createUser($userData)
     }
 }
 
+function updateUser($lastEmail, $userData)
+{
+
+    global $dbConn;
+    $sql = "UPDATE TBL_USER SET 
+        FIRST_NAME = ?,
+        LAST_NAME = ?,
+        NATIONAL_ID = ?,
+        EMAIL = ?,
+        PHONE = ?,
+        BLOOD_TYPE = ?,
+        DATE_OF_BIRTH = ?,
+        TITLE = ?,
+        GENDER = ?,
+        LANGUAGE_PREF = ?,
+        PASSPORT_NUM = ?,
+        PWD = ?
+        WHERE EMAIL = ?
+";
+
+//        UPDATE table_name SET field1=new-value1, field2=new-value2
+//    [WHERE Clause]
+}
+
 function deleteUser($userID)
 {
     global $dbConn;
