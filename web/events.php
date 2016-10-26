@@ -93,7 +93,7 @@ $arrEvents = getAllUpcommingEvents($mysqli);
                                     <a href="edit-event.php?eventid=<?php echo $Row['event_id']; ?>" class="btn btn-xs btn-primary">Edit</a>
                                     <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="cancelevent btn btn-xs btn-warning">Toggle Cancel</a>
                                     <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewevent btn btn-xs btn-info">View</a>
-                                    <a href="#;" data-id="<?php echo $Row['clinic_id']; ?>" class="viewrsvps btn btn-xs btn-default">RSVP's</a>
+                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewrsvps btn btn-xs btn-default">RSVP's</a>
                                 </td>
                             </tr>
                             <?php
@@ -264,6 +264,60 @@ $arrEvents = getAllUpcommingEvents($mysqli);
     </div>
 </div>
 
+<div class="modal fade" id="modal-view-rsvps" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Users who have RSVP'd</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">User ID</label>
+                            </div>
+                            <div class="col-md-9">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">First Name</label>
+                            </div>
+                            <div class="col-md-9">
+                                <span id="moUserFirstName"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">Last Name</label>
+                            </div>
+                            <div class="col-md-9">
+                                <span id="moUserLastName"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">Phone</label>
+                            </div>
+                            <div class="col-md-9">
+                                <span id="moUserPhone"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php require_once('footer.php'); ?>
 
 <script>
@@ -305,6 +359,32 @@ $arrEvents = getAllUpcommingEvents($mysqli);
             }
         }
         echo json_encode($admins);    
+    ?>
+            
+    var jsonRsvps = 
+    <?php 
+
+        //get rsvps
+        $sql = "SELECT * FROM VIEW_RSVP_USER_DETAILS;";
+        $rsvps = array();
+        $QueryResult = $mysqli->query($sql);
+        if ($QueryResult == TRUE)
+        {
+            $count = 0;
+            while (($Row = $QueryResult->fetch_assoc()) !== NULL)
+            {
+                $rsvps[$count] = array();
+                $rsvps[$count]['user_id'] = $Row['USER_ID'];
+                $rsvps[$count]['event_id'] = $Row['EVENT_ID'];
+                $rsvps[$count]['attending'] = $Row['ATTENDING'];
+                $rsvps[$count]['first_name'] = $Row['FIRST_NAME'];
+                $rsvps[$count]['last_name'] = $Row['LAST_NAME'];
+                $rsvps[$count]['phone'] = $Row['PHONE'];
+                $rsvps[$count]['email'] = $Row['EMAIL'];
+                $count++;
+            }
+        }
+        echo json_encode($rsvps);    
     ?>
     
     //view event modal
@@ -353,7 +433,6 @@ $arrEvents = getAllUpcommingEvents($mysqli);
             var uid = $(this).data('id');
             
             //get json object
-
             var objEvent;
             $.each(jsonEvents, function (i, item)
             {
@@ -382,6 +461,45 @@ $arrEvents = getAllUpcommingEvents($mysqli);
             
             
             $('#modal-cancel-event').modal('show', {backdrop: 'static'});
+
+         });
+    });
+    
+    //function to show users who have RSVP'd
+     jQuery(function($){
+         $('a.viewrsvps').click(function(ev){
+            ev.preventDefault();
+            var uid = $(this).data('id');
+            
+            //get json object
+            var html = "";
+            $.each(jsonRsvps, function (i, rsvp)
+            {
+                if (typeof rsvp == 'object')
+                {
+                    if(rsvp.event_id === uid.toString())
+                    {
+                        window.console&&console.log(rsvp.first_name);
+                        html += '<div class="row"><div class="col-md-3"><label class="control-label">User ID</label></div><div class="col-md-9"><span>' + rsvp.user_id +'</span></div></div>';
+                        html += '<div class="row"><div class="col-md-3"><label class="control-label">First Name</label></div><div class="col-md-9"><span>' + rsvp.first_name +'</span></div></div>';
+                        html += '<div class="row"><div class="col-md-3"><label class="control-label">Last Name</label></div><div class="col-md-9"><span>' + rsvp.last_name +'</span></div></div>';
+                        html += '<div class="row"><div class="col-md-3"><label class="control-label">Phone ID</label></div><div class="col-md-9"><span>' + rsvp.phone +'</span></div></div>';
+                        html += '<div class="row"><div class="col-md-3"><label class="control-label">E-mail</label></div><div class="col-md-9"><span>' + rsvp.email +'</span></div></div>';
+                        if(parseInt(rsvp.attending) === 0) //not attending
+                        {
+                            html += '<div class="row"><div class="col-md-3"><label class="control-label">Attending</label></div><div class="col-md-9"><span class="label label-warning">Not Attending</span></div></div>';
+                        }
+                        else
+                        {
+                            html += '<div class="row"><div class="col-md-3"><label class="control-label">Attending</label></div><div class="col-md-9"><span class="label label-success">Attending</span></div></div>';
+                        }
+                        html += '<div class="row"><div class="col-md-12"><span class="divider">_____________________________________</span></div></div><br/>';
+                    }
+                }
+            });
+            $('#modal-view-rsvps .modal-body').html(html);          
+            
+            $('#modal-view-rsvps').modal('show', {backdrop: 'static'});
 
          });
     });
