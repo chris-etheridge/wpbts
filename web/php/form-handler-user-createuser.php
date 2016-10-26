@@ -1,13 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dave
- * Date: 2016/10/26
- * Time: 9:54 AM
- *
- * To create a user
- *
- */
 
 require_once('../php/DBConn_Dave.php');
 include_once("../users_functions.php");
@@ -16,77 +7,92 @@ include_once("../address_functions.php");
 session_start();
 
 //SETUP SESSION VARIABLES:
-$_SESSION['USER_ID'] = $_POST['USER_ID'];
-$_SESSION['FIRST_NAME'] = $_POST['FIRST_NAME'];
-$_SESSION['LAST_NAME'] = $_POST['LAST_NAME'];
-$_SESSION['NATIONAL_ID'] = $_POST['NATIONAL_ID'];
-$_SESSION['EMAIL'] = $_POST['EMAIL'];
-$_SESSION['PHONE'] = $_POST['PHONE'];
-$_SESSION['STREET_NO'] = $_POST['STREET_NO'];
-$_SESSION['STREET'] = $_POST['STREET'];
-$_SESSION['OFFICE'] = $_POST['OFFICE'];
-$_SESSION['BUILDING_NUMBER'] = $_POST['BUILDING_NUMBER'];
-$_SESSION['DATE_OF_BIRTH'] = $_POST['DATE_OF_BIRTH'];
-$_SESSION['BLOOD_TYPE'] = $_POST['BLOOD_TYPE'];
-$_SESSION['GENDER'] = $_POST['GENDER'];
-$_SESSION['LANGUAGE_PREF'] = $_POST['LANGUAGE_PREF'];
-$_SESSION['PASSPORT_NO'] = $_POST['PASSPORT_NO'];
-$_SESSION['AREA'] = $_POST['AREA'];
-$_SESSION['AREA_CODE'] = $_POST['AREA_CODE'];
-$_SESSION['CITY'] = $_POST['CITY'];
-$_SESSION['PASSWORD'] = $_POST['PASSWORD'];
-$_SESSION['TITLE'] = $_POST['TITLE'];
+$_SESSION['USER']['USER_ID'] = $_POST['USER_ID'];
+$_SESSION['USER']['FIRST_NAME'] = $_POST['FIRST_NAME'];
+$_SESSION['USER']['LAST_NAME'] = $_POST['LAST_NAME'];
+$_SESSION['USER']['NATIONAL_ID'] = $_POST['NATIONAL_ID'];
+$_SESSION['USER']['EMAIL'] = $_POST['EMAIL'];
+$_SESSION['USER']['PHONE'] = $_POST['PHONE'];
+$_SESSION['USER']['STREET_NO'] = $_POST['STREET_NO'];
+$_SESSION['USER']['STREET'] = $_POST['STREET'];
+$_SESSION['USER']['OFFICE'] = $_POST['OFFICE'];
+$_SESSION['USER']['BUILDING_NUMBER'] = $_POST['BUILDING_NUMBER'];
+$_SESSION['USER']['DATE_OF_BIRTH'] = $_POST['DATE_OF_BIRTH'];
+$_SESSION['USER']['BLOOD_TYPE'] = $_POST['BLOOD_TYPE'];
+$_SESSION['USER']['GENDER'] = $_POST['GENDER'];
+$_SESSION['USER']['LANGUAGE_PREF'] = $_POST['LANGUAGE_PREF'];
+$_SESSION['USER']['PASSPORT_NO'] = $_POST['PASSPORT_NO'];
+$_SESSION['USER']['AREA'] = $_POST['AREA'];
+$_SESSION['USER']['AREA_CODE'] = $_POST['AREA_CODE'];
+$_SESSION['USER']['CITY'] = $_POST['CITY'];
+$_SESSION['USER']['PWD'] = sha1($_POST['PASSWORD']);
+$_SESSION['USER']['TITLE'] = $_POST['TITLE'];
 
-
-$userExists = doesUserExist($_SESSION['EMAIL']);
-if ($userExists) {
-    $_SESSION['ALERT'] = "User already exists";
-    header("Location: " . $_SERVER['HTTP_REFERER']);
+//we need to validate that the user is not existing and
+//if the user exists, return to the page with the session variables.
+$isExistsUser = doesUserExist($_SESSION['USER']['EMAIL']);
+if ($isExistsUser) {
+    $_SESSION['alert']['message_type'] = "alert-danger";
+    $_SESSION['alert']['message_title'] = "Email exists!";
+    $_SESSION['alert']['message'] = "The user email already exists, this use alerady exists";
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit();
 }
+
+//NEED TO UPDATE WITH CORRECTIONS.
+//if the user does not exist, we need to create the address
+//get the ID of the address
 
 $addressData = array(
-    "STREET_NO" => $_SESSION['STREET_NO'],
-    "STREET" => $_SESSION['STREET'],
-    "OFFICE" => $_SESSION['OFFICE'],
-    "BUILDING_NUMBER" => $_SESSION['BUILDING_NUMBER'],
-    "AREA" => $_SESSION['AREA'],
-    "AREA_CODE" => $_SESSION['AREA_CODE'],
-    "CITY" => $_SESSION['CITY']
+    'STREET_NO' => $_SESSION['USER']['STREET_NO'],
+    'CITY' => $_SESSION['USER']['CITY'],
+    'OFFICE' => $_SESSION['USER']['OFFICE'],
+    'STREET' => $_SESSION['USER']['STREET'],
+    'AREA' => $_SESSION['USER']['AREA'],
+    'AREA_CODE' => $_SESSION['USER']['AREA_CODE'],
+    'BUILDING_NUMBER' => $_SESSION['USER']['BUILDING_NUMBER']
 );
-$addressID = createAddress($addressData);
-if ($addressID == false) {
-    $_SESSION['ALERT'] = "Error writing to DB: Check field types";
-    header("Location: " . $_SERVER['HTTP_REFERER']);
+//
+$addressResult = createAddress($addressData);
+if ($addressResult == false) {
+    $_SESSION['alert']['message_type'] = "alert-danger";
+    $_SESSION['alert']['message_title'] = "Address write error!";
+    $_SESSION['alert']['message'] = "The address data was incorrect, ensure correct data types . ";
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit();
 }
-echo $addressID;
 
-echo $_SESSION['DATE_OF_BIRTH'];
-
-$userData = array(
-    "USER_ID" => $_SESSION['USER_ID'],
-    "FIRST_NAME" => $_SESSION['FIRST_NAME'],
-    "LAST_NAME" => $_SESSION['LAST_NAME'],
-    "NATIONAL_ID" => $_SESSION['NATIONAL_ID'],
-    "EMAIL" => $_SESSION['EMAIL'],
-    "PHONE" => $_SESSION['PHONE'],
-    "DATE_OF_BIRTH" => $_SESSION['DATE_OF_BIRTH'],
-    "BLOOD_TYPE" => $_SESSION['BLOOD_TYPE'],
-    "GENDER" => $_SESSION['GENDER'],
-    "LANGUAGE_PREF" => $_SESSION['LANGUAGE_PREF'],
-    "PASSPORT_NUM" => $_SESSION['PASSPORT_NO'],
-    "PWD" => $_SESSION['PASSWORD'],
-    "TITLE" => $_SESSION['TITLE']
-
+echo $addressResult;
+$userArray = array(
+    'USER_ID' => $_SESSION['USER']['USER_ID'],
+    'FIRST_NAME' => $_SESSION['USER']['FIRST_NAME'],
+    'LAST_NAME' => $_SESSION['USER']['LAST_NAME'],
+    'NATIONAL_ID' => $_SESSION['USER']['NATIONAL_ID'],
+    'EMAIL' => $_SESSION['USER']['EMAIL'],
+    'BLOOD_TYPE' => $_SESSION['USER']['BLOOD_TYPE'],
+    'ADDRESS_ID' => $addressResult,
+    'DATE_OF_BIRTH' => $_SESSION['USER']['DATE_OF_BIRTH'],
+    'USER_ID' => $_SESSION['USER']['USER_ID'],
+    'TITLE' => $_SESSION['USER']['TITLE'],
+    'GENDER' => $_SESSION['USER']['GENDER'],
+    'LANGUAGE_PREF' => $_SESSION['USER']['LANGUAGE_PREF'],
+    'PASSPORT_NUM' => $_SESSION['USER']['PASSPORT_NUM'],
+    'PWD' => $_SESSION['USER']['PWD']
 );
-$result = createUser($userData, $addressID);
-if ($result == false) {
-    $_SESSION['ALERT'] = "Error creating user, check field types...";
-    header("Location: " . $_SERVER['HTTP_REFERER']);
+$userResult = createUser($userArray);
+if ($userResult == false) {
+    $_SESSION['alert']['message_type'] = "alert-danger";
+    $_SESSION['alert']['message_title'] = "User data write error!";
+    $_SESSION['alert']['message'] = "The address data was incorrect, ensure correct data types . ";
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit();
+} else {
+
+    $_SESSION['USER'] = null;
+    header('Location: ../users.php');
+
+
 }
-session_destroy();
-header("Location: ../users.php");
 
 
-
-
-
+?>

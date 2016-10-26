@@ -27,6 +27,11 @@ function getAddress($addressID)
     }
 }
 
+function isAddressExist($userAddressFromWeb)
+{
+
+}
+
 function createAddress($address)
 {
     global $dbConn;
@@ -55,19 +60,12 @@ function createAddress($address)
     $stmt->bindParam(5, $address['STREET']);
     $stmt->bindParam(6, $address['AREA']);
     $stmt->bindParam(7, $address['AREA_CODE']);
-    if ($address["BUILDING_NUMBER"] = "") {
-        $address["BUILDING_NUMBER"] = 0;
-    } else {
-        $address["BUILDING_NUMBER"] = (int)$address["BUILDING_NUMBER"];
-    }
     $stmt->bindParam(8, $address["BUILDING_NUMBER"]);
 
     if ($stmt->execute() == false) {
-        print_r($stmt->errorInfo());
+        //print_r($stmt->errorInfo());
         return false;
-        //issueError('113');
     }
-    echo "address created";
     return $lastID;
 }
 
