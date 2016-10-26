@@ -1,4 +1,6 @@
-drop table if exists TBL_ALERT, 
+drop table if exists 
+TBL_EVENT_RSVP,
+TBL_ALERT, 
 TBL_EVENT, 
 TBL_EVENT_TYPE, 
 TBL_ADMIN, 
@@ -16,7 +18,7 @@ create table TBL_ADDRESS(
 	AREA varchar(50),
 	AREA_CODE varchar(10),
 	BUILDING_NUMBER int
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 create table TBL_USER(
 	USER_ID int primary key,
@@ -35,7 +37,7 @@ create table TBL_USER(
 	PWD varchar(255),
 	
 	foreign key (ADDRESS_ID) references TBL_ADDRESS(ADDRESS_ID)
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 create table TBL_CLINIC(
 	CLINIC_ID int primary key AUTO_INCREMENT,
@@ -44,7 +46,7 @@ create table TBL_CLINIC(
 	CONTACT_2 varchar(15),
 	DESCRIPTION varchar(255),	
 	foreign key (ADDRESS_ID) references TBL_ADDRESS(ADDRESS_ID)
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 create table TBL_ADMIN(
 	ADMIN_ID int primary key,
@@ -52,13 +54,13 @@ create table TBL_ADMIN(
 	FIRST_NAME varchar(20),
 	LAST_NAME varchar(50),
 	PASSWORD varchar(100)
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 create table TBL_EVENT_TYPE(
 	TYPE_ID int primary key,
 	DESCRIPTION varchar(255),
 	URGENCY varchar(5)
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 create table TBL_EVENT(
 	EVENT_ID int primary key AUTO_INCREMENT, 
@@ -75,7 +77,7 @@ create table TBL_EVENT(
 	foreign key (TYPE_ID) references TBL_EVENT_TYPE(TYPE_ID),
 	foreign key (CREATOR_ID) references TBL_ADMIN(ADMIN_ID),
 	foreign key (EVENT_ADMIN_ID) references TBL_ADMIN(ADMIN_ID)
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 create table TBL_ALERT(
 	ALERT_ID int primary key,
@@ -84,7 +86,16 @@ create table TBL_ALERT(
 	DESCRIPTION int, /* int refferences enum */
 	
 	foreign key (TYPE_ID) references TBL_EVENT_TYPE(TYPE_ID)
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE TBL_EVENT_RSVP(
+	USER_ID INT,
+	EVENT_ID INT,
+	ATTENDING INT,
+	PRIMARY KEY(USER_ID, EVENT_ID),
+	FOREIGN KEY (USER_ID) REFERENCES TBL_USER(USER_ID),
+	FOREIGN KEY (EVENT_ID) REFERENCES TBL_EVENT(EVENT_ID)
+)DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /* inserts */
 /* TBL_ADDRESS */
@@ -154,6 +165,9 @@ values
 (2,'2017-08-31',2,4,'MObile blood drive event','Blood Drive',false,2, 3),
 (3,'2017-10-25',3,5,'College outreach and educational','College Outreach',true,3, 2),
 (4,'2016-06-29',4,6,'Corporate Internal administrative meeting','Corporate Private Event',true,4, 1);
+
+/* TBL_EVENT_RSVP */
+INSERT INTO TBL_EVENT_RSVP (USER_ID, EVENT_ID, ATTENDING) VALUES (1,1, 1), (2, 1, 1), (2, 2, 1), (2, 3, 0);
 
 /* views */
 CREATE OR REPLACE VIEW VIEW_CLINICSWADDRESS AS
