@@ -3,6 +3,7 @@ $_TITLE = "WPBTS - User Management";
 require_once("header.php");
 require_once('php/DBConn_Dave.php');
 include_once("users_functions.php");
+session_start();
 
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
@@ -23,6 +24,19 @@ include_once("users_functions.php");
             <h1 class="page-header">User Management</h1>
         </div>
     </div><!--/.row-->
+
+    <?php
+    if (isset($_SESSION['alert'])) {
+        ?>
+        <div class="alert <?php echo $_SESSION['alert']['message_type']; ?> alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <strong><?php echo $_SESSION['alert']["message_title"] ?></strong> <?php echo $_SESSION['alert']["message"] ?>
+        </div>
+        <?php
+        $_SESSION['alert'] = null;
+    }
+    ?>
 
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
@@ -85,7 +99,12 @@ include_once("users_functions.php");
                                 <td class="text-center"><?php echo $value['BLOOD_TYPE'] ?></td>
                                 <td class="text-center">
                                     <a href="users_viewuser.php?userID=<?php echo $value['USER_ID'] ?>"
-                                       class="btn btn-xs btn-primary">View / Edit User Record</a>
+                                       class="btn btn-xs btn-primary">Edit</a>
+                                    <a href="php/form-handler-user-remove.php?userID=<?php echo $value['USER_ID'] . "&addressID=" . $value['ADDRESS_ID'] ?>"
+                                       class="btn btn-xs btn-warning">Remove</a>
+                                    <a href="#;" data-id="1" class="viewclinic btn btn-xs btn-info">View</a>
+
+
                                 </td>
                             </tr>
                             <?php

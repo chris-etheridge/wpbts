@@ -5,8 +5,6 @@
 //Or delete the record from the database.
 
 session_start();
-
-
 $_TITLE = "WPBTS - User Management";
 require_once("header.php");
 require_once('php/DBConn_Dave.php');
@@ -38,27 +36,13 @@ include_once("address_functions.php");
     <?php
     //get the latest ID from the users table and use this for the new user. (+1)
     $userKey = getLastIDForTable() + 1;
-    echo $userKey;
-
-    if (isset($_SESSION['ALERT'])) {
-        ?>
-        <div class="alert <?php echo $_SESSION['alert']['message_type']; ?> alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                    aria-hidden="true">&times;</span></button>
-            <strong><?php echo $_SESSION['alert']["message_title"] ?></strong> <?php echo $_SESSION['alert']["message"] ?>
-        </div>
-        <?php
-        $_SESSION['ALERT'] = null;
-    }
-
     ?>
 
 
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
             <h3>User Details:</h3>
-
-            <form action="php/form-handler-user-createuser.php" method="post">
+            <form action="" method="get">
                 <div class="col-md-6">
                     <label>User ID</label>
                     <input required readonly type="text"

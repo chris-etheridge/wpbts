@@ -65,7 +65,6 @@ function createAddress($address)
     if ($stmt->execute() == false) {
         print_r($stmt->errorInfo());
         return false;
-        //issueError('113');
     }
     echo "address created";
     return $lastID;
