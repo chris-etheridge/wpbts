@@ -43,80 +43,77 @@ if (isset($_SESSION['USER'])) {
 
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
-            <h4>User Functions:</h4>
+            <h4>All Users</h4>
             <a href="users_createuser.php" class="btn btn-default btn-md">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add User
             </a>
         </div>
     </div>
-
-    <hr>
-
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
-            <h4>Users List:</h4>
-            <input type="text" id="myInput" onkeyup="filterSName()" on placeholder="Filter by surname"
-                   width='50%' class="col-md-4">
-            <input type="text" id="myInput2" onkeyup="filterDOB()" placeholder="Filter by date of birth"
-                   width='50%' class="col-md-4">
-            <input type="text" id="myInput3" onkeyup="filterBT()" placeholder="Filter by blood type"
-                   width='50%' class="col-md-4">
-            <div class="col-md-12">
+            <!--            <h4>Users List:</h4>-->
+            <!--            <input type="text" id="myInput" onkeyup="filterSName()" on placeholder="Filter by surname"-->
+            <!--                   width='50%' class="col-md-4">-->
+            <!--            <input type="text" id="myInput2" onkeyup="filterDOB()" placeholder="Filter by date of birth"-->
+            <!--                   width='50%' class="col-md-4">-->
+            <!--            <input type="text" id="myInput3" onkeyup="filterBT()" placeholder="Filter by blood type"-->
+            <!--                   width='50%' class="col-md-4">-->
+            <!--            <div class="col-md-12">-->
+
+            <?php
+            $userData = getAllUsers();
+
+            if ($userData[0] == false) {
+                //IF THE DATABASE HAD AN ERROR, SHOW HTML WITH MESSAGE
+                ?>
+                <div class="alert alert-danger" role="alert">
+                    <strong>DB Error:</strong> <?php echo $userData[1] ?>
+                </div>
+                <?php
+            }
+            ?>
+            <table data-toggle="table" data-search="true" data-pagination="true">
+                <thead>
+                <th class="text-center">User ID</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Surname</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Phone</th>
+                <th class="text-center">DOB</th>
+                <th class="text-center">Blood Type</th>
+                <th class="text-center">Options</th>
+                </thead>
 
                 <?php
-                $userData = getAllUsers();
-
-                if ($userData[0] == false) {
-                    //IF THE DATABASE HAD AN ERROR, SHOW HTML WITH MESSAGE
-                    ?>
-                    <div class="alert alert-danger" role="alert">
-                        <strong>DB Error:</strong> <?php echo $userData[1] ?>
-                    </div>
-                    <?php
+                $count = 0;
+                if ($userData[0] == true) {
+                    foreach ($userData[1] as $value) {
+                        ?>
+                        <tr class="<?php if ($count % 2 == 0) echo "odd" ?>">
+                            <td class="text-center"><?php echo $value['USER_ID'] ?></td>
+                            <td class="text-center"><?php echo $value['FIRST_NAME'] ?></td>
+                            <td class="text-center"><?php echo $value['LAST_NAME'] ?></td>
+                            <td class="text-center"><?php echo $value['EMAIL'] ?></td>
+                            <td class="text-center"><?php echo $value['PHONE'] ?></td>
+                            <td class="text-center"><?php echo $value['DATE_OF_BIRTH'] ?></td>
+                            <td class="text-center"><?php echo $value['BLOOD_TYPE'] ?></td>
+                            <td class="text-center">
+                                <a href="users_viewuser.php?userID=<?php echo $value['USER_ID'] ?>"
+                                   class="btn btn-xs btn-primary">Edit</a>
+                                <a href="php/form-handler-user-remove.php?userID=<?php echo $value['USER_ID'] . "&addressID=" . $value['ADDRESS_ID'] ?>"
+                                   class=" btn btn-xs btn-warning">Remove</a>
+                                <a href="#;" data-id="1" class="viewclinic btn btn-xs btn-info">View</a>
+                            </td>
+                        </tr>
+                        <?php
+                        $count++;
+                    }
                 }
                 ?>
-                <table id="usersTable" class="custom-table table-bordered" width='100%'>
-                    <thead>
-                    <th class="text-center">User ID</th>
-                    <th class="text-center">Name</th>
-                    <th class="text-center">Surname</th>
-                    <th class="text-center">Email</th>
-                    <th class="text-center">Phone</th>
-                    <th class="text-center">DOB</th>
-                    <th class="text-center">Blood Type</th>
-                    <th class="text-center">Options</th>
-                    </thead>
-
-                    <?php
-                    $count = 0;
-                    if ($userData[0] == true) {
-                        foreach ($userData[1] as $value) {
-                            ?>
-                            <tr class="<?php if ($count % 2 == 0) echo "odd" ?>">
-                                <td class="text-center"><?php echo $value['USER_ID'] ?></td>
-                                <td class="text-center"><?php echo $value['FIRST_NAME'] ?></td>
-                                <td class="text-center"><?php echo $value['LAST_NAME'] ?></td>
-                                <td class="text-center"><?php echo $value['EMAIL'] ?></td>
-                                <td class="text-center"><?php echo $value['PHONE'] ?></td>
-                                <td class="text-center"><?php echo $value['DATE_OF_BIRTH'] ?></td>
-                                <td class="text-center"><?php echo $value['BLOOD_TYPE'] ?></td>
-                                <td class="text-center">
-                                    <a href="users_viewuser.php?userID=<?php echo $value['USER_ID'] ?>"
-                                       class="btn btn-xs btn-primary">Edit</a>
-                                    <a href="php/form-handler-user-remove.php?userID=<?php echo $value['USER_ID'] . "&addressID=" . $value['ADDRESS_ID'] ?>"
-                                       class=" btn btn-xs btn-warning">Remove</a>
-                                    <a href="#;" data-id="1" class="viewclinic btn btn-xs btn-info">View</a>
-                                </td>
-                            </tr>
-                            <?php
-                            $count++;
-                        }
-                    }
-                    ?>
-                </table>
-            </div>
+            </table>
         </div>
     </div>
+</div>
 </div>
 </div>
 </div>
