@@ -10,7 +10,7 @@
 <link href="css/styles.css" rel="stylesheet">
 <link href="css/custom-table-styles.css" rel="stylesheet">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.css">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">        
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <!--Icons-->
 <script src="js/lumino.glyphs.js"></script>
@@ -42,16 +42,17 @@
 					</li>
 				</ul>
 			</div>
-							
+
 		</div><!-- /.container-fluid -->
 	</nav>
-		
+
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<ul class="nav menu">
                         <li class="<?php if(isset($_PARENT['events'])){ echo "active"; } ?>"><a href="events.php"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Event Management</a></li>
 			<li class="<?php if(isset($_PARENT['clinics'])){ echo "active"; } ?>"><a href="clinics.php"><svg class="glyph stroked clipboard-with-paper"><use xlink:href="#stroked-clipboard-with-paper"></use></svg> Clinic Management</a></li>
 			<li class="<?php if(isset($_PARENT['users'])){ echo "active"; } ?>"><a href="users.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> User Management</a></li>
-			
+			<li class="<?php if(isset($_PARENT['users'])){ echo "active"; } ?>"><a href="alerts.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Alert Management</a></li>
+
 			<li role="presentation" class="divider"></li>
 			<li><a href="login.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
 		</ul>
