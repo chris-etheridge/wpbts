@@ -28,8 +28,8 @@ $_SESSION['USER']['CITY'] = $_POST['CITY'];
 $_SESSION['USER']['PASSWORD'] = $_POST['PASSWORD'];
 $_SESSION['USER']['TITLE'] = $_POST['TITLE'];
 
-echo $_SESSION['FIRST_NAME'];
-echo $_SESSION['LAST_NAME'];
-echo $_SESSION['EMAIL'];
+echo $_SESSION['USER']['FIRST_NAME'];
+echo $_SESSION['USER']['LAST_NAME'];
+echo $_SESSION['USER']['EMAIL'];
 
 ?>
