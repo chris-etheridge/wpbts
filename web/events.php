@@ -179,96 +179,103 @@ $arrPastEvents = getAllPastEvents($mysqli);
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
+                         <div class="row">
+                            <div class="col-sm-8 col-sm-offset-2 text-center" id="moEventImage">
+
+                            </div>
+                        </div>
+                        <br/>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Title</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moEventTitle"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Description</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moEventDescription"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Date</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moEventDate"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Type</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moEventType"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Urgency</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moEventUrgency"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Event Admin</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moEventAdmin"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Street No.</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moEventStreetNo"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Street</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moEventStreet"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Area</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moEventArea"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">City</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moEventCity"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Area Code</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moEventAreaCode"></span>
                             </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -288,18 +295,18 @@ $arrPastEvents = getAllPastEvents($mysqli);
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-xs-3">
                         <label class="control-label">Event</label>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-xs-9">
                         <span id="moEventTitle"></span>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-xs-3">
                         <label class="control-label">Date</label>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-xs-9">
                         <span id="moEventDate"></span>
                     </div>
                 </div>
@@ -325,34 +332,34 @@ $arrPastEvents = getAllPastEvents($mysqli);
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">User ID</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">First Name</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moUserFirstName"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Last Name</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moUserLastName"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Phone</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moUserPhone"></span>
                             </div>
                         </div>
@@ -468,6 +475,7 @@ $arrPastEvents = getAllPastEvents($mysqli);
             $('#modal-view-event .modal-body #moEventArea').html(objEvent.area);
             $('#modal-view-event .modal-body #moEventCity').html(objEvent.city);
             $('#modal-view-event .modal-body #moEventAreaCode').html(objEvent.area_code);
+            $('#modal-view-event .modal-body #moEventImage').html('<img class="media-object img-responsive" src="img/events/' + objEvent.event_id + '.jpg" alt="">');
             
             $('#modal-view-event').modal('show', {backdrop: 'static'});
 
@@ -528,18 +536,18 @@ $arrPastEvents = getAllPastEvents($mysqli);
                     if(rsvp.event_id === uid.toString())
                     {
                         window.console&&console.log(rsvp.first_name);
-                        html += '<div class="row"><div class="col-md-3"><label class="control-label">User ID</label></div><div class="col-md-9"><span>' + rsvp.user_id +'</span></div></div>';
-                        html += '<div class="row"><div class="col-md-3"><label class="control-label">First Name</label></div><div class="col-md-9"><span>' + rsvp.first_name +'</span></div></div>';
-                        html += '<div class="row"><div class="col-md-3"><label class="control-label">Last Name</label></div><div class="col-md-9"><span>' + rsvp.last_name +'</span></div></div>';
-                        html += '<div class="row"><div class="col-md-3"><label class="control-label">Phone ID</label></div><div class="col-md-9"><span>' + rsvp.phone +'</span></div></div>';
-                        html += '<div class="row"><div class="col-md-3"><label class="control-label">E-mail</label></div><div class="col-md-9"><span>' + rsvp.email +'</span></div></div>';
+                        html += '<div class="row"><div class="col-xs-3"><label class="control-label">User ID</label></div><div class="col-xs-9"><span>' + rsvp.user_id +'</span></div></div>';
+                        html += '<div class="row"><div class="col-xs-3"><label class="control-label">First Name</label></div><div class="col-xs-9"><span>' + rsvp.first_name +'</span></div></div>';
+                        html += '<div class="row"><div class="col-xs-3"><label class="control-label">Last Name</label></div><div class="col-xs-9"><span>' + rsvp.last_name +'</span></div></div>';
+                        html += '<div class="row"><div class="col-xs-3"><label class="control-label">Phone ID</label></div><div class="col-xs-9"><span>' + rsvp.phone +'</span></div></div>';
+                        html += '<div class="row"><div class="col-xs-3"><label class="control-label">E-mail</label></div><div class="col-xs-9"><span>' + rsvp.email +'</span></div></div>';
                         if(parseInt(rsvp.attending) === 0) //not attending
                         {
-                            html += '<div class="row"><div class="col-md-3"><label class="control-label">Attending</label></div><div class="col-md-9"><span class="label label-warning">Not Attending</span></div></div>';
+                            html += '<div class="row"><div class="col-xs-3"><label class="control-label">Attending</label></div><div class="col-xs-9"><span class="label label-warning">Not Attending</span></div></div>';
                         }
                         else
                         {
-                            html += '<div class="row"><div class="col-md-3"><label class="control-label">Attending</label></div><div class="col-md-9"><span class="label label-success">Attending</span></div></div>';
+                            html += '<div class="row"><div class="col-xs-3"><label class="control-label">Attending</label></div><div class="col-xs-9"><span class="label label-success">Attending</span></div></div>';
                         }
                         html += '<div class="row"><div class="col-md-12"><span class="divider">_____________________________________</span></div></div><br/>';
                     }

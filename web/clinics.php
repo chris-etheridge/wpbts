@@ -116,74 +116,80 @@ $arrClinics = getAllClinics($mysqli);
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-sm-8 col-sm-offset-2 text-center" id="moClinicImage">
+
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-3">
                                 <label class="control-label">Clinic ID</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moClinicID"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Description</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moClinicDescription"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Contact No. 1</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moClinicContact1"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Contact No. 1</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moClinicContact2"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Street No.</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moClinicStreetNo"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Street</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moClinicStreet"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Area</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moClinicArea"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">City</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moClinicCity"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-3">
                                 <label class="control-label">Area Code</label>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-xs-9">
                                 <span id="moClinicAreaCode"></span>
                             </div>
                         </div>
@@ -208,18 +214,18 @@ $arrClinics = getAllClinics($mysqli);
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-xs-3">
                         <label class="control-label">Clinic</label>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-xs-9">
                         <span id="moClinicDescription"></span>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-xs-3">
                         <label class="control-label">Clinic ID</label>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-xs-9">
                         <span id="moClinicID"></span>
                     </div>
                 </div>
@@ -288,6 +294,7 @@ $arrClinics = getAllClinics($mysqli);
             $('#modal-view-clinic .modal-body #moClinicArea').html(objClinic.area);
             $('#modal-view-clinic .modal-body #moClinicCity').html(objClinic.city);
             $('#modal-view-clinic .modal-body #moClinicAreaCode').html(objClinic.area_code);
+            $('#modal-view-clinic .modal-body #moClinicImage').html('<img class="media-object img-responsive" src="img/clinics/' + objClinic.clinic_id + '.jpg" alt="">');
             
             $('#modal-view-clinic').modal('show', {backdrop: 'static'});
 
