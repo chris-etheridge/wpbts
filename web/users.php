@@ -3,6 +3,7 @@ $_TITLE = "WPBTS - User Management";
 require_once("header.php");
 require_once('php/DBConn_Dave.php');
 include_once("users_functions.php");
+
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 
@@ -26,8 +27,12 @@ include_once("users_functions.php");
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
             <h4>User Functions:</h4>
-            <button type="button" class="btn btn-xs btn-primary">Create New User</button>
-            <button type="button" class="btn btn-xs btn-primary">Refresh User List</button>
+            <a href="users_createuser.php" class="btn btn-default btn-md">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add User
+            </a>
+            <a href="create-event.php" class="btn btn-default btn-md">
+                <span class="glyphicon-refresh" aria-hidden="true"></span> Refresh List
+            </a>
         </div>
     </div>
 
@@ -82,7 +87,8 @@ include_once("users_functions.php");
                                 <td><?php echo $value['DATE_OF_BIRTH'] ?></td>
                                 <td><?php echo $value['BLOOD_TYPE'] ?></td>
                                 <td class="text-center">
-                                    <a href="users_viewuser.php?userID=<?php echo $value['USER_ID'] ?>">[View/Edit]</a>
+                                    <a href="users_viewuser.php?userID=<?php echo $value['USER_ID'] ?>"
+                                       class="btn btn-xs btn-primary">View / Edit User Record</a>
                                 </td>
                             </tr>
                             <?php
@@ -90,8 +96,6 @@ include_once("users_functions.php");
                         }
                     }
                     ?>
-
-
                 </table>
             </div>
         </div>
@@ -104,7 +108,6 @@ include_once("users_functions.php");
 </div>    <!--/.main-->
 
 <?php require_once('footer.php'); ?>
-
 <script>
     $('#calendar').datepicker({});
 

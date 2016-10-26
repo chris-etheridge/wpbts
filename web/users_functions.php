@@ -45,5 +45,34 @@ function getAllUsers()
     }
 }
 
+function doesUserExist($userEmail)
+{
+    global $dbConn;
+    $sql = "SELECT * FROM TBL_USER WHERE EMAIL = ?";
+    $stmt = $dbConn->prepare($sql);
+    $stmt->bindParam(1, $userEmail);
+    if ($stmt->execute()) {
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($res != null) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        echo "Error";
+    }
+}
+
+function getLastIDForTable($tableName = 'TBL_USER', $column = 'USER_ID')
+{
+    global $dbConn;
+    $sql = "select $column from $tableName ORDER BY $column DESC LIMIT 1";
+    $stmt = $dbConn->prepare($sql);
+    $stmt->execute();
+    $res = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $res[$column];
+
+}
+
 
 ?>
