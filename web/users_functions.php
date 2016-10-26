@@ -77,14 +77,10 @@ function getLastIDForTable($tableName = 'TBL_USER', $column = 'USER_ID')
 }
 
 
-function createUser($userData, $addressID)
+function createUser($userData)
 {
     global $dbConn;
-
-    $lastUserID = (int)getLastIDForTable("TBL_USER", "USER_ID") + 1;
-    $userData['PWD'] = sha1($userData['PWD']);
-    $userData['ADDRESS_ID'] = $addressID;
-
+    
     $sql = "INSERT INTO TBL_USER (USER_ID, FIRST_NAME, LAST_NAME, NATIONAL_ID, EMAIL,
         PHONE, BLOOD_TYPE, ADDRESS_ID, DATE_OF_BIRTH, TITLE,
         GENDER, LANGUAGE_PREF, PASSPORT_NUM, PWD)
@@ -93,8 +89,6 @@ function createUser($userData, $addressID)
             ?,?,?,?)";
 
     $stmt = $dbConn->prepare($sql);
-
-    echo $userData['PWD'];
 
     $stmt->bindParam(1, $userData['USER_ID']);
     $stmt->bindParam(2, $userData['FIRST_NAME']);
