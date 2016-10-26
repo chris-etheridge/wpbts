@@ -66,4 +66,23 @@ function getEvents($mysqli, $SQLString)
     return $events;
 }
 
-?>
+function rsvp($mysqli, $eventid, $attending, $userid)
+{
+    $sql = "INSERT INTO TBL_EVENT_RSVP (USER_ID, EVENT_ID, ATTENDING) "
+            . " VALUES ($userid, $eventid, $attending)"
+            . " ON DUPLICATE KEY UPDATE ATTENDING = VALUES(ATTENDING);";
+    
+    $action = ((int)$attending === 1) ? "attending" : "not attending";
+    
+    $QueryResult = $mysqli->query($sql);
+    $response;
+    if ($QueryResult == TRUE)
+    {
+        $response = array("code" => "400", "success" => true, "message" => "You are successfully $action the event.");
+    }
+    else
+    {
+        $response = array("code" => "445", "message" => "An unknown DB error occured: " . $mysqli->error);
+    }
+    return $response;
+}

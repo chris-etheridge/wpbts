@@ -93,6 +93,7 @@ $arrEvents = getAllUpcommingEvents($mysqli);
                                     <a href="edit-event.php?eventid=<?php echo $Row['event_id']; ?>" class="btn btn-xs btn-primary">Edit</a>
                                     <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="cancelevent btn btn-xs btn-warning">Toggle Cancel</a>
                                     <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewevent btn btn-xs btn-info">View</a>
+                                    <a href="#;" data-id="<?php echo $Row['clinic_id']; ?>" class="viewrsvps btn btn-xs btn-default">RSVP's</a>
                                 </td>
                             </tr>
                             <?php
