@@ -80,7 +80,7 @@ function getLastIDForTable($tableName = 'TBL_USER', $column = 'USER_ID')
 function createUser($userData)
 {
     global $dbConn;
-    
+
     $sql = "INSERT INTO TBL_USER (USER_ID, FIRST_NAME, LAST_NAME, NATIONAL_ID, EMAIL,
         PHONE, BLOOD_TYPE, ADDRESS_ID, DATE_OF_BIRTH, TITLE,
         GENDER, LANGUAGE_PREF, PASSPORT_NUM, PWD)
@@ -110,6 +110,21 @@ function createUser($userData)
     } else {
         return false;
     }
+}
+
+function deleteUser($userID)
+{
+
+    echo $userID;
+//    global $dbConn;
+//    $sql = "DELETE FROM TBL_USER WHERE USER_ID = ?";
+//    $stmt = $dbConn->prepare($sql);
+//    $stmt->bindParam(1, $userID);
+//    if ($stmt->execute()) {
+//        return true;
+//    } else {
+//        return false;
+//    }
 
 
 }

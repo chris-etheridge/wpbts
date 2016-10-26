@@ -35,8 +35,7 @@ if (isset($_SESSION['USER'])) {
         <div class="alert <?php echo $_SESSION['alert']['message_type']; ?> alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                     aria-hidden="true">&times;</span></button>
-            <strong><?php echo $_SESSION['alert']["message_title"] ?></strong> <?php echo $_SESSION['alert']["message"] ?>
-        </div>
+            <strong><?php echo $_SESSION['alert']["message_title"] ?></strong></div>
         <?php
         $_SESSION['alert'] = null;
     }
@@ -104,11 +103,9 @@ if (isset($_SESSION['USER'])) {
                                 <td class="text-center">
                                     <a href="users_viewuser.php?userID=<?php echo $value['USER_ID'] ?>"
                                        class="btn btn-xs btn-primary">Edit</a>
-                                    <a href="php/form-handler-user-remove.php?userID=<?php echo $value['USER_ID'] . "
-                                       class="btn btn-xs btn-warning">Remove</a>
+                                    <a href="php/form-handler-user-remove.php?userID=<?php echo $value['USER_ID'] . "addressID=" . $value['ADDRESS_ID'] ?>"
+                                       class=" btn btn-xs btn-warning">Remove</a>
                                     <a href="#;" data-id="1" class="viewclinic btn btn-xs btn-info">View</a>
-
-
                                 </td>
                             </tr>
                             <?php
