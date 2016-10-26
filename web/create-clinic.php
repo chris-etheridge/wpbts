@@ -46,11 +46,17 @@ require_once('php/DBConn.php');
 
     <div class="row">
         <div class="col-lg-12">            
-            <form role="form" action="php/form-handler-clinic-create.php" method="POST" class="form-horizontal">
+            <form role="form" action="php/form-handler-clinic-create.php" method="POST" class="form-horizontal" enctype="multipart/form-data">
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="control-label">Description</label>
                         <textarea required class="form-control" rows="6" name="description"><?php echo $_SESSION['clinic']['description']; ?></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label class="control-label">Select An Image</label>
+                        <input required type="file" name="fileToUpload">
                     </div>
                 </div>
                 <div class="form-group">

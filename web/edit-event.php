@@ -51,7 +51,7 @@ if(!isset($_SESSION['event']))
 
     <div class="row">
         <div class="col-lg-12">            
-                <form role="form" action="php/form-handler-event-edit.php" method="POST" class="form-horizontal">
+                <form role="form" action="php/form-handler-event-edit.php" method="POST" class="form-horizontal" enctype="multipart/form-data">
                 <div class="form-group">
                     <div class="col-sm-6">
                         <label>Event ID</label>
@@ -79,7 +79,7 @@ if(!isset($_SESSION['event']))
                         <div class="row">
                             <div class="col-sm-12">
                                 <label class="control-label">Date</label>
-                                <input required type="text" class="form-control daterange" id="eventdate" name="event_date" value="<?php echo $_SESSION['event']['event_date']; ?>">    
+                                <input required type="text" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" class="form-control daterange" id="eventdate" name="event_date" value="<?php echo $_SESSION['event']['event_date']; ?>">    
                             </div>
                         </div>
                         <div class="row">
@@ -144,6 +144,22 @@ if(!isset($_SESSION['event']))
                                 </select>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="control-label">Active</label>
+                                <select required type="text" class="form-control" name="active">
+                                    <option value='' disabled>Select one--</option>
+                                    <option <?php if((int)$_SESSION['event']['active'] === 1){ echo "selected"; } ?> value='1'>Active</option>
+                                    <option <?php if((int)$_SESSION['event']['active'] === 0){ echo "selected"; } ?> value='0'>Canceled</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="control-label">Select An Image</label>
+                                <input type="file" name="fileToUpload">
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-6">
                         <label class="control-label">Address</label>
@@ -173,7 +189,7 @@ if(!isset($_SESSION['event']))
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-6 text-right">
                         <br/>
-                        <button type="submit" class="btn btn-info">Save Event</button>
+                        <button type="submit" value="submit" id="submit" class="btn btn-info">Save Event</button>
                     </div>
                 </div>
             </form>

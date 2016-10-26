@@ -46,7 +46,7 @@ require_once('php/DBConn.php');
 
     <div class="row">
         <div class="col-lg-12">            
-            <form role="form" action="php/form-handler-event-create.php" method="POST" class="form-horizontal">
+            <form role="form" action="php/form-handler-event-create.php" method="POST" class="form-horizontal" enctype="multipart/form-data">
                 <div class="form-group">
                     <div class="col-sm-6">
                         <label class="control-label">Creator ID</label>
@@ -70,7 +70,7 @@ require_once('php/DBConn.php');
                         <div class="row">
                             <div class="col-sm-12">
                                 <label class="control-label">Date</label>
-                                <input required type="text" class="form-control daterange" id="eventdate" name="event_date" value="<?php echo $_SESSION['event']['event_date']; ?>">    
+                                <input required readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" type="text" class="form-control daterange" id="eventdate" name="event_date" value="<?php echo $_SESSION['event']['event_date']; ?>">    
                             </div>
                         </div>
                         <div class="row">
@@ -133,6 +133,12 @@ require_once('php/DBConn.php');
                                     }
                                     ?>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="control-label">Select An Image</label>
+                                <input required type="file" name="fileToUpload">
                             </div>
                         </div>
                     </div>

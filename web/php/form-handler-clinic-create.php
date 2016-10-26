@@ -64,6 +64,7 @@ $sql = "INSERT INTO TBL_CLINIC (DESCRIPTION, CONTACT_1, CONTACT_2, ADDRESS_ID) "
             . " VALUES('$description', '$contact1', '$contact2', $insertedAddressID);";
 
 $mysqli->query($sql);
+$clinicid = $mysqli->insert_id;
 
 if($mysqli->error) //redirect user to edit/create page
 {
@@ -72,6 +73,65 @@ if($mysqli->error) //redirect user to edit/create page
     $_SESSION['alert']['message'] = "Please review the clinic details. If problem persists, contact system administrator!" ;
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit();
+}
+
+//upload image
+if(isset($_FILES["fileToUpload"]) && $_FILES["fileToUpload"]['size'] > 0)
+{
+    $target_dir = "../img/clinics/";
+    $ext = pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION);
+    $target_file = $target_dir . $clinicid . "." .$ext;
+    $uploadOk = 1;
+    $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+    $rejectMessage = "";
+    // Check if image file is a actual image or fake image
+
+    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    if ($check !== false)
+    {
+        //echo "File is an image - " . $check["mime"] . ".";
+        $uploadOk = 1;
+    } else
+    {
+        $rejectMessage = "File is not an image.";
+        $uploadOk = 0;
+    }
+
+// Check file size
+    if ($_FILES["fileToUpload"]["size"] > 500000)
+    {
+        $rejectMessage = "Sorry, your file is too large.";
+        $uploadOk = 0;
+    }
+// Allow certain file formats
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif")
+    {
+        $rejectMessage = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+    }
+// Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0)
+    {
+        //echo "Sorry, your file was not uploaded.";
+        $_SESSION['alert']['message_type'] = "alert-warning";
+        $_SESSION['alert']['message_title'] = "Warning";
+        $_SESSION['alert']['message'] = "$rejectMessage Please Try again. If problem persists, contact system administrator!";
+        header('Location: ../events.php');
+        exit();
+    } else // if everything is ok, try to upload file
+    {
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file))
+        {
+            //echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
+        } else
+        {
+            $_SESSION['alert']['message_type'] = "alert-warning";
+            $_SESSION['alert']['message_title'] = "Warning";
+            $_SESSION['alert']['message'] = "There was an error uploading your image. Please try again! If problem persists, contact system administrator!";
+            header('Location: ../events.php');
+            exit();
+        }
+    }
 }
 
 
