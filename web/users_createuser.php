@@ -63,7 +63,7 @@ include_once("address_functions.php");
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
             <h3>User Details:</h3>
-            <form action="php/form-handler-user-createuser.php" method="POST">
+            <form action="php/form-handler-user-create.php" method="POST">
                 <div class="col-md-6">
                     <label>User ID</label>
                     <input required readonly type="text"
