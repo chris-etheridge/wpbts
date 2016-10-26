@@ -178,6 +178,7 @@ require_once('php/DBConn.php');
 <script>
     
     $("#eventdate").datepicker({dateFormat: "dd-mm-yy"}); //sets date picker format
+    $("#eventdate").datepicker("option", "minDate", 0);    //prevents past dates from being chosen
     
     function validateNumberIn(evt) {
         var theEvent = evt || window.event;

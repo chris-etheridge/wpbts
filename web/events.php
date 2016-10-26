@@ -9,6 +9,7 @@ session_start();
 
 //get upcoming events
 $arrEvents = getAllUpcommingEvents($mysqli);
+$arrPastEvents = getAllPastEvents($mysqli);
 ?>
 
 
@@ -69,7 +70,7 @@ $arrEvents = getAllUpcommingEvents($mysqli);
                         {
                             //$Row['EVENT_ID']
                             ?>
-                            <tr class="<?php if ($count % 2 !== 0) echo "odd"; ?>">
+                            <tr>
                                 <td class="text-center"><?php echo (int)$Row['event_id']; ?></td>
                                 <td class="text-center"><?php echo $Row['title']; ?></td>
                                 <td class="text-center"><span class="hidden">DD-MM-YYYY</span><?php echo $Row['event_date']; ?></td>
@@ -103,7 +104,54 @@ $arrEvents = getAllUpcommingEvents($mysqli);
                         {
                             ?>
                             <tr>
-                                <td colspan="4">No Upcoming Events</td>
+                                <td colspan="5">No Upcoming Events</td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row"> <!-- past events -->
+        <div class="col-md-12">
+            <h4>Past Events</h4>
+            <div class="row">
+                <div class="col-md-12">
+                    <table  data-toggle="table" data-search="true" data-pagination="true">
+                        <thead>
+                        <tr>
+                            <th class="text-center" data-sortable="true">Event ID</th>
+                            <th class="text-center" data-sortable="true">Title</th>
+                            <th class="text-center" data-sortable="true">Event Date</th>
+                            <th class="text-center">Options</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        foreach($arrPastEvents as $Row)
+                        {
+                            ?>
+                            <tr class="<?php if ($count % 2 !== 0) echo "odd"; ?>">
+                                <td class="text-center"><?php echo (int)$Row['event_id']; ?></td>
+                                <td class="text-center"><?php echo $Row['title']; ?></td>
+                                <td class="text-center"><span class="hidden">DD-MM-YYYY</span><?php echo $Row['event_date']; ?></td>
+                                <td class="text-center">
+                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewevent btn btn-xs btn-info">View</a>
+                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewrsvps btn btn-xs btn-default">RSVP's</a>
+                                </td>
+                            </tr>
+                            <?php
+                            $count++;
+                        }
+                        if(sizeof($arrPastEvents) === 0) 
+                        {
+                            ?>
+                            <tr>
+                                <td colspan="3">No Past Events</td>
                             </tr>
                             <?php
                         }
@@ -339,7 +387,7 @@ $arrEvents = getAllUpcommingEvents($mysqli);
             $('#sidebar-collapse').collapse('hide')
     })
     
-    var jsonEvents = <?php echo json_encode(getAllUpcommingEvents($mysqli)); ?>;
+    var jsonEvents = <?php echo json_encode(getAllEvents($mysqli)); ?>;
     
     var jsonAdmins = 
     <?php 
