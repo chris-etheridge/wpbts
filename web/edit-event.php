@@ -17,6 +17,27 @@ if(!isset($_SESSION['event']))
 {
     $_SESSION['event'] = getEvent($mysqli, $eventid)[0]; //first and only slot - 0
 }
+
+$creatorName = "";
+$admins = array();
+$sql = "SELECT * FROM TBL_ADMIN;";
+$QueryResult = $mysqli->query($sql);
+if ($QueryResult == TRUE)
+{
+    $count = 0;
+    while (($Row = $QueryResult->fetch_assoc()) !== NULL)
+    {
+        $admins[$count] = array();
+        $admins[$count]['admin_id'] = $Row['ADMIN_ID'];
+        $admins[$count]['first_name'] = $Row['FIRST_NAME'];
+        $admins[$count]['last_name'] = $Row['LAST_NAME'];
+        if((int)$_SESSION['event']['creator_id'] === (int)$Row['ADMIN_ID'])
+        {
+            $creatorName = $Row['FIRST_NAME'] . " " . $Row['LAST_NAME'];
+        }
+        $count++;
+    }
+}
     
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main"><!--.main-->
@@ -52,144 +73,154 @@ if(!isset($_SESSION['event']))
     <div class="row">
         <div class="col-lg-12">            
                 <form role="form" action="php/form-handler-event-edit.php" method="POST" class="form-horizontal" enctype="multipart/form-data">
-                <div class="form-group">
-                    <div class="col-sm-6">
-                        <label>Event ID</label>
-                        <input required readonly type="text" class="form-control" name="event_id" value="<?php echo $_SESSION['event']['event_id']; ?>">
-                    </div>
-                    <div class="col-sm-6">
-                        <label class="control-label">Creator ID</label>
-                        <input required readonly type="text" class="form-control" name="creator_id" value="<?php echo $_SESSION['event']['creator_id']; ?>">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label class="control-label">Title</label>
-                        <input required type="text" class="form-control" name="title" value="<?php echo $_SESSION['event']['title']; ?>">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label class="control-label">Description</label>
-                        <textarea required class="form-control" rows="6" name="description"><?php echo $_SESSION['event']['description']; ?></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-6">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <label class="control-label">Date</label>
-                                <input required type="text" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" class="form-control daterange" id="eventdate" name="event_date" value="<?php echo $_SESSION['event']['event_date']; ?>">    
-                            </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <div class="col-sm-12">
+                            <label>Event ID</label>
+                            <input required readonly type="text" class="form-control" name="event_id" value="<?php echo $_SESSION['event']['event_id']; ?>">
                         </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <label class="control-label">Type</label>
-                                <select required type="text" class="form-control" name="type_id">
-                                    <?php
-                                    {
-                                        $sql = "SELECT * FROM TBL_EVENT_TYPE;";
-                                        $QueryResult = $mysqli->query($sql);
-                                        if ($QueryResult == TRUE)
+                        <div class="col-sm-12">
+                            <label class="control-label">Creator ID</label>
+                            <input required readonly type="text" class="form-control" name="creator_id" value="<?php echo $creatorName; ?>"
+                            >
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="control-label">Title</label>
+                            <input required type="text" class="form-control" name="title" value="<?php echo $_SESSION['event']['title']; ?>">
+                        </div>
+                    </div>
+                
+                    <div class="form-group col-sm-6">
+                        <div class="text-center form-image">
+                            <span><img class="media-object img-responsive" src="img/events/<?php echo $_SESSION['event']['event_id']; ?>.jpg" alt=""/></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        <div class="col-sm-12">
+                            <label class="control-label">Description</label>
+                            <textarea required class="form-control" rows="6" name="description"><?php echo $_SESSION['event']['description']; ?></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label class="control-label">Date</label>
+                                    <input required type="text" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" class="form-control daterange" id="eventdate" name="event_date" value="<?php echo $_SESSION['event']['event_date']; ?>">    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label class="control-label">Type</label>
+                                    <select required type="text" class="form-control" name="type_id">
+                                        <?php
                                         {
-                                            ?>
-                                                <option value='' disabled>Select one--</option>
-                                            <?php
-                                            while (($Row = $QueryResult->fetch_assoc()) !== NULL)
+                                            $sql = "SELECT * FROM TBL_EVENT_TYPE;";
+                                            $QueryResult = $mysqli->query($sql);
+                                            if ($QueryResult == TRUE)
                                             {
                                                 ?>
-                                                    <option <?php if($_SESSION['event']['type_id'] === $Row['TYPE_ID']){ echo "selected"; } ?> value='<?php echo $Row['TYPE_ID']; ?>'><?php echo $Row['URGENCY'] . " - " . $Row['DESCRIPTION']; ?></option>
+                                                    <option value='' disabled>Select one--</option>
+                                                <?php
+                                                while (($Row = $QueryResult->fetch_assoc()) !== NULL)
+                                                {
+                                                    ?>
+                                                        <option <?php if($_SESSION['event']['type_id'] === $Row['TYPE_ID']){ echo "selected"; } ?> value='<?php echo $Row['TYPE_ID']; ?>'><?php echo $Row['URGENCY'] . " - " . $Row['DESCRIPTION']; ?></option>
+                                                    <?php
+                                                }
+                                            }
+                                            else
+                                            {
+                                                ?>
+                                                    <option selected disabled>Could not load list</option>
                                                 <?php
                                             }
                                         }
-                                        else
-                                        {
-                                            ?>
-                                                <option selected disabled>Could not load list</option>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>                    
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <label class="control-label">Event Admin</label>
-                                <select required type="text" class="form-control" name="event_admin">
-                                    <?php
-                                    {
-                                        $sql = "SELECT * FROM TBL_ADMIN;";
-                                        $QueryResult = $mysqli->query($sql);
-                                        if ($QueryResult == TRUE)
-                                        {
-                                            ?>
-                                                <option value='' disabled>Select one--</option>
-                                            <?php
-                                            while (($Row = $QueryResult->fetch_assoc()) !== NULL)
+                                        ?>
+                                    </select>
+                                </div>                    
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label class="control-label">Event Admin</label>
+                                    <select required type="text" class="form-control" name="event_admin">
+                                        <?php 
+                                            if(sizeof($admins) > 0)
                                             {
                                                 ?>
-                                                    <option <?php if($_SESSION['event']['event_admin'] === $Row['ADMIN_ID']){ echo "selected"; } ?> value='<?php echo $Row['ADMIN_ID']; ?>'><?php echo $Row['FIRST_NAME'] . " " . $Row['LAST_NAME']; ?></option>
+                                                    <option value='' disabled>Select one--</option>
                                                 <?php
                                             }
-                                        }
-                                        else
-                                        {
-                                            ?>
-                                                <option selected disabled>Could not load list</option>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
-                                </select>
+                                            else
+                                            {
+                                                ?>
+                                                    <option selected disabled>Could not load list</option>
+                                                <?php
+                                            }
+                                            foreach ($admins as $Row)
+                                            {
+                                                ?>
+                                                    <option <?php if($_SESSION['event']['event_admin'] === $Row['admin_id']){ echo "selected"; } ?> value='<?php echo $Row['admin_id']; ?>'><?php echo $Row['first_name'] . " " . $Row['last_name']; ?></option>
+                                                <?php
+                                            }
+                                        ?>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label class="control-label">Active</label>
+                                    <select required type="text" class="form-control" name="active">
+                                        <option value='' disabled>Select one--</option>
+                                        <option <?php if((int)$_SESSION['event']['active'] === 1){ echo "selected"; } ?> value='1'>Active</option>
+                                        <option <?php if((int)$_SESSION['event']['active'] === 0){ echo "selected"; } ?> value='0'>Canceled</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label class="control-label">Select An Image</label>
+                                    <input type="file" name="fileToUpload">
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <label class="control-label">Active</label>
-                                <select required type="text" class="form-control" name="active">
-                                    <option value='' disabled>Select one--</option>
-                                    <option <?php if((int)$_SESSION['event']['active'] === 1){ echo "selected"; } ?> value='1'>Active</option>
-                                    <option <?php if((int)$_SESSION['event']['active'] === 0){ echo "selected"; } ?> value='0'>Canceled</option>
-                                </select>
+                        <div class="col-sm-6">
+                            <label class="control-label">Address</label>
+                            <input type="hidden" name="address_id" value="<?php echo $_SESSION['event']['address_id']; ?>">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Street Number</label>
+                                <div class="col-sm-9"><input onkeypress="validateNumberIn(event)" required type="number" class="form-control" name="street_no" value="<?php echo $_SESSION['event']['street_no']; ?>"></div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <label class="control-label">Select An Image</label>
-                                <input type="file" name="fileToUpload">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Street</label>
+                                <div class="col-sm-9"><input required type="text" class="form-control" name="street" value="<?php echo $_SESSION['event']['street']; ?>"></div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <label class="control-label">Address</label>
-                        <input type="hidden" name="address_id" value="<?php echo $_SESSION['event']['address_id']; ?>">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Street Number</label>
-                            <div class="col-sm-9"><input onkeypress="validateNumberIn(event)" required type="number" class="form-control" name="street_no" value="<?php echo $_SESSION['event']['street_no']; ?>"></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Street</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="street" value="<?php echo $_SESSION['event']['street']; ?>"></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Suburb</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="area" value="<?php echo $_SESSION['event']['area']; ?>"></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">City</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="city" value="<?php echo $_SESSION['event']['city']; ?>"></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Zip Code</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="area_code" value="<?php echo $_SESSION['event']['area_code']; ?>"></div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Suburb</label>
+                                <div class="col-sm-9"><input required type="text" class="form-control" name="area" value="<?php echo $_SESSION['event']['area']; ?>"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">City</label>
+                                <div class="col-sm-9"><input required type="text" class="form-control" name="city" value="<?php echo $_SESSION['event']['city']; ?>"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Zip Code</label>
+                                <div class="col-sm-9"><input required type="text" class="form-control" name="area_code" value="<?php echo $_SESSION['event']['area_code']; ?>"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-6 col-md-offset-6 text-right">
-                        <br/>
-                        <button type="submit" value="submit" id="submit" class="btn btn-info">Save Event</button>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        <div class="col-md-6 col-md-offset-6 text-right">
+                            <br/>
+                            <button type="submit" value="submit" id="submit" class="btn btn-info">Save Event</button>
+                        </div>
                     </div>
                 </div>
             </form>

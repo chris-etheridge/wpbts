@@ -52,22 +52,31 @@ if(!isset($_SESSION['clinic']))
     <div class="row">
         <div class="col-lg-12">            
                 <form role="form" action="php/form-handler-clinic-edit.php" method="POST" class="form-horizontal" enctype="multipart/form-data">
-                <div class="form-group">
+                <div class="row">
                     <div class="col-sm-6">
-                        <label>Clinic ID</label>
-                        <input required readonly type="text" class="form-control" name="clinic_id" value="<?php echo $_SESSION['clinic']['clinic_id']; ?>">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label>Clinic ID</label>
+                                <input required readonly type="text" class="form-control" name="clinic_id" value="<?php echo $_SESSION['clinic']['clinic_id']; ?>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label class="control-label">Description</label>
+                                <textarea required class="form-control" rows="6" name="description"><?php echo $_SESSION['clinic']['description']; ?></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label class="control-label">Select An Image</label>
+                                <input type="file" name="fileToUpload">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label class="control-label">Description</label>
-                        <textarea required class="form-control" rows="6" name="description"><?php echo $_SESSION['clinic']['description']; ?></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <label class="control-label">Select An Image</label>
-                        <input type="file" name="fileToUpload">
+                    <div class="col-sm-6">
+                        <div class="text-center form-image">
+                            <span><img class="media-object img-responsive" src="img/clinics/<?php echo $_SESSION['clinic']['clinic_id']; ?>.jpg" alt=""/></span>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
