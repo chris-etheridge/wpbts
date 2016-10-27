@@ -1,5 +1,6 @@
 <?php
 $_TITLE = "WPBTS - Create Clinic";
+$_PARENT['clinics'] = time();
 
 session_start();
 
