@@ -933,7 +933,10 @@ h1.page-header {
 	overflow: scroll;
 }
 
-
+.form-image  .img-responsive{
+    max-height: 280px;
+    margin: 0 auto;
+}
 
 
 
