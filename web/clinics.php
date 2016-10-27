@@ -78,8 +78,8 @@ $arrClinics = getAllClinics($mysqli);
                                 <td class="text-center"><?php echo $Row['contact_2']; ?></td>
                                 <td class="text-center">
                                     <a href="edit-clinic.php?clinicid=<?php echo $Row['clinic_id']; ?>" class="btn btn-xs btn-primary">Edit</a>
-                                    <a href="#;" data-id="<?php echo $Row['clinic_id']; ?>" class="removeclinic btn btn-xs btn-warning">Remove</a>
-                                    <a href="#;" data-id="<?php echo $Row['clinic_id']; ?>" class="viewclinic btn btn-xs btn-info">View</a>
+                                    <a href="#;" data-id="<?php echo $Row['clinic_id']; ?>" class="removeclinic btn btn-xs btn-warning"onclick="removeclinic(event)">Remove</a>
+                                    <a href="#;" data-id="<?php echo $Row['clinic_id']; ?>" class="viewclinic btn btn-xs btn-info" onclick="viewclinic(event)">View</a>
                                 </td>
                             </tr>
                             <?php
@@ -264,74 +264,71 @@ $arrClinics = getAllClinics($mysqli);
     var jsonClinics = <?php echo json_encode(getAllClinics($mysqli)); ?>;
       
     //view event modal
-    jQuery(function($){
-         $('a.viewclinic').click(function(ev){
-            ev.preventDefault();
-            window.console&&console.log('button clicked');
-            var uid = $(this).data('id');
-            
-            //get json object
+    function viewclinic(ev)
+    {
+        ev.preventDefault();
+        window.console&&console.log('button clicked');
+        var uid = ev.target.dataset.id;
 
-            var objClinic;
-            $.each(jsonClinics, function (i, item)
+        //get json object
+
+        var objClinic;
+        $.each(jsonClinics, function (i, item)
+        {
+            if (typeof item == 'object')
             {
-                if (typeof item == 'object')
+                if(item.clinic_id === uid.toString())
                 {
-                    if(item.clinic_id === uid.toString())
-                    {
-                        objClinic = item;
-                    }
+                    objClinic = item;
                 }
-            });
-            
-            $('#modal-view-clinic .modal-header .modal-title').html("Viewing: " + objClinic.clinic_id);
-            
-            $('#modal-view-clinic .modal-body #moClinicID').html(objClinic.clinic_id);
-            $('#modal-view-clinic .modal-body #moClinicDescription').html(objClinic.description);
-            $('#modal-view-clinic .modal-body #moClinicContact1').html(objClinic.contact_1);
-            $('#modal-view-clinic .modal-body #moClinicContact2').html(objClinic.contact_2);
-            $('#modal-view-clinic .modal-body #moClinicDescription').html(objClinic.description);
-            $('#modal-view-clinic .modal-body #moClinicStreetNo').html(objClinic.street_no);
-            $('#modal-view-clinic .modal-body #moClinicStreet').html(objClinic.street);
-            $('#modal-view-clinic .modal-body #moClinicArea').html(objClinic.area);
-            $('#modal-view-clinic .modal-body #moClinicCity').html(objClinic.city);
-            $('#modal-view-clinic .modal-body #moClinicAreaCode').html(objClinic.area_code);
-            $('#modal-view-clinic .modal-body #moClinicImage').html('<img class="media-object img-responsive" src="img/clinics/' + objClinic.clinic_id + '.jpg" alt="">');
-            
-            $('#modal-view-clinic').modal('show', {backdrop: 'static'});
+            }
+        });
 
-         });
-    });
+        $('#modal-view-clinic .modal-header .modal-title').html("Viewing: " + objClinic.clinic_id);
+
+        $('#modal-view-clinic .modal-body #moClinicID').html(objClinic.clinic_id);
+        $('#modal-view-clinic .modal-body #moClinicDescription').html(objClinic.description);
+        $('#modal-view-clinic .modal-body #moClinicContact1').html(objClinic.contact_1);
+        $('#modal-view-clinic .modal-body #moClinicContact2').html(objClinic.contact_2);
+        $('#modal-view-clinic .modal-body #moClinicDescription').html(objClinic.description);
+        $('#modal-view-clinic .modal-body #moClinicStreetNo').html(objClinic.street_no);
+        $('#modal-view-clinic .modal-body #moClinicStreet').html(objClinic.street);
+        $('#modal-view-clinic .modal-body #moClinicArea').html(objClinic.area);
+        $('#modal-view-clinic .modal-body #moClinicCity').html(objClinic.city);
+        $('#modal-view-clinic .modal-body #moClinicAreaCode').html(objClinic.area_code);
+        $('#modal-view-clinic .modal-body #moClinicImage').html('<img class="media-object img-responsive" src="img/clinics/' + objClinic.clinic_id + '.jpg" alt="">');
+
+        $('#modal-view-clinic').modal('show', {backdrop: 'static'});
+
+     }
     
     //cancel event confirmation dialog
-    jQuery(function($){
-         $('a.removeclinic').click(function(ev){
-            ev.preventDefault();
-            var uid = $(this).data('id');
-            
-            //get json object
+    function removeclinic(ev){
+        ev.preventDefault();
+        var uid = ev.target.dataset.id;
 
-            var objClinic;
-            $.each(jsonClinics, function (i, item)
+        //get json object
+
+        var objClinic;
+        $.each(jsonClinics, function (i, item)
+        {
+            if (typeof item == 'object')
             {
-                if (typeof item == 'object')
+                if(item.clinic_id === uid.toString())
                 {
-                    if(item.clinic_id === uid.toString())
-                    {
-                        objClinic = item;
-                    }
+                    objClinic = item;
                 }
-            });
-                    
-            $('#modal-remove-clinic .modal-body #moClinicID').html(objClinic.clinic_id);
-            $('#modal-remove-clinic .modal-body #moClinicDescription').html(objClinic.description);
-            $('#modal-remove-clinic .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/delete-clinic.php?clinic=" + objClinic.clinic_id + "'>Delete Clinic</a>");
-            
-            
-            $('#modal-remove-clinic').modal('show', {backdrop: 'static'});
+            }
+        });
 
-         });
-    });
+        $('#modal-remove-clinic .modal-body #moClinicID').html(objClinic.clinic_id);
+        $('#modal-remove-clinic .modal-body #moClinicDescription').html(objClinic.description);
+        $('#modal-remove-clinic .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/delete-clinic.php?clinic=" + objClinic.clinic_id + "'>Delete Clinic</a>");
+
+
+        $('#modal-remove-clinic').modal('show', {backdrop: 'static'});
+
+     }
 
     
 </script>

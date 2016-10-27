@@ -91,9 +91,9 @@ $arrPastEvents = getAllPastEvents($mysqli);
                                 </td>
                                 <td class="text-center">
                                     <a href="edit-event.php?eventid=<?php echo $Row['event_id']; ?>" class="btn btn-xs btn-primary">Edit</a>
-                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="cancelevent btn btn-xs btn-warning">Toggle Cancel</a>
-                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewevent btn btn-xs btn-info">View</a>
-                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewrsvps btn btn-xs btn-default">RSVP's</a>
+                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="cancelevent btn btn-xs btn-warning" onclick="cancelevent(event)">Toggle Cancel</a>
+                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewevent btn btn-xs btn-info" onclick="viewevent(event)">View</a>
+                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewrsvps btn btn-xs btn-default" onclick="viewrsvps(event)">RSVP's</a>
                                 </td>
                             </tr>
                             <?php
@@ -139,8 +139,8 @@ $arrPastEvents = getAllPastEvents($mysqli);
                                 <td class="text-center"><?php echo $Row['title']; ?></td>
                                 <td class="text-center"><span class="hidden">DD-MM-YYYY</span><?php echo $Row['event_date']; ?></td>
                                 <td class="text-center">
-                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewevent btn btn-xs btn-info">View</a>
-                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewrsvps btn btn-xs btn-default">RSVP's</a>
+                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewevent btn btn-xs btn-info" onclick="viewevent(event)">View</a>
+                                    <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewrsvps btn btn-xs btn-default" onclick="viewrsvps(event)">RSVP's</a>
                                 </td>
                             </tr>
                             <?php
@@ -442,122 +442,118 @@ $arrPastEvents = getAllPastEvents($mysqli);
     ?>
     
     //view event modal
-    jQuery(function($){
-         $('a.viewevent').click(function(ev){
-            ev.preventDefault();
-            var uid = $(this).data('id');
-            
-            //get json object
+    function viewevent(ev)
+    {
+        ev.preventDefault();
+        var uid = ev.target.dataset.id;
 
-            var objEvent;
-            $.each(jsonEvents, function (i, item)
+        //get json object
+
+        var objEvent;
+        $.each(jsonEvents, function (i, item)
+        {
+            if (typeof item == 'object')
             {
-                if (typeof item == 'object')
+                if(item.event_id === uid.toString())
                 {
-                    if(item.event_id === uid.toString())
-                    {
-                        objEvent = item;
-                    }
+                    objEvent = item;
                 }
-            });
-            
-            $('#modal-view-event .modal-header .modal-title').html("Viewing: " + objEvent.title);
-            
-            $('#modal-view-event .modal-body #moEventTitle').html(objEvent.title);
-            $('#modal-view-event .modal-body #moEventDescription').html(objEvent.description);
-            $('#modal-view-event .modal-body #moEventDate').html(objEvent.event_date);
-            $('#modal-view-event .modal-body #moEventType').html(objEvent.type_description);
-            $('#modal-view-event .modal-body #moEventUrgency').html(objEvent.urgency);
-            $('#modal-view-event .modal-body #moEventAdmin').html(jsonAdmins[objEvent.event_admin].first_name + " " + jsonAdmins[objEvent.event_admin].last_name);
-            $('#modal-view-event .modal-body #moEventStreetNo').html(objEvent.street_no);
-            $('#modal-view-event .modal-body #moEventStreet').html(objEvent.street);
-            $('#modal-view-event .modal-body #moEventArea').html(objEvent.area);
-            $('#modal-view-event .modal-body #moEventCity').html(objEvent.city);
-            $('#modal-view-event .modal-body #moEventAreaCode').html(objEvent.area_code);
-            $('#modal-view-event .modal-body #moEventImage').html('<img class="media-object img-responsive" src="img/events/' + objEvent.event_id + '.jpg" alt=""/>');
-            
-            $('#modal-view-event').modal('show', {backdrop: 'static'});
+            }
+        });
 
-         });
-    });
+        $('#modal-view-event .modal-header .modal-title').html("Viewing: " + objEvent.title);
+
+        $('#modal-view-event .modal-body #moEventTitle').html(objEvent.title);
+        $('#modal-view-event .modal-body #moEventDescription').html(objEvent.description);
+        $('#modal-view-event .modal-body #moEventDate').html(objEvent.event_date);
+        $('#modal-view-event .modal-body #moEventType').html(objEvent.type_description);
+        $('#modal-view-event .modal-body #moEventUrgency').html(objEvent.urgency);
+        $('#modal-view-event .modal-body #moEventAdmin').html(jsonAdmins[objEvent.event_admin].first_name + " " + jsonAdmins[objEvent.event_admin].last_name);
+        $('#modal-view-event .modal-body #moEventStreetNo').html(objEvent.street_no);
+        $('#modal-view-event .modal-body #moEventStreet').html(objEvent.street);
+        $('#modal-view-event .modal-body #moEventArea').html(objEvent.area);
+        $('#modal-view-event .modal-body #moEventCity').html(objEvent.city);
+        $('#modal-view-event .modal-body #moEventAreaCode').html(objEvent.area_code);
+        $('#modal-view-event .modal-body #moEventImage').html('<img class="media-object img-responsive" src="img/events/' + objEvent.event_id + '.jpg" alt=""/>');
+
+        $('#modal-view-event').modal('show', {backdrop: 'static'});
+
+    }
     
     //cancel event confirmation dialog
-    jQuery(function($){
-         $('a.cancelevent').click(function(ev){
-            ev.preventDefault();
-            var uid = $(this).data('id');
-            
-            //get json object
-            var objEvent;
-            $.each(jsonEvents, function (i, item)
-            {
-                if (typeof item == 'object')
-                {
-                    if(item.event_id === uid.toString())
-                    {
-                        objEvent = item;
-                    }
-                }
-            });
-            var status = (parseInt(objEvent.active) === 0) ? 1 : 0;
-            var cancelBtnTxt = "Cancel Event";
-            var cancelTitleTxt = "Are You Sure You Want To Cancel This Event?";
-            if(status === 1)
-            {
-                cancelBtnTxt = "Uncancel Event";
-                cancelTitleTxt = "Are You Sure You Want To Uncancel This Event?";
-            }
-            
-            $('#modal-cancel-event .modal-header .modal-title').html(cancelTitleTxt); 
-                    
-            $('#modal-cancel-event .modal-body #moEventTitle').html(objEvent.title);
-            $('#modal-cancel-event .modal-body #moEventDate').html(objEvent.event_date);
-            $('#modal-cancel-event .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/cancel-event.php?eventid=" + objEvent.event_id + "&cancel=" + status + "'>" + cancelBtnTxt +"</a>");
-            
-            
-            $('#modal-cancel-event').modal('show', {backdrop: 'static'});
+    function cancelevent(ev)
+    {
+        ev.preventDefault();
+        var uid = ev.target.dataset.id;
 
-         });
-    });
+        //get json object
+        var objEvent;
+        $.each(jsonEvents, function (i, item)
+        {
+            if (typeof item == 'object')
+            {
+                if(item.event_id === uid.toString())
+                {
+                    objEvent = item;
+                }
+            }
+        });
+        var status = (parseInt(objEvent.active) === 0) ? 1 : 0;
+        var cancelBtnTxt = "Cancel Event";
+        var cancelTitleTxt = "Are You Sure You Want To Cancel This Event?";
+        if(status === 1)
+        {
+            cancelBtnTxt = "Uncancel Event";
+            cancelTitleTxt = "Are You Sure You Want To Uncancel This Event?";
+        }
+
+        $('#modal-cancel-event .modal-header .modal-title').html(cancelTitleTxt); 
+
+        $('#modal-cancel-event .modal-body #moEventTitle').html(objEvent.title);
+        $('#modal-cancel-event .modal-body #moEventDate').html(objEvent.event_date);
+        $('#modal-cancel-event .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/cancel-event.php?eventid=" + objEvent.event_id + "&cancel=" + status + "'>" + cancelBtnTxt +"</a>");
+
+
+        $('#modal-cancel-event').modal('show', {backdrop: 'static'});
+    }
     
     //function to show users who have RSVP'd
-     jQuery(function($){
-         $('a.viewrsvps').click(function(ev){
-            ev.preventDefault();
-            var uid = $(this).data('id');
-            
-            //get json object
-            var html = "";
-            $.each(jsonRsvps, function (i, rsvp)
-            {
-                if (typeof rsvp == 'object')
-                {
-                    if(rsvp.event_id === uid.toString())
-                    {
-                        window.console&&console.log(rsvp.first_name);
-                        html += '<div class="row"><div class="col-xs-3"><label class="control-label">User ID</label></div><div class="col-xs-9"><span>' + rsvp.user_id +'</span></div></div>';
-                        html += '<div class="row"><div class="col-xs-3"><label class="control-label">First Name</label></div><div class="col-xs-9"><span>' + rsvp.first_name +'</span></div></div>';
-                        html += '<div class="row"><div class="col-xs-3"><label class="control-label">Last Name</label></div><div class="col-xs-9"><span>' + rsvp.last_name +'</span></div></div>';
-                        html += '<div class="row"><div class="col-xs-3"><label class="control-label">Phone ID</label></div><div class="col-xs-9"><span>' + rsvp.phone +'</span></div></div>';
-                        html += '<div class="row"><div class="col-xs-3"><label class="control-label">E-mail</label></div><div class="col-xs-9"><span>' + rsvp.email +'</span></div></div>';
-                        if(parseInt(rsvp.attending) === 0) //not attending
-                        {
-                            html += '<div class="row"><div class="col-xs-3"><label class="control-label">Attending</label></div><div class="col-xs-9"><span class="label label-warning">Not Attending</span></div></div>';
-                        }
-                        else
-                        {
-                            html += '<div class="row"><div class="col-xs-3"><label class="control-label">Attending</label></div><div class="col-xs-9"><span class="label label-success">Attending</span></div></div>';
-                        }
-                        html += '<div class="row"><div class="col-md-12"><span class="divider">_____________________________________</span></div></div><br/>';
-                    }
-                }
-            });
-            $('#modal-view-rsvps .modal-body').html(html);          
-            
-            $('#modal-view-rsvps').modal('show', {backdrop: 'static'});
+    function viewrsvps(ev)
+    {
+        ev.preventDefault();
+        window.console&&console.log(ev.target.dataset.id);
+        var uid = ev.target.dataset.id;
 
-         });
-    });
+        //get json object
+        var html = "";
+        $.each(jsonRsvps, function (i, rsvp)
+        {
+            if (typeof rsvp == 'object')
+            {
+                if(rsvp.event_id === uid.toString())
+                {
+                    window.console&&console.log(rsvp.first_name);
+                    html += '<div class="row"><div class="col-xs-3"><label class="control-label">User ID</label></div><div class="col-xs-9"><span>' + rsvp.user_id +'</span></div></div>';
+                    html += '<div class="row"><div class="col-xs-3"><label class="control-label">First Name</label></div><div class="col-xs-9"><span>' + rsvp.first_name +'</span></div></div>';
+                    html += '<div class="row"><div class="col-xs-3"><label class="control-label">Last Name</label></div><div class="col-xs-9"><span>' + rsvp.last_name +'</span></div></div>';
+                    html += '<div class="row"><div class="col-xs-3"><label class="control-label">Phone ID</label></div><div class="col-xs-9"><span>' + rsvp.phone +'</span></div></div>';
+                    html += '<div class="row"><div class="col-xs-3"><label class="control-label">E-mail</label></div><div class="col-xs-9"><span>' + rsvp.email +'</span></div></div>';
+                    if(parseInt(rsvp.attending) === 0) //not attending
+                    {
+                        html += '<div class="row"><div class="col-xs-3"><label class="control-label">Attending</label></div><div class="col-xs-9"><span class="label label-warning">Not Attending</span></div></div>';
+                    }
+                    else
+                    {
+                        html += '<div class="row"><div class="col-xs-3"><label class="control-label">Attending</label></div><div class="col-xs-9"><span class="label label-success">Attending</span></div></div>';
+                    }
+                    html += '<div class="row"><div class="col-md-12"><span class="divider">_____________________________________</span></div></div><br/>';
+                }
+            }
+        });
+        $('#modal-view-rsvps .modal-body').html(html);          
+
+        $('#modal-view-rsvps').modal('show', {backdrop: 'static'});
+    }
 
     
 </script>
