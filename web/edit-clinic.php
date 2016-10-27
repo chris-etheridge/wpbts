@@ -5,11 +5,12 @@ if(!isset($_GET['clinicid']))
 {
     header("Location: clinics.php");
 }
+
+session_start();
+
 require_once("header.php");
 require_once('php/DBConn.php');
 require_once('api/clinics/functions.php');
-
-session_start();
 
 //get selected event info
 $clinicid = filter_var($_GET['clinicid'], FILTER_SANITIZE_STRING);

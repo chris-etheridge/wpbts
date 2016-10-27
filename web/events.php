@@ -1,11 +1,9 @@
 <?php
 $_TITLE = "WPBTS - Event Management";
-$_PARENT['events'] = time();
+
 require_once("header.php");
 require_once('php/DBConn.php');
 require_once('api/events/functions.php');
-session_start();
-
 
 //get upcoming events
 $arrEvents = getAllUpcommingEvents($mysqli);

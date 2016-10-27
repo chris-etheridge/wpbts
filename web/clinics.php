@@ -1,9 +1,10 @@
 <?php
 $_TITLE = "WPBTS - Clinic Management";
-$_PARENT['clinics'] = time();
+
 require_once("header.php");
 require_once('php/DBConn.php');
 require_once('api/clinics/functions.php');
+
 session_start();
 
 

@@ -1,12 +1,11 @@
 <?php
 $_TITLE = "WPBTS - Create Event";
 $_PARENT['events'] = time();
+
 session_start();
-$_SESSION['adminid'] = 1; //TODO FIX THIS AFTER AUTHENTICATION is implemented
-if(!isset($_SESSION['adminid']))
-{
-    header("Location: events.php");
-}
+
+$adminid = $_SESSION['AUTH_USER_ID'];
+
 
 require_once("header.php");
 require_once('php/DBConn.php');
@@ -50,7 +49,7 @@ require_once('php/DBConn.php');
                 <div class="form-group">
                     <div class="col-sm-6">
                         <label class="control-label">Creator ID</label>
-                        <input readonly required type="text" class="form-control" name="creator_id" value="<?php echo $_SESSION['adminid'] ?>">
+                        <input readonly required type="text" class="form-control" name="creator_id" value="<?php echo $adminid; ?>">
                     </div>
                 </div>
                 <div class="form-group">

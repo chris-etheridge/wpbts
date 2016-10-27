@@ -1,4 +1,14 @@
-
+<?php
+    session_start();
+    $adminid = $_SESSION['AUTH_USER_ID'];
+    if ($adminid == null) {
+        $_SESSION['alert']['message_type'] = "alert-danger";
+        $_SESSION['alert']['message_title'] = "Not logged in..";
+        $_SESSION['alert']['message'] = " Please authenticate to regain access";
+        header('Location: login.php');
+        exit();
+    }
+?>
 
 <!DOCTYPE html>
 <html>

@@ -1,12 +1,7 @@
 <?php
 $_TITLE = "WPBTS - Create Clinic";
-$_PARENT['clinics'] = time();
+
 session_start();
-$_SESSION['adminid'] = 1; //TODO FIX THIS AFTER AUTHENTICATION is implemented
-if(!isset($_SESSION['adminid']))
-{
-    header("Location: login.php");
-}
 
 require_once("header.php");
 require_once('php/DBConn.php');

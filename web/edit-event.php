@@ -5,11 +5,14 @@ if(!isset($_GET['eventid']))
 {
     header("Location: events.php");
 }
+
+session_start();
+
+$adminid = $_SESSION['AUTH_USER_ID'];
+
 require_once("header.php");
 require_once('php/DBConn.php');
 require_once('api/events/functions.php');
-
-session_start();
 
 //get selected event info
 $eventid = filter_var($_GET['eventid'], FILTER_SANITIZE_STRING);
