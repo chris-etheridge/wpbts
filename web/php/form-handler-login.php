@@ -14,7 +14,7 @@ $password = sha1($_POST['PASSWORD']);
 //echo "ORIG PASS:" . $password;
 
 global $dbConn;
-$sql = "SELECT USER_ID, PWD FROM TBL_USER WHERE EMAIL = ?";
+$sql = "SELECT ADMIN_ID, PASSWORD FROM TBL_ADMIN WHERE EMAIL = ?";
 $stmt = $dbConn->prepare($sql);
 $stmt->bindParam(1, $userEmail);
 
@@ -38,7 +38,7 @@ if ($stmt->execute() == false) {
     }
 
     //WRONG PASSWORD TEST
-    if ((strcmp($password, $res['PWD']) == 0) == false) {
+    if ((strcmp($password, $res['PASSWORD']) == 0) == false) {
         $_SESSION['alert']['message_type'] = "alert-danger";
         $_SESSION['alert']['message_title'] = "Login failed";
         $_SESSION['alert']['message'] = "The password was incorrect.";
@@ -46,7 +46,7 @@ if ($stmt->execute() == false) {
     } else {
 
         //LOGIN SUCCESS
-        $_SESSION['AUTH_USER_ID'] = $res['USER_ID'];
+        $_SESSION['AUTH_USER_ID'] = $res['ADMIN_ID'];
 
         if (isset($_POST['COOKKIE'])) {
             $cookie_name = 'EMAIL_COOKIE';

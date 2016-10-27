@@ -116,11 +116,12 @@ INSERT INTO TBL_ADDRESS VALUES( 14, 10, 'Bandrma', '1', 'Ap #421-8024 Consectetu
 INSERT INTO TBL_ADDRESS VALUES( 15, 10, 'Codognè', '3', '350-7576 Tincidunt Rd.', 'Veneto', 'XW7C 3HC', 2);
 
 /* TBL_ADMIN */
-INSERT INTO TBL_ADMIN VALUES( 1, 'eu.metus@nonhendreritid.ca', 'Timon', 'Oliver', '81dc9bdb52d04dc20036dbd8313ed055');
-INSERT INTO TBL_ADMIN VALUES( 2, 'et@diamPellentesque.co.uk', 'Yolanda', 'Jordan', '81dc9bdb52d04dc20036dbd8313ed056');
-INSERT INTO TBL_ADMIN VALUES( 3, 'Etiam.vestibulum.massa@cursus.org', 'Lacey', 'Watson', '81dc9bdb52d04dc20036dbd8313ed057');
-INSERT INTO TBL_ADMIN VALUES( 4, 'lobortis@loremutaliquam.net', 'Zenaida', 'Fitzgerald', '81dc9bdb52d04dc20036dbd8313ed058');
-INSERT INTO TBL_ADMIN VALUES( 5, 'ut.lacus@sit.co.uk', 'Kitra', 'Bass', '81dc9bdb52d04dc20036dbd8313ed059');
+INSERT INTO TBL_ADMIN VALUES( 1, 'eu.metus@nonhendreritid.ca', 'Timon', 'Oliver', 'e731a7b612ab389fcb7f973c452f33df3eb69c99');
+INSERT INTO TBL_ADMIN VALUES( 2, 'et@diamPellentesque.co.uk', 'Yolanda', 'Jordan', 'e731a7b612ab389fcb7f973c452f33df3eb69c99');
+INSERT INTO TBL_ADMIN VALUES( 3, 'Etiam.vestibulum.massa@cursus.org', 'Lacey', 'Watson', 'e731a7b612ab389fcb7f973c452f33df3eb69c99');
+INSERT INTO TBL_ADMIN VALUES( 4, 'lobortis@loremutaliquam.net', 'Zenaida', 'Fitzgerald', 'e731a7b612ab389fcb7f973c452f33df3eb69c99');
+INSERT INTO TBL_ADMIN VALUES( 5, 'ut.lacus@sit.co.uk', 'Kitra', 'Bass', 'e731a7b612ab389fcb7f973c452f33df3eb69c99');
+INSERT INTO TBL_ADMIN VALUES( 6, 'admin@live.co.za', 'Admin', 'Super', 'e731a7b612ab389fcb7f973c452f33df3eb69c99');
 
 /* TBL_USER */
 INSERT INTO TBL_USER VALUES( 1, 'Kyle', 'Burton', '9999999999999', 'kyle@live.co.za', '0229999999', 'O-', 6, '1995-02-03', 'Mr', 'M', 'English', '', 'e731a7b612ab389fcb7f973c452f33df3eb69c99');
