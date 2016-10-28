@@ -2,6 +2,7 @@
 $_TITLE = "WPBTS - User Management";
 require_once("header.php");
 require_once('php/DBConn_Dave.php');
+require_once('php/alerts_functions.php');
 include_once("users_functions.php");
 session_start();
 
@@ -14,7 +15,14 @@ if ($_SESSION['AUTH_USER_ID'] == null) {
     exit();
 }
 
-
+$exitingAlerst = getAllALerts();
+if ($exitingAlerst == false) {
+    $_SESSION['alert']['message_type'] = "alert-danger";
+    $_SESSION['alert']['message_title'] = "Unable to access alerts. ";
+    $_SESSION['alert']['message'] = " Check server logs.";
+} else {
+    var_dump($exitingAlerst);
+}
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
@@ -62,18 +70,14 @@ if ($_SESSION['AUTH_USER_ID'] == null) {
             <table data-toggle="table" data-search="true" data-pagination="true">
                 <thead>
                 <tr>
-                    <th class="text-center">User ID</th>
-                    <th class="text-center" data-sortable="true">Name</th>
-                    <th class="text-center" data-sortable="true">Surname</th>
-                    <th class="text-center">Email</th>
-                    <th class="text-center">Phone</th>
-                    <th class="text-center" data-sortable="true">DOB</th>
-                    <th class="text-center">Blood Type</th>
+                    <th class="text-center">Alert ID</th>
+                    <th class="text-center">Type ID</th>
+                    <th class="text-center">Title</th>
+                    <th class="text-center">Body</th>
+                    <th class="text-center">Description</th>
                     <th class="text-center">Options</th>
                 </tr>
                 </thead>
-
-
             </table>
         </div>
     </div>
