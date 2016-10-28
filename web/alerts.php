@@ -92,12 +92,10 @@ if (isset($_SESSION['ALERT'])) {
                         <td class="text-center"><?php echo $value['BODY'] ?></td>
                         <td class="text-center"><?php echo $value['DESCRIPTION'] ?></td>
                         <td class="text-center">
-                            <a href="edit-event.php?eventid=<?php echo $Row['event_id']; ?>"
-                               class="btn btn-xs btn-primary">Edit</a>
-                            <a href="#;" data-id="<?php echo $Row['event_id']; ?>"
+                            <a href="alerts_send.php?test=test&two=two"
+                               class="btn btn-xs btn-primary">Send</a>
+                            <a href=""
                                class="cancelevent btn btn-xs btn-warning" onclick="cancelevent(event)">Remove</a>
-                            <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewevent btn btn-xs btn-info"
-                               onclick="viewevent(event)">View</a>
                         </td>
                     </tr>
                     <?php

@@ -85,9 +85,7 @@ create table TBL_ALERT(
 	TYPE_ID int,
 	TITLE varchar(50),
 	BODY varchar(255),
-	DESCRIPTION varchar(255), /* JSON string for processing on the client side. */
-	
-	foreign key (TYPE_ID) references TBL_EVENT_TYPE(TYPE_ID)
+	DESCRIPTION varchar(255) /* JSON string for processing on the client side. */
 )DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 create table TBL_DEVICES(
