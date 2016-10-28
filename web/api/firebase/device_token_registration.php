@@ -9,6 +9,11 @@
  *
  */
 
+require_once("../../php/DBConn_Dave.php");
+//require_once("functions.php");
+global $dbConn;
+
+
 $receivedData = file_get_contents('php://input');
 
 $jsonString = json_decode($receivedData, true);
@@ -21,4 +26,13 @@ if ($jsonString == null) {
 $userEmail = $jsonString['EMAIL'];
 $userToken = $jsonString['TOKEN'];
 
-$sql = "";
+$sql = "INSERT INTO TBL_DEVICES (DEVICE_EMAIL, DEVICE_TOKEN) VALUES (?,?)";
+$stmt = $dbConn->prepare($sql);
+$stmt->bindParam(1, $userEmail);
+$stmt->bindParam(2, $userToken);
+
+if ($stmt->execute()) {
+    echo "112 - Success, device token registered";
+} else {
+    echo "111 - Error: " . print_r($stmt->errorInfo());
+}
