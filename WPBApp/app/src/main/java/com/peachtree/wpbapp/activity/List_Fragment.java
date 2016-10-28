@@ -14,6 +14,7 @@ import com.peachtree.wpbapp.entities.Event;
 import com.peachtree.wpbapp.layout_Handlers.List_Adapter;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class List_Fragment extends DialogFragment{
 
@@ -50,6 +51,7 @@ public class List_Fragment extends DialogFragment{
 				break;
 			case EVENT:
 				ArrayList<Event> events = new ArrayList<>();  //TO-DO Replace with DB call.
+				events.add(new Event(0,new Date(2016,3,2),"Test"));
 				results = events;
 				break;
 			default:

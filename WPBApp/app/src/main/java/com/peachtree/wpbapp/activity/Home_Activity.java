@@ -45,6 +45,10 @@ public class Home_Activity extends AppCompatActivity
 
 				NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 				navigationView.setNavigationItemSelectedListener(this);
+
+				if(fragmentManager.findFragmentByTag("embed") == null){
+					switchFragment(R.id.nav_event_list);
+				}
 			}
 
 
