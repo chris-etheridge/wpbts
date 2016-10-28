@@ -40,3 +40,16 @@ function createAlert($alertData)
 
     }
 }
+
+function getAllDevices()
+{
+    global $dbConn;
+    $sql = "SELECT * FROM TBL_DEVICES";
+    $stmt = $dbConn->prepare($sql);
+    if ($stmt->execute()) {
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        return false;
+    }
+
+}

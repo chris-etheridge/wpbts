@@ -22,10 +22,6 @@ if ($exitingAlerst == false) {
     $_SESSION['alert']['message'] = " Check server logs.";
 }
 
-if (isset($_SESSION['ALERT'])) {
-    $_SESSION['ALERT'] = null;
-}
-
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
@@ -51,7 +47,8 @@ if (isset($_SESSION['ALERT'])) {
         <div class="alert <?php echo $_SESSION['alert']['message_type']; ?> alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                     aria-hidden="true">&times;</span></button>
-            <strong><?php echo $_SESSION['alert']["message_title"] ?></strong></div>
+            <strong><?php echo $_SESSION['alert']["message_title"] ?></strong><?php echo $_SESSION['alert']["message"] ?>
+        </div>
         <?php
         $_SESSION['alert'] = null;
     }
@@ -60,7 +57,7 @@ if (isset($_SESSION['ALERT'])) {
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
             <h4>All Alerts</h4>
-            <a href="alerts_create.php" class="btn btn-default btn-md">
+            <a href="alerts_create.php" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create Alert
             </a>
         </div>

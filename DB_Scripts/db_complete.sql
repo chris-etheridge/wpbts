@@ -164,6 +164,12 @@ values
 (1,'Alert for low blood O-','We are short of O- blood, help the cause by donating blood today!','As per the body.'),
 (2,'Alert for low blood B+','We are short of B+ blood, help the cause by donating blood today!','As per the body.');
 
+insert into TBL_DEVICES
+(DEVICE_EMAIL, DEVICE_TOKEN)
+values
+('test@live.co.za','bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ');
+
+
 
 /* TBL_EVENT */
 insert into TBL_EVENT
