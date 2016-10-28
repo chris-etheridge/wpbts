@@ -21,7 +21,7 @@ if ($exitingAlerst == false) {
     $_SESSION['alert']['message_title'] = "Unable to access alerts. ";
     $_SESSION['alert']['message'] = " Check server logs.";
 } else {
-    var_dump($exitingAlerst);
+    
 }
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
@@ -57,7 +57,7 @@ if ($exitingAlerst == false) {
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
             <h4>All Alerts</h4>
-            <a href="users_createuser.php" class="btn btn-default btn-md">
+            <a href="php/form-handler-alert-create.php" class="btn btn-default btn-md">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create Alert
             </a>
         </div>
@@ -82,9 +82,21 @@ if ($exitingAlerst == false) {
                 <?php
                 foreach ($exitingAlerst as $value) {
                     ?>
-                        <tr>
-                            <td class="text-center"><?php echo $value['']?></td>
-                        </tr>
+                    <tr>
+                        <td class="text-center"><?php echo $value['ALERT_ID'] ?></td>
+                        <td class="text-center"><?php echo $value['TYPE_ID'] ?></td>
+                        <td class="text-center"><?php echo $value['TITLE'] ?></td>
+                        <td class="text-center"><?php echo $value['BODY'] ?></td>
+                        <td class="text-center"><?php echo $value['DESCRIPTION'] ?></td>
+                        <td class="text-center">
+                            <a href="edit-event.php?eventid=<?php echo $Row['event_id']; ?>"
+                               class="btn btn-xs btn-primary">Edit</a>
+                            <a href="#;" data-id="<?php echo $Row['event_id']; ?>"
+                               class="cancelevent btn btn-xs btn-warning" onclick="cancelevent(event)">Remove</a>
+                            <a href="#;" data-id="<?php echo $Row['event_id']; ?>" class="viewevent btn btn-xs btn-info"
+                               onclick="viewevent(event)">View</a>
+                        </td>
+                    </tr>
                     <?php
                 }
                 ?>

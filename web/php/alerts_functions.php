@@ -14,7 +14,7 @@ function getAllALerts()
     $sql = "SELECT * FROM TBL_ALERT";
     $stmt = $dbConn->prepare($sql);
     if ($stmt->execute()) {
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } else {
         return false;
     }
