@@ -20,3 +20,26 @@ function getAllALerts()
     }
 
 }
+
+function createAlert($alertData)
+{
+
+    var_dump($alertData);
+    die();
+
+//    global $dbConn;
+//    $sql = "INSERT INTO TBL_ALERT(TYPE_ID, TITLE, BODY, DESCRIPTION) VALUES(?,?,?,?)";
+//    $stmt = $dbConn->prepare($sql);
+//    $stmt->bindParam(1, $alertData['TYPE_ID']);
+//    $stmt->bindParam(2, $alertData['TITLE']);
+//    $stmt->bindParam(3, $alertData['BODY']);
+//    $stmt->bindParam(4, $alertData['DESCRIPTION']);
+//
+//    if ($stmt->execute()) {
+//        return true;
+//    } else {
+//        return false;
+//    }
+
+
+}
