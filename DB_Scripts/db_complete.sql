@@ -6,7 +6,8 @@ TBL_EVENT_TYPE,
 TBL_ADMIN, 
 TBL_CLINIC, 
 TBL_USER, 
-TBL_ADDRESS;
+TBL_ADDRESS,
+TBL_DEVICES;
 
 
 create table TBL_ADDRESS(
@@ -160,7 +161,7 @@ values
 
 /* TBL_ALERT */
 insert into TBL_ALERT
-(ALERT_ID,TYPE_ID, TITLE, DESCRIPTION)
+(ALERT_ID,TYPE_ID, TITLE,BODY,DESCRIPTION)
 values
 (1,1,'Alert for low blood O-','We are short of O- blood, help the cause by donating blood today!','As per the body.'),
 (2,2,'Alert for low blood B+','We are short of B+ blood, help the cause by donating blood today!','As per the body.');
