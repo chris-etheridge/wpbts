@@ -83,6 +83,7 @@ create table TBL_ALERT(
 	ALERT_ID int primary key,
 	TYPE_ID int,
 	TITLE varchar(50),
+	BODY varchar(255),
 	DESCRIPTION varchar(255), /* JSON string for processing on the client side. */
 	
 	foreign key (TYPE_ID) references TBL_EVENT_TYPE(TYPE_ID)
@@ -161,8 +162,8 @@ values
 insert into TBL_ALERT
 (ALERT_ID,TYPE_ID, TITLE, DESCRIPTION)
 values
-(1,1,'Alert for low blood O-',2),
-(2,2,'Alert for low blood B+', 2);
+(1,1,'Alert for low blood O-','We are short of O- blood, help the cause by donating blood today!','As per the body.'),
+(2,2,'Alert for low blood B+','We are short of B+ blood, help the cause by donating blood today!','As per the body.');
 
 
 /* TBL_EVENT */

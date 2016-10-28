@@ -72,12 +72,24 @@ if ($exitingAlerst == false) {
                 <tr>
                     <th class="text-center">Alert ID</th>
                     <th class="text-center">Type ID</th>
-                    <th class="text-center">Title</th>
+                    <th class="text-center" data-sortable="true">Title</th>
                     <th class="text-center">Body</th>
                     <th class="text-center">Description</th>
                     <th class="text-center">Options</th>
                 </tr>
                 </thead>
+
+                <?php
+                foreach ($exitingAlerst as $value) {
+                    ?>
+                        <tr>
+                            <td class="text-center"><?php echo $value['']?></td>
+                        </tr>
+                    <?php
+                }
+                ?>
+
+
             </table>
         </div>
     </div>
