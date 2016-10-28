@@ -83,9 +83,16 @@ create table TBL_ALERT(
 	ALERT_ID int primary key,
 	TYPE_ID int,
 	TITLE varchar(50),
-	DESCRIPTION int, /* int refferences enum */
+	DESCRIPTION varchar(255), /* JSON string for processing on the client side. */
 	
 	foreign key (TYPE_ID) references TBL_EVENT_TYPE(TYPE_ID)
+)DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+create table TBL_DEVICES(
+	DEVICE_ID int primary key AUTO_INCREMENT,
+	DEVICE_EMAIL varchar(255),
+	DEVICE_TOKEN varchar(255)
+
 )DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE TBL_EVENT_RSVP(

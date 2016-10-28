@@ -57,7 +57,7 @@ if ($_SESSION['AUTH_USER_ID'] == null) {
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
             <?php
-                //LETS GET ALL ALERTS FROM THE DB THAT HAVE BEEN SENT.
+            //LETS GET ALL ALERTS FROM THE DB THAT HAVE BEEN SENT.
             ?>
             <table data-toggle="table" data-search="true" data-pagination="true">
                 <thead>
