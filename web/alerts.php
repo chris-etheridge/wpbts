@@ -83,6 +83,7 @@ if (isset($_SESSION['ALERT'])) {
                 </thead>
 
                 <?php
+
                 foreach ($exitingAlerst as $value) {
                     ?>
                     <tr>
@@ -92,17 +93,15 @@ if (isset($_SESSION['ALERT'])) {
                         <td class="text-center"><?php echo $value['BODY'] ?></td>
                         <td class="text-center"><?php echo $value['DESCRIPTION'] ?></td>
                         <td class="text-center">
-                            <a href="alerts_send.php?test=test&two=two"
+                            <a href="alerts_send.php?title=<?php echo $value['TITLE'] . "&body=" . $value['BODY'] ?>"
                                class="btn btn-xs btn-primary">Send</a>
-                            <a href=""
+                            <a href="alerts_send.php?test=test"
                                class="cancelevent btn btn-xs btn-warning" onclick="cancelevent(event)">Remove</a>
                         </td>
                     </tr>
                     <?php
                 }
                 ?>
-
-
             </table>
         </div>
     </div>
