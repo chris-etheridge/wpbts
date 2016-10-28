@@ -81,7 +81,7 @@ create table TBL_EVENT(
 )DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 create table TBL_ALERT(
-	ALERT_ID int primary key,
+	ALERT_ID int primary key AUTO_INCREMENT,
 	TYPE_ID int,
 	TITLE varchar(50),
 	BODY varchar(255),
@@ -161,10 +161,10 @@ values
 
 /* TBL_ALERT */
 insert into TBL_ALERT
-(ALERT_ID,TYPE_ID, TITLE,BODY,DESCRIPTION)
+(TYPE_ID,TITLE,BODY,DESCRIPTION)
 values
-(1,1,'Alert for low blood O-','We are short of O- blood, help the cause by donating blood today!','As per the body.'),
-(2,2,'Alert for low blood B+','We are short of B+ blood, help the cause by donating blood today!','As per the body.');
+(1,'Alert for low blood O-','We are short of O- blood, help the cause by donating blood today!','As per the body.'),
+(2,'Alert for low blood B+','We are short of B+ blood, help the cause by donating blood today!','As per the body.');
 
 
 /* TBL_EVENT */
