@@ -1,9 +1,10 @@
 package com.peachtree.wpbapp.core;
 
-import android.graphics.drawable.Drawable;
+import com.peachtree.wpbapp.entities.Event;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -15,5 +16,11 @@ public class Util {
 		DateFormat format = new SimpleDateFormat("dd MMMM yyyy");
 
 		return format.format(date);
+	}
+
+	public ArrayList<Event> getEvents(){
+		ArrayList<Event> events = null;
+
+		return events;
 	}
 }
