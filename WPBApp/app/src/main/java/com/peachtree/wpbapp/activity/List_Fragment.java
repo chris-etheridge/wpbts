@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.peachtree.wpbapp.R;
 import com.peachtree.wpbapp.entities.Clinic;
@@ -67,7 +68,7 @@ public class List_Fragment extends DialogFragment{
 		View view = inflater.inflate(R.layout.event_list_layout, container, false);
 
 		ArrayList data=getListData();
-		if(data != null)
+		if(data != null && data.size() > 0)
 		{
 			ListView list = (ListView) view.findViewById(R.id.list);
 			switch (type)
@@ -78,6 +79,15 @@ public class List_Fragment extends DialogFragment{
 				case EVENT:
 					list.setAdapter(new List_Adapter(data, parent, List_Adapter.Type.Event));
 					break;
+			}
+			view.findViewById(R.id.TXT_Error).setVisibility(View.GONE);
+			view.findViewById(R.id.list).setVisibility(View.VISIBLE);
+		}else{
+			view.findViewById(R.id.TXT_Error).setVisibility(View.VISIBLE);
+			view.findViewById(R.id.list).setVisibility(View.GONE);
+
+			if(type == CLINIC){
+				((TextView)view.findViewById(R.id.TXT_Error)).setText("No Clinics Found.\nPlease check your network connection.");
 			}
 		}
 

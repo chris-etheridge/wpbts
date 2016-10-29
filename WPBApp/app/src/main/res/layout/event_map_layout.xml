@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.Event_Map_Fragment"
-    tools:showIn="@layout/event_map_coordinator">
+    >
 
 
     <TextView

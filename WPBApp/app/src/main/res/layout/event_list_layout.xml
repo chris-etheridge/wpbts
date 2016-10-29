@@ -51,13 +51,28 @@
     </LinearLayout>
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/list"
-        android:dividerHeight="1dp"
-        android:divider="@color/colorPrimaryDark"
-        android:drawSelectorOnTop="false"
-        android:background="@color/colorBG"
-        android:paddingTop="0dp"
-        android:layout_marginTop="1dp"/>
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/list"
+		android:dividerHeight="1dp"
+		android:divider="@color/colorPrimaryDark"
+		android:drawSelectorOnTop="false"
+		android:background="@color/colorBG"
+		android:paddingTop="0dp"
+		android:layout_marginTop="1dp"
+		android:layout_weight="1"/>
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:text="No Events Found"
+		android:id="@+id/TXT_Error"
+		android:layout_weight="1"
+		android:background="@color/colorBG"
+		android:textColor="@color/colorPrimaryDark"
+		android:textAlignment="gravity"
+		android:gravity="center"/>
+
+
 </LinearLayout>
