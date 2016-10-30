@@ -1,13 +1,20 @@
 package com.peachtree.wpbapp.Core;
 
 import android.location.Location;
+import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.peachtree.wpbapp.Core.impl.Core;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.peachtree.wpbapp.Entities.Event;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import cz.msebera.android.httpclient.Header;
+
 
 /**
  * Created by chrisetheridge on 10/30/16.
@@ -15,12 +22,10 @@ import java.util.Date;
 
 public class Events  {
 
-    private static String MULTIPLE_EVENTS_API_URL = "/api/events/view_events.php";
-    private static String SINGLE_EVENT_API_URL = "/api/events/view_event.php";
+    private static Networking API_HELPER;
 
-    public Events() {
-
-    }
+    private String MULTIPLE_EVENTS_API_URL = API_HELPER.GetApiBaseUrl() +  "/api/events/view_events.php";
+    private String SINGLE_EVENT_API_URL = API_HELPER.GetApiBaseUrl() +  "/api/events/view_event.php";
 
     public Event GetEventById(int id) {
         return new Event();
@@ -31,7 +36,26 @@ public class Events  {
     }
 
     public ArrayList<Event> GetAllEvents() {
-        return new ArrayList<Event>();
+        API_HELPER.Get(MULTIPLE_EVENTS_API_URL, null, new JsonHttpResponseHandler() {
+            @Override
+            public void onStart() {
+                Log.d("API", "Starting API request => " + MULTIPLE_EVENTS_API_URL);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // If the response is JSONObject instead of expected JSONArray
+                Log.d("API", response.toString());
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                Log.d("API", response.toString());
+            }
+
+        });
+
+        return new ArrayList<>();
     }
 
     public void GetAllEvents(AsyncHttpResponseHandler handler) {

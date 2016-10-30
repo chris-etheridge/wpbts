@@ -26,6 +26,14 @@ import java.util.Set;
  */
 public class Networking {
 
+    // TODO: change to server host
+    // your host MUST be your IP address on your network, it CANNOT be localhost/127.0.0.1
+    private static String INTERNAL_BASE_URL = "http://192.168.0.8:8888/web";
+
+    public static String GetApiBaseUrl() {
+        return INTERNAL_BASE_URL;
+    }
+
     private static AsyncHttpClient HTTP_CLIENT = new AsyncHttpClient();
 
     public static void Get(String url, RequestParams params, AsyncHttpResponseHandler response_handler) {

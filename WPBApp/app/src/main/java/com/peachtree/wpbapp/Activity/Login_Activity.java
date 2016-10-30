@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.peachtree.wpbapp.Entities.Event;
 import com.peachtree.wpbapp.R;
 import com.peachtree.wpbapp.Core.*;
 
@@ -24,6 +25,10 @@ public class Login_Activity extends AppCompatActivity
 		session_Account = null;
 		user = (TextView)findViewById(R.id.TXT_username);
 		password = (TextView)findViewById(R.id.TXT_password);
+
+		Events h = new Events();
+
+		h.GetAllEvents();
 	}
 
 	public void onLoginClick(View view){
