@@ -1,8 +1,11 @@
 <?php
 $_TITLE = "WPBTS - User Management";
+$_PARENT['users'] = time();
+
 require_once("header.php");
 require_once('php/DBConn_Dave.php');
 include_once("users_functions.php");
+
 session_start();
 
 if (isset($_SESSION['USER'])) {
@@ -80,7 +83,7 @@ if (isset($_SESSION['USER'])) {
                     <th class="text-center" data-sortable="true">Surname</th>
                     <th class="text-center">Email</th>
                     <th class="text-center">Phone</th>
-                    <th class="text-center" data-sortable="true">DOB</th>
+                    <th class="text-center" data-sortable="true">Date of Birth</th>
                     <th class="text-center">Blood Type</th>
                     <th class="text-center">Options</th>
                 </tr>
@@ -307,4 +310,3 @@ if (isset($_SESSION['USER'])) {
 </body>
 
 </html>
-

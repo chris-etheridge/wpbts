@@ -1,12 +1,14 @@
 <?php
 $_TITLE = "WPBTS - User Management";
+$_PARENT['alerts'] = time();
+
 require_once("header.php");
 require_once('php/DBConn_Dave.php');
 require_once('php/alerts_functions.php');
 include_once("users_functions.php");
 session_start();
 
-//Setup authenticatoin.
+//Setup authentication.
 if ($_SESSION['AUTH_USER_ID'] == null) {
     $_SESSION['alert']['message_type'] = "alert-danger";
     $_SESSION['alert']['message_title'] = "Not logged in..";
@@ -73,7 +75,7 @@ if ($exitingAlerst == false) {
                     <th class="text-center">Alert ID</th>
                     <th class="text-center">Type ID</th>
                     <th class="text-center" data-sortable="true">Title</th>
-                    <th class="text-center">Body</th>
+                    <th class="text-center">Content</th>
                     <th class="text-center">Description</th>
                     <th class="text-center">Options</th>
                 </tr>
@@ -293,4 +295,3 @@ if ($exitingAlerst == false) {
 </body>
 
 </html>
-
