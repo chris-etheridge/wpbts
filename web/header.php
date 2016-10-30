@@ -9,7 +9,6 @@
         exit();
     }
     
-    echo var_dump($_PARENT);
 ?>
 
 <!DOCTYPE html>
