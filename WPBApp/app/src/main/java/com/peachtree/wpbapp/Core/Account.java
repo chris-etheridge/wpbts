@@ -56,6 +56,7 @@ public class Account extends Generic {
         }
     }
 
+    // is the user logged in?
     private boolean logged_in_q() {
         return CURRENT_USER != null;
     }
