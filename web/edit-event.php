@@ -83,7 +83,7 @@ if ($QueryResult == TRUE)
                             <input required readonly type="text" class="form-control" name="event_id" value="<?php echo $_SESSION['event']['event_id']; ?>">
                         </div>
                         <div class="col-sm-12">
-                            <label class="control-label">Creator ID</label>
+                            <label class="control-label">Creator</label>
                             <input required readonly type="text" class="form-control" name="creator_id" value="<?php echo $creatorName; ?>"
                             >
                         </div>
@@ -214,6 +214,14 @@ if ($QueryResult == TRUE)
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Zip Code</label>
                                 <div class="col-sm-9"><input required type="text" class="form-control" name="area_code" value="<?php echo $_SESSION['event']['area_code']; ?>"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Office / Company</label>
+                                <div class="col-sm-9"><input type="text" class="form-control" name="office" value="<?php echo $_SESSION['event']['office']; ?>"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Building Number</label>
+                                <div class="col-sm-9"><input type="number" class="form-control" name="building_number" value="<?php echo $_SESSION['event']['building_number']; ?>"></div>
                             </div>
                         </div>
                     </div>

@@ -90,6 +90,14 @@ require_once('php/DBConn.php');
                             <label class="col-sm-3 control-label">Zip Code</label>
                             <div class="col-sm-9"><input required type="text" class="form-control" name="area_code" value="<?php echo $_SESSION['clinic']['area_code']; ?>"></div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Office / Company</label>
+                            <div class="col-sm-9"><input type="text" class="form-control" name="office" value="<?php echo $_SESSION['clinic']['office']; ?>"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Building Number</label>
+                            <div class="col-sm-9"><input type="number" class="form-control" name="building_number" value="<?php echo $_SESSION['clinic']['building_number']; ?>"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

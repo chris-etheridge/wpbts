@@ -24,6 +24,8 @@ $_SESSION['clinic']['street'] = $_POST['street'];
 $_SESSION['clinic']['area'] = $_POST['area'];
 $_SESSION['clinic']['city'] = $_POST['city'];
 $_SESSION['clinic']['area_code'] = $_POST['area_code'];
+$_SESSION['clinic']['office'] = $_POST['office'];
+$_SESSION['clinic']['building_number'] = $_POST['building_number'];
 
 if(       !isset($_POST['clinic_id']) || !isset($_POST['description']) || !isset($_POST['contact_1'])
         || !isset($_POST['contact_2']) || !isset($_POST['street_no']) || !isset($_POST['street'])
@@ -48,10 +50,12 @@ $street = $mysqli->real_escape_string($_POST['street']);
 $suburb = $mysqli->real_escape_string($_POST['area']);
 $city = $mysqli->real_escape_string($_POST['city']);
 $zip = $mysqli->real_escape_string($_POST['area_code']);
+$office = $mysqli->real_escape_string($_POST['office']);
+$buildingno = $mysqli->real_escape_string($_POST['building_number']);
 
 /* INSERT/ UPDATE ADDRESS*/
 $sql = "UPDATE TBL_ADDRESS SET STREET_NO = $streetno, STREET = '$street', " 
-        . "AREA = '$suburb', CITY = '$city', AREA_CODE = '$zip' " 
+        . "AREA = '$suburb', CITY = '$city', AREA_CODE = '$zip', OFFICE = '$office', BUILDING_NUMBER = $buildingno " 
         . " WHERE ADDRESS_ID = $addressid";
 
 $mysqli->query($sql);

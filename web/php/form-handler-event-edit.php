@@ -25,11 +25,12 @@ $_SESSION['event']['street'] = $_POST['street'];
 $_SESSION['event']['area'] = $_POST['area'];
 $_SESSION['event']['city'] = $_POST['city'];
 $_SESSION['event']['area_code'] = $_POST['area_code'];
-$_SESSION['event']['creator_id'] = $_POST['creator_id'];
+$_SESSION['event']['office'] = $_POST['office'];
+$_SESSION['event']['building_number'] = $_POST['building_number'];
 $_SESSION['event']['event_id'] = $_POST['event_id'];
 $_SESSION['event']['address_id'] = $_POST['address_id'];
 
-if(        !isset($_POST['event_id']) || !isset($_POST['creator_id']) || !isset($_POST['title'])
+if(        !isset($_POST['event_id']) || !isset($_POST['title'])
         || !isset($_POST['description']) || !isset($_POST['event_date']) || !isset($_POST['type_id'])
         || !isset($_POST['event_admin']) || !isset($_POST['street_no']) || !isset($_POST['street'])
         || !isset($_POST['area']) || !isset($_POST['city']) || !isset($_POST['area_code'])
@@ -43,7 +44,6 @@ if(        !isset($_POST['event_id']) || !isset($_POST['creator_id']) || !isset(
 }
 
 $eventid = $mysqli->real_escape_string($_POST['event_id']);
-$creatorid = $mysqli->real_escape_string($_POST['creator_id']);
 $title = $mysqli->real_escape_string($_POST['title']);
 $description = $mysqli->real_escape_string($_POST['description']);
 $date = $mysqli->real_escape_string($_POST['event_date']);
@@ -57,11 +57,13 @@ $street = $mysqli->real_escape_string($_POST['street']);
 $suburb = $mysqli->real_escape_string($_POST['area']);
 $city = $mysqli->real_escape_string($_POST['city']);
 $zip = $mysqli->real_escape_string($_POST['area_code']);
+$office = $mysqli->real_escape_string($_POST['office']);
+$buildingno = $mysqli->real_escape_string($_POST['building_number']);
 
 
 /* INSERT/ UPDATE ADDRESS*/
 $sql = "UPDATE TBL_ADDRESS SET STREET_NO = $streetno, STREET = '$street', " 
-        . "AREA = '$suburb', CITY = '$city', AREA_CODE = '$zip' " 
+        . "AREA = '$suburb', CITY = '$city', AREA_CODE = '$zip', OFFICE = '$office', BUILDING_NUMBER = $buildingno " 
         . " WHERE ADDRESS_ID = $addressid";
 
 $mysqli->query($sql);

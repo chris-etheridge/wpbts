@@ -49,7 +49,7 @@ function getEvents($mysqli, $SQLString)
             
             $events[$rowid]['address_id'] = $Row['ADDRESS_ID'];
             $events[$rowid]['city'] = $Row['CITY'];
-            $events[$rowid]['office'] = $Row['OFFICE'];
+            $events[$rowid]['office'] = $Row['OFFICE']; //aka company name
             $events[$rowid]['street_no'] = $Row['STREET_NO'];
             $events[$rowid]['street'] = $Row['STREET'];
             $events[$rowid]['area'] = $Row['AREA'];

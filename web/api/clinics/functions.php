@@ -34,7 +34,7 @@ function getClinics($mysqli, $SQLString)
             $clinics[$rowid]['area'] = $Row['AREA'];
             $clinics[$rowid]['area_code'] = $Row['AREA_CODE'];
             $clinics[$rowid]['city'] = $Row['CITY'];
-            $clinics[$rowid]['office'] = $Row['OFFICE'];
+            $clinics[$rowid]['office'] = $Row['OFFICE']; //aka company names
             $clinics[$rowid]['building_number'] = $Row['BUILDING_NUMBER'];
             $rowid++;
         }

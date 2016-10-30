@@ -21,6 +21,8 @@ $_SESSION['clinic']['street'] = $_POST['street'];
 $_SESSION['clinic']['area'] = $_POST['area'];
 $_SESSION['clinic']['city'] = $_POST['city'];
 $_SESSION['clinic']['area_code'] = $_POST['area_code'];
+$_SESSION['clinic']['building_number'] = $_POST['building_number'];
+$_SESSION['clinic']['office'] = $_POST['office'];
 
 if(        !isset($_POST['description']) || !isset($_POST['contact_1'])
         || !isset($_POST['contact_2']) || !isset($_POST['street_no']) || !isset($_POST['street'])
@@ -42,10 +44,13 @@ $street = $mysqli->real_escape_string($_POST['street']);
 $suburb = $mysqli->real_escape_string($_POST['area']);
 $city = $mysqli->real_escape_string($_POST['city']);
 $zip = $mysqli->real_escape_string($_POST['area_code']);
+$office = $mysqli->real_escape_string($_POST['office']);
+$buildingno = $mysqli->real_escape_string($_POST['building_number']);
+$buildingno = (!$buildingno) ? "NULL" : $buildingno; //so db lets us ommit building number
 
 /* INSERT/ UPDATE ADDRESS*/
 
-$sql = "INSERT INTO TBL_ADDRESS (STREET_NO, STREET, AREA, CITY, AREA_CODE) VALUES($streetno, '$street', '$suburb', '$city', '$zip')";
+$sql = "INSERT INTO TBL_ADDRESS (STREET_NO, STREET, AREA, CITY, AREA_CODE, OFFICE, BUILDING_NUMBER) VALUES($streetno, '$street', '$suburb', '$city', '$zip',  '$office', $buildingno)";
 
 $mysqli->query($sql);
 $insertedAddressID = $mysqli->insert_id;
@@ -53,7 +58,7 @@ $insertedAddressID = $mysqli->insert_id;
 if($mysqli->error)
 {
     $_SESSION['alert']['message_type'] = "alert-danger";
-    $_SESSION['alert']['message_title'] = "Error creating address details!";
+    $_SESSION['alert']['message_title'] = "Error creating address details!" . $sql . " ___ " . $mysqli->error;
     $_SESSION['alert']['message'] = "Please review the address fields. If problem persists, contact system administrator!";
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit();
