@@ -29,4 +29,26 @@ public class Networking {
         HTTP_CLIENT.post(url, params, response_handler);
     }
 
+    // checks if a response okay
+    public static boolean ResponseIsOkay_q(JSONObject response) {
+        String d = "";
+        boolean passed = false;
+
+        try {
+            d = response.getString("status");
+        } catch (JSONException e) {
+            passed = false;
+
+            return passed;
+        }
+
+        if(!d.equals("error")) {
+            passed = true;
+        } else {
+            passed = false;
+        }
+
+        return passed;
+    }
+
 }

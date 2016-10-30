@@ -3,6 +3,7 @@ package com.peachtree.wpbapp.Core;
 import android.app.Activity;
 import android.util.Log;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.peachtree.wpbapp.Core.impl.Generic;
 import com.peachtree.wpbapp.Core.impl.UserNotLoggedInException;
 import com.peachtree.wpbapp.Entities.User;
@@ -31,16 +32,39 @@ public class Account extends Generic {
         }
     }
 
+    public User LogIn(String email, String password, AsyncHttpResponseHandler handler) {
+        if(logged_in_q()) {
+            return CURRENT_USER;
+        } else {
+            return new User();
+        }
+    }
+
     // log the current user out
-    public void LogOut(String email) {}
+    public void LogOut(String email) {
+
+    }
+
+    public void LogOut(String email, AsyncHttpResponseHandler handler) {
+
+    }
 
     // check if a user is logged in
-    public void IsLoggedIn(String email) {}
+    public boolean IsLoggedIn(String email) {
+        if(CURRENT_USER != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     // update the user account profile
-    public void UpdateProfile(String email) throws UserNotLoggedInException {
+    public User UpdateProfile(String email) throws UserNotLoggedInException {
         if(logged_in_q()) {
+            // do the work
 
+            // return the user
+            return CURRENT_USER;
         } else {
             throw new UserNotLoggedInException();
         }
@@ -52,6 +76,14 @@ public class Account extends Generic {
             return CURRENT_USER;
         } else {
             // create account and log the user in
+            return new User();
+        }
+    }
+
+    public User Register(String email, AsyncHttpResponseHandler handler) {
+        if(logged_in_q()) {
+            return CURRENT_USER;
+        } else {
             return new User();
         }
     }

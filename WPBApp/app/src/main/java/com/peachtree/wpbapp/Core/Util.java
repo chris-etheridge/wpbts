@@ -2,6 +2,8 @@ package com.peachtree.wpbapp.Core;
 
 import com.peachtree.wpbapp.Entities.Event;
 
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
