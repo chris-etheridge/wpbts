@@ -1,8 +1,11 @@
 package com.peachtree.wpbapp.Core;
 
+import android.support.annotation.NonNull;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.peachtree.wpbapp.Core.impl.Core;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,6 +15,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Core networking implementation.
@@ -49,6 +56,56 @@ public class Networking {
         }
 
         return passed;
+    }
+
+    public static class NetworkingErrors {
+
+        // generic event codes
+        public static int ERROR_UNKNOWN_DB_ERROR = 222;
+        public static int ERROR_INCORRECT_STRING_FORMAT = 155;
+        public static int ERROR_DATABASE_UNAVALIABLE = 113;
+
+        public static int LOGIN_ERROR_USER_DOES_NOT_EXIST = 111;
+        public static int LOGIN_ERROR_SCRIPT_NOT_IMPLEMENTED = 114;
+        public static int LOGIN_ERROR_AUTHENTICATION_FAILURE = 181;
+        public static int REG_ERROR_USER_EMAIL_EXISTS = 111;
+        public static int PROFILE_ERROR_GENERIC = 111;
+        public static int RSVP_ERROR_NOT_ALL_VALUES_PROVIDED = 443;
+        public static int RSVP_ERROR_ILLEGAL_OPT_IN_VALUE = 444;
+        public static int RSVP_ERROR_UNKNOWN_DB_ERROR = 445;
+        public static int EVENT_ERROR_NO_ID_SPECIFIED = 223;
+        public static int CLINIC_GET_NO_ID_SPECIFIED = 333;
+
+        // build a hashmap that contains errors -> human-readable messaages
+        private static final HashMap<Integer, String> ERRORS_INDEX = new HashMap<>();
+
+        static {
+            ERRORS_INDEX.put(ERROR_UNKNOWN_DB_ERROR, "Unknown database error occured.");
+            ERRORS_INDEX.put(ERROR_INCORRECT_STRING_FORMAT, "Incorrect string format provided.");
+            ERRORS_INDEX.put(ERROR_DATABASE_UNAVALIABLE, "Database is not avaliable.");
+            ERRORS_INDEX.put(LOGIN_ERROR_USER_DOES_NOT_EXIST, "The user specified does not exist.");
+            ERRORS_INDEX.put(LOGIN_ERROR_SCRIPT_NOT_IMPLEMENTED, "Script specified during login is not implemented.");
+            ERRORS_INDEX.put(LOGIN_ERROR_AUTHENTICATION_FAILURE, "Failed to authenticate the user.");
+            ERRORS_INDEX.put(REG_ERROR_USER_EMAIL_EXISTS, "A user with that email already exists.");
+            ERRORS_INDEX.put(PROFILE_ERROR_GENERIC, "There was a problem updating your profile.");
+            ERRORS_INDEX.put(RSVP_ERROR_NOT_ALL_VALUES_PROVIDED, "Some information required for RSVP was blank.");
+            ERRORS_INDEX.put(RSVP_ERROR_ILLEGAL_OPT_IN_VALUE, "The wrong value to opt in for the RSVP was given.");
+            ERRORS_INDEX.put(RSVP_ERROR_UNKNOWN_DB_ERROR, "During the RSVP, an uknown database error ocurred.");
+            ERRORS_INDEX.put(EVENT_ERROR_NO_ID_SPECIFIED, "No ID for the event was specified.");
+            ERRORS_INDEX.put(CLINIC_GET_NO_ID_SPECIFIED, "No ID for the clinic was specified.");
+        }
+
+        public static String GetErrorMessageForCode(int code) {
+            String msg = "";
+
+            try {
+                msg = ERRORS_INDEX.get(code);
+            } catch(Exception e) {
+                msg = "Unknown error occurred.";
+            }
+
+            return msg;
+        }
     }
 
 }

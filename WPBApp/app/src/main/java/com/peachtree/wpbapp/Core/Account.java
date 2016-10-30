@@ -1,25 +1,18 @@
 package com.peachtree.wpbapp.Core;
 
-import android.app.Activity;
-import android.util.Log;
-
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.peachtree.wpbapp.Core.impl.Generic;
 import com.peachtree.wpbapp.Core.impl.UserNotLoggedInException;
 import com.peachtree.wpbapp.Entities.User;
-import com.peachtree.wpbapp.R;
 
 /**
  * Functions to manage the user account.
  * Default constructor will try log the user in, or get the currently logged in user.
  */
-public class Account extends Generic {
+public class Account {
 
     private User CURRENT_USER = null;
 
-    public Account(String api_url, String email, String password) {
-        super(api_url);
-
+    public Account(String email, String password) {
         LogIn(email, password);
     }
 
@@ -30,7 +23,7 @@ public class Account extends Generic {
         } else {
             return new User();
         }
-    }
+    }   
 
     public User LogIn(String email, String password, AsyncHttpResponseHandler handler) {
         if(logged_in_q()) {
