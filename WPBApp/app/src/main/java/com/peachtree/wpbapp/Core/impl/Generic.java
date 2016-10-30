@@ -20,8 +20,12 @@ public class Generic {
         API_URL = api_url;
     }
 
-
+    // error codes -> recognizable errors
     public static class ErrorCodes {
+        // internal exception, not web related
+        public static final int INTERNAL_ANDROID_EXCEPTION = -999;
+
+        // web related errors
         public static final int RSVP__INSUFFICIENT_PARAMETERS_SUPPLIED = 443;
         public static final int RSVP__ATTENDING_ILLEGAL_OPTION = 444;
         public static final int RSVP__UNKNWON_DB_ERROR = 445;

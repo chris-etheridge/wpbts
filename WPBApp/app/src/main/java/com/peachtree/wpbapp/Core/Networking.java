@@ -1,5 +1,9 @@
 package com.peachtree.wpbapp.Core;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,43 +15,18 @@ import java.net.URL;
 
 /**
  * Core networking implementation.
+ * Uses android-async-http http://loopj.com/android-async-http/
  */
 public class Networking {
 
-    // GET from URL
-    // returns json object
-    public static JSONObject GetJsonFromUrl(String targetUrl) throws JSONException {
-        StringBuffer buf = new StringBuffer("");
-        JSONObject returnObj = new JSONObject();
+    private static AsyncHttpClient HTTP_CLIENT = new AsyncHttpClient();
 
-        try {
-            URL url = new URL(targetUrl);
-            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-
-            BufferedReader bufR = new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
-
-            String line = "";
-
-            while((line = bufR.readLine()) != null) {
-                buf.append(line + "\n");
-            }
-
-            returnObj.put("status", "success");
-            returnObj.put("response", buf);
-
-        } catch (IOException ex) {
-            returnObj.put("status", "error");
-            returnObj.put("message", ex.getMessage());
-        }
-
-        return returnObj;
+    public static void Get(String url, RequestParams params, AsyncHttpResponseHandler response_handler) {
+        HTTP_CLIENT.get(url, params, response_handler);
     }
 
-    // POST to url
-    // requires a json payload and url
-    // returns a json object
-    public static JSONObject PostJsonToUrl(String url, JSONObject payload) {
-        return new JSONObject();
+    public static void Post(String url, RequestParams params, AsyncHttpResponseHandler response_handler) {
+        HTTP_CLIENT.post(url, params, response_handler);
     }
 
 }
