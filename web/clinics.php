@@ -323,7 +323,7 @@ $arrClinics = getAllClinics($mysqli);
 
         $('#modal-remove-clinic .modal-body #moClinicID').html(objClinic.clinic_id);
         $('#modal-remove-clinic .modal-body #moClinicDescription').html(objClinic.description);
-        $('#modal-remove-clinic .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/delete-clinic.php?clinic=" + objClinic.clinic_id + "'>Delete Clinic</a>");
+        $('#modal-remove-clinic .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/delete-clinic.php?clinicid=" + objClinic.clinic_id + "'>Delete Clinic</a>");
 
 
         $('#modal-remove-clinic').modal('show', {backdrop: 'static'});
