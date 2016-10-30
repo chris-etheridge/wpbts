@@ -1,5 +1,7 @@
 package com.peachtree.wpbapp.Core.impl;
 
+import android.util.Log;
+
 /**
  * Created by chrisetheridge on 10/30/16.
  */
@@ -9,6 +11,12 @@ public class Generic {
     private String API_URL;
 
     public Generic(String api_url) {
+        String[] parts = api_url.split("/");
+
+        if(parts[1] != "api") {
+            Log.w("API", "API URL provided does not contain \"API\", did you spell it correctly? api_url = " + api_url);
+        }
+
         API_URL = api_url;
     }
 
