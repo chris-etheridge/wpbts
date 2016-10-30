@@ -1,4 +1,4 @@
-package com.peachtree.wpbapp.activity;
+package com.peachtree.wpbapp.Activity;
 
 import android.app.Activity;
 import android.app.DialogFragment;

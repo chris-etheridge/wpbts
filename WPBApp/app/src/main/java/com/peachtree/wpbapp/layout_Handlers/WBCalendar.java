@@ -18,9 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.peachtree.wpbapp.R;
-import com.peachtree.wpbapp.activity.Event_Info_Fragment;
-import com.peachtree.wpbapp.core.Util;
-import com.peachtree.wpbapp.entities.Event;
+import com.peachtree.wpbapp.Activity.Event_Info_Fragment;
+import com.peachtree.wpbapp.Core.Util;
+import com.peachtree.wpbapp.Entities.Event;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

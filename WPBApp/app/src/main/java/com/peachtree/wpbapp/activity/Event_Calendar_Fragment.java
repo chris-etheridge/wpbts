@@ -1,4 +1,4 @@
-package com.peachtree.wpbapp.activity;
+package com.peachtree.wpbapp.Activity;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.peachtree.wpbapp.R;
-import com.peachtree.wpbapp.core.Util;
+import com.peachtree.wpbapp.Core.Util;
 
 public class Event_Calendar_Fragment extends DialogFragment
 {

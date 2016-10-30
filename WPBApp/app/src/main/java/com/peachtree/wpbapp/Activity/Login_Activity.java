@@ -1,4 +1,4 @@
-package com.peachtree.wpbapp.activity;
+package com.peachtree.wpbapp.Activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.peachtree.wpbapp.R;
-import com.peachtree.wpbapp.core.*;
+import com.peachtree.wpbapp.Core.*;
 
 public class Login_Activity extends AppCompatActivity
 {

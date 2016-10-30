@@ -1,4 +1,4 @@
-package com.peachtree.wpbapp.entities;
+package com.peachtree.wpbapp.Entities;
 
 /**
  * Created by tyron_000 on 8/26/2016.

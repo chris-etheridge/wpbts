@@ -1,4 +1,4 @@
-package com.peachtree.wpbapp.activity;
+package com.peachtree.wpbapp.Activity;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.peachtree.wpbapp.R;
-import com.peachtree.wpbapp.core.Util;
-import com.peachtree.wpbapp.entities.Clinic;
-import com.peachtree.wpbapp.entities.Event;
+import com.peachtree.wpbapp.Core.Util;
+import com.peachtree.wpbapp.Entities.Clinic;
+import com.peachtree.wpbapp.Entities.Event;
 
 public class Clinic_Info_Fragment extends DialogFragment
 {

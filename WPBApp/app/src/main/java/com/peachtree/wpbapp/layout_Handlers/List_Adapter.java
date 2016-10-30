@@ -11,10 +11,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.peachtree.wpbapp.R;
-import com.peachtree.wpbapp.activity.Clinic_Info_Fragment;
-import com.peachtree.wpbapp.activity.Event_Info_Fragment;
-import com.peachtree.wpbapp.entities.*;
-
+import com.peachtree.wpbapp.Activity.Clinic_Info_Fragment;
+import com.peachtree.wpbapp.Activity.Event_Info_Fragment;
+import com.peachtree.wpbapp.Entities.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

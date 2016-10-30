@@ -1,4 +1,4 @@
-package com.peachtree.wpbapp.entities;
+package com.peachtree.wpbapp.Entities;
 
 import java.net.URL;
 
@@ -15,9 +15,9 @@ public class Clinic {
 	private String description;
 	private URL img_url;
 
-	public Clinic(){}
+	public Clinic() {}
 
-	public Clinic(int id, Address address ){
+	public Clinic(int id, Address address ) {
 		this.id=id;
 		this.address=address;
 		name = address.getArea() + "Clinic";

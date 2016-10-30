@@ -1,6 +1,6 @@
-package com.peachtree.wpbapp.core;
+package com.peachtree.wpbapp.Core;
 
-import com.peachtree.wpbapp.entities.Event;
+import com.peachtree.wpbapp.Entities.Event;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package com.peachtree.wpbapp.entities;
+package com.peachtree.wpbapp.Entities;
 
 /**
  * Entity that models a User.

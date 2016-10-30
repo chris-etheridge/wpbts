@@ -1,4 +1,4 @@
-package com.peachtree.wpbapp.core;
+package com.peachtree.wpbapp.Core;
 
 import org.json.JSONException;
 import org.json.JSONObject;
