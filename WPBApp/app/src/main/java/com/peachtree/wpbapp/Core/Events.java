@@ -5,4 +5,9 @@ package com.peachtree.wpbapp.Core;
  */
 
 public class Events {
+
+    public Events(String api_url) {
+
+    }
+
 }

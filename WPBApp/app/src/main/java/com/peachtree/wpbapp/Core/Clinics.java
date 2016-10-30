@@ -5,4 +5,9 @@ package com.peachtree.wpbapp.Core;
  */
 
 public class Clinics {
+
+    public Clinics(String api_url) {
+
+    }
+
 }

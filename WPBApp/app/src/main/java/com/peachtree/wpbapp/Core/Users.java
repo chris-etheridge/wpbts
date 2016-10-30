@@ -5,4 +5,7 @@ package com.peachtree.wpbapp.Core;
  */
 
 public class Users {
+
+    public Users(String api_url) { }
+
 }
