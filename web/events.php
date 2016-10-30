@@ -242,6 +242,22 @@ $arrPastEvents = getAllPastEvents($mysqli);
                         </div>
                         <div class="row">
                             <div class="col-xs-3">
+                                <label class="control-label">Office</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moEventOffice"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Building Number</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moEventBuildingNo"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
                                 <label class="control-label">Street</label>
                             </div>
                             <div class="col-xs-9">
@@ -470,6 +486,8 @@ $arrPastEvents = getAllPastEvents($mysqli);
         $('#modal-view-event .modal-body #moEventUrgency').html(objEvent.urgency);
         $('#modal-view-event .modal-body #moEventAdmin').html(jsonAdmins[objEvent.event_admin].first_name + " " + jsonAdmins[objEvent.event_admin].last_name);
         $('#modal-view-event .modal-body #moEventStreetNo').html(objEvent.street_no);
+        $('#modal-view-event .modal-body #moEventOffice').html(objEvent.office);
+        $('#modal-view-event .modal-body #moEventBuildingNo').html(objEvent.building_number);
         $('#modal-view-event .modal-body #moEventStreet').html(objEvent.street);
         $('#modal-view-event .modal-body #moEventArea').html(objEvent.area);
         $('#modal-view-event .modal-body #moEventCity').html(objEvent.city);

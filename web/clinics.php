@@ -165,6 +165,22 @@ $arrClinics = getAllClinics($mysqli);
                         </div>
                         <div class="row">
                             <div class="col-xs-3">
+                                <label class="control-label">Office</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moClinicOffice"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Building Number</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moClinicBuildingNo"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
                                 <label class="control-label">Street</label>
                             </div>
                             <div class="col-xs-9">
@@ -292,6 +308,8 @@ $arrClinics = getAllClinics($mysqli);
         $('#modal-view-clinic .modal-body #moClinicContact2').html(objClinic.contact_2);
         $('#modal-view-clinic .modal-body #moClinicDescription').html(objClinic.description);
         $('#modal-view-clinic .modal-body #moClinicStreetNo').html(objClinic.street_no);
+        $('#modal-view-clinic .modal-body #moClinicOffice').html(objClinic.office);
+        $('#modal-view-clinic .modal-body #moClinicBuildingNo').html(objClinic.building_number);
         $('#modal-view-clinic .modal-body #moClinicStreet').html(objClinic.street);
         $('#modal-view-clinic .modal-body #moClinicArea').html(objClinic.area);
         $('#modal-view-clinic .modal-body #moClinicCity').html(objClinic.city);

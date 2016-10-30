@@ -95,7 +95,7 @@ if(!isset($_SESSION['clinic']))
                 <div class="form-group">
                     <div class="col-sm-12">
                         <label class="control-label">Address</label>
-                        <input type="hidden" name="address_id" value="<?php echo $_SESSION['clinic']['clinic_id']; ?>">
+                        <input type="hidden" name="address_id" value="<?php echo $_SESSION['clinic']['address_id']; ?>">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Street Number</label>
                             <div class="col-sm-9"><input onkeypress="validateNumberIn(event)" required type="number" class="form-control" name="street_no" value="<?php echo $_SESSION['clinic']['street_no']; ?>"></div>
