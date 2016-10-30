@@ -1,6 +1,7 @@
 package com.peachtree.wpbapp.Core;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -37,10 +38,14 @@ public class Networking {
     private static AsyncHttpClient HTTP_CLIENT = new AsyncHttpClient();
 
     public static void Get(String url, RequestParams params, AsyncHttpResponseHandler response_handler) {
+        Log.d("API", "Performing _GET_ to URL => " + url);
+
         HTTP_CLIENT.get(url, params, response_handler);
     }
 
     public static void Post(String url, RequestParams params, AsyncHttpResponseHandler response_handler) {
+        Log.d("API", "Performing _POST_ to URL => " + url);
+
         HTTP_CLIENT.post(url, params, response_handler);
     }
 

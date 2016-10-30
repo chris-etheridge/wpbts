@@ -38,13 +38,7 @@ public class Events  {
     public ArrayList<Event> GetAllEvents() {
         API_HELPER.Get(MULTIPLE_EVENTS_API_URL, null, new JsonHttpResponseHandler() {
             @Override
-            public void onStart() {
-                Log.d("API", "Starting API request => " + MULTIPLE_EVENTS_API_URL);
-            }
-
-            @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                // If the response is JSONObject instead of expected JSONArray
                 Log.d("API", response.toString());
             }
 
