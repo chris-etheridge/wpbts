@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class Event {
 
-    private static SimpleDateFormat fmt = new SimpleDateFormat("MM-DD-YYYY");
+    private static SimpleDateFormat fmt = new SimpleDateFormat("mm-dd-yyyy");
 
     private enum EventType {
         Donation,
@@ -46,7 +46,7 @@ public class Event {
     }
 
 
-    public ArrayList<Event> EventsFromJsonArray(JSONArray a) throws JSONException, ParseException {
+    public static ArrayList<Event> EventsFromJsonArray(JSONArray a) throws JSONException, ParseException {
         ArrayList<Event> es = new ArrayList<>();
 
         for(int i = 0; i < a.length(); i++) {
@@ -56,7 +56,7 @@ public class Event {
         return es;
     }
 
-    public Event EventFromJsonObject(JSONObject o) throws JSONException, ParseException {
+    public static Event EventFromJsonObject(JSONObject o) throws JSONException, ParseException {
         int id = Integer.parseInt(o.getString("event_id"));
         Date date = fmt.parse(o.getString("event_date"));
         String title = o.getString("title");
@@ -65,7 +65,7 @@ public class Event {
         int type_id = Integer.parseInt(o.getString("type_id"));
         int urgency_id = Integer.parseInt(o.getString("urgency"));
 
-        return new Event(id, date, title, description);
+        return new Event(id, date, title, desc);
 
     }
 

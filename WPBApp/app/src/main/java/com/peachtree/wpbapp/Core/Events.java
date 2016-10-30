@@ -8,8 +8,10 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.peachtree.wpbapp.Entities.Event;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -35,25 +37,8 @@ public class Events  {
 
     }
 
-    public ArrayList<Event> GetAllEvents() {
-        API_HELPER.Get(MULTIPLE_EVENTS_API_URL, null, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("API", response.toString());
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                Log.d("API", response.toString());
-            }
-
-        });
-
-        return new ArrayList<>();
-    }
-
     public void GetAllEvents(AsyncHttpResponseHandler handler) {
-
+        API_HELPER.Get(MULTIPLE_EVENTS_API_URL, null, handler);
     }
 
     public ArrayList<Event> GetEventsForDate(Date date) {
