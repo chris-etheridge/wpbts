@@ -2,12 +2,14 @@ package com.peachtree.wpbapp.Activity;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.peachtree.wpbapp.Core.Events;
@@ -31,6 +33,8 @@ public class List_Fragment extends DialogFragment{
 
 	private Activity parent;
 	private int stackNum, type;
+	private Context current_ctx;
+
 	public static final int CLINIC = 1, EVENT = 2;
 
 	private static final Events EVENTS_HELPER = new Events();
@@ -53,6 +57,8 @@ public class List_Fragment extends DialogFragment{
 		parent = getActivity();
 		stackNum = getArguments().getInt("stackNum");
 		type = getArguments().getInt("type");
+
+		current_ctx = this.getActivity();
 	}
 
 	@Override
@@ -72,10 +78,28 @@ public class List_Fragment extends DialogFragment{
 
 							list.setAdapter(new List_Adapter(es, parent, List_Adapter.Type.Event));
 						} catch (JSONException e) {
-							e.printStackTrace();
+
 						} catch (ParseException e) {
 							e.printStackTrace();
 						}
+					}
+
+					@Override
+					public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+						// handle the error here
+						int code = -1;
+
+						try {
+							code = Integer.parseInt(response.getString("code"));
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+
+						// parse the error
+						String message = Networking.NetworkingErrors.GetErrorMessageForCode(code);
+
+						// show to the user
+						Toast.makeText(current_ctx, message, Toast.LENGTH_SHORT);
 					}
 				});
 
