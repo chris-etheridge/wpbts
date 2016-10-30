@@ -3,7 +3,6 @@ package com.peachtree.wpbapp.Core;
 import android.location.Location;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.peachtree.wpbapp.Core.impl.Generic;
 import com.peachtree.wpbapp.Entities.Event;
 
 import java.util.ArrayList;
@@ -13,10 +12,10 @@ import java.util.Date;
  * Created by chrisetheridge on 10/30/16.
  */
 
-public class Events extends Generic {
+public class Events  {
 
-    public Events(String api_url) {
-        super(api_url);
+    public Events() {
+
     }
 
     public Event GetEventById(int id) {
