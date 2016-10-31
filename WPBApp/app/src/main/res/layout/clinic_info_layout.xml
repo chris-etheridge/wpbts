@@ -10,6 +10,16 @@
               android:background="@drawable/dialog_bg"
               android:elevation="10dp">
 
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pull_grip"
+        android:tint="@color/colorPrimaryDark"
+        android:background="#00000000"
+        android:src="@android:drawable/arrow_down_float"
+        android:padding="5dp"
+        />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

@@ -106,11 +106,10 @@ public class Event_Info_Fragment extends DialogFragment
 	@Override
 	public void onStart(){
 		super.onStart();
-		WindowManager wm = (WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE);
+		WindowManager wm = (WindowManager)parent.getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
 		getDialog().getWindow().setBackgroundDrawable(null);
 		getDialog().getWindow().setLayout(display.getWidth() - 50, display.getHeight() - 50);
-		//getDialog().getWindow().getAttributes().height = getDialog().getWindow().getAttributes().height - 10;
 	}
 
 	private void load_event(){
