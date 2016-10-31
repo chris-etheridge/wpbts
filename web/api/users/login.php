@@ -13,7 +13,7 @@ if ($postMethod != 'POST') {
 $receivedData = file_get_contents('php://input');
 $jsonData = json_decode($receivedData, true);
 if ($jsonData == null) {
-    echo "155 - Paramaters must be in json string format";
+    echo json_encode(array("code" => "155", "message" => "Incorrect format provided."));
 }
 
 $jsonData = array_change_key_case($jsonData, CASE_UPPER);
@@ -23,28 +23,22 @@ foreach ($jsonData as $key => &$values) {
     }
 }
 
-var_dump($jsonData);
 $email = $jsonData['EMAIL'];
+
 $password = sha1($jsonData['PWD']);
-
-echo $jsonData['PWD'];
-echo $password;
-
 
 $isIUserExist = doesEmailAddressExist($email);
 if ($isIUserExist == false) {
-    echo "111 - User does not exist";
+    echo json_encode(array("code" => "111", "message" => "User does not exists."));
     die();
 }
 
-
 $savedPassword = getHashedPassword($email);
 
-
 if (strcmp($password, $savedPassword['PWD']) == 0) {
-    echo "112 - Login Accepted.";
+    echo json_encode(array("code" => "182", "message" => "User logged in successfully.", "user" => $savedPassword));
 } else {
-    echo "181 - Autentication Failed.";
+    echo json_encode(array("code" => "181", "message" => "Incorrect password."));
 }
 
 ?>
