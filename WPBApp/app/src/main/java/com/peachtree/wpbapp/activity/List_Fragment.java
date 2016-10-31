@@ -64,7 +64,7 @@ public class List_Fragment extends DialogFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
-		View view = inflater.inflate(R.layout.event_list_layout, container, false);
+		final View view = inflater.inflate(R.layout.event_list_layout, container, false);
 
 		final ListView list = (ListView) view.findViewById(R.id.list);
 		switch (type)
@@ -90,7 +90,13 @@ public class List_Fragment extends DialogFragment{
 						int code = -1;
 
 						try {
-							code = Integer.parseInt(response.getString("code"));
+							if(response != null)
+							{
+								code = Integer.parseInt(response.getString("code"));
+							}else{
+								view.findViewById(R.id.list).setVisibility(View.GONE);
+								view.findViewById(R.id.TXT_Error).setVisibility(View.VISIBLE);
+							}
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -108,6 +114,14 @@ public class List_Fragment extends DialogFragment{
 				list.setAdapter(new List_Adapter(new ArrayList(), parent, List_Adapter.Type.Event));
 				break;
 		}
+
+		view.findViewById(R.id.BTN_Search).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+			}
+		});
 
 		return view;
 	}
