@@ -1,34 +1,40 @@
 <?php
+//get a single event
 function getEvent($mysqli, $eventid)
 {
     $sql = "SELECT * FROM VIEW_EVENTSWADDRESS WHERE EVENT_ID = $eventid;";
     return getEvents($mysqli, $sql);
 }
 
-function getUpcommingEvents($mysqli) //returns only events that are active
+//returns only events that are active
+function getUpcommingEvents($mysqli) 
 {
     $sql = "SELECT * FROM VIEW_EVENTSWADDRESS WHERE STR_TO_DATE(EVENT_DATE, '%d-%m-%Y') > NOW() AND ACTIVE = 1;";
     return getEvents($mysqli, $sql);
 }
 
-function getAllUpcommingEvents($mysqli) //returns ALL future dated events
+//returns ALL future dated events
+function getAllUpcommingEvents($mysqli) 
 {
     $sql = "SELECT * FROM VIEW_EVENTSWADDRESS WHERE STR_TO_DATE(EVENT_DATE, '%d-%m-%Y') > NOW();";
     return getEvents($mysqli, $sql);
 }
 
-function getAllPastEvents($mysqli) //returns ALL future dated events
+//returns ALL past dated events
+function getAllPastEvents($mysqli) 
 {
     $sql = "SELECT * FROM VIEW_EVENTSWADDRESS WHERE STR_TO_DATE(EVENT_DATE, '%d-%m-%Y') < NOW();";
     return getEvents($mysqli, $sql);
 }
 
+//get alll events with addresses
 function getAllEvents($mysqli)
 {
     $sql = "SELECT * FROM VIEW_EVENTSWADDRESS;";
     return getEvents($mysqli, $sql);
 }
 
+//main method for selecting from DB
 function getEvents($mysqli, $SQLString)
 {
     $QueryResult = $mysqli->query($SQLString);

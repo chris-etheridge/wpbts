@@ -1,18 +1,20 @@
 <?php
 
+//get a single clinics data with their addresses
 function getClinic($mysqli, $clinicid)
 {
     $SQLString = "SELECT * FROM VIEW_CLINICSWADDRESS WHERE CLINIC_ID = $clinicid;";
     return getClinics($mysqli, $SQLString);
 }
 
+//get all clinics with their addresses
 function getAllClinics($mysqli)
 {
     $SQLString = "SELECT * FROM VIEW_CLINICSWADDRESS;";
     return getClinics($mysqli, $SQLString);
 }
 
-
+//main method for selecting from DB
 function getClinics($mysqli, $SQLString)
 {
     $QueryResult = $mysqli->query($SQLString);
