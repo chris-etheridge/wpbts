@@ -26,7 +26,7 @@ $_SESSION['clinic']['office'] = $_POST['office'];
 
 if(        !isset($_POST['description']) || !isset($_POST['contact_1'])
         || !isset($_POST['contact_2']) || !isset($_POST['street_no']) || !isset($_POST['street'])
-        || !isset($_POST['area']) || !isset($_POST['city']) || !isset($_POST['area_code']))
+        || !isset($_POST['area']) || !isset($_POST['city']) || !isset($_POST['area_code'])) //verify everything crucial was posted
 {
     $_SESSION['alert']['message_type'] = "alert-danger";
     $_SESSION['alert']['message_title'] = "Error!";
@@ -35,6 +35,7 @@ if(        !isset($_POST['description']) || !isset($_POST['contact_1'])
     exit();
 }
 
+//setting local variables to filtered post values for sql statements
 $description = $mysqli->real_escape_string($_POST['description']);
 $contact1 = $mysqli->real_escape_string($_POST['contact_1']);
 $contact2 = $mysqli->real_escape_string($_POST['contact_2']);
@@ -90,6 +91,7 @@ if(isset($_FILES["fileToUpload"]) && $_FILES["fileToUpload"]['size'] > 0)
     
     if(isset($response))
     {
+        //redirect back to previous page with error message
         $_SESSION['alert']['message_type'] = "alert-warning";
         $_SESSION['alert']['message_title'] = "Warning";
         $_SESSION['alert']['message'] = $response;
@@ -98,7 +100,7 @@ if(isset($_FILES["fileToUpload"]) && $_FILES["fileToUpload"]['size'] > 0)
     }
 }
 
-
+//redirect back to previous page with success message
 $_SESSION['alert']['message_type'] = "alert-success";
 $_SESSION['alert']['message_title'] = "SUCCESS!";
 $_SESSION['alert']['message'] = "Clinic created successfully.";

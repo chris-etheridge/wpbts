@@ -34,12 +34,14 @@ function uploadImage($image, $target_file)
         $rejectMessage = "Sorry, only .jpg files are allowed.";
         $uploadOk = 0;
     }
+
 // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0)
     {
         //echo "Sorry, your file was not uploaded.";
         $rejectMessage = "$rejectMessage Please Try again. If problem persists, contact system administrator!";
-    } else // if everything is ok, try to upload file
+    } 
+    else // if everything is ok, try to upload file
     {
         if (move_uploaded_file($image["tmp_name"], $target_file))
         {
@@ -50,6 +52,7 @@ function uploadImage($image, $target_file)
             $rejectMessage = "There was an error uploading your image. Please try again! If problem persists, contact system administrator!";
         }
     }
+    
     if(!$success)
     {
         return $rejectMessage;

@@ -34,7 +34,7 @@ if(        !isset($_POST['event_id']) || !isset($_POST['title'])
         || !isset($_POST['description']) || !isset($_POST['event_date']) || !isset($_POST['type_id'])
         || !isset($_POST['event_admin']) || !isset($_POST['street_no']) || !isset($_POST['street'])
         || !isset($_POST['area']) || !isset($_POST['city']) || !isset($_POST['area_code'])
-        || !isset($_POST['address_id']) || !isset($_POST['active']))
+        || !isset($_POST['address_id']) || !isset($_POST['active'])) //verify everything crucial was posted
 {
     $_SESSION['alert']['message_type'] = "alert-danger";
     $_SESSION['alert']['message_title'] = "Error!";
@@ -43,6 +43,7 @@ if(        !isset($_POST['event_id']) || !isset($_POST['title'])
     exit();
 }
 
+//setting local variables to filtered post values for sql statements
 $eventid = $mysqli->real_escape_string($_POST['event_id']);
 $title = $mysqli->real_escape_string($_POST['title']);
 $description = $mysqli->real_escape_string($_POST['description']);
@@ -103,6 +104,7 @@ if(isset($_FILES["fileToUpload"]) && $_FILES["fileToUpload"]['size'] > 0)
     
     if(isset($response))
     {
+        //redirect back to previous page with error message
         $_SESSION['alert']['message_type'] = "alert-warning";
         $_SESSION['alert']['message_title'] = "Warning";
         $_SESSION['alert']['message'] = $response;
@@ -111,10 +113,11 @@ if(isset($_FILES["fileToUpload"]) && $_FILES["fileToUpload"]['size'] > 0)
     }
 }
 
-
+//redirect back to previous page with success message
 $_SESSION['alert']['message_type'] = "alert-success";
 $_SESSION['alert']['message_title'] = "SUCCESS!";
 $_SESSION['alert']['message'] = "Event updated successfully.";
+
 $_SESSION['event'] = null; //clear sticky form data
 header('Location: ../events.php');
 exit();
