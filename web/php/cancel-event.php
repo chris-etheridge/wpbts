@@ -5,7 +5,7 @@ require_once("DBConn.php");
 
 session_start();
 
-if(!isset($_GET['eventid']) || !isset($_GET['cancel']))
+if(!isset($_GET['eventid']) || !isset($_GET['cancel']))//verify everything crucial was posted
 {
     $_SESSION['alert']['message_type'] = "alert-warning";
     $_SESSION['alert']['message_title'] = "Warning!";
@@ -14,9 +14,11 @@ if(!isset($_GET['eventid']) || !isset($_GET['cancel']))
     exit();
 }
 
+//setting local variables to filtered post values for sql statements
 $eventid = $mysqli->real_escape_string($_GET['eventid']);
 $status = $mysqli->real_escape_string($_GET['cancel']);
 
+//local variables used as part of the message that will be returned to the user based on a toggle
 $action = ((int)$status === 0) ? "canceling" : "uncanceling";
 $actionPastTense = ((int)$status === 0) ? "canceled" : "uncanceled";
 
@@ -25,6 +27,7 @@ $mysqli->query($sql);
 
 if($mysqli->error) //redirect user to edit/create page
 {
+    //send through error message
     $_SESSION['alert']['message_type'] = "alert-danger";
     $_SESSION['alert']['message_title'] = "Error $action event!";
     $_SESSION['alert']['message'] = "Unknown error. If problem persists, contact system administrator!";
@@ -32,6 +35,7 @@ if($mysqli->error) //redirect user to edit/create page
     exit();
 }
 
+//redirect back to previous page with success message
 $_SESSION['alert']['message_type'] = "alert-success";
 $_SESSION['alert']['message_title'] = "SUCCESS!";
 $_SESSION['alert']['message'] = "Event $actionPastTense successfully.";
