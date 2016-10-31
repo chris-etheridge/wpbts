@@ -99,7 +99,7 @@ public class List_Fragment extends DialogFragment{
 						String message = Networking.NetworkingErrors.GetErrorMessageForCode(code);
 
 						// show to the user
-						Toast.makeText(current_ctx, message, Toast.LENGTH_SHORT);
+						Toast.makeText(current_ctx, message, Toast.LENGTH_SHORT).show();
 					}
 				});
 
@@ -108,18 +108,6 @@ public class List_Fragment extends DialogFragment{
 				list.setAdapter(new List_Adapter(new ArrayList(), parent, List_Adapter.Type.Event));
 				break;
 		}
-
-			view.findViewById(R.id.TXT_Error).setVisibility(View.GONE);
-			view.findViewById(R.id.list).setVisibility(View.VISIBLE);
-
-/*		else {
-			view.findViewById(R.id.TXT_Error).setVisibility(View.VISIBLE);
-			view.findViewById(R.id.list).setVisibility(View.GONE);
-
-			if(type == CLINIC){
-				((TextView)view.findViewById(R.id.TXT_Error)).setText("No Clinics Found.\nPlease check your network connection.");
-			}
-		}*/
 
 		return view;
 	}

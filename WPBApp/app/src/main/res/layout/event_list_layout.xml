@@ -72,7 +72,8 @@
 		android:background="@color/colorBG"
 		android:textColor="@color/colorPrimaryDark"
 		android:textAlignment="gravity"
-		android:gravity="center"/>
+		android:gravity="center"
+		android:visibility="gone"/>
 
 
 </LinearLayout>

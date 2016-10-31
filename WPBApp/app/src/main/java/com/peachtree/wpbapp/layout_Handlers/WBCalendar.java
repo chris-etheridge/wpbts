@@ -16,16 +16,26 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.peachtree.wpbapp.R;
 import com.peachtree.wpbapp.Activity.Event_Info_Fragment;
 import com.peachtree.wpbapp.Core.Util;
 import com.peachtree.wpbapp.Entities.Event;
+import com.peachtree.wpbapp.Core.Events;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by Tyron on 10/28/2016.
@@ -33,9 +43,9 @@ import java.util.Date;
 public class WBCalendar extends LinearLayout
 {
 
-	private ArrayList<Event> events;
+	private ArrayList<Event> events = null;
 	private Event selected;
-	private Context ctx;
+	private final Context ctx;
 	private Calendar currentDate = Calendar.getInstance();
 	private final int DAYS_COUNT = 42;
 	private final String FORMAT = "MMMM yyyy";
@@ -43,7 +53,7 @@ public class WBCalendar extends LinearLayout
 	private TextView month_title, description;
 	private ImageButton btn_next, btn_prev;
 	private Button btn_view;
-	private Util util = new Util();
+	private final Events EVENTS_HELPER = new Events();
 
 
 	public WBCalendar(Context ctx){
@@ -54,21 +64,19 @@ public class WBCalendar extends LinearLayout
 	public WBCalendar(Context ctx, AttributeSet attrs){
 		super(ctx, attrs);
 		this.ctx = ctx;
-		initControl(ctx);
+		initControl();
 	}
 
 	public WBCalendar(Context ctx, AttributeSet attrs, int defStyleAttr)
 	{
 		super(ctx, attrs, defStyleAttr);
 		this.ctx = ctx;
-		initControl(ctx);
+		initControl();
 	}
 
-	private void initControl(Context ctx){
+	private void initControl(){
 		LayoutInflater inflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.calendar, this);
-
-		events = util.getEvents();
 
 		grid = (GridView) findViewById(R.id.days_grid);
 		month_title = (TextView) findViewById(R.id.TXT_month);
@@ -77,6 +85,39 @@ public class WBCalendar extends LinearLayout
 		description = (TextView)findViewById(R.id.TXT_description);
 		btn_view = (Button) findViewById(R.id.BTN_view);
 
+		EVENTS_HELPER.GetAllEvents( new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, JSONArray a) {
+				try {
+					ArrayList es = com.peachtree.wpbapp.Entities.Event.EventsFromJsonArray(a);
+
+					events = es;
+					updateCalendar();
+				} catch (JSONException e) {
+
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+				// handle the error here
+				int code = -1;
+
+				try {
+					code = Integer.parseInt(response.getString("code"));
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+				// parse the error
+				String message = com.peachtree.wpbapp.Core.Networking.NetworkingErrors.GetErrorMessageForCode(code);
+
+				// show to the user
+				Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show();
+			}
+		});
 		setOnClicksListeners();
 
 		updateCalendar();
