@@ -46,7 +46,7 @@ public class Clinic_Info_Fragment extends DialogFragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
-		View view = inflater.inflate(R.layout.clinic_info_layout, container, false);
+		final View view = inflater.inflate(R.layout.clinic_info_layout, container, false);
 
 		mCurrenty = view.getY();
 		final float originalY = mCurrenty;

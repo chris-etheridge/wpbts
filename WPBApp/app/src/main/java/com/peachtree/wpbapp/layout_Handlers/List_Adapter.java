@@ -74,7 +74,7 @@ public class List_Adapter extends BaseAdapter
 		if(type== Type.Event) {
 			TextView name = (TextView) convertView.findViewById(R.id.TXT_name);
 			TextView date = (TextView) convertView.findViewById(R.id.TXT_date);
-			Event event = (Event)list.get(pos);
+			final Event event = (Event)list.get(pos);
 
 			name.setText(event.getTitle());
 			date.setText(new SimpleDateFormat("dd-MM-yyyy").format(event.getDate()));
@@ -85,7 +85,8 @@ public class List_Adapter extends BaseAdapter
 				{
 					FragmentManager manager = ((Activity)context).getFragmentManager();
 					FragmentTransaction transaction = manager.beginTransaction();
-					Event_Info_Fragment event_dialog = Event_Info_Fragment.init(1);
+					transaction.setCustomAnimations(android.support.design.R.anim.abc_popup_enter, android.support.design.R.anim.abc_popup_exit);
+					Event_Info_Fragment event_dialog = Event_Info_Fragment.init(event.getId());
 					event_dialog.show(transaction, "event_dialog");
 				}
 			});
