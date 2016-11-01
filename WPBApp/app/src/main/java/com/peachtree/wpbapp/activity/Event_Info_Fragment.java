@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.peachtree.wpbapp.Core.Events;
@@ -41,6 +42,8 @@ public class Event_Info_Fragment extends DialogFragment
 
 	private Events EVENTS_HELPER;
 
+	private Context CURRENT_CONTEXT;
+
 	public static Event_Info_Fragment init(int id){
 		Event_Info_Fragment fragment = new Event_Info_Fragment();
 
@@ -57,6 +60,8 @@ public class Event_Info_Fragment extends DialogFragment
 		id = getArguments().getInt("id");
 
 		EVENTS_HELPER = new Events(this.getContext());
+
+		CURRENT_CONTEXT = this.getContext();
 
 		load_event();
     }
@@ -86,7 +91,7 @@ public class Event_Info_Fragment extends DialogFragment
 					desc.setText(e.getDescription());
 					date.setText("Date: " + Util.getDateString(e.getDate()));
 					address.setText("Address: " + e.getAddress());
-					
+
 				} catch (ParseException e) {
 					e.printStackTrace();
 				} catch (JSONException e) {
@@ -102,7 +107,7 @@ public class Event_Info_Fragment extends DialogFragment
 				try {
 					code = Integer.parseInt(response.getString("code"));
 				} catch (JSONException e) {
-					e.printStackTrace();
+					Networking.NetworkingErrors.GenericNetworkingErrorToast(CURRENT_CONTEXT, Toast.LENGTH_SHORT);
 				}
 			}
 		});
