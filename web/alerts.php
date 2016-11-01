@@ -73,7 +73,6 @@ if ($exitingAlerst == false) {
                 <thead>
                 <tr>
                     <th class="text-center">Alert ID</th>
-                    <th class="text-center">Type ID</th>
                     <th class="text-center" data-sortable="true">Title</th>
                     <th class="text-center">Content</th>
                     <th class="text-center">Description</th>
@@ -87,15 +86,13 @@ if ($exitingAlerst == false) {
                     ?>
                     <tr>
                         <td class="text-center"><?php echo $value['ALERT_ID'] ?></td>
-                        <td class="text-center"><?php echo $value['TYPE_ID'] ?></td>
                         <td class="text-center"><?php echo $value['TITLE'] ?></td>
                         <td class="text-center"><?php echo $value['BODY'] ?></td>
                         <td class="text-center"><?php echo $value['DESCRIPTION'] ?></td>
                         <td class="text-center">
                             <a href="alerts_send.php?title=<?php echo $value['TITLE'] . "&body=" . $value['BODY'] ?>"
                                class="btn btn-xs btn-primary">Send</a>
-                            <a href="alerts_send.php?test=test"
-                               class="cancelevent btn btn-xs btn-warning" onclick="cancelevent(event)">Remove</a>
+                            <a href="alerts_send.php?test=test" data-id="<?php echo $value['ALERT_ID']; ?>" class="btn btn-xs btn-warning" onclick="removeclinic(event)">Remove</a>
                         </td>
                     </tr>
                     <?php
@@ -111,184 +108,50 @@ if ($exitingAlerst == false) {
 
 
 </div>    <!--/.main-->
+<div class="modal fade" id="modal-remove-alert" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Are you sure you want to permanently delete this alert?</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <label class="control-label">Alert ID</label>
+                    </div>
+                    <div class="col-xs-9">
+                        <span id="moAlertID"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <span id="confirmationBtns"></span>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php require_once('footer.php'); ?>
-<!--<script>-->
-<!--    $('#calendar').datepicker({});-->
-<!---->
-<!--    !function ($) {-->
-<!--        $(document).on("click", "ul.nav li.parent > a > span.icon", function () {-->
-<!--            $(this).find('em:first').toggleClass("glyphicon-minus");-->
-<!--        });-->
-<!--        $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");-->
-<!--    }(window.jQuery);-->
-<!---->
-<!--    $(window).on('resize', function () {-->
-<!--        if ($(window).width() > 768)-->
-<!--            $('#sidebar-collapse').collapse('show')-->
-<!--    })-->
-<!--    $(window).on('resize', function () {-->
-<!--        if ($(window).width() <= 767)-->
-<!--            $('#sidebar-collapse').collapse('hide')-->
-<!--    })-->
-<!--</script>-->
 
-<script>
-    function filterSName() {
-        // Declare variables
-        var input, filter, table, tr, td, i;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("usersTable");
-        tr = table.getElementsByTagName("tr");
+<script type="text/javascript">
+    
+function removeclinic(ev){
+        ev.preventDefault();
+        var uid = ev.target.dataset.id;
 
-        var tdField = 2;
+        //get json object
 
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[tdField];
-            if (td) {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
-
-<script>
-    function filterDOB() {
-        // Declare variables
-        var input, filter, table, tr, td, i;
-        input = document.getElementById("myInput2");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("usersTable");
-        tr = table.getElementsByTagName("tr");
-        var tdField = 5;
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[tdField];
-            if (td) {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
-
-<script>
-    function filterBT() {
-        // Declare variables
-        var input, filter, table, tr, td, i;
-        input = document.getElementById("myInput3");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("usersTable");
-        tr = table.getElementsByTagName("tr");
-        var tdField = 6;
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[tdField];
-            if (td) {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
+        $('#modal-remove-alert .modal-body #moAlertID').html(uid);
+        $('#modal-remove-alert .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/delete-alert.php?alertid=" + uid + "'>Delete Alert</a>");
 
 
-<script>
-    $('#calendar').datepicker({});
+        $('#modal-remove-alert').modal('show', {backdrop: 'static'});
 
-    !function ($) {
-        $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
-            $(this).find('em:first').toggleClass("glyphicon-minus");
-        });
-        $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
-    }(window.jQuery);
-
-    $(window).on('resize', function () {
-        if ($(window).width() > 768)
-            $('#sidebar-collapse').collapse('show')
-    })
-    $(window).on('resize', function () {
-        if ($(window).width() <= 767)
-            $('#sidebar-collapse').collapse('hide')
-    })
-
-    var jsonClinics = <?php echo json_encode(getAllClinics($mysqli)); ?>;
-
-    //view event modal
-    jQuery(function ($) {
-        $('a.viewclinic').click(function (ev) {
-            ev.preventDefault();
-            window.console && console.log('button clicked');
-            var uid = $(this).data('id');
-
-            //get json object
-
-            var objClinic;
-            $.each(jsonClinics, function (i, item) {
-                if (typeof item == 'object') {
-                    if (item.clinic_id === uid.toString()) {
-                        objClinic = item;
-                    }
-                }
-            });
-
-            $('#modal-view-clinic .modal-header .modal-title').html("Viewing: " + objClinic.clinic_id);
-
-            $('#modal-view-clinic .modal-body #moClinicID').html(objClinic.clinic_id);
-            $('#modal-view-clinic .modal-body #moClinicDescription').html(objClinic.description);
-            $('#modal-view-clinic .modal-body #moClinicContact1').html(objClinic.contact_1);
-            $('#modal-view-clinic .modal-body #moClinicContact2').html(objClinic.contact_2);
-            $('#modal-view-clinic .modal-body #moClinicDescription').html(objClinic.description);
-            $('#modal-view-clinic .modal-body #moClinicStreetNo').html(objClinic.street_no);
-            $('#modal-view-clinic .modal-body #moClinicStreet').html(objClinic.street);
-            $('#modal-view-clinic .modal-body #moClinicArea').html(objClinic.area);
-            $('#modal-view-clinic .modal-body #moClinicCity').html(objClinic.city);
-            $('#modal-view-clinic .modal-body #moClinicAreaCode').html(objClinic.area_code);
-
-            $('#modal-view-clinic').modal('show', {backdrop: 'static'});
-
-        });
-    });
-
-    //cancel event confirmation dialog
-    jQuery(function ($) {
-        $('a.removeclinic').click(function (ev) {
-            ev.preventDefault();
-            var uid = $(this).data('id');
-
-            //get json object
-
-            var objClinic;
-            $.each(jsonClinics, function (i, item) {
-                if (typeof item == 'object') {
-                    if (item.clinic_id === uid.toString()) {
-                        objClinic = item;
-                    }
-                }
-            });
-
-            $('#modal-remove-clinic .modal-body #moClinicID').html(objClinic.clinic_id);
-            $('#modal-remove-clinic .modal-body #moClinicDescription').html(objClinic.description);
-            $('#modal-remove-clinic .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/delete-clinic.php?clinic=" + objClinic.clinic_id + "'>Delete Clinic</a>");
-
-
-            $('#modal-remove-clinic').modal('show', {backdrop: 'static'});
-
-        });
-    });
-
+     }
 
 </script>
 

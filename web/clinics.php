@@ -69,9 +69,8 @@ $arrClinics = getAllClinics($mysqli);
                         //var_dump($arrEvents);
                         foreach($arrClinics as $Row)
                         {
-                            //$Row['EVENT_ID']
                             ?>
-                            <tr class="<?php if ($count % 2 !== 0) echo "odd"; ?>">
+                            <tr>
                                 <td class="text-center"><?php echo $Row['clinic_id']; ?></td>
                                 <td class="text-center"><?php echo $Row['description']; ?></td>
                                 <td class="text-center"><?php echo $Row['contact_1']; ?></td>
