@@ -67,7 +67,7 @@
 			<li class="<?php if(isset($_PARENT['alerts'])){ echo "active"; } ?>"><a href="alerts.php"><svg class="glyph stroked star"><use xlink:href="#stroked-star"></use></svg> Alert Management</a></li>
 
 			<li role="presentation" class="divider"></li>
-			<li><a href="login.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
+                        <li><a href="php/form-handler-logout.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Exit</a></li>
 		</ul>
 
 	</div><!--/.sidebar-->

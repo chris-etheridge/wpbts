@@ -103,7 +103,7 @@ if (isset($_SESSION['USER'])) {
                             <td class="text-center"><?php echo $value['DATE_OF_BIRTH'] ?></td>
                             <td class="text-center"><?php echo $value['BLOOD_TYPE'] ?></td>
                             <td class="text-center">
-                                <a href="users_viewuser.php?userID=<?php echo $value['USER_ID'] ?>"
+                                <a href="users_edituser.php?userID=<?php echo $value['USER_ID'] ?>"
                                    class="btn btn-xs btn-primary">Edit</a>
                                 <a href="php/form-handler-user-remove.php?userID=<?php echo $value['USER_ID'] . "&addressID=" . $value['ADDRESS_ID'] ?>"
                                    class=" btn btn-xs btn-warning">Remove</a>

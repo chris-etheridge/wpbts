@@ -1,5 +1,6 @@
 <?php
 $_TITLE = "WPBTS - Dashboard";
+
 require_once("header.php");
 require_once('php/DBConn.php');
 require_once('api/events/functions.php');
