@@ -11,7 +11,6 @@ session_start();
 
 
 $alertData = array(
-    "TYPE_ID" => $_POST["TYPE_ID"],
     "TITLE" => $_POST["TITLE"],
     "BODY" => $_POST["BODY"],
     "DESCRIPTION" => $_POST["DESCRIPTION"]

@@ -25,12 +25,11 @@ function createAlert($alertData)
 {
 
     global $dbConn;
-    $sql = "INSERT INTO TBL_ALERT(TYPE_ID, TITLE, BODY, DESCRIPTION) VALUES(?,?,?,?)";
+    $sql = "INSERT INTO TBL_ALERT(TITLE, BODY, DESCRIPTION) VALUES(?,?,?)";
     $stmt = $dbConn->prepare($sql);
-    $stmt->bindParam(1, $alertData['TYPE_ID']);
-    $stmt->bindParam(2, $alertData['TITLE']);
-    $stmt->bindParam(3, $alertData['BODY']);
-    $stmt->bindParam(4, $alertData['DESCRIPTION']);
+    $stmt->bindParam(1, $alertData['TITLE']);
+    $stmt->bindParam(2, $alertData['BODY']);
+    $stmt->bindParam(3, $alertData['DESCRIPTION']);
 
     if ($stmt->execute()) {
         return true;
