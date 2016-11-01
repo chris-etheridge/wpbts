@@ -90,7 +90,8 @@ if ($exitingAlerst == false) {
                         <td class="text-center"><?php echo $value['BODY'] ?></td>
                         <td class="text-center"><?php echo $value['DESCRIPTION'] ?></td>
                         <td class="text-center">
-                            <a href="" data-id="<?php echo $value['ALERT_ID']; ?>" class="btn btn-xs btn-primary" onclick="sendAlert(event)">Send</a>
+                            <a href="edit-alert.php?alertid=<?php echo $value['ALERT_ID']; ?>" class="btn btn-xs btn-primary">Edit</a>
+                            <a href="" data-id="<?php echo $value['ALERT_ID']; ?>" class="btn btn-xs btn-success" onclick="sendAlert(event)">Send</a>
                             <a href="" data-id="<?php echo $value['ALERT_ID']; ?>" class="btn btn-xs btn-warning" onclick="removeAlert(event)">Remove</a>
                         </td>
                     </tr>

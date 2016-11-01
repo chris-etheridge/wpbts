@@ -56,20 +56,20 @@ require_once('php/DBConn_Dave.php');
                 <div class="col-md-6">
                     <label>Title:</label>
                     <input required type="text"
-                           class="form-control" name="TITLE" value="<?php $_SESSION['ALERT']['TITLE'] ?>"
+                           class="form-control" name="TITLE" value="<?php echo $_SESSION['ALERT']['TITLE']; ?>"
                            style="margin-bottom:2%">
                 </div>
 
                 <div class="col-md-12">
                     <label>Body</label>
                     <textarea required="" class="form-control" rows="6"
-                              name="BODY"><?php $_SESSION['ALERT']['BODY'] ?></textarea>
+                              name="BODY"><?php echo $_SESSION['ALERT']['BODY']; ?></textarea>
                 </div>
 
                 <div class="col-md-12">
                     <label>Description</label>
                     <textarea required="" class="form-control" rows="6" name="DESCRIPTION"
-                              style="margin-bottom: 7%"><?php $_SESSION['ALERT']['DESCRIPTION'] ?></textarea>
+                              style="margin-bottom: 7%"><?php echo $_SESSION['ALERT']['DESCRIPTION']; ?></textarea>
                 </div>
 
                 <div class="col-md-12" align="right" style="margin-bottom: 5%">

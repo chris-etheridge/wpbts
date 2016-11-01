@@ -21,6 +21,20 @@ function getAllALerts()
 
 }
 
+function getAlert($alertid)
+{
+    global $dbConn;
+    $sql = "SELECT * FROM TBL_ALERT WHERE ALERT_ID = ?";
+    $stmt = $dbConn->prepare($sql);
+    $stmt->bindParam(1, $alertid);
+    if ($stmt->execute()) {
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        return false;
+    }
+
+}
+
 function createAlert($alertData)
 {
 
