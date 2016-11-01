@@ -113,7 +113,7 @@ public class List_Fragment extends DialogFragment{
 
 				break;
 			case CLINIC:
-				list.setAdapter(new List_Adapter(new ArrayList(), parent, List_Adapter.Type.Event));
+				list.setAdapter(new List_Adapter(new ArrayList(), parent, List_Adapter.Type.Clinic));
 				break;
 		}
 
