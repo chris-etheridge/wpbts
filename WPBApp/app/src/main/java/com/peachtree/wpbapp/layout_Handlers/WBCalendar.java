@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.peachtree.wpbapp.R;
 import com.peachtree.wpbapp.Activity.Event_Info_Fragment;
-import com.peachtree.wpbapp.Core.Util;
 import com.peachtree.wpbapp.Entities.Event;
 import com.peachtree.wpbapp.Core.Events;
 

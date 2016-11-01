@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.peachtree.wpbapp.Entities.Event;
 import com.peachtree.wpbapp.R;
-import com.peachtree.wpbapp.Core.Util;
 import com.peachtree.wpbapp.layout_Handlers.List_Adapter;
 
 import org.json.JSONArray;

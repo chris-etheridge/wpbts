@@ -88,6 +88,7 @@ public class List_Adapter extends BaseAdapter
 					FragmentTransaction transaction = manager.beginTransaction();
 					transaction.setCustomAnimations(android.support.design.R.anim.abc_popup_enter, android.support.design.R.anim.abc_popup_exit);
 					Event_Info_Fragment event_dialog = Event_Info_Fragment.init(event.getId());
+					event_dialog.loadEvents(list);
 					event_dialog.show(transaction, "event_dialog");
 				}
 			});

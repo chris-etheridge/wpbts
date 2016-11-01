@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +16,12 @@ import java.util.Date;
 public class Event {
 
     private static SimpleDateFormat fmt = new SimpleDateFormat("mm-dd-yyyy");
+
+    public static String getDateString(Date date){
+		DateFormat format = new SimpleDateFormat("dd MMMM yyyy");
+
+		return format.format(date);
+	}
 
     private enum EventType {
         Donation,

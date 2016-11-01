@@ -2,7 +2,7 @@
 <resources>
     <!-- top level endpoint -->
     <!-- TODO: change this to your local -->
-    <string name="API_BASE">http://192.168.0.9:8888/web</string>
+    <string name="API_BASE">http://www.idfs.co.za/wpbts</string>
 
     <!-- user api endpoints -->
     <string name="USER_REGISTER">/api/users/create_user.php</string>

@@ -14,15 +14,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.peachtree.wpbapp.R;
-import com.peachtree.wpbapp.Core.Util;
 import com.peachtree.wpbapp.Entities.Clinic;
-import com.peachtree.wpbapp.Entities.Event;
+
+import java.util.ArrayList;
 
 public class Clinic_Info_Fragment extends DialogFragment
 {
 
 	private Activity parent;
 	private int id;
+	private ArrayList<Clinic> clinics;
 	private Clinic clinic;
 	private float mCurrenty;
 
@@ -40,7 +41,7 @@ public class Clinic_Info_Fragment extends DialogFragment
         super.onCreate(savedInstanceState);
 		parent = getActivity();
 		id = getArguments().getInt("id");
-		load_event();
+
     }
 
 	@Override
@@ -101,7 +102,7 @@ public class Clinic_Info_Fragment extends DialogFragment
 		getDialog().getWindow().setLayout(display.getWidth() - 50, display.getHeight() - 50);
 	}
 
-	private void load_event(){
-		//TO-DO
+	public void loadClinics(ArrayList<Clinic> c){
+		clinics = c;
 	}
 }
