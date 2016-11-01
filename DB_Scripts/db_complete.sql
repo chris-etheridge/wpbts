@@ -36,6 +36,7 @@ create table TBL_USER(
 	LANGUAGE_PREF varchar(20),
 	PASSPORT_NUM varchar(20),
 	PWD varchar(255),
+	DEVICE_TOKEN varchar(255),
 	
 	foreign key (ADDRESS_ID) references TBL_ADDRESS(ADDRESS_ID)
 )DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -88,13 +89,6 @@ create table TBL_ALERT(
 	DESCRIPTION varchar(255) /* JSON string for processing on the client side. */
 )DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-create table TBL_DEVICES(
-	DEVICE_ID int primary key AUTO_INCREMENT,
-	DEVICE_EMAIL varchar(255),
-	DEVICE_TOKEN varchar(255)
-
-)DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 CREATE TABLE TBL_EVENT_RSVP(
 	USER_ID INT,
 	EVENT_ID INT,
@@ -131,11 +125,11 @@ INSERT INTO TBL_ADMIN VALUES( 5, 'ut.lacus@sit.co.uk', 'Kitra', 'Bass', 'e731a7b
 INSERT INTO TBL_ADMIN VALUES( 6, 'admin@live.co.za', 'Admin', 'Super', 'e731a7b612ab389fcb7f973c452f33df3eb69c99');
 
 /* TBL_USER */
-INSERT INTO TBL_USER VALUES( 1, 'Kyle', 'Burton', '9999999999999', 'kyle@live.co.za', '0229999999', 'O-', 6, '1995-02-03', 'Mr', 'M', 'English', '', 'e731a7b612ab389fcb7f973c452f33df3eb69c99');
-INSERT INTO TBL_USER VALUES( 2, 'Chris', 'Etheridge', '8888888888888', 'chirs@live.co.za', '0228888888', 'AB+', 7, '1990-03-04', 'Mr', 'M', 'English', '','e731a7b612ab389fcb7f973c452f33df3eb69c99');
-INSERT INTO TBL_USER VALUES( 3, 'Tyron', 'deAndrade', '7777777777777', 'tyron@live.co.za', '0227777777', 'A+', 8, '1985-04-05', 'Mrs', 'F', 'Afrikaans', '','e731a7b612ab389fcb7f973c452f33df3eb69c99');
-INSERT INTO TBL_USER VALUES( 4, 'David', 'Abrahams', '6666666666666', 'david@live.co.za', '0225555555', 'B-', 9, '1980-05-06', 'Mrs', 'F', 'isiXhosa', '','e731a7b612ab389fcb7f973c452f33df3eb69c99');
-INSERT INTO TBL_USER VALUES( 5, 'Daniel', 'Erasmus', '', 'daniel@live.co.za', '0224444444', 'O+', 10, '1975-06-07', 'Mr', 'M', 'English', '3333333333333','e731a7b612ab389fcb7f973c452f33df3eb69c99');
+INSERT INTO TBL_USER (USER_ID, FIRST_NAME, LAST_NAME, NATIONAL_ID, EMAIL, PHONE, BLOOD_TYPE, ADDRESS_ID, DATE_OF_BIRTH, TITLE, GENDER, LANGUAGE_PREF, PASSPORT_NUM, PWD) VALUES( 1, 'Kyle', 'Burton', '9999999999999', 'kyle@live.co.za', '0229999999', 'O-', 6, '1995-02-03', 'Mr', 'M', 'English', '', 'e731a7b612ab389fcb7f973c452f33df3eb69c99');
+INSERT INTO TBL_USER (USER_ID, FIRST_NAME, LAST_NAME, NATIONAL_ID, EMAIL, PHONE, BLOOD_TYPE, ADDRESS_ID, DATE_OF_BIRTH, TITLE, GENDER, LANGUAGE_PREF, PASSPORT_NUM, PWD) VALUES( 2, 'Chris', 'Etheridge', '8888888888888', 'chirs@live.co.za', '0228888888', 'AB+', 7, '1990-03-04', 'Mr', 'M', 'English', '','e731a7b612ab389fcb7f973c452f33df3eb69c99');
+INSERT INTO TBL_USER (USER_ID, FIRST_NAME, LAST_NAME, NATIONAL_ID, EMAIL, PHONE, BLOOD_TYPE, ADDRESS_ID, DATE_OF_BIRTH, TITLE, GENDER, LANGUAGE_PREF, PASSPORT_NUM, PWD) VALUES( 3, 'Tyron', 'deAndrade', '7777777777777', 'tyron@live.co.za', '0227777777', 'A+', 8, '1985-04-05', 'Mrs', 'F', 'Afrikaans', '','e731a7b612ab389fcb7f973c452f33df3eb69c99');
+INSERT INTO TBL_USER (USER_ID, FIRST_NAME, LAST_NAME, NATIONAL_ID, EMAIL, PHONE, BLOOD_TYPE, ADDRESS_ID, DATE_OF_BIRTH, TITLE, GENDER, LANGUAGE_PREF, PASSPORT_NUM, PWD) VALUES( 4, 'David', 'Abrahams', '6666666666666', 'david@live.co.za', '0225555555', 'B-', 9, '1980-05-06', 'Mrs', 'F', 'isiXhosa', '','e731a7b612ab389fcb7f973c452f33df3eb69c99');
+INSERT INTO TBL_USER (USER_ID, FIRST_NAME, LAST_NAME, NATIONAL_ID, EMAIL, PHONE, BLOOD_TYPE, ADDRESS_ID, DATE_OF_BIRTH, TITLE, GENDER, LANGUAGE_PREF, PASSPORT_NUM, PWD) VALUES( 5, 'Daniel', 'Erasmus', '', 'daniel@live.co.za', '0224444444', 'O+', 10, '1975-06-07', 'Mr', 'M', 'English', '3333333333333','e731a7b612ab389fcb7f973c452f33df3eb69c99');
 
 /* TBL_CLINIC */
 INSERT INTO TBL_CLINIC VALUES( 1, 1, '0769999999', '0219999999', 'clinic 1');
@@ -163,12 +157,6 @@ insert into TBL_ALERT
 values
 (1,'Alert for low blood O-','We are short of O- blood, help the cause by donating blood today!','As per the body.'),
 (2,'Alert for low blood B+','We are short of B+ blood, help the cause by donating blood today!','As per the body.');
-
-insert into TBL_DEVICES
-(DEVICE_EMAIL, DEVICE_TOKEN)
-values
-('test@live.co.za','bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ');
-
 
 
 /* TBL_EVENT */
