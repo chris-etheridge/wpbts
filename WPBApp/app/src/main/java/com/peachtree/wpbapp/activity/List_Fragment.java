@@ -70,7 +70,7 @@ public class List_Fragment extends DialogFragment{
 		switch (type)
 		{
 			case EVENT:
-				EVENTS_HELPER.GetAllEvents( new JsonHttpResponseHandler() {
+				EVENTS_HELPER.GetAllEvents(new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(int statusCode, Header[] headers, JSONArray a) {
 						try {

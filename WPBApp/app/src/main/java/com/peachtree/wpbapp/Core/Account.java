@@ -1,8 +1,23 @@
 package com.peachtree.wpbapp.Core;
 
+import android.widget.Toast;
+
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.peachtree.wpbapp.Core.impl.UserNotLoggedInException;
+import com.peachtree.wpbapp.Entities.Event;
 import com.peachtree.wpbapp.Entities.User;
+import com.peachtree.wpbapp.layout_Handlers.List_Adapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Functions to manage the user account.
@@ -12,24 +27,59 @@ public class Account {
 
     private User CURRENT_USER = null;
 
+    private static Networking API_HELPER;
+
+    private String USER_LOGIN_API_URL = API_HELPER.GetApiBaseUrl() +  "/api/user/login.php";
+    private String USER_REGISTER_API_URL = API_HELPER.GetApiBaseUrl() +  "/api/events/view_event.php";
+
+
     public Account(String email, String password) {
         LogIn(email, password);
     }
 
-    // log a new user in
     public User LogIn(String email, String password) {
         if(logged_in_q()) {
             return CURRENT_USER;
         } else {
-            return new User();
-        }
-    }   
+            RequestParams params = new RequestParams();
 
-    public User LogIn(String email, String password, AsyncHttpResponseHandler handler) {
-        if(logged_in_q()) {
+            params.add("email", email);
+            params.add("pwd", password);
+
+            API_HELPER.Post(USER_LOGIN_API_URL, params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject o) {
+                    try {
+                        JSONObject u = o.getJSONObject("user");
+
+                        User user = User.UserFromJsonObject(u);
+
+                        CURRENT_USER = user;
+                    } catch (JSONException e) {
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+                    // handle the error here
+                    int code = -1;
+
+                    try {
+                        code = Integer.parseInt(response.getString("code"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    // parse the error
+                    String message = Networking.NetworkingErrors.GetErrorMessageForCode(code);
+
+                }
+            });
+
             return CURRENT_USER;
-        } else {
-            return new User();
         }
     }
 

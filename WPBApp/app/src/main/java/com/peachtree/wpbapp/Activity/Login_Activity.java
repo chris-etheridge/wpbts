@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.peachtree.wpbapp.Entities.Event;
 import com.peachtree.wpbapp.R;
@@ -13,7 +14,7 @@ import com.peachtree.wpbapp.Core.*;
 public class Login_Activity extends AppCompatActivity
 {
 
-	private Account session_Account;
+	private Account session_account;
 	private TextView user, password;
 
 	@Override
@@ -22,7 +23,7 @@ public class Login_Activity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_activity);
 
-		session_Account = null;
+		session_account = null;
 		user = (TextView)findViewById(R.id.TXT_username);
 		password = (TextView)findViewById(R.id.TXT_password);
 	}
@@ -30,11 +31,20 @@ public class Login_Activity extends AppCompatActivity
 	public void onLoginClick(View view){
 
 		if(validateUsername()){
-			session_Account = new Account(user.getText().toString(), password.getText().toString());
-		}
+			session_account = new Account(user.getText().toString(), password.getText().toString());
 
-		Intent loginIntent = new Intent(this, Home_Activity.class);
-		startActivity(loginIntent);
+			if(session_account != null) {
+				Intent loginIntent = new Intent(this, Home_Activity.class);
+
+				startActivity(loginIntent);
+			} else {
+				Toast.makeText(this,
+						"There was an error logging you in, please try again in a few minutes!",
+						Toast.LENGTH_SHORT).show();
+			}
+		} else {
+			Toast.makeText(this, "Please enter a username!", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	private boolean validateUsername(){
