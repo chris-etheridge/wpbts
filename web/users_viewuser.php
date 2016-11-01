@@ -344,11 +344,7 @@ $_SESSION['USER']['LAST_EMAIL'] = $userData[1][0]['EMAIL'];
                            class="form-control" name="CITY" value="<?php echo $_SESSION['USER']['CITY'] ?>"
                            style="margin-bottom:2%">
 
-                    <label>Password</label>
-                    <input required type="text"
-                           class="form-control" name="PASSWORD"
-                           value="p4ssw0rd" style="margin-bottom:7%">
-
+                    
                     <div class="col-md-12" align="right" style="margin-bottom: 5%">
                         <button type="submit" class="btn btn-info">Save User</button>
                     </div>
