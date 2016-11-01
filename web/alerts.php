@@ -90,9 +90,8 @@ if ($exitingAlerst == false) {
                         <td class="text-center"><?php echo $value['BODY'] ?></td>
                         <td class="text-center"><?php echo $value['DESCRIPTION'] ?></td>
                         <td class="text-center">
-                            <a href="alerts_send.php?title=<?php echo $value['TITLE'] . "&body=" . $value['BODY'] ?>"
-                               class="btn btn-xs btn-primary">Send</a>
-                            <a href="alerts_send.php?test=test" data-id="<?php echo $value['ALERT_ID']; ?>" class="btn btn-xs btn-warning" onclick="removeclinic(event)">Remove</a>
+                            <a href="" data-id="<?php echo $value['ALERT_ID']; ?>" class="btn btn-xs btn-primary" onclick="sendAlert(event)">Send</a>
+                            <a href="" data-id="<?php echo $value['ALERT_ID']; ?>" class="btn btn-xs btn-warning" onclick="removeAlert(event)">Remove</a>
                         </td>
                     </tr>
                     <?php
@@ -135,23 +134,66 @@ if ($exitingAlerst == false) {
     </div>
 </div>
 
+<div class="modal fade" id="modal-send-alert" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Are you sure you want to send this alert to everyone?</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <label class="control-label">Alert ID</label>
+                    </div>
+                    <div class="col-xs-9">
+                        <span id="moAlertID"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <span id="confirmationBtns"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php require_once('footer.php'); ?>
 
 <script type="text/javascript">
     
-function removeclinic(ev){
-        ev.preventDefault();
-        var uid = ev.target.dataset.id;
+function removeAlert(ev)
+{
+    ev.preventDefault();
+    var uid = ev.target.dataset.id;
 
-        //get json object
+    //get json object
 
-        $('#modal-remove-alert .modal-body #moAlertID').html(uid);
-        $('#modal-remove-alert .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/delete-alert.php?alertid=" + uid + "'>Delete Alert</a>");
+    $('#modal-remove-alert .modal-body #moAlertID').html(uid);
+    $('#modal-remove-alert .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/delete-alert.php?alertid=" + uid + "'>Delete Alert</a>");
 
 
-        $('#modal-remove-alert').modal('show', {backdrop: 'static'});
+    $('#modal-remove-alert').modal('show', {backdrop: 'static'});
 
-     }
+}
+     
+function sendAlert(ev)
+{
+    ev.preventDefault();
+    var uid = ev.target.dataset.id;
+
+    //get json object
+
+    $('#modal-send-alert .modal-body #moAlertID').html(uid);
+    $('#modal-send-alert .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/send-alert.php?alertid=" + uid + "'>Send Alert</a>");
+
+
+    $('#modal-send-alert').modal('show', {backdrop: 'static'});
+
+}
 
 </script>
 
