@@ -25,8 +25,7 @@ require_once('php/DBConn_Dave.php');
     </div><!--/.row-->
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">
-                Create new alert:</h1>
+            <h1 class="page-header">Create new alert:</h1>
         </div>
     </div><!--/.row-->
 
