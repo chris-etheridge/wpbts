@@ -55,9 +55,7 @@ public class Login_Activity extends AppCompatActivity
 				}
 				// else, there was an internal or network error
 				else {
-					Toast.makeText(this,
-							"There was an error logging you in, please try again in a few minutes!",
-							Toast.LENGTH_SHORT).show();
+					Networking.NetworkingErrors.GenericNetworkingErrorToast(CURRENT_CONTEXT, Toast.LENGTH_SHORT);
 				}
 			} else {
 				Toast.makeText(this, "Please enter a password!", Toast.LENGTH_SHORT).show();

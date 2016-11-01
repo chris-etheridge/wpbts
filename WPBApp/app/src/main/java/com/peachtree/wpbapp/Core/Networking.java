@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -128,6 +129,10 @@ public class Networking {
             }
 
             return msg;
+        }
+
+        public static void GenericNetworkingErrorToast(Context ctx, int duration) {
+            Toast.makeText(ctx, "There was a networking error, please try again in a few moments.", duration);
         }
     }
 

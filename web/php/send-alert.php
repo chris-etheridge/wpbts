@@ -4,8 +4,58 @@ session_start();
 
 require_once("DBConn.php");
 
+//variables used to store alert message before sending
+$alertbody;
+$alerttitle;
 
-$url = 'https://fcm.googleapis.com/fcm/send';
+//get alert from db or parse custom alert
+if(isset($_GET['alertid'])) //preset alert
+{
+    $alertid = $mysqli->real_escape_string($_GET['alertid']); //filter post
+    $sql = "SELECT * FROM TBL_ALERT WHERE ALERT_ID = $alertid";
+    $QueryResult = $mysqli->query($sql);
+    $alert = array();
+    if ($QueryResult == TRUE)
+    {
+        $rowid = 0;
+        while (($Row = $QueryResult->fetch_assoc()) !== NULL)
+        {
+            $alert[$rowid] = array();
+            $alert[$rowid]['alertid'] = $Row['ALERT_ID'];
+            $alert[$rowid]['description'] = $Row['DESCRIPTION'];
+            $alert[$rowid]['body'] = $Row['BODY'];
+            $alert[$rowid]['title'] = $Row['TITLE'];
+        }
+        $alertbody = $alert[0]['body'];
+        $alerttitle = $alert[0]['title'];
+    }
+    else
+    {
+        $_SESSION['alert']['message_type'] = "alert-danger";
+        $_SESSION['alert']['message_title'] = "Warning!";
+        $_SESSION['alert']['message'] = "There was an error finding the alert in the database.";
+        header('Location: ../alerts.php');
+        exit();
+    }
+}
+else //custom alert
+{
+    if(isset($_POST['custom_alert'])) //parse custom alert components
+    {
+        $alertbody = $_POST['custom_alert']['BODY'];
+        $alerttitle = $_POST['custom_alert']['TITLE'];
+    }
+    else
+    {
+        $_SESSION['alert']['message_type'] = "alert-danger";
+        $_SESSION['alert']['message_title'] = "Warning!";
+        $_SESSION['alert']['message'] = "No alert data to send.";
+        header('Location: ../alerts.php');
+        exit();
+    }
+}
+
+
 
 /*$fields = array (
         'registration_ids' => array (
@@ -16,10 +66,15 @@ $url = 'https://fcm.googleapis.com/fcm/send';
         )
 );*/
 
+echo $alerttitle;
+echo "\n";
+echo $alertbody;
+echo "\n";
+
 $fields = array(
     'message' => array(
-        'title' => "test title",
-        'body' => "test body"
+        'title' => $alerttitle,
+        'body' => $alertbody
     ),
     'to' => "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ"
 );
@@ -32,7 +87,7 @@ $headers = array (
 );
 
 $ch = curl_init ();
-curl_setopt ( $ch, CURLOPT_URL, $url );
+curl_setopt ( $ch, CURLOPT_URL, $FCMurl );
 curl_setopt ( $ch, CURLOPT_POST, true );
 curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
 curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );

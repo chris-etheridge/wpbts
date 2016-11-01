@@ -269,31 +269,31 @@ function prepareData($userData)
 
 function issueError($errCode)
 {
-    $USER_NOT_EXISTS = "111 - User already exist";
-    $LOGIN_ACCEPTED = "112 - Registration Accepted";
-    $DATABASE_UNABAILABLE = "113 - Database unavailable - check server logs";
-    $SCRIPT_UNAVAILABLE = "114 - Script not implemented";
-    $INCORRECT_JSON = "115 - Incorrect string format";
-    $INCORRECT_PARAMATER_COUNT = "116 - Incomplete paramaters . Expect min 12 user, 6 address";
+    $USER_NOT_EXISTS = array('code' => "111", 'message' => "User already exist");
+    $LOGIN_ACCEPTED = array('code' => "112", 'message' => "Registration Accepted");
+    $DATABASE_UNABAILABLE = array('code' => "113", 'message' => "Database unavailable - check server logs");
+    $SCRIPT_UNAVAILABLE = array('code' => "114", 'message' => "Script not implemented");
+    $INCORRECT_JSON = array('code' => "115", 'message' => "Incorrect string format");
+    $INCORRECT_PARAMATER_COUNT = array('code' => "116", 'message' => "Incomplete paramaters . Expect min 12 user, 6 address");
 
     switch ($errCode) {
         case '111':
-            echo $USER_NOT_EXISTS;
+            echo json_encode($USER_NOT_EXISTS);
             break;
         case '112':
-            echo $LOGIN_ACCEPTED;
+            echo json_encode($LOGIN_ACCEPTED);
             break;
         case '113':
-            echo $DATABASE_UNABAILABLE;
+            echo json_encode($DATABASE_UNABAILABLE);
             break;
         case '114':
-            echo $SCRIPT_UNAVAILABLE;
+            echo json_encode($SCRIPT_UNAVAILABLE);
             break;
         case'115':
-            echo $INCORRECT_JSON;
+            echo json_encode($INCORRECT_JSON);
             break;
         case '116':
-            echo $INCORRECT_PARAMATER_COUNT;
+            echo json_encode($INCORRECT_PARAMATER_COUNT);
             break;
     }
     die();

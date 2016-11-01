@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.peachtree.wpbapp.Core.Events;
@@ -36,6 +37,8 @@ public class Event_Info_Fragment extends DialogFragment
 	private float mCurrenty, mCurrentx;
 
 	//private Events EVENTS_HELPER;
+
+	private Context CURRENT_CONTEXT;
 
 	public static Event_Info_Fragment init(int id){
 		Event_Info_Fragment fragment = new Event_Info_Fragment();
@@ -72,6 +75,7 @@ public class Event_Info_Fragment extends DialogFragment
 		mCurrenty = view.getX();
 		final float originalY = mCurrenty;
 		final float originalX = mCurrentx;
+
 
 		// get all of our fields
 		TextView title = (TextView)view.findViewById(R.id.event_title);

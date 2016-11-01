@@ -1,5 +1,5 @@
 <?php
-$_TITLE = "WPBTS - User Management";
+$_TITLE = "WPBTS - Alert Management";
 $_PARENT['alerts'] = time();
 
 require_once("header.php");
@@ -59,9 +59,8 @@ if ($exitingAlerst == false) {
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
             <h4>All Alerts</h4>
-            <a href="alerts_create.php" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create Alert
-            </a>
+            <a href="alerts_create.php" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create Alert</a>
+            <a href="alerts_send_custom.php" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Send one off alert</a>
         </div>
     </div>
     <div class="row"> <!-- upcoming events -->

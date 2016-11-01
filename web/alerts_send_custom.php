@@ -6,7 +6,7 @@
 
 session_start();
 $_PARENT['alerts'] = time();
-$_TITLE = "WPBTS - Alert Management";
+$_TITLE = "WPBTS - User Management";
 require_once("header.php");
 require_once('php/DBConn_Dave.php');
 
@@ -52,28 +52,24 @@ require_once('php/DBConn_Dave.php');
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
             <h3>Alert Details:</h3>
-            <form action="php/form-handler-alert-create.php" method="POST">
+            <form action="php/send-alert.php" method="POST">
                 <div class="col-md-6">
                     <label>Title:</label>
-                    <input required type="text"
-                           class="form-control" name="TITLE" value="<?php echo $_SESSION['ALERT']['TITLE']; ?>"
-                           style="margin-bottom:2%">
+                    <input required type="text" class="form-control" name="custom_alert[TITLE]" value="<?php echo $_SESSION['ALERT']['TITLE']; ?>" style="margin-bottom:2%">
                 </div>
 
                 <div class="col-md-12">
                     <label>Body</label>
-                    <textarea required="" class="form-control" rows="6"
-                              name="BODY"><?php echo $_SESSION['ALERT']['BODY']; ?></textarea>
+                    <textarea required="" class="form-control" rows="6" name="custom_alert[BODY]"><?php echo $_SESSION['ALERT']['BODY']; ?></textarea>
                 </div>
 
                 <div class="col-md-12">
                     <label>Description</label>
-                    <textarea required="" class="form-control" rows="6" name="DESCRIPTION"
-                              style="margin-bottom: 7%"><?php echo $_SESSION['ALERT']['DESCRIPTION']; ?></textarea>
+                    <textarea required="" class="form-control" rows="6" name="custom_alert[DESCRIPTION]" style="margin-bottom: 7%"><?php echo $_SESSION['ALERT']['DESCRIPTION']; ?></textarea>
                 </div>
 
                 <div class="col-md-12" align="right" style="margin-bottom: 5%">
-                    <button type="submit" class="btn btn-info">Save Alert</button>
+                    <button type="submit" class="btn btn-info">Send Alert to Everyone</button>
                 </div>
             </form>
         </div>
