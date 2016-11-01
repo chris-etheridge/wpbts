@@ -83,7 +83,6 @@ create table TBL_EVENT(
 
 create table TBL_ALERT(
 	ALERT_ID int primary key AUTO_INCREMENT,
-	TYPE_ID int,
 	TITLE varchar(50),
 	BODY varchar(255),
 	DESCRIPTION varchar(255) /* JSON string for processing on the client side. */
@@ -153,10 +152,10 @@ values
 
 /* TBL_ALERT */
 insert into TBL_ALERT
-(TYPE_ID,TITLE,BODY,DESCRIPTION)
+(TITLE,BODY,DESCRIPTION)
 values
-(1,'Alert for low blood O-','We are short of O- blood, help the cause by donating blood today!','As per the body.'),
-(2,'Alert for low blood B+','We are short of B+ blood, help the cause by donating blood today!','As per the body.');
+('Alert for low blood O-','We are short of O- blood, help the cause by donating blood today!','As per the body.'),
+('Alert for low blood B+','We are short of B+ blood, help the cause by donating blood today!','As per the body.');
 
 
 /* TBL_EVENT */
