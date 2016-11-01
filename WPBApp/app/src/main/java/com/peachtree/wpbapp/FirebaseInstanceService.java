@@ -21,13 +21,13 @@ import cz.msebera.android.httpclient.Header;
 
 import static android.content.ContentValues.TAG;
 
-public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
+public class FirebaseInstanceService extends FirebaseInstanceIdService {
 
     private static Networking API_HELPER;
     private String USER_UPDATE_DEVICE_TOKEN_API = API_HELPER.GetApiBaseUrl() +  "/api/firebase/device_token_registration.php";
 
-    public MyFirebaseInstanceIDService() {
-
+    public FirebaseInstanceService() {
+        API_HELPER = new Networking();
     }
 
     @Override
