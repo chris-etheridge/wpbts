@@ -6,15 +6,16 @@ require_once("functions.php");
 
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method != "POST") {
-    echo "Requires POST to access this API";
+    echo json_encode(array("code" => "101", "message" => "Requires POST to access this API"));
+    exit();
 }
 
 $userData = file_get_contents('php://input');
 
 $jsonData = json_decode($userData, true);
 if ($jsonData == null) {
-    echo "Error with JSON string, could not parse: $userData";
-    die();
+    echo json_encode(array("code" => "102", "message" => "Error with JSON string, could not parse: $userData"));
+    exit();
 }
 
 foreach ($jsonData as &$jsonObject) {

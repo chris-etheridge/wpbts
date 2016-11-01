@@ -269,12 +269,12 @@ function prepareData($userData)
 
 function issueError($errCode)
 {
-    $USER_NOT_EXISTS = array('code' => 111, 'message' => "User already exist");
-    $LOGIN_ACCEPTED = array('code' => 112, 'message' => "Registration Accepted");
-    $DATABASE_UNABAILABLE = array('code' => 113, 'message' => "Database unavailable - check server logs");
-    $SCRIPT_UNAVAILABLE = array('code' => 114, 'message' => "Script not implemented");
-    $INCORRECT_JSON = array('code' => 115, 'message' => "Incorrect string format");
-    $INCORRECT_PARAMATER_COUNT = array('code' => 116, 'message' => "Incomplete paramaters . Expect min 12 user, 6 address");
+    $USER_NOT_EXISTS = array('code' => "111", 'message' => "User already exist");
+    $LOGIN_ACCEPTED = array('code' => "112", 'message' => "Registration Accepted");
+    $DATABASE_UNABAILABLE = array('code' => "113", 'message' => "Database unavailable - check server logs");
+    $SCRIPT_UNAVAILABLE = array('code' => "114", 'message' => "Script not implemented");
+    $INCORRECT_JSON = array('code' => "115", 'message' => "Incorrect string format");
+    $INCORRECT_PARAMATER_COUNT = array('code' => "116", 'message' => "Incomplete paramaters . Expect min 12 user, 6 address");
 
     switch ($errCode) {
         case '111':
