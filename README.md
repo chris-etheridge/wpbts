@@ -13,7 +13,7 @@ This is the application that is being built for Western Province Blood Service, 
 - Run the webserver, and point the `web root` to the `web` folder
 - Create a database called `wpbts` 
 - Run the `db_complete.sql` in `DB_Scripts` folder on your MySQL instance.
-- Change the `INTERNAL_HOST_URL` string in `com.peachtree.wpbapp.Core.Networking` class to your host.
+- Change the `API_BASE` string in `res/values/api_urls.xml` file to your host.
   - Make sure the `HOST` is NOT `localhost` or `127.0.0.1`
   - Include the right port (`8888` is default)
 - Navigate to `HOST/login.php` to login
