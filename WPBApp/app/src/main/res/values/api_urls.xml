@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="API_ACCOUNT_URL">/api/account</string>
-    <string name="API_EVENTS_STREAM_URL">/api/events</string>
-    <string name="API_EVENT_URL">/api/event</string>
-    <string name="API_CLINIC_URL">/api/clinic</string>
-    <string name="API_ALERTS_STREAM_URL">/api/alerts</string>
+    <!-- top level endpoint -->
+    <!-- TODO: change this to your local -->
+    <string name="API_BASE">http://192.168.0.9:8888/web/</string>
+
+    <!-- user api endpoints -->
+    <string name="USER_REGISTER">/api/users/create_user.php</string>
+    <string name="USER_LOGIN">/api/users/create_user.php</string>
+    <string name="USER_UPDATE">/api/users/create_user.php</string>
+
+    <!-- events api endpoints -->
+    <string name="ALL_EVENTS">/api/events/view_events.php</string>
+    <string name="VIEW_EVENT">/api/users/view_event.php</string>
+    <string name="RSVP_EVENT">/api/users/rsvp.php</string>
+
+    <!-- clinics api endpoints -->
+    <string name="VIEW_CLINIC">/api/clinics/view_Clinic.php</string>
+    <string name="ALL_CLINICS">/api/clinics/view_Clinics.php</string>
+
+    <!-- alerts api endpoints -->
+
 </resources>
