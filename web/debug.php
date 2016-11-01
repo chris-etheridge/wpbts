@@ -12,6 +12,8 @@
     <p id="p-events"></p>
     <button id="btn-clinics">Get Clinics</button>
     <p id="p-clinics"></p>
+    <button id="btn-token">Update device token</button>
+    <p id="p-devicetokens"></p>
     <footer>
         
     </footer>
@@ -34,7 +36,7 @@
                 $('#p-events').empty();
                 
                 $.ajax({
-                        url: 'api/view_Clinics.php',
+                        url: 'api/events/view_events.php',
                         type: 'post',
                         data: {'eventid': 1},
                         cache: false,
@@ -56,7 +58,7 @@
                 $('#p-clinics').empty();
                 
                 $.ajax({
-                        url: 'api/view_Clinics.php',
+                        url: 'api/clinics/view_Clinics.php',
                         type: 'post',
                         data: {'eventid': 1},
                         cache: false,
@@ -69,6 +71,28 @@
                         {
                                 console.log(xhr + "\n" + err);
                                 $('#p-clinics').append("failed, :" + xhr + "\n" + err);
+                        }
+                }); // end ajax call
+        });
+        $('#btn-token').on('click', function ()
+        {
+                //e.preventDefault();
+                $('#p-devicetokens').empty();
+                
+                $.ajax({
+                        url: 'api/firebase/device_token_registration.php',
+                        type: 'post',
+                        data: {'userid': 1, 'devicetoken': 'testtoken'},
+                        cache: false,
+                        success: function (json)
+                        {
+                                $('#p-devicetokens').empty();
+                                $('#p-devicetokens').append("JSON: " + JSON.stringify(json));
+                        },
+                        error: function (xhr, desc, err)
+                        {
+                                console.log(xhr + "\n" + err);
+                                $('#p-devicetokens').append("failed, :" + xhr + "\n" + err);
                         }
                 }); // end ajax call
         });

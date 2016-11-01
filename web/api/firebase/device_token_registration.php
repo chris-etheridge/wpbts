@@ -1,5 +1,5 @@
 <?php
-
+ini_set('display_errors', 1);
 header("content-type:application/json");
 
 /**
@@ -7,7 +7,7 @@ header("content-type:application/json");
  *
  */
 
-require_once("DBConn.php");
+require_once("../../php/DBConn.php");
 
 //error - no id posted with request
 if(!isset($_POST['userid']) && !isset($_POST['devicetoken']))
@@ -19,13 +19,13 @@ if(!isset($_POST['userid']) && !isset($_POST['devicetoken']))
 $userid = $mysqli->real_escape_string($_POST['userid']);
 $devicetoken = $mysqli->real_escape_string($_POST['devicetoken']);
 
-$sql = "UDPATE TBL_USER SET DEVICE_TOKEN = '$devicetoken' WHERE USER_ID = $userid";
+$sql = "UPDATE TBL_USER SET DEVICE_TOKEN = '$devicetoken' WHERE USER_ID = $userid";
 
 $mysqli->query($sql);
 
 if($mysqli->error)
 {
-    echo json_encode(array("code" => "556", "message" => "Error updating device token. Try again"));
+    echo json_encode(array("code" => "556", "message" => "Error updating device token. Try again."));
     exit();
 }
 
