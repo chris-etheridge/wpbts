@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.zip.Inflater;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -52,14 +53,11 @@ public class WBCalendar extends LinearLayout
 	private TextView month_title, description;
 	private ImageButton btn_next, btn_prev;
 	private Button btn_view;
-	private Events EVENTS_HELPER;
 
 
 	public WBCalendar(Context ctx){
 		super(ctx);
 		this.ctx = ctx;
-
-		EVENTS_HELPER = new Events(ctx);
 	}
 
 	public WBCalendar(Context ctx, AttributeSet attrs){
@@ -86,39 +84,6 @@ public class WBCalendar extends LinearLayout
 		description = (TextView)findViewById(R.id.TXT_description);
 		btn_view = (Button) findViewById(R.id.BTN_view);
 
-		EVENTS_HELPER.GetAllEvents( new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONArray a) {
-				try {
-					ArrayList es = com.peachtree.wpbapp.Entities.Event.EventsFromJsonArray(a);
-
-					events = es;
-					updateCalendar();
-				} catch (JSONException e) {
-
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
-				// handle the error here
-				int code = -1;
-
-				try {
-					code = Integer.parseInt(response.getString("code"));
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-
-				// parse the error
-				String message = com.peachtree.wpbapp.Core.Networking.NetworkingErrors.GetErrorMessageForCode(code);
-
-				// show to the user
-				Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show();
-			}
-		});
 		setOnClicksListeners();
 
 		updateCalendar();
@@ -193,6 +158,7 @@ public class WBCalendar extends LinearLayout
 					FragmentManager manager = ((Activity) ctx).getFragmentManager();
 					FragmentTransaction transaction = manager.beginTransaction();
 					Event_Info_Fragment event_dialog = Event_Info_Fragment.init(selected.getId());
+					event_dialog.loadEvents(events);
 					event_dialog.show(transaction, "event_dialog");
 				}
 			}
@@ -266,4 +232,8 @@ public class WBCalendar extends LinearLayout
 		}
 	}
 
+	public void setEvents(ArrayList<Event> e){
+		events = e;
+		initControl();
+	}
 }

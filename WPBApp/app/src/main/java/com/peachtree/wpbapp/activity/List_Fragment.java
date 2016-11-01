@@ -2,20 +2,21 @@ package com.peachtree.wpbapp.Activity;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.peachtree.wpbapp.Core.Events;
 import com.peachtree.wpbapp.Core.Networking;
 import com.peachtree.wpbapp.R;
-import com.peachtree.wpbapp.Entities.Clinic;
 import com.peachtree.wpbapp.Entities.Event;
 import com.peachtree.wpbapp.layout_Handlers.List_Adapter;
 
@@ -25,7 +26,6 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -34,6 +34,7 @@ public class List_Fragment extends DialogFragment{
 	private Activity parent;
 	private int stackNum, type;
 	private Context current_ctx;
+	protected ArrayList es;
 
 	public static final int CLINIC = 1, EVENT = 2;
 
@@ -66,7 +67,7 @@ public class List_Fragment extends DialogFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
-		final View view = inflater.inflate(R.layout.event_list_layout, container, false);
+		final View view = inflater.inflate(R.layout.list_layout, container, false);
 
 		final ListView list = (ListView) view.findViewById(R.id.list);
 		switch (type)
@@ -76,7 +77,7 @@ public class List_Fragment extends DialogFragment{
 					@Override
 					public void onSuccess(int statusCode, Header[] headers, JSONArray a) {
 						try {
-							ArrayList es = Event.EventsFromJsonArray(a);
+							es = Event.EventsFromJsonArray(a);
 
 							list.setAdapter(new List_Adapter(es, parent, List_Adapter.Type.Event));
 						} catch (JSONException e) {
@@ -121,6 +122,16 @@ public class List_Fragment extends DialogFragment{
 			@Override
 			public void onClick(View v)
 			{
+				DialogFragment fragment = Event_Calendar_Fragment.init(stackNum);
+				((Event_Calendar_Fragment)fragment).setEvents(es);
+				FragmentManager manager = parent.getFragmentManager();
+				FragmentTransaction transaction = manager.beginTransaction();
+				Fragment prev = manager.findFragmentByTag("embed");
+				if(prev!=null){
+					transaction.remove(prev);
+				}
+				transaction.add(R.id.content ,fragment, "embed");
+				transaction.commit();
 			}
 		});
 
