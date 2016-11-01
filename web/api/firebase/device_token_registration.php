@@ -1,38 +1,34 @@
 <?php
+
+header("content-type:application/json");
+
 /**
- * Created by PhpStorm.
- * User: dave
- * Date: 2016/10/28
- * Time: 9:41 AM
- *
  * Gets the device token from the devics and writes this to the database.
  *
  */
 
-require_once("../../php/DBConn_Dave.php");
-//require_once("functions.php");
-global $dbConn;
+require_once("DBConn.php");
 
-
-$receivedData = file_get_contents('php://input');
-
-$jsonString = json_decode($receivedData, true);
-if ($jsonString == null) {
-    echo "Error with JSON string, could not parse: $userData";
-    die();
+//error - no id posted with request
+if(!isset($_POST['userid']) && !isset($_POST['devicetoken']))
+{
+    echo json_encode(array("code" => "555", "message" => "No ID and/or device token specified"));
+    exit();
 }
 
+$userid = $mysqli->real_escape_string($_POST['userid']);
+$devicetoken = $mysqli->real_escape_string($_POST['devicetoken']);
 
-$userEmail = $jsonString['EMAIL'];
-$userToken = $jsonString['TOKEN'];
+$sql = "UDPATE TBL_USER SET DEVICE_TOKEN = '$devicetoken' WHERE USER_ID = $userid";
 
-$sql = "INSERT INTO TBL_DEVICES (DEVICE_EMAIL, DEVICE_TOKEN) VALUES (?,?)";
-$stmt = $dbConn->prepare($sql);
-$stmt->bindParam(1, $userEmail);
-$stmt->bindParam(2, $userToken);
+$mysqli->query($sql);
 
-if ($stmt->execute()) {
-    echo "112 - Success, device token registered";
-} else {
-    echo "111 - Error: " . print_r($stmt->errorInfo());
+if($mysqli->error)
+{
+    echo json_encode(array("code" => "556", "message" => "Error updating device token. Try again"));
+    exit();
 }
+
+echo json_encode(array("code" => "550", "message" => "Successfully updated device token"));
+
+exit();

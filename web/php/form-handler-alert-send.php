@@ -27,7 +27,7 @@ $fields = array(
 $fields = json_encode ( $fields );
 
 $headers = array (
-        'Authorization: key=' . "AIzaSyAGqEvspvB03dZSawIjfp2xj_2lF1VRtmw",
+        'Authorization: key=' . $FCMServerKey,
         'Content-Type: application/json'
 );
 
