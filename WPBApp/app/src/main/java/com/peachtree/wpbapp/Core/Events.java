@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.peachtree.wpbapp.Entities.Event;
 import com.peachtree.wpbapp.R;
 
@@ -42,12 +43,13 @@ public class Events  {
         SINGLE_EVENT_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.VIEW_EVENT);
     }
 
-    public Event GetEventById(int id) {
-        return new Event();
-    }
-
     public void GetEventById(int id, AsyncHttpResponseHandler handler) {
 
+        RequestParams p = new RequestParams();
+
+        p.add("eventid", id + "");
+
+        Networking.Post(SINGLE_EVENT_API_URL, p, handler);
     }
 
     public void GetAllEvents(AsyncHttpResponseHandler handler) {

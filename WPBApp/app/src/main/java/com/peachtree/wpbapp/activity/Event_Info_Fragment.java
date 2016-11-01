@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,9 +16,20 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.peachtree.wpbapp.Core.Events;
+import com.peachtree.wpbapp.Core.Networking;
+import com.peachtree.wpbapp.Entities.User;
 import com.peachtree.wpbapp.R;
 import com.peachtree.wpbapp.Core.Util;
 import com.peachtree.wpbapp.Entities.Event;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+
+import cz.msebera.android.httpclient.Header;
 
 public class Event_Info_Fragment extends DialogFragment
 {
@@ -26,6 +38,8 @@ public class Event_Info_Fragment extends DialogFragment
 	private int id;
 	private Event event;
 	private float mCurrenty;
+
+	private Events EVENTS_HELPER;
 
 	public static Event_Info_Fragment init(int id){
 		Event_Info_Fragment fragment = new Event_Info_Fragment();
@@ -41,6 +55,9 @@ public class Event_Info_Fragment extends DialogFragment
         super.onCreate(savedInstanceState);
 		parent = getActivity();
 		id = getArguments().getInt("id");
+
+		EVENTS_HELPER = new Events(this.getContext());
+
 		load_event();
     }
 
@@ -52,24 +69,25 @@ public class Event_Info_Fragment extends DialogFragment
 		mCurrenty = view.getY();
 		final float originalY = mCurrenty;
 
-		if(event != null){
-			TextView title = (TextView)view.findViewById(R.id.event_title);
-			TextView desc = (TextView)view.findViewById(R.id.TXT_details);
-			TextView date = (TextView)view.findViewById(R.id.TXT_date);
-			TextView address = (TextView)view.findViewById(R.id.TXT_Address);
-			ImageView image = (ImageView)view.findViewById(R.id.IMG_event);
+		EVENTS_HELPER.GetEventById(id, new JsonHttpResponseHandler(){
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, JSONObject o) {
+					Log.d("API_E", o.toString());
 
-			title.setText(event.getTitle());
-			desc.setText(event.getDescription());
-			date.setText("Date: " + Util.getDateString(event.getDate()));
-			address.setText("Address: " + event.getAddress());
-			//image.setImageDrawable();		TO-DO
-		}else{
-			/* To be implemented once test data available.
-			Toast.makeText(getActivity(), "Could Not Load Event.", Toast.LENGTH_SHORT);
-			dismiss();
-			*/
-		}
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+				// handle the error here
+				int code = -1;
+
+				try {
+					code = Integer.parseInt(response.getString("code"));
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 		view.findViewById(R.id.pull_grip).setOnTouchListener(new View.OnTouchListener()
 		{
