@@ -30,27 +30,31 @@ public class Login_Activity extends AppCompatActivity
 
 	public void onLoginClick(View view){
 
-		if(validateUsername()){
-			session_account = new Account(user.getText().toString(), password.getText().toString());
+		if(validateString(user.getText().toString())){
+			if(validateString(password.getText().toString())) {
+				session_account = new Account(user.getText().toString(), password.getText().toString());
 
-			if(session_account != null) {
-				Intent loginIntent = new Intent(this, com.peachtree.wpbapp.Activity.Home_Activity.class);
+				if(session_account != null) {
+					Intent loginIntent = new Intent(this, com.peachtree.wpbapp.Activity.Home_Activity.class);
 
-				startActivity(loginIntent);
+					startActivity(loginIntent);
+				} else {
+					Toast.makeText(this,
+							"There was an error logging you in, please try again in a few minutes!",
+							Toast.LENGTH_SHORT).show();
+				}
 			} else {
-				Toast.makeText(this,
-						"There was an error logging you in, please try again in a few minutes!",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Please enter a password!", Toast.LENGTH_SHORT).show();
 			}
 		} else {
 			Toast.makeText(this, "Please enter a username!", Toast.LENGTH_SHORT).show();
 		}
 	}
 
-	private boolean validateUsername(){
+	private boolean validateString(String s){
 		boolean result = true;
 
-		if(user.getText().length() < 1){
+		if(s.length() < 1){
 			result = false;
 		}
 
