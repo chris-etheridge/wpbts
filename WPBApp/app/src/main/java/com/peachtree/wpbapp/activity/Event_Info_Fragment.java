@@ -72,8 +72,26 @@ public class Event_Info_Fragment extends DialogFragment
 		EVENTS_HELPER.GetEventById(id, new JsonHttpResponseHandler(){
 			@Override
 			public void onSuccess(int statusCode, Header[] headers, JSONObject o) {
-					Log.d("API_E", o.toString());
+				try {
+					Event e = Event.EventFromJsonObject(o);
 
+					// get all of our fields
+					TextView title = (TextView)view.findViewById(R.id.event_title);
+					TextView desc = (TextView)view.findViewById(R.id.TXT_details);
+					TextView date = (TextView)view.findViewById(R.id.TXT_date);
+					TextView address = (TextView)view.findViewById(R.id.TXT_Address);
+					ImageView image = (ImageView)view.findViewById(R.id.IMG_event);
+
+					title.setText(e.getTitle());
+					desc.setText(e.getDescription());
+					date.setText("Date: " + Util.getDateString(e.getDate()));
+					address.setText("Address: " + e.getAddress());
+					
+				} catch (ParseException e) {
+					e.printStackTrace();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
 			}
 
 			@Override
