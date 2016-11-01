@@ -42,8 +42,8 @@ else //custom alert
 {
     if(isset($_POST['custom_alert'])) //parse custom alert components
     {
-        $alertbody = $_POST['custom_alert']['body'];
-        $alerttitle = $_POST['custom_alert']['title'];
+        $alertbody = $_POST['custom_alert']['BODY'];
+        $alerttitle = $_POST['custom_alert']['TITLE'];
     }
     else
     {
@@ -65,6 +65,11 @@ else //custom alert
                 "message" => "TEST MESSAGE"
         )
 );*/
+
+echo $alerttitle;
+echo "\n";
+echo $alertbody;
+echo "\n";
 
 $fields = array(
     'message' => array(
