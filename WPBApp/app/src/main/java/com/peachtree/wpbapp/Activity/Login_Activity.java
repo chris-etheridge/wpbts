@@ -30,15 +30,25 @@ public class Login_Activity extends AppCompatActivity
 
 	public void onLoginClick(View view){
 
-		if(validateString(user.getText().toString())){
-			if(validateString(password.getText().toString())) {
-				session_account = new Account(user.getText().toString(), password.getText().toString());
+		// get the text for username and password fields
+		String u_name = user.getText().toString();
+		String u_pass = user.getText().toString();
 
+		// validate both username and password
+		if(validateString(u_name)) {
+			if(validateString(u_pass)) {
+				// create a new account with the username and pass
+				session_account = new Account(u_name, u_pass);
+
+				// make sure our account is not null
 				if(session_account != null) {
+					// show the home screen
 					Intent loginIntent = new Intent(this, com.peachtree.wpbapp.Activity.Home_Activity.class);
 
 					startActivity(loginIntent);
-				} else {
+				}
+				// else, there was an internal or network error
+				else {
 					Toast.makeText(this,
 							"There was an error logging you in, please try again in a few minutes!",
 							Toast.LENGTH_SHORT).show();
@@ -51,6 +61,8 @@ public class Login_Activity extends AppCompatActivity
 		}
 	}
 
+	// validates a string
+	// makes sure the length is > 1
 	private boolean validateString(String s){
 		boolean result = true;
 
