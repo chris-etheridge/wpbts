@@ -34,7 +34,7 @@ public class Login_Activity extends AppCompatActivity
 			session_account = new Account(user.getText().toString(), password.getText().toString());
 
 			if(session_account != null) {
-				Intent loginIntent = new Intent(this, Home_Activity.class);
+				Intent loginIntent = new Intent(this, com.peachtree.wpbapp.Activity.Home_Activity.class);
 
 				startActivity(loginIntent);
 			} else {
