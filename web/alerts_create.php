@@ -5,6 +5,7 @@
 //Or delete the record from the database.
 
 session_start();
+$_PARENT['alerts'] = time();
 $_TITLE = "WPBTS - User Management";
 require_once("header.php");
 require_once('php/DBConn_Dave.php');

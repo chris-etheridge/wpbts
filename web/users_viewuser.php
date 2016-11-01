@@ -5,6 +5,7 @@
 //Or delete the record from the database.
 
 $_TITLE = "WPBTS - User Management";
+$_PARENT['users'] = time();
 require_once("header.php");
 require_once('php/DBConn_Dave.php');
 include_once("users_functions.php");
