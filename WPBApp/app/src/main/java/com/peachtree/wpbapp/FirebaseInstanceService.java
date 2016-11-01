@@ -43,13 +43,13 @@ public class FirebaseInstanceService extends FirebaseInstanceIdService {
         sendRegistrationToServer(refreshedToken);
     }
 
-    protected void sendRegistrationToServer(String newToken)
+    protected void sendRegistrationToServer(String newToken) //TODO: Needs to be invoked on user login and/or register
     {
         //send newToken and logged in user id to server
 
         RequestParams params = new RequestParams();
 
-        params.add("userid", "1"); //TODO get current user ID
+        params.add("userid", "1"); //TODO: get current user ID
         params.add("devicetoken", newToken);
 
         API_HELPER.Post(USER_UPDATE_DEVICE_TOKEN_API, params, new JsonHttpResponseHandler() {
