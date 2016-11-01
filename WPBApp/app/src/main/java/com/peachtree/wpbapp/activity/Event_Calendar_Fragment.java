@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.peachtree.wpbapp.Entities.Event;
 import com.peachtree.wpbapp.R;
 import com.peachtree.wpbapp.Core.Util;
 import com.peachtree.wpbapp.layout_Handlers.List_Adapter;
@@ -36,7 +37,7 @@ public class Event_Calendar_Fragment extends DialogFragment
 	private Activity parent;
 	private int stackNum;
 
-	private static final com.peachtree.wpbapp.Core.Events EVENTS_HELPER = new com.peachtree.wpbapp.Core.Events();
+	private com.peachtree.wpbapp.Core.Events EVENTS_HELPER;
 
 	public static Event_Calendar_Fragment init(int stackNum){
 		Event_Calendar_Fragment fragment = new Event_Calendar_Fragment();
@@ -54,6 +55,8 @@ public class Event_Calendar_Fragment extends DialogFragment
 
 		parent = getActivity();
 		stackNum = getArguments().getInt("stackNum");
+
+		EVENTS_HELPER = new com.peachtree.wpbapp.Core.Events(this.getContext());
     }
 
 	@Override

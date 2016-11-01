@@ -1,5 +1,6 @@
 package com.peachtree.wpbapp.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ public class Login_Activity extends AppCompatActivity
 	private Account session_account;
 	private TextView user, password;
 
+	private Context CURRENT_CONTEXT;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -26,6 +29,9 @@ public class Login_Activity extends AppCompatActivity
 		session_account = null;
 		user = (TextView)findViewById(R.id.TXT_username);
 		password = (TextView)findViewById(R.id.TXT_password);
+
+		CURRENT_CONTEXT = this.getApplicationContext();
+
 	}
 
 	public void onLoginClick(View view){
@@ -38,7 +44,7 @@ public class Login_Activity extends AppCompatActivity
 		if(validateString(u_name)) {
 			if(validateString(u_pass)) {
 				// create a new account with the username and pass
-				session_account = new Account(u_name, u_pass);
+				session_account = new Account(CURRENT_CONTEXT ,u_name, u_pass);
 
 				// make sure our account is not null
 				if(session_account != null) {

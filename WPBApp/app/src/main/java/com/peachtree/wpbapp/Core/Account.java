@@ -1,5 +1,6 @@
 package com.peachtree.wpbapp.Core;
 
+import android.content.Context;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -8,6 +9,7 @@ import com.loopj.android.http.RequestParams;
 import com.peachtree.wpbapp.Core.impl.UserNotLoggedInException;
 import com.peachtree.wpbapp.Entities.Event;
 import com.peachtree.wpbapp.Entities.User;
+import com.peachtree.wpbapp.R;
 import com.peachtree.wpbapp.layout_Handlers.List_Adapter;
 
 import org.json.JSONArray;
@@ -29,11 +31,18 @@ public class Account {
 
     private static Networking API_HELPER;
 
-    private String USER_LOGIN_API_URL = API_HELPER.GetApiBaseUrl() +  "/api/user/login.php";
-    private String USER_REGISTER_API_URL = API_HELPER.GetApiBaseUrl() +  "/api/events/view_event.php";
+    private Context CURRENT_CONTEXT;
 
+    private String USER_LOGIN_API_URL;
+    private String USER_REGISTER_API_URL;
 
-    public Account(String email, String password) {
+    public Account(Context ctx, String email, String password) {
+        CURRENT_CONTEXT = ctx;
+        API_HELPER = new Networking(CURRENT_CONTEXT);
+
+        USER_LOGIN_API_URL = API_HELPER.GetApiBaseUrl() + ctx.getString(R.string.USER_LOGIN);
+        USER_REGISTER_API_URL = API_HELPER.GetApiBaseUrl() + ctx.getString(R.string.USER_REGISTER);
+
         LogIn(email, password);
     }
 

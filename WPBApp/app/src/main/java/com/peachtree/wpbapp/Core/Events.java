@@ -1,11 +1,13 @@
 package com.peachtree.wpbapp.Core;
 
+import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.peachtree.wpbapp.Entities.Event;
+import com.peachtree.wpbapp.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,10 +26,21 @@ import cz.msebera.android.httpclient.Header;
 
 public class Events  {
 
-    private static Networking API_HELPER;
+    private Context CURRENT_CONTEXT;
 
-    private String MULTIPLE_EVENTS_API_URL = API_HELPER.GetApiBaseUrl() +  "/api/events/view_events.php";
-    private String SINGLE_EVENT_API_URL = API_HELPER.GetApiBaseUrl() +  "/api/events/view_event.php";
+    private Networking API_HELPER;
+
+    private String MULTIPLE_EVENTS_API_URL;
+    private String SINGLE_EVENT_API_URL;
+
+    public Events(Context ctx) {
+        CURRENT_CONTEXT = ctx;
+
+        API_HELPER = new Networking(ctx);
+
+        MULTIPLE_EVENTS_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.ALL_EVENTS);
+        SINGLE_EVENT_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.VIEW_EVENT);
+    }
 
     public Event GetEventById(int id) {
         return new Event();
@@ -38,7 +51,7 @@ public class Events  {
     }
 
     public void GetAllEvents(AsyncHttpResponseHandler handler) {
-        API_HELPER.Get(MULTIPLE_EVENTS_API_URL, null, handler);
+        Networking.Get(MULTIPLE_EVENTS_API_URL, null, handler);
     }
 
     public ArrayList<Event> GetEventsForDate(Date date) {

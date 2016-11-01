@@ -27,7 +27,7 @@ public class FirebaseInstanceService extends FirebaseInstanceIdService {
     private String USER_UPDATE_DEVICE_TOKEN_API = API_HELPER.GetApiBaseUrl() +  "/api/firebase/device_token_registration.php";
 
     public FirebaseInstanceService() {
-        API_HELPER = new Networking();
+        API_HELPER = new Networking(this.getApplicationContext());
     }
 
     @Override

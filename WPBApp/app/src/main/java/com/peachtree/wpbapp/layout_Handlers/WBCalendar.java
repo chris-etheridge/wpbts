@@ -53,12 +53,14 @@ public class WBCalendar extends LinearLayout
 	private TextView month_title, description;
 	private ImageButton btn_next, btn_prev;
 	private Button btn_view;
-	private final Events EVENTS_HELPER = new Events();
+	private Events EVENTS_HELPER;
 
 
 	public WBCalendar(Context ctx){
 		super(ctx);
 		this.ctx = ctx;
+
+		EVENTS_HELPER = new Events(ctx);
 	}
 
 	public WBCalendar(Context ctx, AttributeSet attrs){

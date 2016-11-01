@@ -37,7 +37,7 @@ public class List_Fragment extends DialogFragment{
 
 	public static final int CLINIC = 1, EVENT = 2;
 
-	private static final Events EVENTS_HELPER = new Events();
+	private Events EVENTS_HELPER;
 
 	public static List_Fragment init(int stackNum, int type){
 		List_Fragment fragment = new List_Fragment();
@@ -59,6 +59,8 @@ public class List_Fragment extends DialogFragment{
 		type = getArguments().getInt("type");
 
 		current_ctx = this.getActivity();
+
+		EVENTS_HELPER = new Events(current_ctx);
 	}
 
 	@Override
@@ -90,10 +92,9 @@ public class List_Fragment extends DialogFragment{
 						int code = -1;
 
 						try {
-							if(response != null)
-							{
+							if(response != null) {
 								code = Integer.parseInt(response.getString("code"));
-							}else{
+							} else {
 								view.findViewById(R.id.list).setVisibility(View.GONE);
 								view.findViewById(R.id.TXT_Error).setVisibility(View.VISIBLE);
 							}
