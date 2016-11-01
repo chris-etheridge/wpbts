@@ -1,4 +1,4 @@
-package com.peachtree.wpbapp.Activity;
+package com.peachtree.wpbapp.activity;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -19,6 +19,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
 
+import com.peachtree.wpbapp.Activity.About_Fragment;
+import com.peachtree.wpbapp.Activity.Event_Calendar_Fragment;
+import com.peachtree.wpbapp.Activity.Event_Map_Fragment;
+import com.peachtree.wpbapp.Activity.List_Fragment;
 import com.peachtree.wpbapp.R;
 
 /**
