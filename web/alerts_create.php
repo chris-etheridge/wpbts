@@ -54,13 +54,6 @@ require_once('php/DBConn_Dave.php');
             <h3>User Details:</h3>
             <form action="php/form-handler-alert-create.php" method="POST">
                 <div class="col-md-6">
-                    <label>Type ID:</label>
-                    <input required type="text"
-                           class="form-control" name="TYPE_ID" value="<?php $_SESSION['ALERT']['TITLE'] ?>"
-                           style="margin-bottom:2%">
-
-                </div>
-                <div class="col-md-6">
                     <label>Title:</label>
                     <input required type="text"
                            class="form-control" name="TITLE" value="<?php $_SESSION['ALERT']['TITLE'] ?>"
@@ -81,6 +74,7 @@ require_once('php/DBConn_Dave.php');
 
                 <div class="col-md-12" align="right" style="margin-bottom: 5%">
                     <button type="submit" class="btn btn-info">Save Alert</button>
+                </div>
             </form>
         </div>
     </div>
