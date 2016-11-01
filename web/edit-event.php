@@ -14,14 +14,17 @@ require_once("header.php");
 require_once('php/DBConn.php');
 require_once('api/events/functions.php');
 
-//get selected event info
+//get selected event info. Add to session variable to make posting page info back easy
 $eventid = filter_var($_GET['eventid'], FILTER_SANITIZE_STRING);
-if(!isset($_SESSION['event']))
+$event = $_SESSION['event'];//first and only slot - 0
+if(!isset($_SESSION['event'])) //if session event does not exist, get event from db
 {
-    $_SESSION['event'] = getEvent($mysqli, $eventid)[0]; //first and only slot - 0
+    $event = getEvent($mysqli, $eventid)[0]; //first and only slot - 0
 }
 
 $creatorName = "";
+
+//fetch admins from db (no api for this functionality)
 $admins = array();
 $sql = "SELECT * FROM TBL_ADMIN;";
 $QueryResult = $mysqli->query($sql);
@@ -34,7 +37,7 @@ if ($QueryResult == TRUE)
         $admins[$count]['admin_id'] = $Row['ADMIN_ID'];
         $admins[$count]['first_name'] = $Row['FIRST_NAME'];
         $admins[$count]['last_name'] = $Row['LAST_NAME'];
-        if((int)$_SESSION['event']['creator_id'] === (int)$Row['ADMIN_ID'])
+        if((int)$event['creator_id'] === (int)$Row['ADMIN_ID'])
         {
             $creatorName = $Row['FIRST_NAME'] . " " . $Row['LAST_NAME'];
         }
@@ -80,7 +83,7 @@ if ($QueryResult == TRUE)
                     <div class="form-group col-sm-6">
                         <div class="col-sm-12">
                             <label>Event ID</label>
-                            <input required readonly type="text" class="form-control" name="event_id" value="<?php echo $_SESSION['event']['event_id']; ?>">
+                            <input required readonly type="text" class="form-control" name="event_id" value="<?php echo $event['event_id']; ?>">
                         </div>
                         <div class="col-sm-12">
                             <label class="control-label">Creator</label>
@@ -89,13 +92,13 @@ if ($QueryResult == TRUE)
                         </div>
                         <div class="col-sm-12">
                             <label class="control-label">Title</label>
-                            <input required type="text" class="form-control" name="title" value="<?php echo $_SESSION['event']['title']; ?>">
+                            <input required type="text" class="form-control" name="title" value="<?php echo $event['title']; ?>">
                         </div>
                     </div>
                 
                     <div class="form-group col-sm-6">
                         <div class="text-center form-image">
-                            <span><img class="media-object img-responsive" src="img/events/<?php echo $_SESSION['event']['event_id']; ?>.jpg" alt=""/></span>
+                            <span><img class="media-object img-responsive" src="img/events/<?php echo $event['event_id']; ?>.jpg" alt=""/></span>
                         </div>
                     </div>
                 </div>
@@ -103,7 +106,7 @@ if ($QueryResult == TRUE)
                     <div class="form-group col-sm-12">
                         <div class="col-sm-12">
                             <label class="control-label">Description</label>
-                            <textarea required class="form-control" rows="6" name="description"><?php echo $_SESSION['event']['description']; ?></textarea>
+                            <textarea required class="form-control" rows="6" name="description"><?php echo $event['description']; ?></textarea>
                         </div>
                     </div>
                 </div>
@@ -113,7 +116,7 @@ if ($QueryResult == TRUE)
                             <div class="row">
                                 <div class="col-sm-12">
                                     <label class="control-label">Date</label>
-                                    <input required type="text" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" class="form-control daterange" id="eventdate" name="event_date" value="<?php echo $_SESSION['event']['event_date']; ?>">    
+                                    <input required type="text" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" class="form-control daterange" id="eventdate" name="event_date" value="<?php echo $event['event_date']; ?>">    
                                 </div>
                             </div>
                             <div class="row">
@@ -132,7 +135,7 @@ if ($QueryResult == TRUE)
                                                 while (($Row = $QueryResult->fetch_assoc()) !== NULL)
                                                 {
                                                     ?>
-                                                        <option <?php if($_SESSION['event']['type_id'] === $Row['TYPE_ID']){ echo "selected"; } ?> value='<?php echo $Row['TYPE_ID']; ?>'><?php echo $Row['URGENCY'] . " - " . $Row['DESCRIPTION']; ?></option>
+                                                        <option <?php if($event['type_id'] === $Row['TYPE_ID']){ echo "selected"; } ?> value='<?php echo $Row['TYPE_ID']; ?>'><?php echo $Row['URGENCY'] . " - " . $Row['DESCRIPTION']; ?></option>
                                                     <?php
                                                 }
                                             }
@@ -167,7 +170,7 @@ if ($QueryResult == TRUE)
                                             foreach ($admins as $Row)
                                             {
                                                 ?>
-                                                    <option <?php if($_SESSION['event']['event_admin'] === $Row['admin_id']){ echo "selected"; } ?> value='<?php echo $Row['admin_id']; ?>'><?php echo $Row['first_name'] . " " . $Row['last_name']; ?></option>
+                                                    <option <?php if($event['event_admin'] === $Row['admin_id']){ echo "selected"; } ?> value='<?php echo $Row['admin_id']; ?>'><?php echo $Row['first_name'] . " " . $Row['last_name']; ?></option>
                                                 <?php
                                             }
                                         ?>
@@ -180,8 +183,8 @@ if ($QueryResult == TRUE)
                                     <label class="control-label">Active</label>
                                     <select required type="text" class="form-control" name="active">
                                         <option value='' disabled>Select one--</option>
-                                        <option <?php if((int)$_SESSION['event']['active'] === 1){ echo "selected"; } ?> value='1'>Active</option>
-                                        <option <?php if((int)$_SESSION['event']['active'] === 0){ echo "selected"; } ?> value='0'>Canceled</option>
+                                        <option <?php if((int)$event['active'] === 1){ echo "selected"; } ?> value='1'>Active</option>
+                                        <option <?php if((int)$event['active'] === 0){ echo "selected"; } ?> value='0'>Canceled</option>
                                     </select>
                                 </div>
                             </div>
@@ -194,34 +197,34 @@ if ($QueryResult == TRUE)
                         </div>
                         <div class="col-sm-6">
                             <label class="control-label">Address</label>
-                            <input type="hidden" name="address_id" value="<?php echo $_SESSION['event']['address_id']; ?>">
+                            <input type="hidden" name="address_id" value="<?php echo $event['address_id']; ?>">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Street Number</label>
-                                <div class="col-sm-9"><input onkeypress="validateNumberIn(event)" required type="number" class="form-control" name="street_no" value="<?php echo $_SESSION['event']['street_no']; ?>"></div>
+                                <div class="col-sm-9"><input onkeypress="validateNumberIn(event)" required type="number" class="form-control" name="street_no" value="<?php echo $event['street_no']; ?>"></div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Street</label>
-                                <div class="col-sm-9"><input required type="text" class="form-control" name="street" value="<?php echo $_SESSION['event']['street']; ?>"></div>
+                                <div class="col-sm-9"><input required type="text" class="form-control" name="street" value="<?php echo $event['street']; ?>"></div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Suburb</label>
-                                <div class="col-sm-9"><input required type="text" class="form-control" name="area" value="<?php echo $_SESSION['event']['area']; ?>"></div>
+                                <div class="col-sm-9"><input required type="text" class="form-control" name="area" value="<?php echo $event['area']; ?>"></div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">City</label>
-                                <div class="col-sm-9"><input required type="text" class="form-control" name="city" value="<?php echo $_SESSION['event']['city']; ?>"></div>
+                                <div class="col-sm-9"><input required type="text" class="form-control" name="city" value="<?php echo $event['city']; ?>"></div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Zip Code</label>
-                                <div class="col-sm-9"><input required type="text" class="form-control" name="area_code" value="<?php echo $_SESSION['event']['area_code']; ?>"></div>
+                                <div class="col-sm-9"><input required type="text" class="form-control" name="area_code" value="<?php echo $event['area_code']; ?>"></div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Office / Company</label>
-                                <div class="col-sm-9"><input type="text" class="form-control" name="office" value="<?php echo $_SESSION['event']['office']; ?>"></div>
+                                <div class="col-sm-9"><input type="text" class="form-control" name="office" value="<?php echo $event['office']; ?>"></div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Building Number</label>
-                                <div class="col-sm-9"><input type="number" class="form-control" name="building_number" value="<?php echo $_SESSION['event']['building_number']; ?>"></div>
+                                <div class="col-sm-9"><input type="number" class="form-control" name="building_number" value="<?php echo $event['building_number']; ?>"></div>
                             </div>
                         </div>
                     </div>

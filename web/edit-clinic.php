@@ -14,9 +14,10 @@ require_once('api/clinics/functions.php');
 
 //get selected event info
 $clinicid = filter_var($_GET['clinicid'], FILTER_SANITIZE_STRING);
+$event = $_SESSION['clinic'];//first and only slot - 0
 if(!isset($_SESSION['clinic']))
 {
-    $_SESSION['clinic'] = getClinic($mysqli, $clinicid)[0]; //first and only slot - 0
+    $clinic = getClinic($mysqli, $clinicid)[0]; //first and only slot - 0
 }
 
 ?>
@@ -58,13 +59,13 @@ if(!isset($_SESSION['clinic']))
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <label>Clinic ID</label>
-                                <input required readonly type="text" class="form-control" name="clinic_id" value="<?php echo $_SESSION['clinic']['clinic_id']; ?>">
+                                <input required readonly type="text" class="form-control" name="clinic_id" value="<?php echo $clinic['clinic_id']; ?>">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <label class="control-label">Description</label>
-                                <textarea required class="form-control" rows="6" name="description"><?php echo $_SESSION['clinic']['description']; ?></textarea>
+                                <textarea required class="form-control" rows="6" name="description"><?php echo $clinic['description']; ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -76,53 +77,53 @@ if(!isset($_SESSION['clinic']))
                     </div>
                     <div class="col-sm-6">
                         <div class="text-center form-image">
-                            <span><img class="media-object img-responsive" src="img/clinics/<?php echo $_SESSION['clinic']['clinic_id']; ?>.jpg" alt=""/></span>
+                            <span><img class="media-object img-responsive" src="img/clinics/<?php echo $clinic['clinic_id']; ?>.jpg" alt=""/></span>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="control-label">Contact No. 1</label>
-                        <input required class="form-control" onkeypress="validateNumberIn(event)" type="number" name="contact_1" value="<?php echo $_SESSION['clinic']['contact_1']; ?>">
+                        <input required class="form-control" onkeypress="validateNumberIn(event)" type="number" name="contact_1" value="<?php echo $clinic['contact_1']; ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="control-label">Contact No. 2</label>
-                        <input required class="form-control" onkeypress="validateNumberIn(event)" type="number" name="contact_2" value="<?php echo $_SESSION['clinic']['contact_2']; ?>">
+                        <input required class="form-control" onkeypress="validateNumberIn(event)" type="number" name="contact_2" value="<?php echo $clinic['contact_2']; ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12">
                         <label class="control-label">Address</label>
-                        <input type="hidden" name="address_id" value="<?php echo $_SESSION['clinic']['address_id']; ?>">
+                        <input type="hidden" name="address_id" value="<?php echo $clinic['address_id']; ?>">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Street Number</label>
-                            <div class="col-sm-9"><input onkeypress="validateNumberIn(event)" required type="number" class="form-control" name="street_no" value="<?php echo $_SESSION['clinic']['street_no']; ?>"></div>
+                            <div class="col-sm-9"><input onkeypress="validateNumberIn(event)" required type="number" class="form-control" name="street_no" value="<?php echo $clinic['street_no']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Street</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="street" value="<?php echo $_SESSION['clinic']['street']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="street" value="<?php echo $clinic['street']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Suburb</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="area" value="<?php echo $_SESSION['clinic']['area']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="area" value="<?php echo $clinic['area']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">City</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="city" value="<?php echo $_SESSION['clinic']['city']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="city" value="<?php echo $clinic['city']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Zip Code</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="area_code" value="<?php echo $_SESSION['clinic']['area_code']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="area_code" value="<?php echo $clinic['area_code']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Office / Company</label>
-                            <div class="col-sm-9"><input type="text" class="form-control" name="office" value="<?php echo $_SESSION['clinic']['office']; ?>"></div>
+                            <div class="col-sm-9"><input type="text" class="form-control" name="office" value="<?php echo $clinic['office']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Building Number</label>
-                            <div class="col-sm-9"><input type="number" class="form-control" name="building_number" value="<?php echo $_SESSION['clinic']['building_number']; ?>"></div>
+                            <div class="col-sm-9"><input type="number" class="form-control" name="building_number" value="<?php echo $clinic['building_number']; ?>"></div>
                         </div>
                     </div>
                 </div>

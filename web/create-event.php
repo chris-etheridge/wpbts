@@ -6,6 +6,7 @@ session_start();
 
 $adminid = $_SESSION['AUTH_USER_ID'];
 
+$event = $_SESSION['event'];
 
 require_once("header.php");
 require_once('php/DBConn.php');
@@ -55,13 +56,13 @@ require_once('php/DBConn.php');
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="control-label">Title</label>
-                        <input required type="text" class="form-control" name="title" value="<?php echo $_SESSION['event']['title']; ?>">
+                        <input required type="text" class="form-control" name="title" value="<?php echo $event['title']; ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="control-label">Description</label>
-                        <textarea required class="form-control" rows="6" name="description"><?php echo $_SESSION['event']['description']; ?></textarea>
+                        <textarea required class="form-control" rows="6" name="description"><?php echo $event['description']; ?></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -69,7 +70,7 @@ require_once('php/DBConn.php');
                         <div class="row">
                             <div class="col-sm-12">
                                 <label class="control-label">Date</label>
-                                <input required readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" type="text" class="form-control daterange" id="eventdate" name="event_date" value="<?php echo $_SESSION['event']['event_date']; ?>">    
+                                <input required readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" type="text" class="form-control daterange" id="eventdate" name="event_date" value="<?php echo $event['event_date']; ?>">    
                             </div>
                         </div>
                         <div class="row">
@@ -88,7 +89,7 @@ require_once('php/DBConn.php');
                                             while (($Row = $QueryResult->fetch_assoc()) !== NULL)
                                             {
                                                 ?>
-                                                    <option <?php if($_SESSION['event']['type_id'] === $Row['TYPE_ID']){ echo "selected"; } ?> value='<?php echo $Row['TYPE_ID']; ?>'><?php echo $Row['URGENCY'] . " - " . $Row['DESCRIPTION']; ?></option>
+                                                    <option <?php if($event['type_id'] === $Row['TYPE_ID']){ echo "selected"; } ?> value='<?php echo $Row['TYPE_ID']; ?>'><?php echo $Row['URGENCY'] . " - " . $Row['DESCRIPTION']; ?></option>
                                                 <?php
                                             }
                                         }
@@ -119,7 +120,7 @@ require_once('php/DBConn.php');
                                             while (($Row = $QueryResult->fetch_assoc()) !== NULL)
                                             {
                                                 ?>
-                                                    <option <?php if($_SESSION['event']['event_admin'] === $Row['ADMIN_ID']){ echo "selected"; } ?> value='<?php echo $Row['ADMIN_ID']; ?>'><?php echo $Row['FIRST_NAME'] . " " . $Row['LAST_NAME']; ?></option>
+                                                    <option <?php if($event['event_admin'] === $Row['ADMIN_ID']){ echo "selected"; } ?> value='<?php echo $Row['ADMIN_ID']; ?>'><?php echo $Row['FIRST_NAME'] . " " . $Row['LAST_NAME']; ?></option>
                                                 <?php
                                             }
                                         }
@@ -145,31 +146,31 @@ require_once('php/DBConn.php');
                         <label class="control-label">Address</label>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Street Number</label>
-                            <div class="col-sm-9"><input onkeypress="validateNumberIn(event)" required type="number" class="form-control" name="street_no" value="<?php echo $_SESSION['event']['street_no']; ?>"></div>
+                            <div class="col-sm-9"><input onkeypress="validateNumberIn(event)" required type="number" class="form-control" name="street_no" value="<?php echo $event['street_no']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Street</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="street" value="<?php echo $_SESSION['event']['street']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="street" value="<?php echo $event['street']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Suburb</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="area" value="<?php echo $_SESSION['event']['area']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="area" value="<?php echo $event['area']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">City</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="city" value="<?php echo $_SESSION['event']['city']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="city" value="<?php echo $event['city']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Zip Code</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="area_code" value="<?php echo $_SESSION['event']['area_code']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="area_code" value="<?php echo $event['area_code']; ?>"></div>
                         </div>
                         <div class="form-group">
                                 <label class="col-sm-3 control-label">Office / Company</label>
-                                <div class="col-sm-9"><input type="text" class="form-control" name="office" value="<?php echo $_SESSION['event']['office']; ?>"></div>
+                                <div class="col-sm-9"><input type="text" class="form-control" name="office" value="<?php echo $event['office']; ?>"></div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Building Number</label>
-                                <div class="col-sm-9"><input type="number" class="form-control" name="building_number" value="<?php echo $_SESSION['event']['building_number']; ?>"></div>
+                                <div class="col-sm-9"><input type="number" class="form-control" name="building_number" value="<?php echo $event['building_number']; ?>"></div>
                             </div>
                     </div>
                 </div>

@@ -4,6 +4,8 @@ $_PARENT['clinics'] = time();
 
 session_start();
 
+$clinic = $_SESSION['clinic'];
+
 require_once("header.php");
 require_once('php/DBConn.php');
 
@@ -46,7 +48,7 @@ require_once('php/DBConn.php');
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="control-label">Description</label>
-                        <textarea required class="form-control" rows="6" name="description"><?php echo $_SESSION['clinic']['description']; ?></textarea>
+                        <textarea required class="form-control" rows="6" name="description"><?php echo $clinic['description']; ?></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -58,13 +60,13 @@ require_once('php/DBConn.php');
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="control-label">Contact No. 1</label>
-                        <input required class="form-control" onkeypress="validateNumberIn(event)" type="number" name="contact_1" value="<?php echo $_SESSION['clinic']['contact_1']; ?>">
+                        <input required class="form-control" onkeypress="validateNumberIn(event)" type="number" name="contact_1" value="<?php echo $clinic['contact_1']; ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="control-label">Contact No. 2</label>
-                        <input required class="form-control" onkeypress="validateNumberIn(event)" type="number" name="contact_2" value="<?php echo $_SESSION['clinic']['contact_2']; ?>">
+                        <input required class="form-control" onkeypress="validateNumberIn(event)" type="number" name="contact_2" value="<?php echo $clinic['contact_2']; ?>">
                     </div>
                 </div>
                 <div class="form-group">
@@ -72,31 +74,31 @@ require_once('php/DBConn.php');
                         <label class="control-label">Address</label>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Street Number</label>
-                            <div class="col-sm-9"><input onkeypress="validateNumberIn(event)" required type="number" class="form-control" name="street_no" value="<?php echo $_SESSION['clinic']['street_no']; ?>"></div>
+                            <div class="col-sm-9"><input onkeypress="validateNumberIn(event)" required type="number" class="form-control" name="street_no" value="<?php echo $clinic['street_no']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Street</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="street" value="<?php echo $_SESSION['clinic']['street']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="street" value="<?php echo $clinic['street']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Suburb</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="area" value="<?php echo $_SESSION['clinic']['area']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="area" value="<?php echo $clinic['area']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">City</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="city" value="<?php echo $_SESSION['clinic']['city']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="city" value="<?php echo $clinic['city']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Zip Code</label>
-                            <div class="col-sm-9"><input required type="text" class="form-control" name="area_code" value="<?php echo $_SESSION['clinic']['area_code']; ?>"></div>
+                            <div class="col-sm-9"><input required type="text" class="form-control" name="area_code" value="<?php echo $clinic['area_code']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Office / Company</label>
-                            <div class="col-sm-9"><input type="text" class="form-control" name="office" value="<?php echo $_SESSION['clinic']['office']; ?>"></div>
+                            <div class="col-sm-9"><input type="text" class="form-control" name="office" value="<?php echo $clinic['office']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Building Number</label>
-                            <div class="col-sm-9"><input type="number" class="form-control" name="building_number" value="<?php echo $_SESSION['clinic']['building_number']; ?>"></div>
+                            <div class="col-sm-9"><input type="number" class="form-control" name="building_number" value="<?php echo $clinic['building_number']; ?>"></div>
                         </div>
                     </div>
                 </div>
