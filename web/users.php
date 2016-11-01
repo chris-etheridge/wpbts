@@ -25,13 +25,7 @@ if (isset($_SESSION['USER'])) {
             <li class="active">User Management</li>
         </ol>
     </div><!--/.row-->
-
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">User Management</h1>
-        </div>
-    </div><!--/.row-->
-
+    <br/>
     <?php
     if (isset($_SESSION['alert'])) {
         ?>
@@ -43,7 +37,12 @@ if (isset($_SESSION['USER'])) {
         $_SESSION['alert'] = null;
     }
     ?>
-
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">User Management</h1>
+        </div>
+    </div><!--/.row-->
+    
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
             <h4>All Users</h4>

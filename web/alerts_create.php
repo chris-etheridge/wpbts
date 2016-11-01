@@ -51,7 +51,7 @@ require_once('php/DBConn_Dave.php');
     ?>
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
-            <h3>User Details:</h3>
+            <h3>Alert Details:</h3>
             <form action="php/form-handler-alert-create.php" method="POST">
                 <div class="col-md-6">
                     <label>Title:</label>
