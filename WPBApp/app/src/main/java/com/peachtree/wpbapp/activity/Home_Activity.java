@@ -1,21 +1,24 @@
 package com.peachtree.wpbapp.Activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.app.FragmentManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -46,13 +49,20 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 	private ArrayList<Event> ALL_EVENTS;
 	private ArrayList<Clinic> ALL_CLINICS;
 
+	// API helper for events and clinic data
 	private Events EVENTS_HELPER;
 	private Clinics CLINICS_HELPER;
 
+	private final static int PERMISSIONS_INTERNET_VALUE = 1;
+
+	private ActionBarDrawerToggle ACTION_BAR_TOGGLE;
+
+	// method to set our events and clinics
+	// this is because we are using async tasks, and passing a reference to our lists
+	// in closures.
 	private void setEvents(ArrayList<Event> es) {
 		ALL_EVENTS = es;
 	}
-
 	private void setClinics(ArrayList<Clinic> cs) {
 		ALL_CLINICS = cs;
 	}
@@ -63,6 +73,7 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_activity);
 
+		// set up our helpers
 		EVENTS_HELPER = new Events(this.getApplicationContext());
 		CLINICS_HELPER = new Clinics(this.getApplicationContext());
 
@@ -74,8 +85,10 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 		final Context ctx = this;
 
 		final DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
-		final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-			R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+
+		// setup our action bar toggle
+		setActionBarToggle(new ActionBarDrawerToggle(this, drawer, toolbar,
+				R.string.navigation_drawer_open, R.string.navigation_drawer_close){
 
 			@Override
 			public void onDrawerOpened(View drawerView){
@@ -83,10 +96,10 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 				InputMethodManager imm = (InputMethodManager)ctx.getSystemService(Activity.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
 			}
-		};
+		});
 
-		drawer.setDrawerListener(toggle);
-		toggle.syncState();
+		drawer.setDrawerListener(ACTION_BAR_TOGGLE);
+		ACTION_BAR_TOGGLE.syncState();
 
 		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
@@ -95,6 +108,50 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 			switchFragment(R.id.nav_event_list);
 		}
 
+		// before we do anything, we need to make sure that we have permissions
+		int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
+
+		if(permissionCheck == PackageManager.PERMISSION_DENIED) {
+			// check if we need to explain why we need permissions
+			if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.INTERNET)) {
+				// we should show this asynchronously
+				Toast.makeText(this,
+						"We need access to the internet to load clinic and event data.",
+						Toast.LENGTH_LONG).show();
+
+			}
+			// don't need to show an explanation, ask for permission
+			else {
+				ActivityCompat.requestPermissions(this,
+						new String[]{Manifest.permission.INTERNET},
+						PERMISSIONS_INTERNET_VALUE);
+
+			}
+		} else {
+			// we have permissions, continue
+			setUpApplication(this, ACTION_BAR_TOGGLE);
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+		switch (requestCode) {
+			case PERMISSIONS_INTERNET_VALUE: {
+				// results array is 0 if the request dialog is closed
+				if (grantResults.length > 0	&& grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+					// we have  permission!
+					setUpApplication(getApplicationContext(), ACTION_BAR_TOGGLE);
+				} else {
+					// we were denied / cancelled permission
+					Toast.makeText(getApplicationContext(),
+							"We need internet access to load data.", Toast.LENGTH_LONG).show();
+				}
+				return;
+			}
+		}
+	}
+
+	private void setUpApplication(final Context ctx, final ActionBarDrawerToggle toggle) {
 		final ProgressDialog progress = new ProgressDialog(this);
 
 		progress.setTitle("Please wait");
@@ -111,8 +168,6 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 			@Override
 			public void onSuccess(int statusCode, Header[] headers, JSONArray a) {
 				try {
-					Log.d("API_HOME", a.toString());
-
 					setEvents(Event.EventsFromJsonArray(a));
 
 					toggle.syncState();
@@ -128,19 +183,20 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 			@Override
 			public void onSuccess(int statusCode, Header[] headers, JSONObject o) {
 				try {
-					// we have an error
-					if(o.getString("error") != null || o.getString("error") != "") {
-						// parse the error
-						int code = o.getInt("code");
-
+					// see if we have an error
+					if(o.has("error")) {
 						// get the message
 						String msg = o.getString("message");
-                    }
+
+						// show the message
+						Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+					}
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 			}
 
+			// network request failed
 			@Override
 			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
 				// show to the user
@@ -205,6 +261,10 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 		DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 		drawerLayout.closeDrawer(GravityCompat.START);
 		return true;
+	}
+
+	private void setActionBarToggle(ActionBarDrawerToggle toggle) {
+		ACTION_BAR_TOGGLE = toggle;
 	}
 
 	public void switchFragment(int id){
