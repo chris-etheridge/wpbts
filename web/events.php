@@ -344,42 +344,7 @@ $arrPastEvents = getAllPastEvents($mysqli);
                 <h4 class="modal-title">Users who have RSVP'd</h4>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <label class="control-label">User ID</label>
-                            </div>
-                            <div class="col-xs-9">
-                                <span></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <label class="control-label">First Name</label>
-                            </div>
-                            <div class="col-xs-9">
-                                <span id="moUserFirstName"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <label class="control-label">Last Name</label>
-                            </div>
-                            <div class="col-xs-9">
-                                <span id="moUserLastName"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <label class="control-label">Phone</label>
-                            </div>
-                            <div class="col-xs-9">
-                                <span id="moUserPhone"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -554,7 +519,7 @@ $arrPastEvents = getAllPastEvents($mysqli);
                     html += '<div class="row"><div class="col-xs-3"><label class="control-label">User ID</label></div><div class="col-xs-9"><span>' + rsvp.user_id +'</span></div></div>';
                     html += '<div class="row"><div class="col-xs-3"><label class="control-label">First Name</label></div><div class="col-xs-9"><span>' + rsvp.first_name +'</span></div></div>';
                     html += '<div class="row"><div class="col-xs-3"><label class="control-label">Last Name</label></div><div class="col-xs-9"><span>' + rsvp.last_name +'</span></div></div>';
-                    html += '<div class="row"><div class="col-xs-3"><label class="control-label">Phone ID</label></div><div class="col-xs-9"><span>' + rsvp.phone +'</span></div></div>';
+                    html += '<div class="row"><div class="col-xs-3"><label class="control-label">Phone</label></div><div class="col-xs-9"><span>' + rsvp.phone +'</span></div></div>';
                     html += '<div class="row"><div class="col-xs-3"><label class="control-label">E-mail</label></div><div class="col-xs-9"><span>' + rsvp.email +'</span></div></div>';
                     if(parseInt(rsvp.attending) === 0) //not attending
                     {
