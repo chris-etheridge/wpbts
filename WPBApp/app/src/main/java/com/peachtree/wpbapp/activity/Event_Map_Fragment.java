@@ -97,12 +97,6 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 		return view;
 	}
 
-	@Override
-	public void onAttach(Activity activity){
-		mContext = (FragmentActivity) activity;
-		super.onAttach(activity);
-	}
-
 	public void loadEvents(ArrayList<Event> e){
 		events = e;
 	}
