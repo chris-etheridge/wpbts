@@ -52,9 +52,9 @@ public class Clinic_Info_Fragment extends DialogFragment
 		mCurrenty = view.getY();
 		final float originalY = mCurrenty;
 
-		if(clinic != null){
-
-		}else{
+		if(clinic != null) {
+			
+		} else {
 			/* To be implemented once test data available.
 			Toast.makeText(getActivity(), "Could Not Load Event.", Toast.LENGTH_SHORT);
 			dismiss();

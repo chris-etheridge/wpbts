@@ -97,7 +97,7 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 		return view;
 	}
 
-	public void loadEvents(ArrayList<Event> e){
+	public void setEvents(ArrayList<Event> e){
 		events = e;
 	}
 

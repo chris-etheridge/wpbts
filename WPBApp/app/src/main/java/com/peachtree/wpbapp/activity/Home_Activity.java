@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethod;
@@ -28,6 +29,7 @@ import com.peachtree.wpbapp.Activity.List_Fragment;
 import com.peachtree.wpbapp.Core.Clinics;
 import com.peachtree.wpbapp.Core.Events;
 import com.peachtree.wpbapp.Core.Networking;
+import com.peachtree.wpbapp.Entities.Clinic;
 import com.peachtree.wpbapp.Entities.Event;
 import com.peachtree.wpbapp.R;
 import com.peachtree.wpbapp.layout_Handlers.List_Adapter;
@@ -53,12 +55,17 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 
 	// these events will be passed to future fragments/activities
 	private ArrayList<Event> ALL_EVENTS;
+	private ArrayList<Clinic> ALL_CLINICS;
 
 	private Events EVENTS_HELPER;
 	private Clinics CLINICS_HELPER;
 
 	private void setEvents(ArrayList<Event> es) {
 		ALL_EVENTS = es;
+	}
+
+	private void setClinics(ArrayList<Clinic> cs) {
+		ALL_CLINICS = cs;
 	}
 
 	@Override
@@ -68,7 +75,7 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 		setContentView(R.layout.home_activity);
 
 		EVENTS_HELPER = new Events(this.getApplicationContext());
-		//CLINICS_HELPER = new Clinics(this.getApplicationContext());
+		CLINICS_HELPER = new Clinics(this.getApplicationContext());
 
 		fragmentManager = getFragmentManager();
 
@@ -89,8 +96,15 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 			}
 		};
 
+		drawer.setDrawerListener(toggle);
+		toggle.syncState();
+
 		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
+
+		if(fragmentManager.findFragmentByTag("embed") == null){
+			switchFragment(R.id.nav_event_list);
+		}
 
 		// before we want sync the state, we want to do a few network requests
 		// get all events
@@ -100,13 +114,9 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 				try {
 					setEvents(Event.EventsFromJsonArray(a));
 
-					drawer.setDrawerListener(toggle);
 					toggle.syncState();
 
-					if(fragmentManager.findFragmentByTag("embed") == null){
-						switchFragment(R.id.nav_event_list);
-					}
-
+					switchFragment(R.id.nav_event_list);
 				} catch (JSONException e) {
 
 				} catch (ParseException e) {
@@ -138,7 +148,40 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 		});
 
 		// get all clinics
+		CLINICS_HELPER.GetAllClinics(new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, JSONArray a) {
+				try {
+					setClinics(Clinic.ClinicsFromJsonArray(a));
+				} catch (JSONException e) {
 
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, JSONObject o) {
+				try {
+					// we have an error
+					if(o.getString("error") != null || o.getString("error") != "") {
+						// parse the error
+						int code = o.getInt("code");
+
+						// get the message
+						String msg = o.getString("message");
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+				// show to the user
+				Toast.makeText(ctx, "There was an error connecting to the server, please try again in a few moments.", Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 
 
@@ -170,27 +213,33 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 				break;
 			case R.id.nav_clinics:
 				fragment = List_Fragment.init(stackNum, List_Fragment.CLINIC);
+
+				((List_Fragment) fragment).setItems(ALL_CLINICS);
+
 				transaction.add(R.id.content, fragment, "embed");
 				transaction.commit();
 				break;
 			case R.id.nav_event_calender:
-				Event_Calendar_Fragment ef = Event_Calendar_Fragment.init(stackNum);
+				fragment = Event_Calendar_Fragment.init(stackNum);
 
-				ef.setEvents(ALL_EVENTS);
+				((Event_Calendar_Fragment) fragment).setItems(ALL_EVENTS);
 
-				transaction.add(R.id.content , ef, "embed");
+				transaction.add(R.id.content , fragment, "embed");
 				transaction.commit();
 				break;
 			case R.id.nav_event_list:
-				List_Fragment ls = List_Fragment.init(stackNum, List_Fragment.EVENT);
+				fragment = List_Fragment.init(stackNum, List_Fragment.EVENT);
 
-				ls.setItems(ALL_EVENTS);
+				((List_Fragment) fragment).setItems(ALL_EVENTS);
 
-				transaction.add(R.id.content, ls, "embed");
+				transaction.add(R.id.content, fragment, "embed");
 				transaction.commit();
 				break;
 			case R.id.nav_event_map:
 				fragment = Event_Map_Fragment.init(stackNum);
+
+				((Event_Map_Fragment) fragment).setEvents(ALL_EVENTS);
+
 				transaction.add(R.id.content,fragment,"embed");
 				transaction.commit();
 				break;

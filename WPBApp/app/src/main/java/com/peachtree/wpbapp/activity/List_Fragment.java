@@ -38,8 +38,6 @@ public class List_Fragment extends DialogFragment {
 
 	public static final int CLINIC = 1, EVENT = 2;
 
-	private Events EVENTS_HELPER;
-
 	public static List_Fragment init(int stackNum, int type){
 		List_Fragment fragment = new List_Fragment();
 
@@ -60,8 +58,6 @@ public class List_Fragment extends DialogFragment {
 		type = getArguments().getInt("type");
 
 		current_ctx = this.getActivity();
-
-		EVENTS_HELPER = new Events(current_ctx);
 	}
 
 	@Override
@@ -73,10 +69,14 @@ public class List_Fragment extends DialogFragment {
 		switch (type)
 		{
 			case EVENT:
-				list.setAdapter(new List_Adapter(ALL_ITEMS, parent, List_Adapter.Type.Event));
+				if(ALL_ITEMS != null && !ALL_ITEMS.isEmpty()) {
+					list.setAdapter(new List_Adapter(ALL_ITEMS, parent, List_Adapter.Type.Event));
+				}
 				break;
 			case CLINIC:
-				list.setAdapter(new List_Adapter(ALL_ITEMS, parent, List_Adapter.Type.Clinic));
+				if(ALL_ITEMS != null && !ALL_ITEMS.isEmpty()) {
+					list.setAdapter(new List_Adapter(ALL_ITEMS, parent, List_Adapter.Type.Clinic));
+				}
 				break;
 		}
 
@@ -86,7 +86,7 @@ public class List_Fragment extends DialogFragment {
 			public void onClick(View v)
 			{
 				DialogFragment fragment = Event_Calendar_Fragment.init(stackNum);
-				((Event_Calendar_Fragment)fragment).setEvents(ALL_ITEMS);
+				((Event_Calendar_Fragment)fragment).setItems(ALL_ITEMS);
 				FragmentManager manager = parent.getFragmentManager();
 				FragmentTransaction transaction = manager.beginTransaction();
 				Fragment prev = manager.findFragmentByTag("embed");

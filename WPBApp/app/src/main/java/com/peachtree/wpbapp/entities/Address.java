@@ -1,8 +1,5 @@
 package com.peachtree.wpbapp.Entities;
 
-/**
- * Created by tyron_000 on 8/26/2016.
- */
 public class Address {
 
 	private int id;
@@ -12,6 +9,15 @@ public class Address {
 	private String area;
 	private String area_code;
 	private int number;
+
+	public Address(String city, String office, String street, String area, String code, int number) {
+		this.city = city;
+		this.office = office;
+		this.street = street;
+		this.area = area;
+		this.area_code = code;
+		this.number = number;
+	}
 
 	public int getId()
 	{

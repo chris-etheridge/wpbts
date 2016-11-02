@@ -1,6 +1,13 @@
 package com.peachtree.wpbapp.Entities;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.URL;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by tyron_000 on 8/26/2016.
@@ -17,16 +24,38 @@ public class Clinic {
 
 	public Clinic() {}
 
+	public Clinic(String name, String description) {
+		this.description = description;
+		this.name = name;
+	}
+
 	public Clinic(int id, Address address ) {
-		this.id=id;
-		this.address=address;
+		this.id = id;
+		this.address = address;
 		name = address.getArea() + "Clinic";
+	}
+
+	public static ArrayList<Clinic> ClinicsFromJsonArray(JSONArray a) throws JSONException, ParseException {
+		ArrayList<Clinic> cs = new ArrayList<>();
+
+		for(int i = 0; i < a.length(); i++) {
+			cs.add(ClinicFromJsonObject(a.getJSONObject(i)));
+		}
+
+		return cs;
+	}
+
+	public static Clinic ClinicFromJsonObject(JSONObject o) throws JSONException, ParseException {
+		int id = Integer.parseInt(o.getString("clinic_id"));
+		String desc = o.getString("description");
+		String name = "Clinic";
+
+		return new Clinic(desc, name);
 	}
 
 	public int getId() {
 		return this.id;
 	}
-
 
 	public Address getAddress() {
 		return this.address;

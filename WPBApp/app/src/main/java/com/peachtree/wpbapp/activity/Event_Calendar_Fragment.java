@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.peachtree.wpbapp.Entities.Clinic;
 import com.peachtree.wpbapp.Entities.Event;
 import com.peachtree.wpbapp.R;
 import com.peachtree.wpbapp.layout_Handlers.WBCalendar;
@@ -18,7 +19,7 @@ public class Event_Calendar_Fragment extends DialogFragment
 
 	private Activity parent;
 	private int stackNum;
-	private ArrayList<Event> events = null;
+	private ArrayList ALL_ITEMS = null;
 
 	public static Event_Calendar_Fragment init(int stackNum){
 		Event_Calendar_Fragment fragment = new Event_Calendar_Fragment();
@@ -44,12 +45,12 @@ public class Event_Calendar_Fragment extends DialogFragment
 		super.onCreateView(inflater, container, savedInstanceState);
 		View view = inflater.inflate(R.layout.event_calendar_layout, container, false);
 
-		((WBCalendar)view.findViewById(R.id.calendar)).setEvents(events);
+		((WBCalendar)view.findViewById(R.id.calendar)).setEvents(ALL_ITEMS);
 
 		return view;
 	}
 
-	public void setEvents(ArrayList<Event> e){
-		events = e;
+	public void setItems(ArrayList<Event> is){
+		ALL_ITEMS = is;
 	}
 }

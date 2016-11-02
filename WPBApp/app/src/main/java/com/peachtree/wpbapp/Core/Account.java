@@ -40,8 +40,8 @@ public class Account {
         CURRENT_CONTEXT = ctx;
         API_HELPER = new Networking(CURRENT_CONTEXT);
 
-        USER_LOGIN_API_URL = API_HELPER.GetApiBaseUrl() + ctx.getString(R.string.USER_LOGIN);
-        USER_REGISTER_API_URL = API_HELPER.GetApiBaseUrl() + ctx.getString(R.string.USER_REGISTER);
+        USER_LOGIN_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.USER_LOGIN);
+        USER_REGISTER_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.USER_REGISTER);
 
         LogIn(email, password);
     }
