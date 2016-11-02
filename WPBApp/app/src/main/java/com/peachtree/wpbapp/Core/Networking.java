@@ -142,7 +142,7 @@ public class Networking {
         }
 
         public static void GenericNetworkingErrorToast(Context ctx, int duration) {
-            Toast.makeText(ctx, "There was a networking error, please try again in a few moments.", duration);
+            Toast.makeText(ctx, "There was a networking error, please try again in a few moments.", duration).show();
         }
     }
 
