@@ -26,7 +26,7 @@ if(!isset($_SESSION['clinic']))
     <div class="row">
         <ol class="breadcrumb">
             <li><a href="index.php"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
-            <li><a href="events.php">Clinic Management</a></li>
+            <li><a href="clinics.php">Clinic Management</a></li>
             <li class="active">Edit Clinic</li>
         </ol>
     </div><!--/.row-->
