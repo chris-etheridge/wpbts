@@ -29,12 +29,12 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class List_Fragment extends DialogFragment{
+public class List_Fragment extends DialogFragment {
 
 	private Activity parent;
 	private int stackNum, type;
 	private Context current_ctx;
-	protected ArrayList es;
+	protected ArrayList<Event> ALL_EVENTS;
 
 	public static final int CLINIC = 1, EVENT = 2;
 
@@ -73,44 +73,7 @@ public class List_Fragment extends DialogFragment{
 		switch (type)
 		{
 			case EVENT:
-				EVENTS_HELPER.GetAllEvents(new JsonHttpResponseHandler() {
-					@Override
-					public void onSuccess(int statusCode, Header[] headers, JSONArray a) {
-						try {
-							es = Event.EventsFromJsonArray(a);
-
-							list.setAdapter(new List_Adapter(es, parent, List_Adapter.Type.Event));
-						} catch (JSONException e) {
-
-						} catch (ParseException e) {
-							e.printStackTrace();
-						}
-					}
-
-					@Override
-					public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
-						// handle the error here
-						int code = -1;
-
-						try {
-							if(response != null) {
-								code = Integer.parseInt(response.getString("code"));
-							} else {
-								view.findViewById(R.id.list).setVisibility(View.GONE);
-								view.findViewById(R.id.TXT_Error).setVisibility(View.VISIBLE);
-							}
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-
-						// parse the error
-						String message = Networking.NetworkingErrors.GetErrorMessageForCode(code);
-
-						// show to the user
-						Toast.makeText(current_ctx, message, Toast.LENGTH_SHORT).show();
-					}
-				});
-
+				list.setAdapter(new List_Adapter(ALL_EVENTS, parent, List_Adapter.Type.Event));
 				break;
 			case CLINIC:
 				list.setAdapter(new List_Adapter(new ArrayList(), parent, List_Adapter.Type.Clinic));
@@ -123,7 +86,7 @@ public class List_Fragment extends DialogFragment{
 			public void onClick(View v)
 			{
 				DialogFragment fragment = Event_Calendar_Fragment.init(stackNum);
-				((Event_Calendar_Fragment)fragment).setEvents(es);
+				((Event_Calendar_Fragment)fragment).setEvents(ALL_EVENTS);
 				FragmentManager manager = parent.getFragmentManager();
 				FragmentTransaction transaction = manager.beginTransaction();
 				Fragment prev = manager.findFragmentByTag("embed");
@@ -136,5 +99,9 @@ public class List_Fragment extends DialogFragment{
 		});
 
 		return view;
+	}
+
+	public void setEvents(ArrayList<Event> es) {
+		ALL_EVENTS = es;
 	}
 }

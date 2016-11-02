@@ -36,8 +36,6 @@ public class Event_Info_Fragment extends DialogFragment
 	private Event event;
 	private float mCurrenty, mCurrentx;
 
-	//private Events EVENTS_HELPER;
-
 	private Context CURRENT_CONTEXT;
 
 	public static Event_Info_Fragment init(int id){
