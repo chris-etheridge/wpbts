@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.peachtree.wpbapp.R;
@@ -85,10 +87,16 @@ public class List_Adapter extends BaseAdapter
 			convertView = inflater.inflate(layout, parent, false);
 		}
 
-		if(type== Type.Event) {
+		if(type == Type.Event) {
 			TextView name = (TextView) convertView.findViewById(R.id.TXT_name);
 			TextView date = (TextView) convertView.findViewById(R.id.TXT_date);
+			ImageView image = (ImageView) convertView.findViewById(R.id.IMG_event);
+
+			ProgressBar loaderView  = (ProgressBar) convertView.findViewById(R.id.item_loader);
+
 			final Event event = (Event)all_items.get(pos);
+
+			event.loadImage(context.getString(R.string.API_BASE), image, loaderView);
 
 			name.setText(event.getTitle());
 			date.setText(new SimpleDateFormat("dd-MM-yyyy").format(event.getDate()));
@@ -105,10 +113,15 @@ public class List_Adapter extends BaseAdapter
 				}
 			});
 
-
-		}else if(type==Type.Clinic){
+		} else if(type == Type.Clinic) {
 			TextView name = (TextView) convertView.findViewById(R.id.TXT_name);
+			ImageView image = (ImageView) convertView.findViewById(R.id.IMG_event);
+
 			final Clinic clinic = (Clinic)all_items.get(pos);
+
+			ProgressBar loaderView = (ProgressBar) convertView.findViewById(R.id.item_loader);
+
+			clinic.loadImage(context.getString(R.string.API_BASE), image, loaderView);
 
 			name.setText(clinic.getName());
 			convertView.setOnClickListener(new View.OnClickListener()

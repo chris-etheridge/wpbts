@@ -1,9 +1,18 @@
 package com.peachtree.wpbapp.Entities;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -75,6 +84,46 @@ public class Event {
 
         return new Event(id, date, title, desc);
 
+    }
+
+    public void loadImage(String baseUrl, ImageView view, ProgressBar loaderView) {
+        new DownloadImageTask(view, loaderView).execute(baseUrl + "/img/events/" + id + ".jpg");
+    }
+
+    // generic task to download an image
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView view;
+        ProgressBar loader;
+
+        public DownloadImageTask(ImageView imageView, ProgressBar loaderView) {
+            view = imageView;
+            loader = loaderView;
+
+            // hide our image view & show loader
+            imageView.setVisibility(View.INVISIBLE);
+            loaderView.setVisibility(View.VISIBLE);
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String url = urls[0];
+            Bitmap image = null;
+            try {
+                InputStream in = new java.net.URL(url).openStream();
+                image = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return image;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            view.setImageBitmap(result);
+
+            // show our image view & hide loader
+            view.setVisibility(View.VISIBLE);
+            loader.setVisibility(View.GONE);
+        }
     }
 
     public int getId() {

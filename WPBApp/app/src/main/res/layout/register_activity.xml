@@ -33,7 +33,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/TXT_username"
+            android:id="@+id/register_txt_username"
             android:hint="Username"
             android:textAlignment="center"
             android:textColorHint="@color/colorAccent"
@@ -64,7 +64,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/TXT_password"
+            android:id="@+id/register_txt_password"
             android:hint="Password"
             android:textAlignment="center"
             android:textColorHint="@color/colorAccent"
@@ -96,7 +96,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/TXT_email"
+            android:id="@+id/register_txt_email"
             android:hint="Email Address"
             android:textAlignment="center"
             android:textColorHint="@color/colorAccent"
@@ -129,7 +129,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/TXT_Address"
+            android:id="@+id/register_txt_address"
             android:hint="Address"
             android:textAlignment="center"
             android:textColorHint="@color/colorAccent"
@@ -160,7 +160,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/TXT_phon"
+            android:id="@+id/register_txt_cell"
             android:hint="Cell Number"
             android:textAlignment="center"
             android:textColorHint="@color/colorAccent"
@@ -193,6 +193,7 @@
             android:layout_height="wrap_content"
             android:text="Register"
             android:id="@+id/BTN_register"
+            android:onClick="onRegisterButtonClicked"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:layout_marginRight="5dp"/>

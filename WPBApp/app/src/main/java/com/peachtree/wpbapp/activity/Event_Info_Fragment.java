@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,7 +88,8 @@ public class Event_Info_Fragment extends DialogFragment
 			TextView desc = (TextView) view.findViewById(R.id.TXT_details);
 			TextView date = (TextView) view.findViewById(R.id.TXT_date);
 			TextView address = (TextView) view.findViewById(R.id.TXT_Address);
-			ImageView image = (ImageView) view.findViewById(R.id.IMG_event);
+			ImageView image = (ImageView) view.findViewById(R.id.event_img);
+			ProgressBar loaderView = (ProgressBar) view.findViewById(R.id.event_info_loader_view);
 			Button going = (Button) view.findViewById(R.id.BTN_going);
 			Button map = (Button) view.findViewById(R.id.BTN_map);
 
@@ -95,6 +97,8 @@ public class Event_Info_Fragment extends DialogFragment
 			desc.setText(event.getDescription());
 			date.setText("Date: " + Event.getDateString(event.getDate()));
 			address.setText("Address: " + event.getAddress());
+
+			event.loadImage(getContext().getString(R.string.API_BASE), image, loaderView);
 
 			going.setOnClickListener(new View.OnClickListener() {
 				@Override
