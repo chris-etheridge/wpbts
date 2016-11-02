@@ -3,16 +3,20 @@ package com.peachtree.wpbapp.Activity;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.peachtree.wpbapp.Core.Events;
@@ -82,11 +86,29 @@ public class Event_Info_Fragment extends DialogFragment
 			TextView date = (TextView) view.findViewById(R.id.TXT_date);
 			TextView address = (TextView) view.findViewById(R.id.TXT_Address);
 			ImageView image = (ImageView) view.findViewById(R.id.IMG_event);
+			Button going = (Button) view.findViewById(R.id.BTN_going);
+			Button map = (Button) view.findViewById(R.id.BTN_map);
 
 			title.setText(event.getTitle());
 			desc.setText(event.getDescription());
 			date.setText("Date: " + Event.getDateString(event.getDate()));
 			address.setText("Address: " + event.getAddress());
+
+			going.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if(event != null) {
+						Intent intent = new Intent(Intent.ACTION_INSERT_OR_EDIT);
+						intent.setType("vnd.android.cursor.item/event");
+						intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.getDate());
+						intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, event.getDate());
+						intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
+						intent.putExtra(CalendarContract.Events.TITLE, event.getTitle());
+						intent.putExtra(CalendarContract.Events.DESCRIPTION, event.getDescription());
+						intent.putExtra(CalendarContract.Events.EVENT_LOCATION, event.getAddress());
+					}
+				}
+			});
 		}else{
 			Toast.makeText(getActivity(), "Could Not Load Event.", Toast.LENGTH_SHORT);
 			dismiss();
