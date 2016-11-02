@@ -11,43 +11,43 @@
 			  android:background="@color/colorBG">
 
 
-    <LinearLayout
-		android:orientation="horizontal"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:elevation="5dp">
+	<LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="5dp">
 
         <EditText
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:id="@+id/TXT_search"
-			android:layout_gravity="center_horizontal"
-			android:textColor="@color/colorBG"
-			android:hint="Search"
-			android:drawableTint="@color/colorPrimary"
-			android:backgroundTint="@color/colorPrimary"
-			android:backgroundTintMode="multiply"
-			android:layout_weight="1"
-			android:padding="10dp"
-			/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/TXT_search"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorPrimary"
+            android:hint="Search"
+            android:drawableTint="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTintMode="multiply"
+            android:layout_weight="1"
+            android:padding="10dp"
+            />
 
         <ImageButton
-			android:layout_width="wrap_content"
-			android:layout_height="match_parent"
-			android:id="@+id/BTN_Search"
-			android:src="@android:drawable/ic_menu_search"
-			android:paddingLeft="3dp"
-			android:paddingTop="10dp"
-			android:paddingRight="3dp"
-			android:paddingBottom="10dp"
-			android:background="#00000000"
-			android:tint="@color/colorPrimary"
-			android:tintMode="multiply"
-			android:focusable="false"
-			android:elevation="3dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/BTN_Search"
+            android:src="@android:drawable/ic_menu_search"
+            android:paddingLeft="3dp"
+            android:paddingTop="10dp"
+            android:paddingRight="3dp"
+            android:paddingBottom="10dp"
+            android:background="#00000000"
+            android:tint="@color/colorPrimary"
+            android:tintMode="multiply"
+            android:focusable="false"
+            android:elevation="3dp"/>
     </LinearLayout>
 
-    <ListView
+	<ListView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:id="@+id/list"

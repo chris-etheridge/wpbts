@@ -10,12 +10,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.peachtree.wpbapp.Core.Events;
 import com.peachtree.wpbapp.Core.Networking;
+import com.peachtree.wpbapp.Entities.Clinic;
 import com.peachtree.wpbapp.R;
 import com.peachtree.wpbapp.Entities.Event;
 import com.peachtree.wpbapp.layout_Handlers.List_Adapter;
@@ -34,7 +37,9 @@ public class List_Fragment extends DialogFragment {
 	private Activity parent;
 	private int stackNum, type;
 	private Context current_ctx;
-	private ArrayList ALL_ITEMS;
+	private ArrayList ALL_ITEMS, FILTERED_ITEMS;
+	private boolean isSearch = false;
+	private String search;
 
 	public static final int CLINIC = 1, EVENT = 2;
 
@@ -66,16 +71,21 @@ public class List_Fragment extends DialogFragment {
 		final View view = inflater.inflate(R.layout.list_layout, container, false);
 
 		final ListView list = (ListView) view.findViewById(R.id.list);
+		ArrayList instance_array = ALL_ITEMS;
+		if(isSearch){
+			instance_array = FILTERED_ITEMS;
+			((EditText)view.findViewById(R.id.TXT_search)).setText(search);
+		}
 		switch (type)
 		{
 			case EVENT:
-				if(ALL_ITEMS != null && !ALL_ITEMS.isEmpty()) {
-					list.setAdapter(new List_Adapter(ALL_ITEMS, parent, List_Adapter.Type.Event));
+				if(instance_array != null && !instance_array.isEmpty()) {
+					list.setAdapter(new List_Adapter(instance_array, parent, List_Adapter.Type.Event));
 				}
 				break;
 			case CLINIC:
-				if(ALL_ITEMS != null && !ALL_ITEMS.isEmpty()) {
-					list.setAdapter(new List_Adapter(ALL_ITEMS, parent, List_Adapter.Type.Clinic));
+				if(instance_array != null && !instance_array.isEmpty()) {
+					list.setAdapter(new List_Adapter(instance_array, parent, List_Adapter.Type.Clinic));
 				}
 				break;
 		}
@@ -85,16 +95,31 @@ public class List_Fragment extends DialogFragment {
 			@Override
 			public void onClick(View v)
 			{
-				DialogFragment fragment = Event_Calendar_Fragment.init(stackNum);
-				((Event_Calendar_Fragment)fragment).setItems(ALL_ITEMS);
-				FragmentManager manager = parent.getFragmentManager();
-				FragmentTransaction transaction = manager.beginTransaction();
-				Fragment prev = manager.findFragmentByTag("embed");
-				if(prev!=null){
-					transaction.remove(prev);
+				TextView search_text = ((TextView)view.findViewById(R.id.TXT_search));
+
+				if(search_text.getText().length() > 0)
+				{
+					List_Fragment filter_Fragment = List_Fragment.init(stackNum, type);
+					filter_Fragment.setItems(ALL_ITEMS);
+					filter_Fragment.setSearch(true, search_text.getText(),type);
+					FragmentTransaction transaction = parent.getFragmentManager().beginTransaction();
+					Fragment prev = parent.getFragmentManager().findFragmentByTag("embed");
+					if (prev != null)
+					{
+						transaction.remove(prev);
+					}
+					transaction.add(R.id.content, filter_Fragment, "embed");
+					transaction.commit();
+				}else {
+					switch (type){
+						case EVENT:
+							((Home_Activity)parent).switchFragment(R.id.nav_event_list);
+							break;
+						case CLINIC:
+							((Home_Activity)parent).switchFragment(R.id.nav_event_list);
+							break;
+					}
 				}
-				transaction.add(R.id.content ,fragment, "embed");
-				transaction.commit();
 			}
 		});
 
@@ -103,5 +128,27 @@ public class List_Fragment extends DialogFragment {
 
 	public void setItems(ArrayList es) {
 		ALL_ITEMS = es;
+	}
+
+	public void setSearch(Boolean isSearch, CharSequence search, int type){
+		this.isSearch = isSearch;
+		this.search = search.toString();
+
+		FILTERED_ITEMS = new ArrayList();
+		for(Object item: ALL_ITEMS)
+		{
+			switch (type)
+			{
+				case EVENT:
+					if (((Event)item).getTitle().contains(search) || ((Event)item).getDescription().contains(search)){
+						FILTERED_ITEMS.add(item);
+					}
+						break;
+				case CLINIC:
+					if (((Clinic)item).getName().contains(search) || ((Clinic)item).getDescription().contains(search)){
+						FILTERED_ITEMS.add(item);
+					}
+			}
+		}
 	}
 }
