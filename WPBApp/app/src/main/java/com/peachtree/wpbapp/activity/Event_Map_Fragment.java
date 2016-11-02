@@ -1,20 +1,30 @@
 package com.peachtree.wpbapp.Activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -23,9 +33,10 @@ import com.peachtree.wpbapp.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Locale;
 
-public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener
+public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, LocationListener
 {
 
 	private Activity parent;
@@ -33,6 +44,31 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 	private MapFragment mapFragment;
 	private GoogleMap mMap;
 	private View mView;
+	private LocationManager location;
+
+	@Override
+	public void onLocationChanged(Location location) {
+		if(location != null) {
+			mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10));
+			mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).draggable(false)
+					.icon(BitmapDescriptorFactory.fromResource(R.drawable.user_icon)));
+		}
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+
+	}
 
 	@Override
 	public boolean onMarkerClick(Marker marker) {
@@ -50,6 +86,7 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 	public void onMapReady(GoogleMap googleMap)
 	{
 		mMap = googleMap;
+		loadEventsToMap();
 	}
 
 	public static Event_Map_Fragment init(int stackNum){
@@ -70,6 +107,7 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 		stackNum = getArguments().getInt("stackNum");
 
 		mapFragment = new MapFragment();
+		location = (LocationManager)(parent.getSystemService(Context.LOCATION_SERVICE));
     }
 
 	@Override
@@ -81,8 +119,6 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 		FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 		transaction.add(R.id.map_layout, mapFragment, "map").commit();
 		mapFragment.getMapAsync(this);
-
-		loadEventsToMap();
 
 		view.findViewById(R.id.BTN_directions).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -118,5 +154,17 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 		SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE dd");
 		String output = String.format("%s\n%s\n%s\n%s", event.getTitle(), event.getAddress(), event.getType(), dayFormat.format(event.getDate()));
 		return output;
+	}
+
+	@Override
+	public void onResume(){
+		super.onResume();
+		Criteria criteria = new Criteria();
+		criteria.setAccuracy(Criteria.ACCURACY_FINE);
+		criteria.setPowerRequirement(criteria.NO_REQUIREMENT);
+
+		if(ContextCompat.checkSelfPermission(parent, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+			location.requestSingleUpdate(criteria, this, null);
+		}
 	}
 }
