@@ -2,7 +2,10 @@ package com.peachtree.wpbapp.Activity;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -10,15 +13,25 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.peachtree.wpbapp.R;
 import com.peachtree.wpbapp.Entities.Clinic;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class Clinic_Info_Fragment extends DialogFragment
+public class Clinic_Info_Fragment extends DialogFragment implements OnMapReadyCallback
 {
 
 	private Activity parent;
@@ -26,6 +39,8 @@ public class Clinic_Info_Fragment extends DialogFragment
 	private ArrayList<Clinic> clinics;
 	private Clinic clinic;
 	private float mCurrenty;
+	private GoogleMap mMap;
+	private MapFragment mapFragment;
 
 	public static Clinic_Info_Fragment init(int id){
 		Clinic_Info_Fragment fragment = new Clinic_Info_Fragment();
@@ -36,12 +51,19 @@ public class Clinic_Info_Fragment extends DialogFragment
 
 		return fragment;
 	}
-    @Override
+
+	@Override
+	public void onMapReady(GoogleMap googleMap) {
+		mMap = googleMap;
+	}
+
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		parent = getActivity();
 		id = getArguments().getInt("id");
 
+		mapFragment = new MapFragment();
     }
 
 	@Override
@@ -49,16 +71,41 @@ public class Clinic_Info_Fragment extends DialogFragment
 		super.onCreateView(inflater, container, savedInstanceState);
 		final View view = inflater.inflate(R.layout.clinic_info_layout, container, false);
 
+		FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+		transaction.add(R.id.map_layout, mapFragment, "map").commit();
+		mapFragment.getMapAsync(this);
+
+		LatLng co_ord = new LatLng(clinic.getLat(), clinic.getLng());
+		mMap.addMarker(new MarkerOptions().title(clinic.getName()).position(co_ord).draggable(false));
+		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(co_ord,10));
+
 		mCurrenty = view.getY();
 		final float originalY = mCurrenty;
 
-		if(clinic != null) {
-			
-		} else {
-			/* To be implemented once test data available.
-			Toast.makeText(getActivity(), "Could Not Load Event.", Toast.LENGTH_SHORT);
+
+		if(clinic != null){
+
+			TextView title = (TextView)view.findViewById(R.id.TXT_title);
+			TextView address = (TextView)view.findViewById(R.id.TXT_address);
+			TextView hours = ((TextView)view.findViewById(R.id.TXT_hours));
+			Button get_directions = ((Button)view.findViewById(R.id.BTN_directions));
+
+			title.setText(clinic.getName());
+			address.setText(clinic.getAddress());
+			hours.setText(clinic.getDescription());
+			get_directions.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					String uri = String.format(Locale.ENGLISH, "geo:%f,%f", clinic.getLat(), clinic.getLng());
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+					parent.startActivity(intent);
+				}
+			});
+
+		}else{
+			Toast.makeText(getActivity(), "Could Not Load Clinic.", Toast.LENGTH_SHORT);
+
 			dismiss();
-			*/
 		}
 
 		view.findViewById(R.id.pull_grip).setOnTouchListener(new View.OnTouchListener()

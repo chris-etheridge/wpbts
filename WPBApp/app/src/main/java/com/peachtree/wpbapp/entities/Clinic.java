@@ -16,23 +16,19 @@ public class Clinic {
 
 	private int id;
 	private String name;
-	private Address address;
+	private String address;
 	private String contact1;
 	private String contact2;
 	private String description;
 	private URL img_url;
+	private double lat, lng;
 
 	public Clinic() {}
+
 
 	public Clinic(String name, String description) {
 		this.description = description;
 		this.name = name;
-	}
-
-	public Clinic(int id, Address address ) {
-		this.id = id;
-		this.address = address;
-		name = address.getArea() + "Clinic";
 	}
 
 	public static ArrayList<Clinic> ClinicsFromJsonArray(JSONArray a) throws JSONException, ParseException {
@@ -57,7 +53,8 @@ public class Clinic {
 		return this.id;
 	}
 
-	public Address getAddress() {
+	public String getAddress() {
+
 		return this.address;
 	}
 
@@ -73,5 +70,13 @@ public class Clinic {
 
 	public String getName(){
 		return name;
+	}
+
+	public double getLat(){
+		return lat;
+	}
+
+	public double getLng(){
+		return lng;
 	}
 }

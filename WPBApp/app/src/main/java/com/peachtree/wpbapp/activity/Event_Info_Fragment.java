@@ -75,18 +75,22 @@ public class Event_Info_Fragment extends DialogFragment
 		final float originalX = mCurrentx;
 
 
-		// get all of our fields
-		TextView title = (TextView)view.findViewById(R.id.event_title);
-		TextView desc = (TextView)view.findViewById(R.id.TXT_details);
-		TextView date = (TextView)view.findViewById(R.id.TXT_date);
-		TextView address = (TextView)view.findViewById(R.id.TXT_Address);
-		ImageView image = (ImageView)view.findViewById(R.id.IMG_event);
+		if(event != null) {
+			// get all of our fields
+			TextView title = (TextView) view.findViewById(R.id.event_title);
+			TextView desc = (TextView) view.findViewById(R.id.TXT_details);
+			TextView date = (TextView) view.findViewById(R.id.TXT_date);
+			TextView address = (TextView) view.findViewById(R.id.TXT_Address);
+			ImageView image = (ImageView) view.findViewById(R.id.IMG_event);
 
-		title.setText(event.getTitle());
-		desc.setText(event.getDescription());
-		date.setText("Date: " + Event.getDateString(event.getDate()));
-		address.setText("Address: " + event.getAddress());
-
+			title.setText(event.getTitle());
+			desc.setText(event.getDescription());
+			date.setText("Date: " + Event.getDateString(event.getDate()));
+			address.setText("Address: " + event.getAddress());
+		}else{
+			Toast.makeText(getActivity(), "Could Not Load Event.", Toast.LENGTH_SHORT);
+			dismiss();
+		}
 		view.findViewById(R.id.pull_grip).setOnTouchListener(new View.OnTouchListener()
 		{
 			private float offset;

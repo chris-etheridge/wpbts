@@ -69,7 +69,20 @@ public class List_Adapter extends BaseAdapter
 	public View getView(int pos, View convertView, final ViewGroup parent){
 		if(convertView == null){
 			LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(R.layout.tile_w_image, parent, false);
+			int layout;
+			switch (type){
+				case Clinic:
+					layout = R.layout.tile_1line;
+					break;
+				case Event:
+					layout = R.layout.tile_w_image;
+					break;
+				default:
+					layout = 0;
+					break;
+			}
+			if(layout != 0)
+			convertView = inflater.inflate(layout, parent, false);
 		}
 
 		if(type== Type.Event) {
@@ -86,7 +99,6 @@ public class List_Adapter extends BaseAdapter
 				{
 					FragmentManager manager = ((Activity)context).getFragmentManager();
 					FragmentTransaction transaction = manager.beginTransaction();
-					transaction.setCustomAnimations(android.support.design.R.anim.abc_popup_enter, android.support.design.R.anim.abc_popup_exit);
 					Event_Info_Fragment event_dialog = Event_Info_Fragment.init(event.getId());
 					event_dialog.loadEvents(all_items);
 					event_dialog.show(transaction, "event_dialog");
@@ -96,11 +108,9 @@ public class List_Adapter extends BaseAdapter
 
 		}else if(type==Type.Clinic){
 			TextView name = (TextView) convertView.findViewById(R.id.TXT_name);
-			TextView date = (TextView) convertView.findViewById(R.id.TXT_date);
 			final Clinic clinic = (Clinic)all_items.get(pos);
 
 			name.setText(clinic.getName());
-			date.setVisibility(View.GONE);
 			convertView.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
@@ -108,7 +118,6 @@ public class List_Adapter extends BaseAdapter
 				{
 					FragmentManager manager = ((Activity)context).getFragmentManager();
 					FragmentTransaction transaction = manager.beginTransaction();
-					transaction.setCustomAnimations(android.support.design.R.anim.abc_popup_enter, android.support.design.R.anim.abc_popup_exit);
 					Clinic_Info_Fragment clinic_dialog = Clinic_Info_Fragment.init(clinic.getId());
 					clinic_dialog.show(transaction, "clinic_dialog");
 				}
