@@ -14,7 +14,7 @@ require_once('api/clinics/functions.php');
 
 //get selected event info
 $clinicid = filter_var($_GET['clinicid'], FILTER_SANITIZE_STRING);
-$event = $_SESSION['clinic'];//first and only slot - 0
+$clinic = $_SESSION['clinic'];//first and only slot - 0
 if(!isset($_SESSION['clinic']))
 {
     $clinic = getClinic($mysqli, $clinicid)[0]; //first and only slot - 0
@@ -44,7 +44,6 @@ if(!isset($_SESSION['clinic']))
             $_SESSION['alert'] = null;
         }
     ?>
-
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Edit Clinic</h1>
@@ -84,13 +83,19 @@ if(!isset($_SESSION['clinic']))
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="control-label">Contact No. 1</label>
-                        <input required class="form-control" onkeypress="validateNumberIn(event)" type="number" name="contact_1" value="<?php echo $clinic['contact_1']; ?>">
+                        <input required class="form-control" onkeypress="validateNumberIn(event)" type="text" name="contact_1" value="<?php echo $clinic['contact_1']; ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="control-label">Contact No. 2</label>
-                        <input required class="form-control" onkeypress="validateNumberIn(event)" type="number" name="contact_2" value="<?php echo $clinic['contact_2']; ?>">
+                        <input required class="form-control" onkeypress="validateNumberIn(event)" type="text" name="contact_2" value="<?php echo $clinic['contact_2']; ?>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label class="control-label">Operating Hours</label>
+                        <input required class="form-control" type="text" name="operating_hours" value="<?php echo $clinic['operating_hours']; ?>">
                     </div>
                 </div>
                 <div class="form-group">

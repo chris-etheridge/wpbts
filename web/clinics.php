@@ -156,6 +156,14 @@ $arrClinics = getAllClinics($mysqli);
                         </div>
                         <div class="row">
                             <div class="col-xs-3">
+                                <label class="control-label">Operating Hours.</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moClinicOperatingHours"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
                                 <label class="control-label">Street No.</label>
                             </div>
                             <div class="col-xs-9">
@@ -306,6 +314,7 @@ $arrClinics = getAllClinics($mysqli);
         $('#modal-view-clinic .modal-body #moClinicContact1').html(objClinic.contact_1);
         $('#modal-view-clinic .modal-body #moClinicContact2').html(objClinic.contact_2);
         $('#modal-view-clinic .modal-body #moClinicDescription').html(objClinic.description);
+        $('#modal-view-clinic .modal-body #moClinicOperatingHours').html(objClinic.operating_hours);
         $('#modal-view-clinic .modal-body #moClinicStreetNo').html(objClinic.street_no);
         $('#modal-view-clinic .modal-body #moClinicOffice').html(objClinic.office);
         $('#modal-view-clinic .modal-body #moClinicBuildingNo').html(objClinic.building_number);

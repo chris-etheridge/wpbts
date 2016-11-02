@@ -17,6 +17,7 @@ $_SESSION['clinic']['clinic_id'] = $_POST['clinic_id'];
 $_SESSION['clinic']['description'] = $_POST['description'];
 $_SESSION['clinic']['contact_1'] = $_POST['contact_1'];
 $_SESSION['clinic']['contact_2'] = $_POST['contact_2'];
+$_SESSION['clinic']['operating_hours'] = $_POST['operating_hours'];
 
 $_SESSION['clinic']['address_id'] = $_POST['address_id'];
 $_SESSION['clinic']['street_no'] = $_POST['street_no'];
@@ -30,7 +31,7 @@ $_SESSION['clinic']['building_number'] = $_POST['building_number'];
 if(       !isset($_POST['clinic_id']) || !isset($_POST['description']) || !isset($_POST['contact_1'])
         || !isset($_POST['contact_2']) || !isset($_POST['street_no']) || !isset($_POST['street'])
         || !isset($_POST['area']) || !isset($_POST['city']) || !isset($_POST['area_code']) //verify everything crucial was posted
-        || !isset($_POST['address_id']))
+        || !isset($_POST['address_id']) || !isset($_POST['operating_hours']))
 {
     $_SESSION['alert']['message_type'] = "alert-danger";
     $_SESSION['alert']['message_title'] = "Error!";
@@ -44,6 +45,7 @@ $clinicid = $mysqli->real_escape_string($_POST['clinic_id']);
 $description = $mysqli->real_escape_string($_POST['description']);
 $contact1 = $mysqli->real_escape_string($_POST['contact_1']);
 $contact2 = $mysqli->real_escape_string($_POST['contact_2']);
+$operatinghours = $mysqli->real_escape_string($_POST['operating_hours']);
 
 $addressid = $mysqli->real_escape_string($_POST['address_id']);
 $streetno = $mysqli->real_escape_string($_POST['street_no']);
@@ -56,7 +58,7 @@ $buildingno = $mysqli->real_escape_string($_POST['building_number']);
 
 /* INSERT/ UPDATE ADDRESS*/
 $sql = "UPDATE TBL_ADDRESS SET STREET_NO = $streetno, STREET = '$street', " 
-        . "AREA = '$suburb', CITY = '$city', AREA_CODE = '$zip', OFFICE = '$office', BUILDING_NUMBER = $buildingno " 
+        . "AREA = '$suburb', CITY = '$city', AREA_CODE = '$zip', OFFICE = '$office', BUILDING_NUMBER = $buildingno"
         . " WHERE ADDRESS_ID = $addressid";
 
 $mysqli->query($sql);
@@ -64,7 +66,7 @@ $mysqli->query($sql);
 if($mysqli->error)
 {
     $_SESSION['alert']['message_type'] = "alert-danger";
-    $_SESSION['alert']['message_title'] = "Error updating details!";
+    $_SESSION['alert']['message_title'] = "Error updating address details!";
     $_SESSION['alert']['message'] = "Please review the address fields. If problem persists, contact system administrator!";
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit();
@@ -74,7 +76,8 @@ if($mysqli->error)
 
 $sql = "UPDATE TBL_CLINIC SET DESCRIPTION = '$description', "
         . "CONTACT_1 = '$contact1', "
-        . "CONTACT_2 = '$contact2'"
+        . "CONTACT_2 = '$contact2', " 
+        . " OPERATING_HOURS = '$operatinghours'"
         . " WHERE CLINIC_ID = $clinicid;";
 
 $mysqli->query($sql);

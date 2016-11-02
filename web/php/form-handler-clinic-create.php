@@ -16,6 +16,8 @@ session_start();
 $_SESSION['clinic']['description'] = $_POST['description'];
 $_SESSION['clinic']['contact_1'] = $_POST['contact_1'];
 $_SESSION['clinic']['contact_2'] = $_POST['contact_2'];
+$_SESSION['clinic']['operating_hours'] = $_POST['operating_hours'];
+
 $_SESSION['clinic']['street_no'] = $_POST['street_no'];
 $_SESSION['clinic']['street'] = $_POST['street'];
 $_SESSION['clinic']['area'] = $_POST['area'];
@@ -26,7 +28,8 @@ $_SESSION['clinic']['office'] = $_POST['office'];
 
 if(        !isset($_POST['description']) || !isset($_POST['contact_1'])
         || !isset($_POST['contact_2']) || !isset($_POST['street_no']) || !isset($_POST['street'])
-        || !isset($_POST['area']) || !isset($_POST['city']) || !isset($_POST['area_code'])) //verify everything crucial was posted
+        || !isset($_POST['area']) || !isset($_POST['city']) || !isset($_POST['area_code'])
+        || !isset($_POST['operating_hours'])) //verify everything crucial was posted
 {
     $_SESSION['alert']['message_type'] = "alert-danger";
     $_SESSION['alert']['message_title'] = "Error!";
@@ -39,6 +42,7 @@ if(        !isset($_POST['description']) || !isset($_POST['contact_1'])
 $description = $mysqli->real_escape_string($_POST['description']);
 $contact1 = $mysqli->real_escape_string($_POST['contact_1']);
 $contact2 = $mysqli->real_escape_string($_POST['contact_2']);
+$operatinghours = $mysqli->real_escape_string($_POST['operating_hours']);
 
 $streetno = $mysqli->real_escape_string($_POST['street_no']);
 $street = $mysqli->real_escape_string($_POST['street']);
@@ -67,8 +71,8 @@ if($mysqli->error)
 
 /* INSERT/ UPDATE CLINIC*/
 
-$sql = "INSERT INTO TBL_CLINIC (DESCRIPTION, CONTACT_1, CONTACT_2, ADDRESS_ID) "
-            . " VALUES('$description', '$contact1', '$contact2', $insertedAddressID);";
+$sql = "INSERT INTO TBL_CLINIC (DESCRIPTION, CONTACT_1, CONTACT_2, ADDRESS_ID, OPERATING_HOURS) "
+            . " VALUES('$description', '$contact1', '$contact2', $insertedAddressID, '$operatinghours');";
 
 $mysqli->query($sql);
 $clinicid = $mysqli->insert_id;
