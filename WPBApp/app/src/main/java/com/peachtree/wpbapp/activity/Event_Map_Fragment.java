@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -45,6 +46,8 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 	private GoogleMap mMap;
 	private View mView;
 	private LocationManager location;
+	private Location mLocation;
+	private Criteria criteria;
 
 	@Override
 	public void onLocationChanged(Location location) {
@@ -52,6 +55,7 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 			mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10));
 			mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).draggable(false)
 					.icon(BitmapDescriptorFactory.fromResource(R.drawable.user_icon)));
+			mLocation = location;
 		}
 	}
 
@@ -129,6 +133,23 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 			}
 		});
 
+		view.findViewById(R.id.BTN_recenter).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				if(mMap != null && mLocation != null){
+					mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLocation.getLatitude(), mLocation. getLongitude()), 10));
+				}else if(mMap != null){
+					getLocation();
+					if(ContextCompat.checkSelfPermission(parent, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+					{
+						Toast.makeText(parent, "Location not found, please wait a moment and try again.", Toast.LENGTH_SHORT).show();
+					}
+				}
+			}
+		});
+
 		mView = view;
 		return view;
 	}
@@ -159,12 +180,24 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 	@Override
 	public void onResume(){
 		super.onResume();
-		Criteria criteria = new Criteria();
+		criteria = new Criteria();
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
 		criteria.setPowerRequirement(criteria.NO_REQUIREMENT);
 
 		if(ContextCompat.checkSelfPermission(parent, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
 			location.requestSingleUpdate(criteria, this, null);
+		}
+		else {
+			Toast.makeText(parent, "Please allow location in app permissions.", Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	private void getLocation(){
+		if(ContextCompat.checkSelfPermission(parent, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+			location.requestSingleUpdate(criteria, this, null);
+		}
+		else{
+			Toast.makeText(parent, "Please allow location in app permissions.", Toast.LENGTH_SHORT).show();
 		}
 	}
 }
