@@ -184,7 +184,7 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 			case R.id.nav_event_list:
 				List_Fragment ls = List_Fragment.init(stackNum, List_Fragment.EVENT);
 
-				ls.setEvents(ALL_EVENTS);
+				ls.setItems(ALL_EVENTS);
 
 				transaction.add(R.id.content, ls, "embed");
 				transaction.commit();

@@ -29,14 +29,13 @@ public class List_Adapter extends BaseAdapter
 		Event,
 		Clinic
 	}
-	private ArrayList<Event> all_events;
-	private ArrayList<Clinic> all_clinics;
+	private ArrayList all_items;
 	private Context context;
 	private Type type;
 
 
-	public List_Adapter (ArrayList<Event> list, Context ctx, Type type){
-		this.all_events = list;
+	public List_Adapter (ArrayList list, Context ctx, Type type){
+		this.all_items = list;
 		this.type = type;
 		context=ctx;
 	}
@@ -44,13 +43,13 @@ public class List_Adapter extends BaseAdapter
 	@Override
 	public int getCount()
 	{
-		return all_events.size();
+		return all_items.size();
 	}
 
 	@Override
 	public Object getItem(int i)
 	{
-		return all_events.get(i);
+		return all_items.get(i);
 	}
 
 	@Override
@@ -59,9 +58,9 @@ public class List_Adapter extends BaseAdapter
 		long id = -1;
 
 		if(type==Type.Event){
-			id = ((Event) all_events.get(i)).getId();
+			id = ((Event) all_items.get(i)).getId();
 		}else if(type==Type.Clinic){
-			id = ((Clinic) all_clinics.get(i)).getId();
+			id = ((Clinic) all_items.get(i)).getId();
 		}
 
 		return id;
@@ -76,7 +75,7 @@ public class List_Adapter extends BaseAdapter
 		if(type== Type.Event) {
 			TextView name = (TextView) convertView.findViewById(R.id.TXT_name);
 			TextView date = (TextView) convertView.findViewById(R.id.TXT_date);
-			final Event event = (Event)all_events.get(pos);
+			final Event event = (Event)all_items.get(pos);
 
 			name.setText(event.getTitle());
 			date.setText(new SimpleDateFormat("dd-MM-yyyy").format(event.getDate()));
@@ -89,7 +88,7 @@ public class List_Adapter extends BaseAdapter
 					FragmentTransaction transaction = manager.beginTransaction();
 					transaction.setCustomAnimations(android.support.design.R.anim.abc_popup_enter, android.support.design.R.anim.abc_popup_exit);
 					Event_Info_Fragment event_dialog = Event_Info_Fragment.init(event.getId());
-					event_dialog.loadEvents(all_events);
+					event_dialog.loadEvents(all_items);
 					event_dialog.show(transaction, "event_dialog");
 				}
 			});
@@ -98,7 +97,7 @@ public class List_Adapter extends BaseAdapter
 		}else if(type==Type.Clinic){
 			TextView name = (TextView) convertView.findViewById(R.id.TXT_name);
 			TextView date = (TextView) convertView.findViewById(R.id.TXT_date);
-			Clinic clinic = (Clinic)all_clinics.get(pos);
+			final Clinic clinic = (Clinic)all_items.get(pos);
 
 			name.setText(clinic.getName());
 			date.setVisibility(View.GONE);
@@ -109,7 +108,8 @@ public class List_Adapter extends BaseAdapter
 				{
 					FragmentManager manager = ((Activity)context).getFragmentManager();
 					FragmentTransaction transaction = manager.beginTransaction();
-					Clinic_Info_Fragment clinic_dialog = Clinic_Info_Fragment.init(1);
+					transaction.setCustomAnimations(android.support.design.R.anim.abc_popup_enter, android.support.design.R.anim.abc_popup_exit);
+					Clinic_Info_Fragment clinic_dialog = Clinic_Info_Fragment.init(clinic.getId());
 					clinic_dialog.show(transaction, "clinic_dialog");
 				}
 			});
