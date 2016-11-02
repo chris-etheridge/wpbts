@@ -119,6 +119,7 @@ public class List_Adapter extends BaseAdapter
 					FragmentManager manager = ((Activity)context).getFragmentManager();
 					FragmentTransaction transaction = manager.beginTransaction();
 					Clinic_Info_Fragment clinic_dialog = Clinic_Info_Fragment.init(clinic.getId());
+					clinic_dialog.loadClinics(all_items);
 					clinic_dialog.show(transaction, "clinic_dialog");
 				}
 			});

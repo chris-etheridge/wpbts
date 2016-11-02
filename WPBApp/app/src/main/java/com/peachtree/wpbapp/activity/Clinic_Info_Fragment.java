@@ -35,7 +35,7 @@ public class Clinic_Info_Fragment extends DialogFragment implements OnMapReadyCa
 {
 
 	private Activity parent;
-	private int id;
+	private int id, array_index;
 	private ArrayList<Clinic> clinics;
 	private Clinic clinic;
 	private float mCurrenty;
@@ -62,6 +62,16 @@ public class Clinic_Info_Fragment extends DialogFragment implements OnMapReadyCa
         super.onCreate(savedInstanceState);
 		parent = getActivity();
 		id = getArguments().getInt("id");
+
+		if(clinics != null){
+			int i = 0;
+			while(i< clinics.size() && clinic == null){
+				if(clinics.get(i).getId() == id){
+					clinic = clinics.get(i);
+					array_index = i;
+				}
+			}
+		}
 
 		mapFragment = new MapFragment();
     }
@@ -111,6 +121,7 @@ public class Clinic_Info_Fragment extends DialogFragment implements OnMapReadyCa
 		view.findViewById(R.id.pull_grip).setOnTouchListener(new View.OnTouchListener()
 		{
 			private float offset;
+			private int threshold = (int)(getDialog().getWindow().getWindowManager().getDefaultDisplay().getHeight() * 2/3.0);
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event)
@@ -126,7 +137,7 @@ public class Clinic_Info_Fragment extends DialogFragment implements OnMapReadyCa
 					}
 				}else if(action == MotionEvent.ACTION_UP){
 
-					if(mCurrenty > originalY + 1000){
+					if(mCurrenty > originalY + threshold){
 						dismiss();
 					}else{
 						mCurrenty = originalY;
