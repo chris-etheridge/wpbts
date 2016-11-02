@@ -89,11 +89,10 @@ if (isset($_SESSION['USER'])) {
                 </thead>
 
                 <?php
-                $count = 0;
                 if ($userData[0] == true) {
                     foreach ($userData[1] as $value) {
                         ?>
-                        <tr class="<?php if ($count % 2 == 0) echo "odd" ?>">
+                        <tr>
                             <td class="text-center"><?php echo $value['USER_ID'] ?></td>
                             <td class="text-center"><?php echo $value['FIRST_NAME'] ?></td>
                             <td class="text-center"><?php echo $value['LAST_NAME'] ?></td>
@@ -102,16 +101,12 @@ if (isset($_SESSION['USER'])) {
                             <td class="text-center"><?php echo $value['DATE_OF_BIRTH'] ?></td>
                             <td class="text-center"><?php echo $value['BLOOD_TYPE'] ?></td>
                             <td class="text-center">
-                                <a href="users_edituser.php?userID=<?php echo $value['USER_ID'] ?>"
-                                   class="btn btn-xs btn-primary">Edit</a>
-                                <a href="php/form-handler-user-remove.php?userID=<?php echo $value['USER_ID'] . "&addressID=" . $value['ADDRESS_ID'] ?>"
-                                   class=" btn btn-xs btn-warning">Remove</a>
-                                <a href="#;" data-id="<?php echo $value['USER_ID'] ?>"
-                                   class="viewclinic btn btn-xs btn-info">View</a>
+                                <a href="users_edituser.php?userID=<?php echo $value['USER_ID'] ?>" class="btn btn-xs btn-primary">Edit</a>
+                                <a href="#;" data-id="<?php echo $value['USER_ID']; ?>" class="removeclinic btn btn-xs btn-warning"onclick="removeUser(event)">Remove</a>
+                                <a href="#;" data-id="<?php echo $value['USER_ID']; ?>" class="viewclinic btn btn-xs btn-info" onclick="viewUser(event)">View</a>
                             </td>
                         </tr>
                         <?php
-                        $count++;
                     }
                 }
                 ?>
@@ -126,8 +121,75 @@ if (isset($_SESSION['USER'])) {
 
 </div>    <!--/.main-->
 
+<div class="modal fade" id="modal-remove-user" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Are you sure you want to permanently delete this user?</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <label class="control-label">User</label>
+                    </div>
+                    <div class="col-xs-9">
+                        <span id="moUserName"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <label class="control-label">User ID</label>
+                    </div>
+                    <div class="col-xs-9">
+                        <span id="moUserID"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <span id="confirmationBtns"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php require_once('footer.php'); ?>
 
+<script type="text/javascript">
+    
+    var jsonUsers = <?php echo json_encode($userData[1]); ?>;
+    
+    //cancel event confirmation dialog
+    function removeUser(ev){
+        ev.preventDefault();
+        var uid = ev.target.dataset.id;
+
+        //get json object
+
+        var objUser;
+        $.each(jsonUsers, function (i, item)
+        {
+            if (typeof item == 'object')
+            {
+                if(item.USER_ID === uid.toString())
+                {
+                    objUser = item;
+                }
+            }
+        });
+
+        $('#modal-remove-user .modal-body #moUserID').html(objUser.USER_ID);
+        $('#modal-remove-user .modal-body #moUserName').html(objUser.FIRST_NAME + " " + objUser.LAST_NAME);
+        $('#modal-remove-user .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/form-handler-user-remove.php?userID=" + objUser.USER_ID + "'>Permanently Delete User</a>");
+
+
+        $('#modal-remove-user').modal('show', {backdrop: 'static'});
+
+     }
+</script>
 
 </body>
 
