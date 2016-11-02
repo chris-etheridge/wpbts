@@ -58,7 +58,7 @@ if(!isset($_SESSION['clinic']))
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <label>Clinic ID</label>
-                                <input required readonly type="text" class="form-control" name="clinic_id" value="<?php echo $clinic['clinic_id']; ?>">
+                                <input required readonly title="Cannot change who created this event" type="text" class="form-control" name="clinic_id" value="<?php echo $clinic['clinic_id']; ?>">
                             </div>
                         </div>
                         <div class="form-group">

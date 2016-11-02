@@ -10,13 +10,13 @@ require_once("notification_functions.php");
 session_start();
 
 
-$alertData = array(
+$notificationData = array(
     "TITLE" => $_POST["TITLE"],
     "BODY" => $_POST["BODY"],
     "DESCRIPTION" => $_POST["DESCRIPTION"]
 );
 
-$res = createAlert($alertData);
+$res = createNotification($notificationData);
 if ($res == false) {
     $_SESSION['alert']['message_type'] = "alert-danger";
     $_SESSION['alert']['message_title'] = "Error writing notification to DB. ";

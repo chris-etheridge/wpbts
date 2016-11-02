@@ -83,11 +83,11 @@ if ($QueryResult == TRUE)
                     <div class="form-group col-sm-6">
                         <div class="col-sm-12">
                             <label>Event ID</label>
-                            <input required readonly type="text" class="form-control" name="event_id" value="<?php echo $event['event_id']; ?>">
+                            <input required readonly title="Cannot change event ID" type="text" class="form-control" name="event_id" value="<?php echo $event['event_id']; ?>">
                         </div>
                         <div class="col-sm-12">
                             <label class="control-label">Creator</label>
-                            <input required readonly type="text" class="form-control" name="creator_id" value="<?php echo $creatorName; ?>"
+                            <input required readonly title="Cannot change who created this event" type="text" class="form-control" name="creator_id" value="<?php echo $creatorName; ?>"
                             >
                         </div>
                         <div class="col-sm-12">
