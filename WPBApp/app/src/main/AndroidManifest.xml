@@ -3,6 +3,7 @@
     package="com.peachtree.wpbapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -10,6 +11,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBxVLttcwnX1QvEjctvS6Eq3WVy7v0cYuU"/>
+
         <activity
             android:name=".Activity.Login_Activity"
             android:screenOrientation="portrait"
@@ -27,12 +33,7 @@
             android:name=".Activity.Home_Activity"
             android:screenOrientation="portrait"></activity>
 
-        <service
-            android:name=".MyFirebaseInstanceIDService"
-            android:enabled="true"
-            android:exported="true">
-            <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-        </service>
+
     </application>
 
 </manifest>
