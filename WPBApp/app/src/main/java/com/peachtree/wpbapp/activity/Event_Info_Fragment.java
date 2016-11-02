@@ -2,6 +2,7 @@ package com.peachtree.wpbapp.Activity;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -98,14 +99,20 @@ public class Event_Info_Fragment extends DialogFragment
 				@Override
 				public void onClick(View v) {
 					if(event != null) {
-						Intent intent = new Intent(Intent.ACTION_INSERT_OR_EDIT);
-						intent.setType("vnd.android.cursor.item/event");
-						intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.getDate());
-						intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, event.getDate());
-						intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
-						intent.putExtra(CalendarContract.Events.TITLE, event.getTitle());
-						intent.putExtra(CalendarContract.Events.DESCRIPTION, event.getDescription());
-						intent.putExtra(CalendarContract.Events.EVENT_LOCATION, event.getAddress());
+						try {
+							Intent intent = new Intent(Intent.ACTION_INSERT_OR_EDIT);
+							intent.setType("vnd.android.cursor.item/event");
+							intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.getDate());
+							intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, event.getDate());
+							intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
+							intent.putExtra(CalendarContract.Events.TITLE, event.getTitle());
+							intent.putExtra(CalendarContract.Events.DESCRIPTION, event.getDescription());
+							intent.putExtra(CalendarContract.Events.EVENT_LOCATION, event.getAddress());
+							startActivity(intent);
+							Toast.makeText(parent, "Event Added To Calendar", Toast.LENGTH_SHORT);
+						}catch (ActivityNotFoundException e){
+							Toast.makeText(parent, "Could not add event.", Toast.LENGTH_SHORT).show();
+						}
 					}
 				}
 			});
