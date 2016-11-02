@@ -6,7 +6,7 @@
  * Time: 10:52 AM
  */
 
-require_once("alerts_functions.php");
+require_once("notification_functions.php");
 session_start();
 
 
@@ -19,14 +19,14 @@ $alertData = array(
 $res = createAlert($alertData);
 if ($res == false) {
     $_SESSION['alert']['message_type'] = "alert-danger";
-    $_SESSION['alert']['message_title'] = "Error writing alert to DB. ";
+    $_SESSION['alert']['message_title'] = "Error writing notification to DB. ";
     $_SESSION['alert']['message'] = "Please check the database logs.";
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit();
 } else {
     $_SESSION['alert']['message_type'] = "alert-success";
-    $_SESSION['alert']['message_title'] = "Alert created";
-    $_SESSION['alert']['message'] = ". Using the alert, send it to relevant users.";
-    header('Location: ../alerts.php');
+    $_SESSION['alert']['message_title'] = "Notification created";
+    $_SESSION['alert']['message'] = ". Notification the alert, send it to relevant users.";
+    header('Location: ../notifications.php');
     exit();
 }

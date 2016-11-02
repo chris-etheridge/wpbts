@@ -5,7 +5,7 @@ require_once("DBConn.php");
 
 session_start();
 
-if(!isset($_GET['alertid']))//verify everything crucial was posted
+if(!isset($_GET['notificationid']))//verify everything crucial was posted
 {
     $_SESSION['alert']['message_type'] = "alert-warning";
     $_SESSION['alert']['message_title'] = "Warning!";
@@ -15,7 +15,7 @@ if(!isset($_GET['alertid']))//verify everything crucial was posted
 }
 
 //setting local variables to filtered post values for sql statements
-$alertid = $mysqli->real_escape_string($_GET['alertid']);
+$alertid = $mysqli->real_escape_string($_GET['notificationid']);
 
 $sql = "DELETE FROM TBL_ALERT WHERE ALERT_ID = $alertid;";
 $mysqli->query($sql);
@@ -26,7 +26,7 @@ if($mysqli->error) //redirect user to edit/create page
     $_SESSION['alert']['message_type'] = "alert-danger";
     $_SESSION['alert']['message_title'] = "Error deleting alert!";
     $_SESSION['alert']['message'] = "Unknown error. If problem persists, contact system administrator!";
-    header('Location: ../alerts.php');
+    header('Location: ../notifications.php');
     exit();
 }
 
@@ -35,5 +35,5 @@ $_SESSION['alert']['message_type'] = "alert-success";
 $_SESSION['alert']['message_title'] = "SUCCESS!";
 $_SESSION['alert']['message'] = "Alert deleted successfully.";
 
-header('Location: ../alerts.php');
+header('Location: ../notifications.php');
 exit();

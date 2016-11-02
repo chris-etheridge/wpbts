@@ -64,7 +64,7 @@
                         <li class="<?php if(isset($_PARENT['events'])){ echo "active"; } ?>"><a href="events.php"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Event Management</a></li>
 			<li class="<?php if(isset($_PARENT['clinics'])){ echo "active"; } ?>"><a href="clinics.php"><svg class="glyph stroked clipboard-with-paper"><use xlink:href="#stroked-clipboard-with-paper"></use></svg> Clinic Management</a></li>
 			<li class="<?php if(isset($_PARENT['users'])){ echo "active"; } ?>"><a href="users.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> User Management</a></li>
-			<li class="<?php if(isset($_PARENT['alerts'])){ echo "active"; } ?>"><a href="alerts.php"><svg class="glyph stroked star"><use xlink:href="#stroked-star"></use></svg> Alert Management</a></li>
+			<li class="<?php if(isset($_PARENT['notifications'])){ echo "active"; } ?>"><a href="notifications.php"><svg class="glyph stroked star"><use xlink:href="#stroked-star"></use></svg> Notification Management</a></li>
 
 			<li role="presentation" class="divider"></li>
                         <li><a href="php/form-handler-logout.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Exit</a></li>

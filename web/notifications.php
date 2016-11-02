@@ -1,10 +1,10 @@
 <?php
-$_TITLE = "WPBTS - Alert Management";
-$_PARENT['alerts'] = time();
+$_TITLE = "WPBTS - Notification Management";
+$_PARENT['notifications'] = time();
 
 require_once("header.php");
 require_once('php/DBConn_Dave.php');
-require_once('php/alerts_functions.php');
+require_once('php/notification_functions.php');
 include_once("users_functions.php");
 session_start();
 
@@ -33,7 +33,7 @@ if ($exitingAlerst == false) {
                         <use xlink:href="#stroked-home"></use>
                     </svg>
                 </a></li>
-            <li class="active">Alert Management</li>
+            <li class="active">Notification Management</li>
         </ol>
     </div><!--/.row-->
     <br/>
@@ -52,15 +52,15 @@ if ($exitingAlerst == false) {
     
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Alert Management</h1>
+            <h1 class="page-header">Notification Management</h1>
         </div>
     </div><!--/.row-->
     
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
-            <h4>All Alerts</h4>
-            <a href="alerts_create.php" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create Alert</a>
-            <a href="alerts_send_custom.php" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Send one off alert</a>
+            <h4>All Notifications</h4>
+            <a href="notification_create.php" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create Notification</a>
+            <a href="notification_send_custom.php" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Send one off Notification</a>
         </div>
     </div>
     <div class="row"> <!-- upcoming events -->
@@ -71,7 +71,7 @@ if ($exitingAlerst == false) {
             <table data-toggle="table" data-search="true" data-pagination="true">
                 <thead>
                 <tr>
-                    <th class="text-center">Alert ID</th>
+                    <th class="text-center">Notification ID</th>
                     <th class="text-center" data-sortable="true">Title</th>
                     <th class="text-center">Content</th>
                     <th class="text-center">Description</th>
@@ -89,9 +89,9 @@ if ($exitingAlerst == false) {
                         <td class="text-center"><?php echo $value['BODY'] ?></td>
                         <td class="text-center"><?php echo $value['DESCRIPTION'] ?></td>
                         <td class="text-center">
-                            <a href="edit-alert.php?alertid=<?php echo $value['ALERT_ID']; ?>" class="btn btn-xs btn-primary">Edit</a>
-                            <a href="" data-id="<?php echo $value['ALERT_ID']; ?>" class="btn btn-xs btn-success" onclick="sendAlert(event)">Send</a>
-                            <a href="" data-id="<?php echo $value['ALERT_ID']; ?>" class="btn btn-xs btn-warning" onclick="removeAlert(event)">Remove</a>
+                            <a href="edit-notification.php?notificationid=<?php echo $value['ALERT_ID']; ?>" class="btn btn-xs btn-primary">Edit</a>
+                            <a href="" data-id="<?php echo $value['ALERT_ID']; ?>" class="btn btn-xs btn-success" onclick="sendNotification(event)">Send</a>
+                            <a href="" data-id="<?php echo $value['ALERT_ID']; ?>" class="btn btn-xs btn-warning" onclick="removeNotification(event)">Remove</a>
                         </td>
                     </tr>
                     <?php
@@ -107,7 +107,7 @@ if ($exitingAlerst == false) {
 
 
 </div>    <!--/.main-->
-<div class="modal fade" id="modal-remove-alert" role="dialog">
+<div class="modal fade" id="modal-remove-notification" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -119,10 +119,10 @@ if ($exitingAlerst == false) {
             <div class="modal-body">
                 <div class="row">
                     <div class="col-xs-3">
-                        <label class="control-label">Alert ID</label>
+                        <label class="control-label">Notification ID</label>
                     </div>
                     <div class="col-xs-9">
-                        <span id="moAlertID"></span>
+                        <span id="moNotificationID"></span>
                     </div>
                 </div>
             </div>
@@ -134,7 +134,7 @@ if ($exitingAlerst == false) {
     </div>
 </div>
 
-<div class="modal fade" id="modal-send-alert" role="dialog">
+<div class="modal fade" id="modal-send-notification" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -146,10 +146,10 @@ if ($exitingAlerst == false) {
             <div class="modal-body">
                 <div class="row">
                     <div class="col-xs-3">
-                        <label class="control-label">Alert ID</label>
+                        <label class="control-label">Notification ID</label>
                     </div>
                     <div class="col-xs-9">
-                        <span id="moAlertID"></span>
+                        <span id="moNotificationID"></span>
                     </div>
                 </div>
             </div>
@@ -165,33 +165,33 @@ if ($exitingAlerst == false) {
 
 <script type="text/javascript">
     
-function removeAlert(ev)
+function removeNotification(ev)
 {
     ev.preventDefault();
     var uid = ev.target.dataset.id;
 
     //get json object
 
-    $('#modal-remove-alert .modal-body #moAlertID').html(uid);
-    $('#modal-remove-alert .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/delete-alert.php?alertid=" + uid + "'>Delete Alert</a>");
+    $('#modal-remove-notification .modal-body #moNotificationID').html(uid);
+    $('#modal-remove-notification .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/delete-notification.php?notificationid=" + uid + "'>Delete Notification</a>");
 
 
-    $('#modal-remove-alert').modal('show', {backdrop: 'static'});
+    $('#modal-remove-notification').modal('show', {backdrop: 'static'});
 
 }
      
-function sendAlert(ev)
+function sendNotification(ev)
 {
     ev.preventDefault();
     var uid = ev.target.dataset.id;
 
     //get json object
 
-    $('#modal-send-alert .modal-body #moAlertID').html(uid);
-    $('#modal-send-alert .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/send-alert.php?alertid=" + uid + "'>Send Alert</a>");
+    $('#modal-send-notification .modal-body #moNotificationID').html(uid);
+    $('#modal-send-notification .modal-footer #confirmationBtns').html("<a class='btn btn-md btn-primary' href='php/send-notification.php?notificationid=" + uid + "'>Send Notification</a>");
 
 
-    $('#modal-send-alert').modal('show', {backdrop: 'static'});
+    $('#modal-send-notification').modal('show', {backdrop: 'static'});
 
 }
 

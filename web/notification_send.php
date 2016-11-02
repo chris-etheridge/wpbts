@@ -5,10 +5,12 @@
 //Or delete the record from the database.
 
 session_start();
-$_PARENT['alerts'] = time();
-$_TITLE = "WPBTS - Alert Management";
+$_PARENT['notifications'] = time();
+$_TITLE = "WPBTS - Send Notification";
 require_once("header.php");
 require_once('php/DBConn_Dave.php');
+include_once("users_functions.php");
+include_once("address_functions.php");
 
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
@@ -19,13 +21,14 @@ require_once('php/DBConn_Dave.php');
                         <use xlink:href="#stroked-home"></use>
                     </svg>
                 </a></li>
-            <li class="active"><a href="alerts.php">Alert Mangement</a></li>
-            <li class="active">Create Alert</li>
+            <li class="active"><a href="notifications.php">Notification Management</a></li>
+            <li class="active">Send Notification</li>
         </ol>
     </div><!--/.row-->
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Create new alert:</h1>
+            <h1 class="page-header">
+                Send Notification:</h1>
         </div>
     </div><!--/.row-->
 
@@ -48,33 +51,20 @@ require_once('php/DBConn_Dave.php');
         $_SESSION['alert'] = null;
     }
     ?>
+
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
-            <h3>Alert Details:</h3>
-            <form action="php/form-handler-alert-create.php" method="POST">
-                <div class="col-md-6">
-                    <label>Title:</label>
-                    <input required type="text"
-                           class="form-control" name="TITLE" value="<?php echo $_SESSION['ALERT']['TITLE']; ?>"
-                           style="margin-bottom:2%">
-                </div>
-
+            <h3>To All:</h3>
+            <div class="row"> <!-- upcoming events -->
                 <div class="col-md-12">
-                    <label>Body</label>
-                    <textarea required="" class="form-control" rows="6"
-                              name="BODY"><?php echo $_SESSION['ALERT']['BODY']; ?></textarea>
+                    <a href="php/form-event-handler-notification-allusers.php" class="btn btn-default btn-md">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span> All Users
+                    </a>
+                    <a href="php/form-handler-notification-send.php" class="btn btn-default btn-md">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span> All Events
+                    </a>
                 </div>
-
-                <div class="col-md-12">
-                    <label>Description</label>
-                    <textarea required="" class="form-control" rows="6" name="DESCRIPTION"
-                              style="margin-bottom: 7%"><?php echo $_SESSION['ALERT']['DESCRIPTION']; ?></textarea>
-                </div>
-
-                <div class="col-md-12" align="right" style="margin-bottom: 5%">
-                    <button type="submit" class="btn btn-info">Save Alert</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
@@ -85,6 +75,23 @@ require_once('php/DBConn_Dave.php');
 
 </div>    <!--/.main-->
 
+
+<script>
+
+    $("#eventdate").datepicker({dateFormat: "dd-mm-yy"}); //sets date picker format
+
+    function validateNumberIn(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+        var regex = /[0-9]/;
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            if (theEvent.preventDefault) theEvent.preventDefault();
+        }
+    }
+
+</script>
 
 <?php require_once('footer.php'); ?>
 

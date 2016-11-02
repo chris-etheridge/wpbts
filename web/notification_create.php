@@ -5,8 +5,8 @@
 //Or delete the record from the database.
 
 session_start();
-$_PARENT['alerts'] = time();
-$_TITLE = "WPBTS - User Management";
+$_PARENT['notifications'] = time();
+$_TITLE = "WPBTS - Notification Management";
 require_once("header.php");
 require_once('php/DBConn_Dave.php');
 
@@ -19,13 +19,13 @@ require_once('php/DBConn_Dave.php');
                         <use xlink:href="#stroked-home"></use>
                     </svg>
                 </a></li>
-            <li class="active"><a href="alerts.php">Alert Mangement</a></li>
-            <li class="active">Create Alert</li>
+            <li class="active"><a href="notifications.php">Notification Management</a></li>
+            <li class="active">Create Notification</li>
         </ol>
     </div><!--/.row-->
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Send one off alert:</h1>
+            <h1 class="page-header">Create new notification:</h1>
         </div>
     </div><!--/.row-->
 
@@ -50,25 +50,29 @@ require_once('php/DBConn_Dave.php');
     ?>
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
-            <h3>Alert Details:</h3>
-            <form action="php/send-alert.php" method="POST">
+            <h3>Notification Details:</h3>
+            <form action="php/form-handler-notification-create.php" method="POST">
                 <div class="col-md-6">
                     <label>Title:</label>
-                    <input required type="text" class="form-control" name="custom_alert[TITLE]" value="<?php echo $_SESSION['ALERT']['TITLE']; ?>" style="margin-bottom:2%">
+                    <input required type="text"
+                           class="form-control" name="TITLE" value="<?php echo $_SESSION['ALERT']['TITLE']; ?>"
+                           style="margin-bottom:2%">
                 </div>
 
                 <div class="col-md-12">
                     <label>Body</label>
-                    <textarea required="" class="form-control" rows="6" name="custom_alert[BODY]"><?php echo $_SESSION['ALERT']['BODY']; ?></textarea>
+                    <textarea required="" class="form-control" rows="6"
+                              name="BODY"><?php echo $_SESSION['ALERT']['BODY']; ?></textarea>
                 </div>
 
                 <div class="col-md-12">
                     <label>Description</label>
-                    <textarea required="" class="form-control" rows="6" name="custom_alert[DESCRIPTION]" style="margin-bottom: 7%"><?php echo $_SESSION['ALERT']['DESCRIPTION']; ?></textarea>
+                    <textarea required="" class="form-control" rows="6" name="DESCRIPTION"
+                              style="margin-bottom: 7%"><?php echo $_SESSION['ALERT']['DESCRIPTION']; ?></textarea>
                 </div>
 
                 <div class="col-md-12" align="right" style="margin-bottom: 5%">
-                    <button type="submit" class="btn btn-info">Send Alert to Everyone</button>
+                    <button type="submit" class="btn btn-info">Save Notification</button>
                 </div>
             </form>
         </div>

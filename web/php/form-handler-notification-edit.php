@@ -11,10 +11,10 @@ require_once("DBConn.php");
 session_start();
 
 //add variables to session for to post them back to referrer if error occured
-$_SESSION['alert']['ALERT_ID'] = $_POST['ALERT_ID'];
-$_SESSION['alert']['TITLE'] = $_POST['TITLE'];
-$_SESSION['alert']['DESCRIPTION'] = $_POST['DESCRIPTION'];
-$_SESSION['alert']['BODY'] = $_POST['BODY'];
+$_SESSION['notification']['ALERT_ID'] = $_POST['ALERT_ID'];
+$_SESSION['notification']['TITLE'] = $_POST['TITLE'];
+$_SESSION['notification']['DESCRIPTION'] = $_POST['DESCRIPTION'];
+$_SESSION['notification']['BODY'] = $_POST['BODY'];
 
 if(       !isset($_POST['ALERT_ID']) || !isset($_POST['TITLE']) || !isset($_POST['DESCRIPTION'])
         || !isset($_POST['BODY']))
@@ -27,7 +27,7 @@ if(       !isset($_POST['ALERT_ID']) || !isset($_POST['TITLE']) || !isset($_POST
 }
 
 //setting local variables to filtered post values for sql statements
-$alertid = $mysqli->real_escape_string($_POST['ALERT_ID']);
+$notificationid = $mysqli->real_escape_string($_POST['ALERT_ID']);
 $description = $mysqli->real_escape_string($_POST['DESCRIPTION']);
 $body = $mysqli->real_escape_string($_POST['BODY']);
 $title = $mysqli->real_escape_string($_POST['TITLE']);
@@ -38,7 +38,7 @@ $title = $mysqli->real_escape_string($_POST['TITLE']);
 $sql = "UPDATE TBL_ALERT SET DESCRIPTION = '$description', "
         . "BODY = '$body', "
         . "TITLE = '$title'"
-        . " WHERE ALERT_ID = $alertid;";
+        . " WHERE ALERT_ID = $notificationid;";
 
 $mysqli->query($sql);
 
@@ -46,7 +46,7 @@ if($mysqli->error) //redirect user to edit/create page
 {
     $_SESSION['alert']['message_type'] = "alert-danger";
     $_SESSION['alert']['message_title'] = "Error updating alert!";
-    $_SESSION['alert']['message'] = "Please review the clinic details. If problem persists, contact system administrator!" ;
+    $_SESSION['alert']['message'] = "Please review the notification details. If problem persists, contact system administrator!" ;
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit();
 }
@@ -55,7 +55,7 @@ if($mysqli->error) //redirect user to edit/create page
 //redirect back to previous page with success message
 $_SESSION['alert']['message_type'] = "alert-success";
 $_SESSION['alert']['message_title'] = "SUCCESS!";
-$_SESSION['alert']['message'] = "Alert updated successfully.";
+$_SESSION['alert']['message'] = "Notification updated successfully.";
 $_SESSION['event'] = null; //clear sticky form data
-header('Location: ../alerts.php');
+header('Location: ../notifications.php');
 exit();
