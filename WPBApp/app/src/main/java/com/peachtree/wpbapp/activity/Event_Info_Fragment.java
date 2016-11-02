@@ -2,6 +2,7 @@ package com.peachtree.wpbapp.Activity;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +42,8 @@ public class Event_Info_Fragment extends DialogFragment
 	private Event event;
 	private float mCurrenty, mCurrentx;
 
+	Event_Info_Fragment newFragment = null;
+
 	private Context CURRENT_CONTEXT;
 
 	public static Event_Info_Fragment init(int id){
@@ -76,8 +79,8 @@ public class Event_Info_Fragment extends DialogFragment
 
 		mCurrenty = view.getY();
 		mCurrenty = view.getX();
-		final float originalY = mCurrenty;
-		final float originalX = mCurrentx;
+		final float originalY = 0;
+		final float originalX = 0;
 
 
 		if(event != null) {
@@ -153,18 +156,61 @@ public class Event_Info_Fragment extends DialogFragment
 		view.findViewById(R.id.dragable_layout).setOnTouchListener(new View.OnTouchListener()
 		{
 
-			private int offset;
+			private float offset;
 			private int threshold = (int)(getDialog().getWindow().getWindowManager().getDefaultDisplay().getWidth() /2);
 			@Override
 			public boolean onTouch(View v, MotionEvent event)
 			{
 				int action = event.getAction();
+				int view_width = getDialog().getWindow().getAttributes().width;
 				if(action == MotionEvent.ACTION_DOWN){
-
+					offset= mCurrentx - event.getRawX();
 				}else if (action == MotionEvent.ACTION_MOVE){
+					mCurrentx = (int)(event.getRawX() + offset);
+					int newID;
+					if(mCurrentx > originalX)
+					{
+						if(array_index + 1 >= events.size()){
+							newID = events.get(0).getId();
+						}else{
+							newID = events.get(array_index + 1).getId();
+						}
+					}else if (mCurrentx < originalX){
+						if(array_index + 1 <= 0){
+							newID = events.get(events.size() - 1).getId();
+						}else{
+							newID = events.get(array_index - 1).getId();
+						}
+					}else{
+						newID = -1;
+					}
 
+					if(newID == -1 && newFragment != null){
+						newFragment.dismiss();
+					}else if(newFragment == null)
+					{
+						newFragment = Event_Info_Fragment.init(newID);
+						newFragment.loadEvents(events);
+						FragmentTransaction transaction = parent.getFragmentManager().beginTransaction();
+						newFragment.show(transaction, "slider");
+					}else{
+						newFragment.getView().setX(mCurrentx + view_width);
+					}
+					view.setX(mCurrentx);
 				}else if (action == MotionEvent.ACTION_UP){
+					if(mCurrentx > originalX + threshold || mCurrentx < originalX - threshold){
+						newFragment.getView().setX(originalX);
+						dismiss();
+					}else{
+						if(newFragment != null)
+						{
+							newFragment.dismiss();
+							newFragment = null;
+						}
 
+						mCurrentx = originalX;
+						view.setX(mCurrentx);
+					}
 				}
 
 				return true;
