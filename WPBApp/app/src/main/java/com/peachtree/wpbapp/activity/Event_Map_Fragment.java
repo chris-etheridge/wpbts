@@ -102,14 +102,15 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 	}
 
 	private void loadEventsToMap(){
-		for (int i = 0; i < events.size(); i++)
-		{
-			Event e = events.get(i);
-			LatLng co_ord = new LatLng(e.getLat(),e.getLng());
-			MarkerOptions mOpt = new MarkerOptions().position(co_ord).title(e.getTitle()).draggable(false);
-			Marker marker = mMap.addMarker(mOpt);
+		if(events != null) {
+			for (int i = 0; i < events.size(); i++) {
+				Event e = events.get(i);
+				LatLng co_ord = new LatLng(e.getLat(), e.getLng());
+				MarkerOptions mOpt = new MarkerOptions().position(co_ord).title(e.getTitle()).draggable(false);
+				Marker marker = mMap.addMarker(mOpt);
 
-			marker.setTag(i);
+				marker.setTag(i);
+			}
 		}
 	}
 
