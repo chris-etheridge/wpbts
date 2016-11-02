@@ -49,23 +49,15 @@ public class Events  {
 
         p.add("eventid", id + "");
 
-        Networking.Post(SINGLE_EVENT_API_URL, p, handler);
+        //Networking.Post(SINGLE_EVENT_API_URL, p, handler);
     }
 
     public void GetAllEvents(AsyncHttpResponseHandler handler) {
         Networking.Get(MULTIPLE_EVENTS_API_URL, null, handler);
     }
 
-    public ArrayList<Event> GetEventsForDate(Date date) {
-        return new ArrayList<Event>();
-    }
-
     public void GetEventsForDate(Date date, AsyncHttpResponseHandler handler) {
 
-    }
-
-    public ArrayList<Event> GetEventsForLocation(Location loc) {
-        return new ArrayList<Event>();
     }
 
     public void GetEventsForLocation(Location loc, AsyncHttpResponseHandler handler) {

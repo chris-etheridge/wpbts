@@ -18,12 +18,17 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.message.BasicHeader;
+import cz.msebera.android.httpclient.protocol.HTTP;
 
 /**
  * Core networking implementation.
@@ -33,7 +38,7 @@ public class Networking {
 
     private String INTERNAL_HOST_URL;
 
-    private Context CURRENT_CONTEXT;
+    private static Context CURRENT_CONTEXT;
 
     public Networking(Context ctx) {
         CURRENT_CONTEXT = ctx;
@@ -54,14 +59,23 @@ public class Networking {
         HTTP_CLIENT.get(url, params, response_handler);
     }
 
-    public static void Post(String url, RequestParams params, AsyncHttpResponseHandler response_handler) {
+    public static void Post(String url, JSONObject params, AsyncHttpResponseHandler response_handler) {
         Log.d("API", "Performing _POST_ to URL => " + url);
 
-        HTTP_CLIENT.post(url, params, response_handler);
+        StringEntity e = null;
+        try {
+            e = new StringEntity(params.toString());
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
+        }
+
+        e.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+        HTTP_CLIENT.post(null, url, e, "application/json", response_handler);
     }
 
     // checks if a response okay
-    public static boolean ResponseIsOkay_q(JSONObject response) {
+    public static boolean ResponseIsOkay(JSONObject response) {
         String d = "";
         boolean passed = false;
 
@@ -73,11 +87,7 @@ public class Networking {
             return passed;
         }
 
-        if(!d.equals("error")) {
-            passed = true;
-        } else {
-            passed = false;
-        }
+        passed = !d.equals("error");
 
         return passed;
     }

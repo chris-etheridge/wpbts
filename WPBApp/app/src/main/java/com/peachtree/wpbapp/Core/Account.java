@@ -1,6 +1,7 @@
 package com.peachtree.wpbapp.Core;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -20,6 +21,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
  * Functions to manage the user account.
@@ -36,59 +38,29 @@ public class Account {
     private String USER_LOGIN_API_URL;
     private String USER_REGISTER_API_URL;
 
-    public Account(Context ctx, String email, String password) {
+    public Account(Context ctx, String email, String password, JsonHttpResponseHandler handler) {
         CURRENT_CONTEXT = ctx;
         API_HELPER = new Networking(CURRENT_CONTEXT);
 
         USER_LOGIN_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.USER_LOGIN);
         USER_REGISTER_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.USER_REGISTER);
 
-        LogIn(email, password);
+        logIn(email, password, handler);
     }
 
-    public User LogIn(String email, String password) {
-        if(logged_in_q()) {
-            return CURRENT_USER;
-        } else {
-            RequestParams params = new RequestParams();
+    public void logIn(String email, String password, JsonHttpResponseHandler handler) {
+        if(!logged_in_q()) {
+            JSONObject params = new JSONObject();
 
-            params.add("email", email);
-            params.add("pwd", password);
+            try {
+                params.put("email", email);
+                params.put("pwd", password);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-            API_HELPER.Post(USER_LOGIN_API_URL, params, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject o) {
-                    try {
-                        JSONObject u = o.getJSONObject("user");
+            Networking.Post(USER_LOGIN_API_URL, params, handler);
 
-                        User user = User.UserFromJsonObject(u);
-
-                        CURRENT_USER = user;
-                    } catch (JSONException e) {
-
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
-                    // handle the error here
-                    int code = -1;
-
-                    try {
-                        code = Integer.parseInt(response.getString("code"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    // parse the error
-                    String message = Networking.NetworkingErrors.GetErrorMessageForCode(code);
-
-                }
-            });
-
-            return CURRENT_USER;
         }
     }
 
@@ -103,11 +75,7 @@ public class Account {
 
     // check if a user is logged in
     public boolean IsLoggedIn(String email) {
-        if(CURRENT_USER != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return CURRENT_USER != null;
     }
 
     // update the user account profile

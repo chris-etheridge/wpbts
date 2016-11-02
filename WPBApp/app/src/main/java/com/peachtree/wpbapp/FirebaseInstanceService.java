@@ -47,12 +47,16 @@ public class FirebaseInstanceService extends FirebaseInstanceIdService {
     {
         //send newToken and logged in user id to server
 
-        RequestParams params = new RequestParams();
+        JSONObject params = new JSONObject();
 
-        params.add("userid", "1"); //TODO: get current user ID
-        params.add("devicetoken", newToken);
+        try {
+            params.put("userid", "1"); //TODO: get current user ID
+            params.put("devicetoken", newToken);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        API_HELPER.Post(USER_UPDATE_DEVICE_TOKEN_API, params, new JsonHttpResponseHandler() {
+        Networking.Post(USER_UPDATE_DEVICE_TOKEN_API, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject o) {
                 try {

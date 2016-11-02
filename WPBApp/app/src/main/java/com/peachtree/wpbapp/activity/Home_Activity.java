@@ -112,6 +112,7 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 			@Override
 			public void onSuccess(int statusCode, Header[] headers, JSONArray a) {
 				try {
+					Log.d("API_HOME", a.toString());
 					setEvents(Event.EventsFromJsonArray(a));
 
 					toggle.syncState();

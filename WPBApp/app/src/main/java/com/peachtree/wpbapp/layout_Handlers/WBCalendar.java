@@ -99,7 +99,7 @@ public class WBCalendar extends LinearLayout
 
 		while(cells.size() < DAYS_COUNT){
 			cells.add(calendar.getTime());
-			calendar.add(calendar.DAY_OF_MONTH, 1);
+			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
 
 		grid.setAdapter(new Calendar_Adapter(getContext(), cells, events));

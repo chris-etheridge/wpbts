@@ -96,13 +96,9 @@ public class Clinic_Info_Fragment extends DialogFragment implements OnMapReadyCa
 		if(clinic != null){
 
 			TextView title = (TextView)view.findViewById(R.id.TXT_title);
-			TextView address = (TextView)view.findViewById(R.id.TXT_address);
-			TextView hours = ((TextView)view.findViewById(R.id.TXT_hours));
 			Button get_directions = ((Button)view.findViewById(R.id.BTN_directions));
 
 			title.setText(clinic.getName());
-			address.setText(clinic.getAddress());
-			hours.setText(clinic.getDescription());
 			get_directions.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
