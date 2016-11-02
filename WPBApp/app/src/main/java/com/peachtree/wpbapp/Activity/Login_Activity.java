@@ -38,7 +38,7 @@ public class Login_Activity extends AppCompatActivity
 		user = (TextView)findViewById(R.id.TXT_username);
 		password = (TextView)findViewById(R.id.TXT_password);
 
-		CURRENT_CONTEXT = this.getApplicationContext();
+		CURRENT_CONTEXT = this;//.getApplicationContext();
 	}
 
 	public void onLoginClick(View view){
@@ -91,7 +91,7 @@ public class Login_Activity extends AppCompatActivity
 							try {
 								String msg = response.getString("message");
 
-								Toast.makeText(CURRENT_CONTEXT, msg, Toast.LENGTH_SHORT);
+								Toast.makeText(CURRENT_CONTEXT, msg, Toast.LENGTH_SHORT).show();
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}

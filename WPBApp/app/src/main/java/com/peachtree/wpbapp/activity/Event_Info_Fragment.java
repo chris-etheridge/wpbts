@@ -2,6 +2,7 @@ package com.peachtree.wpbapp.Activity;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -150,28 +151,41 @@ public class Event_Info_Fragment extends DialogFragment
 			}
 		});
 
-		view.findViewById(R.id.dragable_layout).setOnTouchListener(new View.OnTouchListener()
+		view.findViewById(R.id.arrow_right).setOnClickListener(new View.OnClickListener()
 		{
-
-			private int offset;
-			private int threshold = (int)(getDialog().getWindow().getWindowManager().getDefaultDisplay().getWidth() /2);
 			@Override
-			public boolean onTouch(View v, MotionEvent event)
+			public void onClick(View v)
 			{
-				int action = event.getAction();
-				if(action == MotionEvent.ACTION_DOWN){
+				switch_event(1);
+			}
+		});
 
-				}else if (action == MotionEvent.ACTION_MOVE){
-
-				}else if (action == MotionEvent.ACTION_UP){
-
-				}
-
-				return true;
+		view.findViewById(R.id.arrow_left).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				switch_event(-1);
 			}
 		});
 
 		return view;
+	}
+
+	protected void switch_event(int direction){
+
+		int new_index = array_index + direction;
+		if (array_index > 0){
+			new_index = events.size() - 1;
+		}else if(array_index == events.size()){
+			new_index = 0;
+		}
+
+		Event_Info_Fragment newFragment = Event_Info_Fragment.init(events.get(new_index).getId());
+		newFragment.loadEvents(events);
+		FragmentTransaction transaction = parent.getFragmentManager().beginTransaction();
+		newFragment.show(transaction, "dialog");
+		dismiss();
 	}
 
 	@Override
