@@ -1,7 +1,8 @@
 <?php
-
+ini_set('display_errors', 1);
 require_once("DBConn.php");
 //require_once("../api/events/functions.php");
+require_once ('notification_functions.php');
 
 session_start();
 
@@ -35,10 +36,21 @@ if($mysqli->error) //redirect user to edit/create page
     exit();
 }
 
+//send notification to user based on event status
+if($action === "canceling") //inform users event cancelled
+{
+    sendNotificationSpecificEvent("WPBTS", "An event you RSVP'd to has been cancelled.", $eventid, $mysqli);
+} 
+else //inform users event is active again
+{
+    sendNotificationSpecificEvent("WPBTS", "An event you RSVP'd to is now active again!.", $eventid, $mysqli);
+}
+
 //redirect back to previous page with success message
 $_SESSION['alert']['message_type'] = "alert-success";
 $_SESSION['alert']['message_title'] = "SUCCESS!";
 $_SESSION['alert']['message'] = "Event $actionPastTense successfully.";
 
 header('Location: ../events.php');
+
 exit();

@@ -42,10 +42,10 @@ if(isset($_GET['notificationid'])) //preset alert
 }
 else //custom alert
 {
-    if(isset($_POST['custom_alert'])) //parse custom alert components
+    if(isset($_POST['custom_notification'])) //parse custom alert components
     {
-        $notificationbody = $_POST['custom_alert']['BODY'];
-        $notificationtitle = $_POST['custom_alert']['TITLE'];
+        $notificationbody = $_POST['custom_notification']['BODY'];
+        $notificationtitle = $_POST['custom_notification']['TITLE'];
     }
     else
     {
@@ -68,13 +68,8 @@ else //custom alert
         )
 );*/
 
-echo $notificationtitle;
-echo "\n";
-echo $notificationbody;
-echo "\n";
 
 $result = sendNotificationGlobal($notificationtitle, $notificationbody);
-
 
 
 //return to alerts panel with message
