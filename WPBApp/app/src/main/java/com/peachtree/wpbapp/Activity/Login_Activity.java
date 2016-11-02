@@ -1,5 +1,6 @@
 package com.peachtree.wpbapp.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -24,8 +25,6 @@ import cz.msebera.android.httpclient.Header;
 
 public class Login_Activity extends AppCompatActivity
 {
-
-	private Account session_account;
 	private TextView user, password;
 
 	private Context CURRENT_CONTEXT;
@@ -36,7 +35,6 @@ public class Login_Activity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_activity);
 
-		session_account = null;
 		user = (TextView)findViewById(R.id.TXT_username);
 		password = (TextView)findViewById(R.id.TXT_password);
 
@@ -49,16 +47,24 @@ public class Login_Activity extends AppCompatActivity
 		String u_name = user.getText().toString();
 		String u_pass = password.getText().toString();
 
+		final ProgressDialog progress = new ProgressDialog(this);
+
 		// validate both username and password
 		if(validateString(u_name)) {
 			if(validateString(u_pass)) {
 				// create a new account with the username and pass
 				Account acc = new Account(CURRENT_CONTEXT, u_name, u_pass, new JsonHttpResponseHandler() {
 					@Override
+					public void onStart() {
+						progress.setTitle("Please wait");
+						progress.setMessage("We are logging you in!");
+
+						progress.show();
+					}
+
+					@Override
 					public void onSuccess(int statusCode, Header[] headers, JSONObject o) {
 						boolean error = o.has("error");
-
-						Log.d("API", o.toString());
 
 						// make sure our account is not null
 						if(error != true) {
@@ -78,6 +84,8 @@ public class Login_Activity extends AppCompatActivity
 						// handle the error here
 						int code = -1;
 
+						progress.hide();
+
 						try {
 							code = Integer.parseInt(response.getString("code"));
 						} catch (JSONException e) {
@@ -90,8 +98,8 @@ public class Login_Activity extends AppCompatActivity
 					}
 
 					@Override
-					public void onFailure(int code, Header[] headers, String m, Throwable t) {
-						Log.d("API", "fail" + m);
+					public void onFinish() {
+						progress.hide();
 					}
 				});
 			} else {

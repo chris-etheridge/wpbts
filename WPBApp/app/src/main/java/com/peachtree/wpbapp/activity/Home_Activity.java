@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,22 +18,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.peachtree.wpbapp.Activity.About_Fragment;
-import com.peachtree.wpbapp.Activity.Event_Calendar_Fragment;
-import com.peachtree.wpbapp.Activity.Event_Map_Fragment;
-import com.peachtree.wpbapp.Activity.List_Fragment;
 import com.peachtree.wpbapp.Core.Clinics;
 import com.peachtree.wpbapp.Core.Events;
-import com.peachtree.wpbapp.Core.Networking;
 import com.peachtree.wpbapp.Entities.Clinic;
 import com.peachtree.wpbapp.Entities.Event;
 import com.peachtree.wpbapp.R;
-import com.peachtree.wpbapp.layout_Handlers.List_Adapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,11 +37,6 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-import static com.peachtree.wpbapp.Entities.Event.EventsFromJsonArray;
-
-/**
- * Created by Tyron on 10/18/2016.
- */
 public class Home_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 	private int stackNum = 0;
 	private FragmentManager fragmentManager;
@@ -106,13 +95,24 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 			switchFragment(R.id.nav_event_list);
 		}
 
+		final ProgressDialog progress = new ProgressDialog(this);
+
+		progress.setTitle("Please wait");
+		progress.setMessage("We are loading the events and clinics data.");
+
 		// before we want sync the state, we want to do a few network requests
 		// get all events
 		EVENTS_HELPER.GetAllEvents(new JsonHttpResponseHandler() {
 			@Override
+			public void onStart() {
+				progress.show();
+			}
+
+			@Override
 			public void onSuccess(int statusCode, Header[] headers, JSONArray a) {
 				try {
 					Log.d("API_HOME", a.toString());
+
 					setEvents(Event.EventsFromJsonArray(a));
 
 					toggle.syncState();
@@ -144,23 +144,34 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 			@Override
 			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
 				// show to the user
-				Toast.makeText(ctx, "There was an error connecting to the server, please try again in a few moments.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(ctx, "There was an error connecting to the server, please try again in a few moments.",
+						Toast.LENGTH_SHORT).show();
+			}
+
+			// once the request is done, lets do some cleanup
+			@Override
+			public void onFinish() {
+				progress.hide();
 			}
 		});
 
-		// get all clinics
+		// get all clinics async task
 		CLINICS_HELPER.GetAllClinics(new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers, JSONArray a) {
 				try {
+					// try and set the clinics to the json response
 					setClinics(Clinic.ClinicsFromJsonArray(a));
-				} catch (JSONException e) {
-
-				} catch (ParseException e) {
-					e.printStackTrace();
+				}
+				// any exception here a user cannot really fix
+				catch (Exception e) {
+					Toast.makeText(getApplicationContext(),
+							"Oops! It looks like there was a problem with getting the clinics. Please contact one of the developers!",
+							Toast.LENGTH_SHORT);
 				}
 			}
 
+			// even though it "Succeeded" the response may have an error
 			@Override
 			public void onSuccess(int statusCode, Header[] headers, JSONObject o) {
 				try {
@@ -177,6 +188,7 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 				}
 			}
 
+			// total failure. i.e no connection
 			@Override
 			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
 				// show to the user
