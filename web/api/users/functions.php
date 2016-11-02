@@ -31,7 +31,7 @@ function updateUser($addressID, $lastEmail, $userData)
       PWD = ?
       WHERE EMAIL = '$lastEmail'";
 
-    $userData['PWD'] = sha1(sha1($userData['PWD']));
+    $userData['PWD'] = sha1($userData['PWD']);
 
     $stmt = $dbConn->prepare($sql);
     $stmt->bindParam(1, $userData['FIRST_NAME']);
