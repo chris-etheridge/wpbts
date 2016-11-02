@@ -243,6 +243,9 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 				transaction.add(R.id.content,fragment,"embed");
 				transaction.commit();
 				break;
+			case R.id.nav_logout:
+				finish();
+				break;
 		}
 	}
 }

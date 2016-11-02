@@ -71,7 +71,8 @@
             android:textColor="@color/colorPrimary"
             android:layout_weight="1"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp"/>
+            android:paddingBottom="5dp"
+            android:inputType="textPassword"/>
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -102,7 +103,8 @@
             android:textColor="@color/colorPrimary"
             android:layout_weight="1"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp"/>
+            android:paddingBottom="5dp"
+            android:inputType="textEmailAddress"/>
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -166,7 +168,8 @@
             android:layout_weight="1"
             android:phoneNumber="true"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp"/>
+            android:paddingBottom="5dp"
+            android:inputType="phone"/>
 
         <ImageButton
             android:layout_width="wrap_content"
