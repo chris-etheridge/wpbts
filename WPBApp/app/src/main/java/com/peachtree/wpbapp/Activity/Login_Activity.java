@@ -86,15 +86,22 @@ public class Login_Activity extends AppCompatActivity
 
 						progress.hide();
 
-						try {
-							code = Integer.parseInt(response.getString("code"));
-						} catch (JSONException e) {
-							e.printStackTrace();
+						// make sure response is not null, meaing we got something
+						if(response != null) {
+							try {
+								String msg = response.getString("message");
+
+								Toast.makeText(CURRENT_CONTEXT, msg, Toast.LENGTH_SHORT);
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+
 						}
-
-						// parse the error
-						String message = Networking.NetworkingErrors.GetErrorMessageForCode(code);
-
+						// else, we could not connect at all
+						else {
+							// show a generic networking error
+							Networking.NetworkingErrors.GenericNetworkingErrorToast(CURRENT_CONTEXT, Toast.LENGTH_SHORT);
+						}
 					}
 
 					@Override
