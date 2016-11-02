@@ -42,7 +42,6 @@ if (isset($_SESSION['USER'])) {
             <h1 class="page-header">User Management</h1>
         </div>
     </div><!--/.row-->
-    
     <div class="row"> <!-- upcoming events -->
         <div class="col-md-12">
             <h4>All Users</h4>
@@ -77,7 +76,7 @@ if (isset($_SESSION['USER'])) {
             <table data-toggle="table" data-search="true" data-pagination="true">
                 <thead>
                 <tr>
-                    <th class="text-center">User ID</th>
+                    <th class="text-center">National ID or Passport</th>
                     <th class="text-center" data-sortable="true">Name</th>
                     <th class="text-center" data-sortable="true">Surname</th>
                     <th class="text-center">Email</th>
@@ -93,7 +92,7 @@ if (isset($_SESSION['USER'])) {
                     foreach ($userData[1] as $value) {
                         ?>
                         <tr>
-                            <td class="text-center"><?php echo $value['USER_ID'] ?></td>
+                            <td class="text-center"><?php if(trim($value['NATIONAL_ID']) !== ''){ echo $value['NATIONAL_ID']; } else { echo $value['PASSPORT_NUM']; } ?></td>
                             <td class="text-center"><?php echo $value['FIRST_NAME'] ?></td>
                             <td class="text-center"><?php echo $value['LAST_NAME'] ?></td>
                             <td class="text-center"><?php echo $value['EMAIL'] ?></td>
@@ -156,6 +155,164 @@ if (isset($_SESSION['USER'])) {
     </div>
 </div>
 
+<div class="modal fade" id="modal-view-user" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Full Name</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserName"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Title</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserTitle"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">National ID</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserNationalID"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Passport Number</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserPassportNum"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Email</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserEmail"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Phone</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserPhone"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Blood Type</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserBlood"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Date of Birth</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserDOB"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Gender</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserGender"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Language</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserLanguage"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Street No.</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserStreetNo"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Office</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserOffice"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Building Number</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserBuildingNo"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Street</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserStreet"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Area</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserArea"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">City</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserCity"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Area Code</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moUserAreaCode"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php require_once('footer.php'); ?>
 
 <script type="text/javascript">
@@ -189,6 +346,52 @@ if (isset($_SESSION['USER'])) {
         $('#modal-remove-user').modal('show', {backdrop: 'static'});
 
      }
+     
+     //view event modal
+    function viewUser(ev)
+    {
+        ev.preventDefault();
+        window.console&&console.log('button clicked');
+        var uid = ev.target.dataset.id;
+
+        //get json object
+
+        var objUser;
+        $.each(jsonUsers, function (i, item)
+        {
+            if (typeof item == 'object')
+            {
+                if(item.USER_ID === uid.toString())
+                {
+                    objUser = item;
+                }
+            }
+        });
+
+        $('#modal-view-user .modal-header .modal-title').html("Viewing: " + objUser.clinic_id);
+
+        $('#modal-view-user .modal-body #moUserName').html(objUser.FIRST_NAME + " " + objUser.LAST_NAME);
+        $('#modal-view-user .modal-body #moUserTitle').html(objUser.TITLE);
+        $('#modal-view-user .modal-body #moUserNationalID').html(objUser.NATIONAL_ID);
+        $('#modal-view-user .modal-body #moUserPassportNum').html(objUser.PASSPORT_NUM);
+        $('#modal-view-user .modal-body #moUserEmail').html(objUser.EMAIL);
+        $('#modal-view-user .modal-body #moUserPhone').html(objUser.PHONE);
+        $('#modal-view-user .modal-body #moUserBlood').html(objUser.BLOOD_TYPE);
+        $('#modal-view-user .modal-body #moUserDOB').html(objUser.DATE_OF_BIRTH);
+        $('#modal-view-user .modal-body #moUserGender').html(objUser.GENDER);
+        $('#modal-view-user .modal-body #moUserLanguage').html(objUser.LANGUAGE_PREF);
+        /*$('#modal-view-clinic .modal-body #moUserStreetNo').html(objUser.street_no);
+        $('#modal-view-clinic .modal-body #moUserOffice').html(objUser.office);
+        $('#modal-view-clinic .modal-body #moUserBuildingNo').html(objUser.building_number);
+        $('#modal-view-clinic .modal-body #moUserStreet').html(objUser.street);
+        $('#modal-view-clinic .modal-body #moUserArea').html(objUser.area);
+        $('#modal-view-clinic .modal-body #moUserCity').html(objUser.city);
+        $('#modal-view-clinic .modal-body #moUserAreaCode').html(objUser.area_code);*/
+
+        $('#modal-view-user').modal('show', {backdrop: 'static'});
+
+     }
+     
 </script>
 
 </body>

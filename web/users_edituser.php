@@ -118,7 +118,7 @@ $_SESSION['USER']['LAST_EMAIL'] = $userData[1][0]['EMAIL'];
                            style="margin-bottom:2%">
 
                     <label>National ID:</label>
-                    <input required type="text" value="<?php echo $_SESSION['USER']['NATIONAL_ID'] ?>"
+                    <input type="text" value="<?php echo $_SESSION['USER']['NATIONAL_ID'] ?>"
                            class="form-control" name="NATIONAL_ID"
                            style="margin-bottom:2%">
 
@@ -143,71 +143,14 @@ $_SESSION['USER']['LAST_EMAIL'] = $userData[1][0]['EMAIL'];
                             class="form-control" name="BLOOD_TYPE"
                             style="margin-bottom:2%">
                         <option value="-1" disabled>Select one--</option>
-                        <option value="O-"
-                            <?php
-                            if ($_SESSION['USER']['BLOOD_TYPE'] == "O-") {
-                                echo "selected";
-                            }
-                            ?>
-                        >
-                            O-
-                        </option>
-                        <option value="O+"
-                            <?php
-                            if ($_SESSION['USER']['BLOOD_TYPE'] == "O+") {
-                                echo "selected";
-                            }
-                            ?>
-                        >O+
-                        </option>
-                        <option value="A"
-                            <?php
-                            if ($_SESSION['USER']['BLOOD_TYPE'] == "A") {
-                                echo "selected";
-                            }
-                            ?>
-                        >A
-                        </option>
-                        <option value="A+"
-                            <?php
-                            if ($_SESSION['USER']['BLOOD_TYPE'] == "A+") {
-                                echo "selected";
-                            }
-                            ?>
-                        >A+
-                        </option>
-                        <option value="AB"
-                            <?php
-                            if ($_SESSION['USER']['BLOOD_TYPE'] == "AB") {
-                                echo "selected";
-                            }
-                            ?>
-                        >AB
-                        </option>
-                        <option value="AB+"
-                            <?php
-                            if ($_SESSION['USER']['BLOOD_TYPE'] == "AB+") {
-                                echo "selected";
-                            }
-                            ?>
-                        >AB+
-                        </option>
-                        <option value="B-"
-                            <?php
-                            if ($_SESSION['USER']['BLOOD_TYPE'] == "B-") {
-                                echo "selected";
-                            }
-                            ?>
-                        >B-
-                        </option>
-                        <option value="OB"
-                            <?php
-                            if ($_SESSION['USER']['BLOOD_TYPE'] == "OB") {
-                                echo "selected";
-                            }
-                            ?>
-                        >OB
-                        </option>
+                        <option value="O-" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "O-") { echo "selected"; } ?>> O- </option>
+                        <option value="O+" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "O+") { echo "selected"; } ?>> O+ </option>
+                        <option value="A" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "A") { echo "selected"; } ?>> A </option>
+                        <option value="A+" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "A+") { echo "selected"; } ?>> A+ </option>
+                        <option value="AB" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "AB") { echo "selected"; } ?>> AB </option>
+                        <option value="AB+" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "AB+") { echo "selected"; } ?>> AB+ </option>
+                        <option value="B-" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "B-") { echo "selected"; } ?>> B- </option>
+                        <option value="OB" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "OB") { echo "selected"; } ?>> OB </option>
                     </select>
 
 
@@ -280,7 +223,7 @@ $_SESSION['USER']['LAST_EMAIL'] = $userData[1][0]['EMAIL'];
                     } ?>">Passport Number<?php if ($wasUserError) {
                             echo " (Numeric Only)";
                         } ?></label></label>
-                    <input required type="text"
+                    <input type="text"
                            class="form-control" name="PASSPORT_NO"
                            value="<?php echo $_SESSION['USER']['PASSPORT_NO'] ?>"
                            style="margin-bottom:2%">
