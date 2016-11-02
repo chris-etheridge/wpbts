@@ -34,7 +34,7 @@ public class List_Fragment extends DialogFragment {
 	private Activity parent;
 	private int stackNum, type;
 	private Context current_ctx;
-	protected ArrayList<Event> ALL_EVENTS;
+	private ArrayList ALL_ITEMS;
 
 	public static final int CLINIC = 1, EVENT = 2;
 
@@ -73,10 +73,10 @@ public class List_Fragment extends DialogFragment {
 		switch (type)
 		{
 			case EVENT:
-				list.setAdapter(new List_Adapter(ALL_EVENTS, parent, List_Adapter.Type.Event));
+				list.setAdapter(new List_Adapter(ALL_ITEMS, parent, List_Adapter.Type.Event));
 				break;
 			case CLINIC:
-				list.setAdapter(new List_Adapter(new ArrayList(), parent, List_Adapter.Type.Clinic));
+				list.setAdapter(new List_Adapter(ALL_ITEMS, parent, List_Adapter.Type.Clinic));
 				break;
 		}
 
@@ -86,7 +86,7 @@ public class List_Fragment extends DialogFragment {
 			public void onClick(View v)
 			{
 				DialogFragment fragment = Event_Calendar_Fragment.init(stackNum);
-				((Event_Calendar_Fragment)fragment).setEvents(ALL_EVENTS);
+				((Event_Calendar_Fragment)fragment).setEvents(ALL_ITEMS);
 				FragmentManager manager = parent.getFragmentManager();
 				FragmentTransaction transaction = manager.beginTransaction();
 				Fragment prev = manager.findFragmentByTag("embed");
@@ -101,7 +101,7 @@ public class List_Fragment extends DialogFragment {
 		return view;
 	}
 
-	public void setEvents(ArrayList<Event> es) {
-		ALL_EVENTS = es;
+	public void setItems(ArrayList es) {
+		ALL_ITEMS = es;
 	}
 }
