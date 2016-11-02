@@ -12,7 +12,10 @@ import android.view.ViewGroup;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.MapFragment;
+import com.peachtree.wpbapp.Entities.Event;
 import com.peachtree.wpbapp.R;
+
+import java.util.ArrayList;
 
 public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCallback
 {
@@ -21,11 +24,13 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 	private FragmentActivity mContext;
 	private int stackNum;
 	private MapFragment mapFragment;
+	private GoogleMap mMap;
+	private ArrayList<Event> events;
 
 	@Override
 	public void onMapReady(GoogleMap googleMap)
 	{
-
+		mMap = googleMap;
 	}
 
 	public static Event_Map_Fragment init(int stackNum){
@@ -56,6 +61,7 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 
 		FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 		transaction.add(R.id.map_layout, mapFragment, "map").commit();
+		mapFragment.getMapAsync(this);
 
 		return view;
 	}
@@ -64,5 +70,16 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 	public void onAttach(Activity activity){
 		mContext = (FragmentActivity) activity;
 		super.onAttach(activity);
+	}
+
+	public void loadEvents(ArrayList<Event> e){
+		events = e;
+	}
+
+	private void loadEventsToMap(){
+		for (Event e:events)
+		{
+			
+		}
 	}
 }

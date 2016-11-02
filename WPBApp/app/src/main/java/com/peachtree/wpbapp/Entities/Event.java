@@ -36,6 +36,7 @@ public class Event {
     private String description;
     private EventType type;
     private int urgency;
+    private double lat, lng;
 
     public Event() { }
 
@@ -107,5 +108,9 @@ public class Event {
     public int getUrgency() {
         return this.urgency;
     }
+
+    public Double getLat(){return lat;}
+
+    public Double getLng(){return lng;}
 
 }
