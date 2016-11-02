@@ -368,7 +368,7 @@ if (isset($_SESSION['USER'])) {
             }
         });
 
-        $('#modal-view-user .modal-header .modal-title').html("Viewing: " + objUser.clinic_id);
+        $('#modal-view-user .modal-header .modal-title').html("Viewing: " + objUser.USER_ID);
 
         $('#modal-view-user .modal-body #moUserName').html(objUser.FIRST_NAME + " " + objUser.LAST_NAME);
         $('#modal-view-user .modal-body #moUserTitle').html(objUser.TITLE);
