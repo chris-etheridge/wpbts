@@ -53,7 +53,7 @@ public class Events  {
         Networking.Get(ALL_EVENTS_API_URL, null, handler);
     }
 
-    public void RSVPToEvent(String event_id, String user_id, String attending, AsyncHttpResponseHandler handler) {
+    public void RSVPToEvent(int event_id, int user_id, int attending, AsyncHttpResponseHandler handler) {
         JSONObject params = new JSONObject();
 
         try {

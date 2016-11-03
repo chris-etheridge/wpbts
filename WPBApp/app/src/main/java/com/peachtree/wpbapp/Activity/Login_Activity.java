@@ -3,6 +3,7 @@ package com.peachtree.wpbapp.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -63,7 +64,6 @@ public class Login_Activity extends AppCompatActivity
 					public void onStart() {
 						progress.setTitle("Please wait");
 						progress.setMessage("We are logging you in!");
-
 						progress.show();
 					}
 
@@ -76,6 +76,24 @@ public class Login_Activity extends AppCompatActivity
                             // show the home screen
                             Intent loginIntent = new Intent(CURRENT_CONTEXT, Home_Activity.class);
 
+							// get the current user id
+							int id = 0;
+							try {
+								id = o.getJSONObject("user").getInt("user_id");
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+
+							// preference key to save the user id
+							String prefKey = getApplicationContext().getString(R.string.user_id_perference_key);
+
+							// get the shared preferences
+							SharedPreferences prefs =
+									CURRENT_CONTEXT.getSharedPreferences("com.peachtree.wpbapp", MODE_PRIVATE);
+
+							// save our user id to the preferences
+							prefs.edit().putInt(prefKey, id).apply();
+
                             startActivity(loginIntent);
                         }
                         // else, there was an internal or network error
@@ -86,9 +104,6 @@ public class Login_Activity extends AppCompatActivity
 
 					@Override
 					public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
-						// handle the error here
-						int code = -1;
-
 						progress.hide();
 
 						// make sure response is not null, meaing we got something

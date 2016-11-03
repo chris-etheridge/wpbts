@@ -6,8 +6,11 @@ import android.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.support.annotation.RequiresApi;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -20,16 +23,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.peachtree.wpbapp.Core.Events;
+import com.peachtree.wpbapp.Core.Networking;
 import com.peachtree.wpbapp.R;
 import com.peachtree.wpbapp.Entities.Event;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
@@ -45,6 +47,8 @@ public class Event_Info_Fragment extends DialogFragment
 
 	private Context CURRENT_CONTEXT;
 
+	private Events EVENTS_HELPER;
+
 	public static Event_Info_Fragment init(int id){
 		Event_Info_Fragment fragment = new Event_Info_Fragment();
 
@@ -54,11 +58,16 @@ public class Event_Info_Fragment extends DialogFragment
 
 		return fragment;
 	}
-    @Override
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 		parent = getActivity();
+
 		id = getArguments().getInt("id");
+
 		if(events!=null){
 			int i = 0;
 			while (i < events.size() && event == null){
@@ -69,8 +78,11 @@ public class Event_Info_Fragment extends DialogFragment
 				i++;
 			}
 		}
+
+		EVENTS_HELPER = new Events(this.getContext());
     }
 
+	@RequiresApi(api = Build.VERSION_CODES.M)
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
@@ -104,28 +116,65 @@ public class Event_Info_Fragment extends DialogFragment
 			going.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if(event != null) {
-						try {
-							Intent intent = new Intent(Intent.ACTION_EDIT);
-							intent.setType("vnd.android.cursor.item/event");
-							intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.getDate());
-							intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, event.getDate());
-							intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
-							intent.putExtra(CalendarContract.Events.TITLE, event.getTitle());
-							intent.putExtra(CalendarContract.Events.DESCRIPTION, event.getDescription());
-							//intent.putExtra(CalendarContract.Events.EVENT_LOCATION, event.getAddress());
-							startActivity(intent);
-							Toast.makeText(parent, "Event Added To Calendar", Toast.LENGTH_SHORT);
-						}catch (ActivityNotFoundException e){
-							Toast.makeText(parent, "Could not add event.", Toast.LENGTH_SHORT).show();
+				if(event != null) {
+
+					// get our user id from shared preferences
+					String key = CURRENT_CONTEXT.getString(R.string.user_id_perference_key);
+					SharedPreferences prefs =
+							CURRENT_CONTEXT.getSharedPreferences(CURRENT_CONTEXT.getString(R.string.shared_preferences_key), Context.MODE_PRIVATE);
+
+					// get the value out
+					int id = prefs.getInt(key, 0);
+
+					EVENTS_HELPER.RSVPToEvent(event.getId(), id, 1, new JsonHttpResponseHandler() {
+						@Override
+						public void onSuccess(int statusCode, Header[] headers, JSONObject o) {
+							boolean error = o.has("error");
+
+							// make sure our account is not null
+							if(error != true) {
+								Toast.makeText(CURRENT_CONTEXT, "Successfully RSVP'ed to the event.", Toast.LENGTH_SHORT);
+							}
+							// else, there was an internal or network error
+							else {
+								Networking.NetworkingErrors.GenericNetworkingErrorToast(CURRENT_CONTEXT, Toast.LENGTH_SHORT);
+							}
 						}
+
+						@Override
+						public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+							// make sure response is not null, meaing we got something
+							if(response != null) {
+								try {
+									String msg = response.getString("message");
+
+									Toast.makeText(CURRENT_CONTEXT, msg, Toast.LENGTH_SHORT).show();
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+
+							}
+							// else, we could not connect at all
+							else {
+								// show a generic networking error
+								Networking.NetworkingErrors.GenericNetworkingErrorToast(CURRENT_CONTEXT, Toast.LENGTH_SHORT);
+							}
+						}
+					});
+
+					try {
+						addEventToCalender(event);
+					} catch (ActivityNotFoundException e) {
+						Toast.makeText(parent, "Could not add event.", Toast.LENGTH_SHORT).show();
 					}
 				}
+				}
 			});
-		}else{
+		} else {
 			Toast.makeText(getActivity(), "Could not load event, please try again in a few moments.", Toast.LENGTH_SHORT);
 			dismiss();
 		}
+
 		view.findViewById(R.id.pull_grip).setOnTouchListener(new View.OnTouchListener()
 		{
 			private float offset;
@@ -135,19 +184,19 @@ public class Event_Info_Fragment extends DialogFragment
 			public boolean onTouch(View v, MotionEvent event)
 			{
 				int action = event.getAction();
-				if(action == MotionEvent.ACTION_DOWN){
+				if(action == MotionEvent.ACTION_DOWN) {
 					offset= mCurrenty - event.getRawY();
-				}else if(action == MotionEvent.ACTION_MOVE){
+				} else if(action == MotionEvent.ACTION_MOVE) {
 					mCurrenty = (int)(event.getRawY() + offset);
 					if(mCurrenty > originalY)
 					{
 						view.setY(mCurrenty);
 					}
-				}else if(action == MotionEvent.ACTION_UP){
+				} else if(action == MotionEvent.ACTION_UP) {
 
-					if(mCurrenty > originalY + threshold){
+					if(mCurrenty > originalY + threshold) {
 						dismiss();
-					}else{
+					} else {
 						mCurrenty = originalY;
 						view.setY(mCurrenty);
 					}
@@ -190,6 +239,7 @@ public class Event_Info_Fragment extends DialogFragment
 		newFragment.loadEvents(events);
 		FragmentTransaction transaction = parent.getFragmentManager().beginTransaction();
 		newFragment.show(transaction, "dialog");
+
 		dismiss();
 	}
 
@@ -201,6 +251,19 @@ public class Event_Info_Fragment extends DialogFragment
 		getDialog().getWindow().setBackgroundDrawable(null);
 		getDialog().getWindow().setLayout(display.getWidth() - 50, display.getHeight() - 50);
 
+	}
+
+	public void addEventToCalender(Event event) {
+		Intent intent = new Intent(Intent.ACTION_EDIT);
+		intent.setType("vnd.android.cursor.item/event");
+		intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.getDate());
+		intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, event.getDate());
+		intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
+		intent.putExtra(CalendarContract.Events.TITLE, event.getTitle());
+		intent.putExtra(CalendarContract.Events.DESCRIPTION, event.getDescription());
+		//intent.putExtra(CalendarContract.Events.EVENT_LOCATION, event.getAddress());
+		startActivity(intent);
+		Toast.makeText(parent, "Event Added To Calendar", Toast.LENGTH_SHORT);
 	}
 
 	public void loadEvents(ArrayList<Event> ev){
