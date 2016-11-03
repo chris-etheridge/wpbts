@@ -32,11 +32,6 @@ public class Event {
 		return format.format(date);
 	}
 
-    private enum EventType {
-        Donation,
-        Fundraiser
-    }
-
     private int id;
     private Date date;
     private String title;
@@ -47,9 +42,7 @@ public class Event {
     private String area;
     private String area_code;
     private String building_number;
-    private boolean active;
     private String description;
-    private EventType type;
     private double lat, lng;
 
     public Event() { }
@@ -69,7 +62,7 @@ public class Event {
 
     public Event(int id, Date date, String title, String description, String city, String office,
                  String street_no, String street, String area, String area_code,
-                 String building_number, boolean active) {
+                 String building_number) {
         this.id = id;
         this.date = date;
         this.title = title;
@@ -81,7 +74,6 @@ public class Event {
         this.setArea(area);
         this.setArea_code(area_code);
         this.setBuilding_number(building_number);
-        this.setActive(active);
     }
 
 
@@ -107,15 +99,14 @@ public class Event {
         String area = o.getString("area");
         String area_code = o.getString("area_code");
         String building_number = o.getString("building_number");
-        boolean active = o.getString("active") == "1";
 
         return new Event(id, date, title, desc, city, office, street_no,
-                street, area, area_code, building_number, active);
+                street, area, area_code, building_number);
 
     }
 
     // loads the image for the event
-    // requres the base API url, and image view to set, and a loader view to hide / show
+    // requires the base API url, and image view to set, and a loader view to hide / show
     public void loadImage(String baseUrl, ImageView view, ProgressBar loaderView) {
         new DownloadImageTask(view, loaderView).execute(baseUrl + "/img/events/" + id + ".jpg");
     }
@@ -169,16 +160,8 @@ public class Event {
         return this.title;
     }
 
-    public boolean isActive() {
-        return this.active;
-    }
-
     public String getDescription() {
         return this.description;
-    }
-
-    public EventType getType() {
-        return this.type;
     }
 
     public Double getLat(){return lat;}
@@ -239,10 +222,6 @@ public class Event {
 
     public void setBuilding_number(String building_number) {
         this.building_number = building_number;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 
     public String getAddress(){

@@ -338,4 +338,14 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 				break;
 		}
 	}
+
+	public void loadCenteredMap(Event_Map_Fragment map){
+		Fragment prev = fragmentManager.findFragmentByTag("embed");
+			transaction = getFragmentManager().beginTransaction();
+		if(prev!=null){
+			transaction.remove(prev);
+		}
+		transaction.add(R.id.content, map, "embed");
+		transaction.commit();
+	}
 }

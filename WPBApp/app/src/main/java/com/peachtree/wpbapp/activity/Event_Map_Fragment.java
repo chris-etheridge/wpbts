@@ -41,7 +41,7 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 {
 
 	private Activity parent;
-	private int stackNum, index = -1;
+	private int stackNum, index = -1, center_index = -1;
 	private MapFragment mapFragment;
 	private GoogleMap mMap;
 	private View mView;
@@ -82,6 +82,10 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 		return true;
 	}
 
+	public void preloadData(){
+		((TextView)mView.findViewById(R.id.TXT_description)).setText(generateDescription(events.get(center_index)));
+	}
+
 	private ArrayList<Event> events;
 
 	@Override
@@ -95,6 +99,9 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 		}
 		mMap.getUiSettings().setMyLocationButtonEnabled(true);
 		mMap.getUiSettings().setZoomControlsEnabled(true);
+		if(center_index != -1){
+			mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(events.get(center_index).getLat(), events.get(center_index).getLng()), 10));
+		}
 		loadEventsToMap();
 	}
 
@@ -177,7 +184,7 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 	private String generateDescription(Event event){
 		SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE dd");
 		String output = String.format("%s\n%s\n%s\n%s", event.getTitle(), event.getAddress(),
-				event.getType(), dayFormat.format(event.getDate()));
+				dayFormat.format(event.getDate()));
 		return output;
 	}
 
@@ -194,5 +201,10 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 		else {
 			Toast.makeText(parent, "Please allow location in app permissions.", Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	public void centerOn(int index){
+		center_index = index;
+		preloadData();
 	}
 }
