@@ -110,7 +110,7 @@ public class Event_Info_Fragment extends DialogFragment {
 
             title.setText(event.getTitle());
             desc.setText(event.getDescription());
-            date.setText("Date: " + Event.getDateString(event.getDate()));
+            date.setText("Date: " + event.getDate());
             address.setText("Address: " + event.getAddress());
 
             event.loadImage(parent.getString(R.string.API_BASE), image, loaderView);
@@ -127,7 +127,7 @@ public class Event_Info_Fragment extends DialogFragment {
 
                         // get the value out
                         int id = prefs.getInt(key, 0);
-                        
+
                         EVENTS_HELPER.RSVPToEvent(event.getId(), id, 1, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject o) {
