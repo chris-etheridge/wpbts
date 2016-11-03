@@ -79,8 +79,8 @@ public class Event_Info_Fragment extends DialogFragment {
             }
         }
 
-        CURRENT_CONTEXT = getContext();
-        EVENTS_HELPER = new Events(this.getContext());
+        CURRENT_CONTEXT = parent;
+        EVENTS_HELPER = new Events(parent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

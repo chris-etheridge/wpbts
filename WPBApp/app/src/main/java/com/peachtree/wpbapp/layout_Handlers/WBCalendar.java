@@ -54,7 +54,6 @@ public class WBCalendar extends LinearLayout
 	private ImageButton btn_next, btn_prev;
 	private Button btn_view;
 
-
 	public WBCalendar(Context ctx){
 		super(ctx);
 		this.ctx = ctx;
@@ -102,7 +101,7 @@ public class WBCalendar extends LinearLayout
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
 
-		grid.setAdapter(new Calendar_Adapter(getContext(), cells, events));
+		grid.setAdapter(new Calendar_Adapter(ctx, cells, events));
 
 		SimpleDateFormat format = new SimpleDateFormat(FORMAT);
 		month_title. setText(format.format(currentDate.getTime()));
