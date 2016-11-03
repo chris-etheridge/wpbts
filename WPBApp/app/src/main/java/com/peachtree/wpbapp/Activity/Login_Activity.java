@@ -79,10 +79,12 @@ public class Login_Activity extends AppCompatActivity
 							// get the current user id
 							int id = 0;
 							try {
-								id = o.getJSONObject("user").getInt("user_id");
+								id = o.getInt("userID");
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}
+
+							Log.d("API-LOG", id + "");
 
 							// preference key to save the user id
 							String prefKey = getApplicationContext().getString(R.string.user_id_perference_key);

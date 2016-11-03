@@ -54,6 +54,15 @@ public class Account {
         logIn(email, password, handler);
     }
 
+    public Account(Context ctx) {
+        CURRENT_CONTEXT = ctx;
+        API_HELPER = new Networking(CURRENT_CONTEXT);
+
+        // setup the API urls
+        USER_LOGIN_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.USER_LOGIN);
+        USER_REGISTER_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.USER_REGISTER);
+    }
+
     // logs the user in, with email and password, and calls the handler
     public void logIn(String email, String password, JsonHttpResponseHandler handler) {
         // first make sure the user is not logged in
@@ -73,22 +82,24 @@ public class Account {
         }
     }
 
-    // update the user account profile
-    public User UpdateProfile(String email) throws UserNotLoggedInException {
-        if(logged_in_q()) {
-            // do the work
-
-            // return the user
-            return CURRENT_USER;
-        } else {
-            throw new UserNotLoggedInException();
-        }
-    }
-
     // Register the user, and call the handler
     public void Register(String email, String first_name, String last_name, String password,
                          String address, String cell, AsyncHttpResponseHandler handler) {
-        Networking.Post(USER_REGISTER_API_URL, null, handler);
+
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("email", email);
+            params.put("first_name", first_name);
+            params.put("last_name", last_name);
+            params.put("pwd", password);
+            params.put("address", address);
+            params.put("cell", cell);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Networking.Post(USER_REGISTER_API_URL, params, handler);
     }
 
     // is the user logged in?

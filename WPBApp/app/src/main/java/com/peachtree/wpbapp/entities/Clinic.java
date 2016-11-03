@@ -36,10 +36,13 @@ public class Clinic {
 
 	private double lat, lng;
 
-	public Clinic(int id, String name, String description, double lat, double lng) {
+	public Clinic(int id, String name, String description, String contact_1, String contact_2,
+				  double lat, double lng) {
 		this.id = id;
 		this.description = description;
 		this.name = name;
+		this.contact1 = contact_1;
+		this.contact2 = contact_2;
 
 		this.lat = lat;
 		this.lng = lng;
@@ -58,12 +61,14 @@ public class Clinic {
 	public static Clinic ClinicFromJsonObject(JSONObject o) throws JSONException, ParseException {
 		int id = Integer.parseInt(o.getString("clinic_id"));
 		String desc = o.getString("description");
+		String contact_1 = o.getString("contact_1");
+		String contact_2 = o.getString("contact_2");
 		String name = "Clinic";
 
 		double lat = o.getDouble("latitude");
 		double lng = o.getDouble("longitude");
 
-		return new Clinic(id, desc, name, lat, lng);
+		return new Clinic(id, desc, name, contact_1, contact_2, lat, lng);
 	}
 
 	public void loadImage(String baseUrl, ImageView view, ProgressBar loaderView) {

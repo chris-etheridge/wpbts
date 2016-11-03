@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -78,6 +79,7 @@ public class Event_Info_Fragment extends DialogFragment {
             }
         }
 
+        CURRENT_CONTEXT = getContext();
         EVENTS_HELPER = new Events(this.getContext());
     }
 
@@ -125,8 +127,7 @@ public class Event_Info_Fragment extends DialogFragment {
 
                         // get the value out
                         int id = prefs.getInt(key, 0);
-
-
+                        
                         EVENTS_HELPER.RSVPToEvent(event.getId(), id, 1, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject o) {
@@ -141,13 +142,12 @@ public class Event_Info_Fragment extends DialogFragment {
                                     Networking.NetworkingErrors.GenericNetworkingErrorToast(CURRENT_CONTEXT, Toast.LENGTH_SHORT);
                                 }
 
-                                if (event != null) {
-                                    try {
-                                        addEventToCalender(event);
-                                    } catch (ActivityNotFoundException e) {
-                                        Toast.makeText(parent, "Could not add event.", Toast.LENGTH_SHORT).show();
-                                    }
+                                try {
+                                    addEventToCalender(event);
+                                } catch (ActivityNotFoundException e) {
+                                    Toast.makeText(parent, "Could not add event.", Toast.LENGTH_SHORT).show();
                                 }
+
                             }
 
                             @Override

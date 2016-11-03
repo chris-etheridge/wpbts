@@ -63,7 +63,7 @@ public class Events  {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        
         Networking.Post(RSVP_EVENT_API_URL, params, handler);
     }
 }
