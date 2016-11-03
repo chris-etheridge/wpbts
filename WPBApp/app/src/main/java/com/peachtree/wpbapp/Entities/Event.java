@@ -26,6 +26,12 @@ public class Event {
 
     private static SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
 
+    public static String getDateString(Date date){
+        DateFormat format = new SimpleDateFormat("dd MMMM yyyy");
+
+        return format.format(date);
+    }
+
     private int id;
     private Date date;
     private String title;
