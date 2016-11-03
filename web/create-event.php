@@ -170,15 +170,15 @@ require_once('php/DBConn.php');
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Building Number</label>
-                            <div class="col-sm-9"><input type="number" class="form-control" name="building_number" value="<?php echo $event['building_number']; ?>"></div>
+                            <div class="col-sm-9"><input type="number" min="0" step="1" class="form-control" name="building_number" value="<?php echo $event['building_number']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Longitude</label>
-                            <div class="col-sm-9"><input type="number" class="form-control" name="longitude" value="<?php echo $event['longitude']; ?>"></div>
+                            <div class="col-sm-9"><input type="number" min="0" step="0.000001" class="form-control" name="longitude" value="<?php echo $event['longitude']; ?>"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Latitude</label>
-                            <div class="col-sm-9"><input type="number" class="form-control" name="latitude" value="<?php echo $event['latitude']; ?>"></div>
+                            <div class="col-sm-9"><input type="number" min="0" step="0.000001" class="form-control" name="latitude" value="<?php echo $event['latitude']; ?>"></div>
                         </div>
                     </div>
                 </div>
