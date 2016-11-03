@@ -113,7 +113,7 @@ public class Event_Info_Fragment extends DialogFragment {
 
             title.setText(event.getTitle());
             desc.setText(event.getDescription());
-            date.setText("Date: " + event.getDateString());
+            date.setText("Date: " + event.getDateString(event.getDate()));
             address.setText("Address: " + event.getAddress());
 
             event.loadImage(parent.getString(R.string.API_BASE), image, loaderView);

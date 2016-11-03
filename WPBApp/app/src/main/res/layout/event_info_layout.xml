@@ -74,7 +74,8 @@
                     android:layout_height="200dp"
                     android:layout_weight="1"
                     android:id="@+id/event_img"
-                    android:background="@color/colorFieldBG"/>
+                    android:background="@color/colorFieldBG"
+                    android:scaleType="centerCrop"/>
 
                 <ProgressBar
                     android:layout_width="match_parent"
