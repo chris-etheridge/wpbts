@@ -54,7 +54,9 @@ function createNotification($alertData)
     }
 }
 
+//send notificaion to firebase topic topics/all-users
 function sendNotificationGlobal($title, $message)
+        //author = Kyle Burton
 {
     $fields = array(
         'to' => "/topics/all-users",
@@ -108,8 +110,9 @@ function sendNotificationGlobal($title, $message)
 
 
 }
-
+//send notification to only users who have RSVP'd to an event
 function sendNotificationSpecificEvent($title, $message, $eventid, $mysqli)
+        //author = Kyle Burton
 {
     $arrDeviceTokens;
     

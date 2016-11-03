@@ -1,4 +1,5 @@
 <?php
+//author = Kyle Burton
 
 require_once("DBConn.php");
 //require_once("../api/events/functions.php");

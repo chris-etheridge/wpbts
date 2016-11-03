@@ -1,4 +1,5 @@
 <?php
+//author = Kyle Burton
 //ini_set('display_errors', 1);
 require_once("DBConn.php");
 //require_once("../api/events/functions.php");

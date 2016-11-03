@@ -1,4 +1,5 @@
 <?php
+//author = Kyle Burton
 
 //get a single clinics data with their addresses
 function getClinic($mysqli, $clinicid)

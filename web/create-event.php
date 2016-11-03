@@ -1,3 +1,4 @@
+<!-- author: Kyle Burton -->
 <?php
 $_TITLE = "WPBTS - Create Event";
 $_PARENT['events'] = time();

@@ -1,4 +1,5 @@
 <?php
+//author = Kyle Burton
 
 header("content-type:application/json");
 require_once("../../php/DBConn.php");

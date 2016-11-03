@@ -1,4 +1,6 @@
 <?php
+//author = Kyle Burton
+
 //get a single event
 function getEvent($mysqli, $eventid)
 {
