@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Entity that models a User.
+ * User entity class.
  */
 public class User {
 
@@ -29,16 +29,6 @@ public class User {
         this.hashedPassword = password;
     }
 
-    public static ArrayList<User> UsersFromJsonArray(JSONArray a) throws JSONException, ParseException {
-        ArrayList<User> es = new ArrayList<>();
-
-        for(int i = 0; i < a.length(); i++) {
-            es.add(UserFromJsonObject(a.getJSONObject(i)));
-        }
-
-        return es;
-    }
-
     public static User UserFromJsonObject(JSONObject o) throws JSONException, ParseException {
         String email = o.getString("EMAIL");
         String first = o.getString("FIRST_NAME");
@@ -46,11 +36,10 @@ public class User {
         String address = o.getString("ADDRESS");
         String password = o.getString("PWD");
 
-
         return new User(email, first, last, address, password);
-
     }
 
+    // - Getters and setters -
     public String getFirstName() {
         return this.firstName;
     }

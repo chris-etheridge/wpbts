@@ -23,45 +23,32 @@ import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by chrisetheridge on 10/30/16.
+ * Events API helper
  */
 
 public class Events  {
 
+    // current calling context
     private Context CURRENT_CONTEXT;
 
+    // networking API helper
     private Networking API_HELPER;
 
-    private String MULTIPLE_EVENTS_API_URL;
-    private String SINGLE_EVENT_API_URL;
+    // URL endpoint for all events
+    private String ALL_EVENTS_API_URL;
 
+    // creates a new Events helper
     public Events(Context ctx) {
         CURRENT_CONTEXT = ctx;
 
         API_HELPER = new Networking(ctx);
 
-        MULTIPLE_EVENTS_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.ALL_EVENTS);
-        SINGLE_EVENT_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.VIEW_EVENT);
+        ALL_EVENTS_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.ALL_EVENTS);
     }
 
-    public void GetEventById(int id, AsyncHttpResponseHandler handler) {
-
-        RequestParams p = new RequestParams();
-
-        p.add("eventid", id + "");
-
-        //Networking.Post(SINGLE_EVENT_API_URL, p, handler);
-    }
-
+    // GETs all events, and calls handler
     public void GetAllEvents(AsyncHttpResponseHandler handler) {
-        Networking.Get(MULTIPLE_EVENTS_API_URL, null, handler);
-    }
-
-    public void GetEventsForDate(Date date, AsyncHttpResponseHandler handler) {
-
-    }
-
-    public void GetEventsForLocation(Location loc, AsyncHttpResponseHandler handler) {
-
+        Networking.Get(ALL_EVENTS_API_URL, null, handler);
     }
 
 }

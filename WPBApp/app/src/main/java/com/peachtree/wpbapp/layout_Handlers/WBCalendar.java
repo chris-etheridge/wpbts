@@ -167,7 +167,8 @@ public class WBCalendar extends LinearLayout
 
 	private String generateDescription(Event event){
 		SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE dd");
-		String output = String.format("%s\n%s\n%s\n%s", event.getTitle(), event.getAddress(), event.getType(), dayFormat.format(event.getDate()));
+																	// event.getAddress()
+		String output = String.format("%s\n%s\n%s\n%s", event.getTitle(), "", event.getType(), dayFormat.format(event.getDate()));
 		return output;
 	}
 
