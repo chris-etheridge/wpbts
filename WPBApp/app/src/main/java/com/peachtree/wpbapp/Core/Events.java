@@ -41,7 +41,7 @@ public class Events  {
     // creates a new Events helper
     public Events(Context ctx) {
         CURRENT_CONTEXT = ctx;
- 
+
         API_HELPER = new Networking(ctx);
 
         ALL_EVENTS_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.ALL_EVENTS);

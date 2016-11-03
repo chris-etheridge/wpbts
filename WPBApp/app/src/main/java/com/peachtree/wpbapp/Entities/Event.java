@@ -69,7 +69,7 @@ public class Event {
 
     public Event(int id, Date date, String title, String description, String city, String office,
                  String street_no, String street, String area, String area_code,
-                 String building_number, boolean active) {
+                 String building_number, double lat, double lng, boolean active) {
         this.id = id;
         this.date = date;
         this.title = title;
@@ -98,6 +98,7 @@ public class Event {
     public static Event EventFromJsonObject(JSONObject o) throws JSONException, ParseException {
         int id = Integer.parseInt(o.getString("event_id"));
         Date date = fmt.parse(o.getString("event_date"));
+
         String title = o.getString("title");
         String desc = o.getString("description");
         String city = o.getString("city");
@@ -107,10 +108,14 @@ public class Event {
         String area = o.getString("area");
         String area_code = o.getString("area_code");
         String building_number = o.getString("building_number");
+
+        double lat = o.getDouble("latitude");
+        double lng = o.getDouble("longitude");
+
         boolean active = o.getString("active") == "1";
 
         return new Event(id, date, title, desc, city, office, street_no,
-                street, area, area_code, building_number, active);
+                street, area, area_code, building_number, lat, lng, active);
 
     }
 
