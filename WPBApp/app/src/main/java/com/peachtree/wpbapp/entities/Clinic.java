@@ -36,10 +36,13 @@ public class Clinic {
 
 	private double lat, lng;
 
-	public Clinic(int id, String name, String description) {
+	public Clinic(int id, String name, String description, double lat, double lng) {
 		this.id = id;
 		this.description = description;
 		this.name = name;
+
+		this.lat = lat;
+		this.lng = lng;
 	}
 
 	public static ArrayList<Clinic> ClinicsFromJsonArray(JSONArray a) throws JSONException, ParseException {
@@ -57,7 +60,10 @@ public class Clinic {
 		String desc = o.getString("description");
 		String name = "Clinic";
 
-		return new Clinic(id,desc, name);
+		double lat = o.getDouble("latitude");
+		double lng = o.getDouble("longitude");
+
+		return new Clinic(id, desc, name, lat, lng);
 	}
 
 	public void loadImage(String baseUrl, ImageView view, ProgressBar loaderView) {
