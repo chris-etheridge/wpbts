@@ -36,14 +36,16 @@ public class Events  {
 
     // URL endpoint for all events
     private String ALL_EVENTS_API_URL;
+    private String RSVP_EVENT_API_URL;
 
     // creates a new Events helper
     public Events(Context ctx) {
         CURRENT_CONTEXT = ctx;
-
+ 
         API_HELPER = new Networking(ctx);
 
         ALL_EVENTS_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.ALL_EVENTS);
+        RSVP_EVENT_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.RSVP_EVENT);
     }
 
     // GETs all events, and calls handler
@@ -51,4 +53,17 @@ public class Events  {
         Networking.Get(ALL_EVENTS_API_URL, null, handler);
     }
 
+    public void RSVPToEvent(String event_id, String user_id, String attending, AsyncHttpResponseHandler handler) {
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("eventid", event_id);
+            params.put("userid", user_id);
+            params.put("attending", attending);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Networking.Post(RSVP_EVENT_API_URL, params, handler);
+    }
 }
