@@ -41,6 +41,11 @@ public class Login_Activity extends AppCompatActivity
 		CURRENT_CONTEXT = this;//.getApplicationContext();
 	}
 
+	public void onRegisterClick(View view){
+		Intent regIntent = new Intent(CURRENT_CONTEXT, Register_Activity.class);
+		startActivity(regIntent);
+	}
+
 	public void onLoginClick(View view){
 
 		// get the text for username and password fields
