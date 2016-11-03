@@ -56,23 +56,23 @@ if(!isset($_SESSION['notification']))
         <div class="col-lg-12">            
                 <form role="form" action="php/form-handler-notification-edit.php" method="POST" class="form-horizontal">
                      <div class="col-md-6">
-                        <label>Title:</label>
+                        <label>Title*</label>
                         <input required type="text" class="form-control" name="TITLE" value="<?php echo $notification['TITLE']; ?>" style="margin-bottom:2%">
                     </div>
 
                     <div class="col-md-12">
-                        <label>Body</label>
+                        <label>Body*</label>
                         <textarea required="" class="form-control" rows="6" name="BODY"><?php echo $notification['BODY']; ?></textarea>
                     </div>
 
                     <div class="col-md-12">
-                        <label>Description</label>
+                        <label>Description*</label>
                         <textarea required="" class="form-control" rows="6" name="DESCRIPTION" style="margin-bottom: 7%"><?php echo $notification['DESCRIPTION']; ?></textarea>
                     </div>
 
                     <div class="col-md-12" align="right" style="margin-bottom: 5%">
                         <input type="hidden" name="ALERT_ID" value="<?php echo $notification['ALERT_ID']; ?>">
-                        <button type="submit" class="btn btn-info">Save Notification</button>
+                        <span>* denotes a required field </span><button type="submit" class="btn btn-info">Save Notification</button>
                     </div>
                 </form>
         </div>

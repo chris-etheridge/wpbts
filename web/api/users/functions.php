@@ -246,7 +246,9 @@ function prepareData($userData)
         if ($item == null) {
             $item = "";
         }
-        $item = strtoupper($item);
+        if ($key != "PWD") {
+            $item = strtoupper($item);
+        }
         //echo $item;
     }
     //FOR ADDRESS INFO.

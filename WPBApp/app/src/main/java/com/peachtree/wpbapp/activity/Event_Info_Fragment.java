@@ -193,9 +193,9 @@ public class Event_Info_Fragment extends DialogFragment
 	protected void switch_event(int direction){
 
 		int new_index = array_index + direction;
-		if (array_index > 0){
+		if (new_index <= 0){
 			new_index = events.size() - 1;
-		}else if(array_index == events.size()){
+		}else if(new_index == events.size()){
 			new_index = 0;
 		}
 
@@ -214,6 +214,12 @@ public class Event_Info_Fragment extends DialogFragment
 		getDialog().getWindow().setBackgroundDrawable(null);
 		getDialog().getWindow().setLayout(display.getWidth() - 50, display.getHeight() - 50);
 
+	}
+
+	@Override
+	public void onPause(){
+		super.onPause();
+		dismiss();
 	}
 
 	public void loadEvents(ArrayList<Event> ev){
