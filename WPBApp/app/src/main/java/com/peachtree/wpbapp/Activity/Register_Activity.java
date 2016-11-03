@@ -15,8 +15,8 @@ public class Register_Activity extends AppCompatActivity
 
 	private Account ACCOUNTS_HELPER;
 
-	private TextView userName, password, email, address, cellNumber;
-	private ImageButton user_info, pass_info, email_info, address_info, cell_info;
+	private TextView firstName, surname, password, email, address, cellNumber;
+	private ImageButton fname_info, sname_info, pass_info, email_info, address_info, cell_info;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,22 +24,31 @@ public class Register_Activity extends AppCompatActivity
 		setContentView(R.layout.register_activity);
 
 		// set up all our fields
-		userName = (TextView) findViewById(R.id.register_txt_username);
+		firstName = (TextView) findViewById(R.id.register_txt_fname);
+		surname = (TextView) findViewById(R.id.register_txt_surname);
 		password = (TextView) findViewById(R.id.register_txt_password);
 		email = (TextView) findViewById(R.id.register_txt_email);
 		address = (TextView) findViewById(R.id.register_txt_address);
 		cellNumber = (TextView) findViewById(R.id.register_txt_cell);
 
-		user_info = (ImageButton)findViewById(R.id.info_user);
+		fname_info = (ImageButton)findViewById(R.id.info_fName);
+		sname_info = (ImageButton) findViewById(R.id.info_surname);
 		pass_info = (ImageButton)findViewById(R.id.info_password);
 		email_info = (ImageButton)findViewById(R.id.info_email);
 		address_info = (ImageButton)findViewById(R.id.info_address);
 		cell_info = (ImageButton)findViewById(R.id.info_phone);
 
-		user_info.setOnClickListener(new View.OnClickListener() {
+		fname_info.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(Register_Activity.this, "The name we will know you by.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Register_Activity.this, "Your first name.", Toast.LENGTH_SHORT).show();
+			}
+		});
+
+		sname_info.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(Register_Activity.this, "Your surname/family name.", Toast.LENGTH_SHORT).show();
 			}
 		});
 
