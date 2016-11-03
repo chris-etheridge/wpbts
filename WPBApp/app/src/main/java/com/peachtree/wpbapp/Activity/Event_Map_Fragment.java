@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Locale;
 
-public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, LocationListener
+public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCallback, LocationListener
 {
 
 	private Activity parent;
@@ -72,16 +72,6 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 
 	}
 
-	@Override
-	public boolean onMarkerClick(Marker marker) {
-
-		index = (int)marker.getTag();
-
-		((TextView)mView.findViewById(R.id.TXT_description)).setText(generateDescription(events.get(index)));
-
-		return true;
-	}
-
 	public void preloadData(){
 		((TextView)mView.findViewById(R.id.TXT_description)).setText(generateDescription(events.get(center_index)));
 	}
@@ -100,6 +90,18 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 			preloadData();
 		}
 		loadEventsToMap();
+		mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
+		{
+			@Override
+			public boolean onMarkerClick(Marker marker)
+			{
+				index = (int)marker.getTag();
+
+				((TextView)mView.findViewById(R.id.TXT_description)).setText(generateDescription(events.get(index)));
+
+				return true;
+			}
+		});
 	}
 
 	public static Event_Map_Fragment init(int stackNum){
