@@ -86,7 +86,8 @@ public class Account {
     }
 
     // Register the user, and call the handler
-    public void Register(String email, AsyncHttpResponseHandler handler) {
+    public void Register(String email, String first_name, String last_name, String password,
+                         String address, String cell, AsyncHttpResponseHandler handler) {
         Networking.Post(USER_REGISTER_API_URL, null, handler);
     }
 
