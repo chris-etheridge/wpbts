@@ -36,7 +36,8 @@ public class Clinic {
 
 	private double lat, lng;
 
-	public Clinic(String name, String description) {
+	public Clinic(int id, String name, String description) {
+		this.id = id;
 		this.description = description;
 		this.name = name;
 	}
@@ -56,7 +57,7 @@ public class Clinic {
 		String desc = o.getString("description");
 		String name = "Clinic";
 
-		return new Clinic(desc, name);
+		return new Clinic(id,desc, name);
 	}
 
 	public void loadImage(String baseUrl, ImageView view, ProgressBar loaderView) {

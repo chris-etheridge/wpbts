@@ -27,6 +27,9 @@ $_SESSION['event']['city'] = $_POST['city'];
 $_SESSION['event']['area_code'] = $_POST['area_code'];
 $_SESSION['event']['office'] = $_POST['office'];
 $_SESSION['event']['building_number'] = $_POST['building_number'];
+$_SESSION['event']['longitude'] = $_POST['longitude'];
+$_SESSION['event']['latitude'] = $_POST['latitude'];
+
 $_SESSION['event']['event_id'] = $_POST['event_id'];
 $_SESSION['event']['address_id'] = $_POST['address_id'];
 
@@ -34,7 +37,8 @@ if(        !isset($_POST['event_id']) || !isset($_POST['title'])
         || !isset($_POST['description']) || !isset($_POST['event_date']) || !isset($_POST['type_id'])
         || !isset($_POST['event_admin']) || !isset($_POST['street_no']) || !isset($_POST['street'])
         || !isset($_POST['area']) || !isset($_POST['city']) || !isset($_POST['area_code'])
-        || !isset($_POST['address_id']) || !isset($_POST['active'])) //verify everything crucial was posted
+        || !isset($_POST['address_id']) || !isset($_POST['active'])
+        || !isset($_POST['longitude']) || !isset($_POST['latitude'])) //verify everything crucial was posted
 {
     $_SESSION['alert']['message_type'] = "alert-danger";
     $_SESSION['alert']['message_title'] = "Error!";
@@ -60,12 +64,19 @@ $city = $mysqli->real_escape_string($_POST['city']);
 $zip = $mysqli->real_escape_string($_POST['area_code']);
 $office = $mysqli->real_escape_string($_POST['office']);
 $buildingno = $mysqli->real_escape_string($_POST['building_number']);
+$longitude = $mysqli->real_escape_string($_POST['longitude']);
+$latitude = $mysqli->real_escape_string($_POST['latitude']);
+
+$buildingno = (!$buildingno) ? "NULL" : $buildingno; //so db lets us ommit building number
+$longitude = (!$longitude) ? "NULL" : $longitude; //so db lets us ommit longitude
+$latitude = (!$latitude) ? "NULL" : $latitude; //so db lets us ommit latitude
+
 
 
 /* INSERT/ UPDATE ADDRESS*/
 $sql = "UPDATE TBL_ADDRESS SET STREET_NO = $streetno, STREET = '$street', " 
-        . "AREA = '$suburb', CITY = '$city', AREA_CODE = '$zip', OFFICE = '$office', BUILDING_NUMBER = $buildingno " 
-        . " WHERE ADDRESS_ID = $addressid";
+        . "AREA = '$suburb', CITY = '$city', AREA_CODE = '$zip', OFFICE = '$office', BUILDING_NUMBER = $buildingno, " 
+        . " LONGITUDE = $longitude, LATITUDE = $latitude WHERE ADDRESS_ID = $addressid";
 
 $mysqli->query($sql);
 

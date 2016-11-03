@@ -41,7 +41,7 @@ public class Event_Info_Fragment extends DialogFragment
 	private int id, array_index;
 	private ArrayList<Event> events;
 	private Event event;
-	private float mCurrenty, mCurrentx;
+	private float mCurrenty;
 
 	private Context CURRENT_CONTEXT;
 
@@ -77,9 +77,7 @@ public class Event_Info_Fragment extends DialogFragment
 		final View view = inflater.inflate(R.layout.event_info_layout, container, false);
 
 		mCurrenty = view.getY();
-		mCurrenty = view.getX();
 		final float originalY = mCurrenty;
-		final float originalX = mCurrentx;
 
 
 		if(event != null) {
@@ -99,7 +97,7 @@ public class Event_Info_Fragment extends DialogFragment
 			title.setText(event.getTitle());
 			desc.setText(event.getDescription());
 			date.setText("Date: " + Event.getDateString(event.getDate()));
-			//address.setText("Address: " + event.getAddress());
+			address.setText("Address: " + event.getAddress());
 
 			event.loadImage(getContext().getString(R.string.API_BASE), image, loaderView);
 

@@ -61,6 +61,8 @@ function getEvents($mysqli, $SQLString)
             $events[$rowid]['area'] = $Row['AREA'];
             $events[$rowid]['area_code'] = $Row['AREA_CODE'];
             $events[$rowid]['building_number'] = $Row['BUILDING_NUMBER'];
+            $events[$rowid]['longitude'] = $Row['LONGITUDE'];
+            $events[$rowid]['latitude'] = $Row['LATITUDE'];
             
             $events[$rowid]['type_id'] = $Row['TYPE_ID'];
             $events[$rowid]['type_description'] = $Row['TYPE_DESCRIPTION'];
