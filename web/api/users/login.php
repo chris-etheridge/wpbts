@@ -27,16 +27,23 @@ $email = $jsonData['EMAIL'];
 
 $password = sha1($jsonData['PWD']);
 
+
+//WE EXTRACT BOTH THE EMAIL ADDRESS ALONG WTH THE USER ID INTO THIS VARIABLE
 $isIUserExist = doesEmailAddressExist($email);
+
 if ($isIUserExist == false) {
     echo json_encode(array("code" => "111", "message" => "User does not exists."));
     die();
 }
 
-$savedPassword = getHashedPassword($email);
 
-if (strcmp($password, $savedPassword['PWD']) == 0) {
-    echo json_encode(array("code" => "182", "message" => "User logged in successfully.", "user" => $savedPassword));
+//WE PULL THE USER PASSWORD AND USER ID
+$savedPassword = getHashedPassword($email);
+$extrPassword = $savedPassword[0]['PWD'];
+
+
+if (strcmp($password, $extrPassword) == 0) {
+    echo json_encode(array("code" => "182", "message" => "User logged in successfully.", "savedPW" => $savedPassword[0][PWD], "userID" => $isIUserExist['USER_ID']));
 } else {
     echo json_encode(array("code" => "181", "message" => "Incorrect password."));
 }
