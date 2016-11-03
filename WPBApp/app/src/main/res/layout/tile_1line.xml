@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+	<ProgressBar
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/item_loader"
+		android:indeterminate="true" />
+
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
