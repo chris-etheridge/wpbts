@@ -46,7 +46,6 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 	private GoogleMap mMap;
 	private View mView;
 	private LocationManager location;
-	private Location mLocation;
 	private Criteria criteria;
 
 	@Override
@@ -55,7 +54,6 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 			mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10));
 			mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).draggable(false)
 					.icon(BitmapDescriptorFactory.fromResource(R.drawable.user_icon)));
-			mLocation = location;
 		}
 	}
 
@@ -90,6 +88,13 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 	public void onMapReady(GoogleMap googleMap)
 	{
 		mMap = googleMap;
+		if(ContextCompat.checkSelfPermission(parent, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+			mMap.setMyLocationEnabled(true);
+		}else{
+
+		}
+		mMap.getUiSettings().setMyLocationButtonEnabled(true);
+		mMap.getUiSettings().setZoomControlsEnabled(true);
 		loadEventsToMap();
 	}
 
@@ -120,7 +125,7 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 		super.onCreateView(inflater, container, savedInstanceState);
 		final View view = inflater.inflate(R.layout.event_map_layout, container, false);
 
-		FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+		final FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 		transaction.add(R.id.map_layout, mapFragment, "map").commit();
 		mapFragment.getMapAsync(this);
 
@@ -133,19 +138,17 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 			}
 		});
 
-		view.findViewById(R.id.BTN_recenter).setOnClickListener(new View.OnClickListener()
+		view.findViewById(R.id.BTN_view).setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
-				if(mMap != null && mLocation != null){
-					mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLocation.getLatitude(), mLocation. getLongitude()), 10));
-				}else if(mMap != null){
-					getLocation();
-					if(ContextCompat.checkSelfPermission(parent, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-					{
-						Toast.makeText(parent, "Location not found, please wait a moment and try again.", Toast.LENGTH_SHORT).show();
-					}
+				if(index != -1 && events.get(index) != null){
+					Event_Info_Fragment info = Event_Info_Fragment.init(events.get(index).getId());
+					info.loadEvents(events);
+					FragmentTransaction mTransaction = parent.getFragmentManager().beginTransaction();
+					mTransaction.add(info, "dialog");
+					mTransaction.commit();
 				}
 			}
 		});
@@ -173,8 +176,8 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 
 	private String generateDescription(Event event){
 		SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE dd");
-																	// event.getAddress()
-		String output = String.format("%s\n%s\n%s\n%s", event.getTitle(), "", event.getType(), dayFormat.format(event.getDate()));
+		String output = String.format("%s\n%s\n%s\n%s", event.getTitle(), event.getAddress(),
+				event.getType(), dayFormat.format(event.getDate()));
 		return output;
 	}
 
@@ -189,15 +192,6 @@ public class Event_Map_Fragment extends DialogFragment implements OnMapReadyCall
 			location.requestSingleUpdate(criteria, this, null);
 		}
 		else {
-			Toast.makeText(parent, "Please allow location in app permissions.", Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	private void getLocation(){
-		if(ContextCompat.checkSelfPermission(parent, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-			location.requestSingleUpdate(criteria, this, null);
-		}
-		else{
 			Toast.makeText(parent, "Please allow location in app permissions.", Toast.LENGTH_SHORT).show();
 		}
 	}

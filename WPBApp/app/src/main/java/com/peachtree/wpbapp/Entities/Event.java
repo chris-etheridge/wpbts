@@ -245,4 +245,11 @@ public class Event {
         this.active = active;
     }
 
+    public String getAddress(){
+        String compiledAddress;
+
+        compiledAddress = String.format("%s %s, %s", getStreet_no(), getStreet(), getArea());
+
+        return compiledAddress;
+    }
 }
