@@ -16,21 +16,21 @@ function createUser($userData, $addressID = null)
     //Hits registration method and returns here at end to create the records.
     global $dbConn;
 
-    if ($addressID == null) {
-        registerUser($userData);
-    }
+//    if ($addressID == null) {
+//        registerUser($userData);
+//    }
+
     $lastUserID = (int)getLastIDForTable("TBL_USER", "USER_ID") + 1;
 
-//    echo $userData['PWD'];
-//    echo sha1($userData['PWD']);
-
     $userData['PWD'] = sha1($userData['PWD']);
-    $userData['ADDRESS_ID'] = $addressID;
+
+
+    // $userData['ADDRESS_ID'] = $addressID;
 
     $sql = "INSERT INTO TBL_USER (USER_ID, FIRST_NAME, LAST_NAME, PWD,
-        EMAIL, ADDRESS_ID, PHONE)
+        EMAIL, PHONE)
       VALUES(?,?,?,?,?,
-            ?,?)";
+            ?)";
 
     $stmt = $dbConn->prepare($sql);
     $stmt->bindParam(1, $lastUserID);
@@ -38,8 +38,7 @@ function createUser($userData, $addressID = null)
     $stmt->bindParam(3, $userData['LAST_NAME']);
     $stmt->bindParam(4, $userData['PWD']);
     $stmt->bindParam(5, $userData['EMAIL']);
-    $stmt->bindParam(6, $userData['ADDRESS_ID']);
-    $stmt->bindParam(7, $userData['PHONE']);
+    $stmt->bindParam(6, $userData['PHONE']);
 
 
     if ($stmt->execute()) {
@@ -60,25 +59,28 @@ function registerUser($userData)
 
 
     $userData = json_decode($userData, true);
+
     if ($userData == null) {
         issueError('115');
     }
-    $userData = prepareData($userData);
 
-    if (doesUserExist($userData[0]['EMAIL']) == true) {
+    // echo $userData['EMAIL'];
+
+    if (doesUserExist($userData['EMAIL']) == true) {
         issueError('111');
     }
+    createUser($userData);
 
-    $addresCheck = doesAddressExist($userData[1]);
-    if ($addresCheck != false) {
-        //echo "address exists";
-        //echo $addresCheck[1];
-        createUser($userData[0], $addresCheck[1]);
-    } else {
-        $lastID = createAddress($userData[1]);
-        //echo $lastID;
-        createUser($userData[0], $lastID);
-    }
+    //$addresCheck = doesAddressExist($userData[1]);
+//    if ($addresCheck != false) {
+//        //echo "address exists";
+//        //echo $addresCheck[1];
+//        createUser($userData[0], $addresCheck[1]);
+//    } else {
+//        $lastID = createAddress($userData[1]);
+//        //echo $lastID;
+//        createUser($userData[0], $lastID);
+//    }
 }
 
 
