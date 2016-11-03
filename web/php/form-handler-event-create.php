@@ -26,6 +26,8 @@ $_SESSION['event']['city'] = $_POST['city'];
 $_SESSION['event']['area_code'] = $_POST['area_code'];
 $_SESSION['event']['office'] = $_POST['office'];
 $_SESSION['event']['building_number'] = $_POST['building_number'];
+$_SESSION['event']['longitude'] = $_POST['longitude'];
+$_SESSION['event']['latitude'] = $_POST['latitude'];
 $_SESSION['event']['creator_id'] = $_POST['creator_id'];
 
 if(        !isset($_POST['creator_id']) || !isset($_POST['title'])

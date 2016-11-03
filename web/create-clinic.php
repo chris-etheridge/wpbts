@@ -106,6 +106,14 @@ require_once('php/DBConn.php');
                             <label class="col-sm-3 control-label">Building Number</label>
                             <div class="col-sm-9"><input type="number" class="form-control" name="building_number" value="<?php echo $clinic['building_number']; ?>"></div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Latitude*</label>
+                            <div class="col-sm-9"><input required type="number" min="-90" max="90" step="0.000001" class="form-control" name="latitude" value="<?php echo $clinic['latitude']; ?>"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Longitude*</label>
+                            <div class="col-sm-9"><input required type="number" min="-180" max="180" step="0.000001" class="form-control" name="longitude" value="<?php echo $clinic['longitude']; ?>"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

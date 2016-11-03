@@ -27,6 +27,8 @@ $_SESSION['clinic']['city'] = $_POST['city'];
 $_SESSION['clinic']['area_code'] = $_POST['area_code'];
 $_SESSION['clinic']['office'] = $_POST['office'];
 $_SESSION['clinic']['building_number'] = $_POST['building_number'];
+$_SESSION['clinic']['longitude'] = $_POST['longitude'];
+$_SESSION['clinic']['latitude'] = $_POST['latitude'];
 
 if(       !isset($_POST['clinic_id']) || !isset($_POST['description']) || !isset($_POST['contact_1'])
         || !isset($_POST['contact_2']) || !isset($_POST['street_no']) || !isset($_POST['street'])
@@ -55,11 +57,17 @@ $city = $mysqli->real_escape_string($_POST['city']);
 $zip = $mysqli->real_escape_string($_POST['area_code']);
 $office = $mysqli->real_escape_string($_POST['office']);
 $buildingno = $mysqli->real_escape_string($_POST['building_number']);
+$longitude = $mysqli->real_escape_string($_POST['longitude']);
+$latitude = $mysqli->real_escape_string($_POST['latitude']);
+
+$buildingno = (!$buildingno) ? "NULL" : $buildingno; //so db lets us ommit building number
+$longitude = (!$longitude) ? "NULL" : $longitude; //so db lets us ommit longitude
+$latitude = (!$latitude) ? "NULL" : $latitude; //so db lets us ommit latitude
 
 /* INSERT/ UPDATE ADDRESS*/
 $sql = "UPDATE TBL_ADDRESS SET STREET_NO = $streetno, STREET = '$street', " 
-        . "AREA = '$suburb', CITY = '$city', AREA_CODE = '$zip', OFFICE = '$office', BUILDING_NUMBER = $buildingno"
-        . " WHERE ADDRESS_ID = $addressid";
+        . "AREA = '$suburb', CITY = '$city', AREA_CODE = '$zip', OFFICE = '$office', BUILDING_NUMBER = $buildingno, "
+        . " LONGITUDE = $longitude, LATITUDE = $latitude WHERE ADDRESS_ID = $addressid";
 
 $mysqli->query($sql);
 
