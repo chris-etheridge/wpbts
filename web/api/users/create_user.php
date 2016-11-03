@@ -21,9 +21,6 @@ function createUser($userData, $addressID = null)
     }
     $lastUserID = (int)getLastIDForTable("TBL_USER", "USER_ID") + 1;
 
-    echo $userData['PWD'];
-    echo sha1($userData['PWD']);
-
     $userData['PWD'] = sha1($userData['PWD']);
     $userData['ADDRESS_ID'] = $addressID;
 
