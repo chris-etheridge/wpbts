@@ -108,7 +108,7 @@ public class Event {
         String area_code = o.getString("area_code");
         String building_number = o.getString("building_number");
 
-        double lat = o.getDouble("lattitude");
+        double lat = o.getDouble("latitude");
         double lng = o.getDouble("longitude");
 
         Log.d("EVE", o.getString("event_date"));
