@@ -40,7 +40,7 @@ if ($userID == null) {
     </div><!--/.row-->
 
     <div class="row">
-        <div class="col-xs-12 col-md-6 col-lg-4">
+        <div class="col-xs-12 col-md-6">
             <a href="events.php">
                 <div class="panel panel-red panel-widget ">
                     <div class="row no-padding">
@@ -61,7 +61,7 @@ if ($userID == null) {
                 </div>
             </a>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-4">
+        <div class="col-xs-12 col-md-6">
             <a href="clinics.php">
                 <div class="panel panel-red panel-widget">
                     <div class="row no-padding">
@@ -82,7 +82,7 @@ if ($userID == null) {
                 </div>
             </a>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-4">
+        <div class="col-xs-12 col-md-6">
             <a href="users.php">
                 <div class="panel panel-teal panel-widget">
                     <div class="row no-padding">
@@ -105,6 +105,34 @@ if ($userID == null) {
                                 ?>
                             </div>
                             <div class="text-muted">Users</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <a href="notifications.php">
+                <div class="panel panel-teal panel-widget">
+                    <div class="row no-padding">
+                        <div class="col-sm-3 col-lg-5 widget-left">
+                            <svg class="glyph stroked star">
+                                <use xlink:href="#stroked-star"></use>
+                            </svg>
+                        </div>
+                        <div class="col-sm-9 col-lg-7 widget-right">
+                            <div class="large">
+                                <?php
+                                //get upcoming events
+                                $sql = "SELECT * FROM TBL_ALERTS;";
+                                $QueryResult = $mysqli->query($sql);
+                                if ($QueryResult == TRUE) {
+                                    echo $QueryResult->num_rows;
+                                } else {
+                                    echo "0";
+                                }
+                                ?>
+                            </div>
+                            <div class="text-muted">Notifications</div>
                         </div>
                     </div>
                 </div>
