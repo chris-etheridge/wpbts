@@ -165,8 +165,6 @@ function createAddress($address)
     $lastID = getLastIDForTable("TBL_ADDRESS", "ADDRESS_ID");
     $lastID = (int)$lastID + 1;
 
-    var_dump($address);
-
     $stmt = $dbConn->prepare($sql);
     $stmt->bindParam(1, $lastID);
     $stmt->bindParam(2, $address['STREET_NO']);
@@ -186,7 +184,7 @@ function createAddress($address)
         print_r($stmt->errorInfo());
         issueError('113');
     }
-    echo "address created/";
+    //echo "address created/";
     return $lastID;
 }
 
@@ -232,11 +230,11 @@ function doesUserExist($userEmail)
     $stmt->bindParam(1, $userEmail);
     $stmt->execute();
     $result = $stmt->fetch();
-//    print_r('result' . $result);
+
     if ($result != null) {
-        $doesExist = true;
+        return true;
     }
-    return $doesExist;
+    return false;
 }
 
 //Makes all data lower case and if null ""
