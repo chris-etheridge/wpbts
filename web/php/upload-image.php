@@ -1,7 +1,7 @@
 <?php
-/*
-    code from: http://www.w3schools.com/php/php_file_upload.asp
- */
+//author = Kyle Burton
+//code from: http://www.w3schools.com/php/php_file_upload.asp
+ 
 
 function uploadImage($image, $target_file)
 {

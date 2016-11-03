@@ -1,3 +1,4 @@
+<!-- author: Kyle Burton -->
 <?php
     session_start();
     $adminid = $_SESSION['AUTH_USER_ID'];

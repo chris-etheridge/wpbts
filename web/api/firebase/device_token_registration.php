@@ -1,4 +1,6 @@
 <?php
+//author = Kyle Burton
+
 ini_set('display_errors', 1);
 header("content-type:application/json");
 

@@ -1,3 +1,4 @@
+<!-- author: Kyle Burton -->
 <?php
 $_TITLE = "WPBTS - Clinic Management";
 $_PARENT['clinics'] = time();

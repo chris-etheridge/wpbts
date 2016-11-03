@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- author: Kyle Burton -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,6 +15,8 @@
     <p id="p-clinics"></p>
     <button id="btn-token">Update device token</button>
     <p id="p-devicetokens"></p>
+    <button id="btn-rsvp">RSVP</button>
+    <p id="p-rsvp"></p>
     <footer>
         
     </footer>
@@ -93,6 +96,28 @@
                         {
                                 console.log(xhr + "\n" + err);
                                 $('#p-devicetokens').append("failed, :" + xhr + "\n" + err);
+                        }
+                }); // end ajax call
+        });
+        $('#btn-rsvp').on('click', function ()
+        {
+                //e.preventDefault();
+                $('#p-rsvo').empty();
+                
+                $.ajax({
+                        url: 'api/events/rsvp.php',
+                        type: 'post',
+                        data: {'userid': 5, 'eventid': 3, 'attending': 1},
+                        cache: false,
+                        success: function (json)
+                        {
+                                $('#p-rsvp').empty();
+                                $('#p-rsvp').append("JSON: " + JSON.stringify(json));
+                        },
+                        error: function (xhr, desc, err)
+                        {
+                                console.log(xhr + "\n" + err);
+                                $('#p-rsvp').append("failed, :" + xhr + "\n" + err);
                         }
                 }); // end ajax call
         });
