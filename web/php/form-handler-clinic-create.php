@@ -31,7 +31,7 @@ $_SESSION['clinic']['latitude'] = $_POST['latitude'];
 if(        !isset($_POST['description']) || !isset($_POST['contact_1'])
         || !isset($_POST['contact_2']) || !isset($_POST['street_no']) || !isset($_POST['street'])
         || !isset($_POST['area']) || !isset($_POST['city']) || !isset($_POST['area_code'])
-        || !isset($_POST['operating_hours'])) //verify everything crucial was posted
+        || !isset($_POST['operating_hours']) || !isset($_POST['longitude']) || !isset($_POST['latitude'])) //verify everything crucial was posted
 {
     $_SESSION['alert']['message_type'] = "alert-danger";
     $_SESSION['alert']['message_title'] = "Error!";
