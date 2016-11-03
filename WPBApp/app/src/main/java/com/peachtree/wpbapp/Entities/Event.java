@@ -24,13 +24,7 @@ import java.util.Date;
  */
 public class Event {
 
-    private static SimpleDateFormat fmt = new SimpleDateFormat("mm-dd-yyyy");
-
-    public static String getDateString(Date date){
-		DateFormat format = new SimpleDateFormat("dd MMMM yyyy");
-
-		return format.format(date);
-	}
+    private static SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
 
     private int id;
     private Date date;
@@ -99,6 +93,8 @@ public class Event {
         String area = o.getString("area");
         String area_code = o.getString("area_code");
         String building_number = o.getString("building_number");
+
+        Log.d("EVE", o.getString("event_date"));
 
         return new Event(id, date, title, desc, city, office, street_no,
                 street, area, area_code, building_number);
