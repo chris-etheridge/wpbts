@@ -47,31 +47,31 @@ require_once('php/DBConn.php');
             <form role="form" action="php/form-handler-clinic-create.php" method="POST" class="form-horizontal" enctype="multipart/form-data">
                 <div class="form-group">
                     <div class="col-md-12">
-                        <label class="control-label">Description</label>
+                        <label class="control-label">Description*</label>
                         <textarea required class="form-control" rows="6" name="description"><?php echo $clinic['description']; ?></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12">
                         <label class="control-label">Select An Image</label>
-                        <input required type="file" name="fileToUpload">
+                        <input type="file" name="fileToUpload">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <label class="control-label">Contact No. 1</label>
+                        <label class="control-label">Contact No. 1*</label>
                         <input required class="form-control" onkeypress="validateNumberIn(event)" type="text" name="contact_1" value="<?php echo $clinic['contact_1']; ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <label class="control-label">Contact No. 2</label>
+                        <label class="control-label">Contact No. 2*</label>
                         <input required class="form-control" onkeypress="validateNumberIn(event)" type="text" name="contact_2" value="<?php echo $clinic['contact_2']; ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <label class="control-label">Operating Hours</label>
+                        <label class="control-label">Operating Hours*</label>
                         <input required class="form-control" type="text" name="operating_hours" value="<?php echo $clinic['operating_hours']; ?>">
                     </div>
                 </div>
@@ -79,23 +79,23 @@ require_once('php/DBConn.php');
                     <div class="col-sm-12">
                         <label class="control-label">Address</label>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Street Number</label>
+                            <label class="col-sm-3 control-label">Street Number*</label>
                             <div class="col-sm-9"><input onkeypress="validateNumberIn(event)" required type="number" class="form-control" name="street_no" value="<?php echo $clinic['street_no']; ?>"></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Street</label>
+                            <label class="col-sm-3 control-label">Street*</label>
                             <div class="col-sm-9"><input required type="text" class="form-control" name="street" value="<?php echo $clinic['street']; ?>"></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Suburb</label>
+                            <label class="col-sm-3 control-label">Suburb*</label>
                             <div class="col-sm-9"><input required type="text" class="form-control" name="area" value="<?php echo $clinic['area']; ?>"></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">City</label>
+                            <label class="col-sm-3 control-label">City*</label>
                             <div class="col-sm-9"><input required type="text" class="form-control" name="city" value="<?php echo $clinic['city']; ?>"></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Zip Code</label>
+                            <label class="col-sm-3 control-label">Zip Code*</label>
                             <div class="col-sm-9"><input required type="text" class="form-control" name="area_code" value="<?php echo $clinic['area_code']; ?>"></div>
                         </div>
                         <div class="form-group">
@@ -111,7 +111,7 @@ require_once('php/DBConn.php');
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-6 text-right">
                         <br/>
-                        <button type="submit" class="btn btn-info">Save Clinic</button>
+                        <span>* denotes a required field </span> <button type="submit" class="btn btn-info">Save Clinic</button>
                     </div>
                 </div>
             </form>
