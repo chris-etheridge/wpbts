@@ -54,7 +54,6 @@ public class WBCalendar extends LinearLayout
 	private ImageButton btn_next, btn_prev;
 	private Button btn_view;
 
-
 	public WBCalendar(Context ctx){
 		super(ctx);
 		this.ctx = ctx;
@@ -102,7 +101,7 @@ public class WBCalendar extends LinearLayout
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
 
-		grid.setAdapter(new Calendar_Adapter(getContext(), cells, events));
+		grid.setAdapter(new Calendar_Adapter(ctx, cells, events));
 
 		SimpleDateFormat format = new SimpleDateFormat(FORMAT);
 		month_title. setText(format.format(currentDate.getTime()));
@@ -139,9 +138,9 @@ public class WBCalendar extends LinearLayout
 					selected = null;
 					view.setBackground(getResources().getDrawable(R.drawable.selected_event_bg));
 					int x = 0;
-					while((selected == null || selected.getId() != (int)view.getTag()) && x < events.size()){
+					while((selected == null || selected.getId() != (int)view.getTag()) && x < events.size() && x < events.size()){
 						selected = events.get(x);
-						i++;
+						x++;
 					}
 					description.setText(generateDescription(selected));
 				}
@@ -166,8 +165,14 @@ public class WBCalendar extends LinearLayout
 	}
 
 	private String generateDescription(Event event){
-		SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE dd");
-		String output = String.format("%s\n%s\n%s\n%s", event.getTitle(), event.getAddress(), dayFormat.format(event.getDate()));
+		String output;
+		if(event!=null) {
+			SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE dd");
+			output = String.format("%s\n%s\n%s", event.getTitle(), event.getAddress(), dayFormat.format(event.getDate()));
+
+		}else{
+			output = "there was an error loading this event.";
+		}
 		return output;
 	}
 
@@ -201,7 +206,7 @@ public class WBCalendar extends LinearLayout
 				view = inflater.inflate(R.layout.calendar_day, parent, false);
 			}
 
-			view.setBackgroundResource(0);
+			//view.setBackgroundResource(0);
 
 			((TextView)view).setTextColor(Color.BLACK);
 

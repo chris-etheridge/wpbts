@@ -24,14 +24,17 @@ import java.util.Date;
  */
 public class Event {
 
-    private static SimpleDateFormat fmt = new SimpleDateFormat("mm-dd-yyyy");
+    // date formatting
+    private static SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
 
+    // returns a pretty format of the date
     public static String getDateString(Date date){
-		DateFormat format = new SimpleDateFormat("dd MMMM yyyy");
+        DateFormat format = new SimpleDateFormat("dd MMMM yyyy");
 
-		return format.format(date);
-	}
+        return format.format(date);
+    }
 
+    // Event fields
     private int id;
     private Date date;
     private String title;
@@ -62,24 +65,28 @@ public class Event {
 
     public Event(int id, Date date, String title, String description, String city, String office,
                  String street_no, String street, String area, String area_code,
-                 String building_number) {
+                 String building_number, double lat, double lng) {
         this.id = id;
         this.date = date;
         this.title = title;
         this.description = description;
-        this.setCity(city);
-        this.setOffice(office);
-        this.setStreet_no(street_no);
-        this.setStreet(street);
-        this.setArea(area);
-        this.setArea_code(area_code);
-        this.setBuilding_number(building_number);
+        this.city = city;
+        this.office = office;
+        this.street_no = street_no;
+        this.street = street;
+        this.area = area;
+        this.area_code = area_code;
+        this.building_number = building_number;
+        this.lat = lat;
+        this.lng = lng;
     }
 
 
+    // parses many events from a JSON array
     public static ArrayList<Event> EventsFromJsonArray(JSONArray a) throws JSONException, ParseException {
         ArrayList<Event> es = new ArrayList<>();
 
+        // loop through the array
         for(int i = 0; i < a.length(); i++) {
             es.add(EventFromJsonObject(a.getJSONObject(i)));
         }
@@ -87,6 +94,7 @@ public class Event {
         return es;
     }
 
+    // parses one event from a JSON object
     public static Event EventFromJsonObject(JSONObject o) throws JSONException, ParseException {
         int id = Integer.parseInt(o.getString("event_id"));
         Date date = fmt.parse(o.getString("event_date"));
@@ -100,8 +108,13 @@ public class Event {
         String area_code = o.getString("area_code");
         String building_number = o.getString("building_number");
 
+        double lat = o.getDouble("lattitude");
+        double lng = o.getDouble("longitude");
+
+        Log.d("EVE", o.getString("event_date"));
+
         return new Event(id, date, title, desc, city, office, street_no,
-                street, area, area_code, building_number);
+                street, area, area_code, building_number, lat, lng);
 
     }
 

@@ -41,14 +41,12 @@ public class Register_Activity extends AppCompatActivity
 		surname = (TextView) findViewById(R.id.register_txt_surname);
 		password = (TextView) findViewById(R.id.register_txt_password);
 		email = (TextView) findViewById(R.id.register_txt_email);
-		address = (TextView) findViewById(R.id.register_txt_address);
 		cellNumber = (TextView) findViewById(R.id.register_txt_cell);
 
 		fname_info = (ImageButton)findViewById(R.id.info_fName);
 		sname_info = (ImageButton) findViewById(R.id.info_surname);
 		pass_info = (ImageButton)findViewById(R.id.info_password);
 		email_info = (ImageButton)findViewById(R.id.info_email);
-		address_info = (ImageButton)findViewById(R.id.info_address);
 		cell_info = (ImageButton)findViewById(R.id.info_phone);
 
 		CURRENT_CONTEXT = getApplicationContext();
@@ -83,13 +81,6 @@ public class Register_Activity extends AppCompatActivity
 			}
 		});
 
-		address_info.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(Register_Activity.this, "You're residential address.", Toast.LENGTH_SHORT).show();
-			}
-		});
-
 		cell_info.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -97,6 +88,15 @@ public class Register_Activity extends AppCompatActivity
 			}
 		});
 	}
+
+	public void onCancelButtonClicked(View v) {
+		Intent i = new Intent(this, Login_Activity.class);
+
+		startActivity(i);
+
+		this.finish();
+	}
+
 
 	public void onRegisterButtonClicked(View v) {
 		final ProgressDialog progress = new ProgressDialog(this);
@@ -108,10 +108,9 @@ public class Register_Activity extends AppCompatActivity
 		String first = firstName.getText().toString();
 		String last = surname.getText().toString();
 		String pass = password.getText().toString();
-		String a = address.getText().toString();
 		String cell = cellNumber.getText().toString();
 
-		ACCOUNTS_HELPER.Register(user_email, first, last, pass, a, cell, new JsonHttpResponseHandler(){
+		ACCOUNTS_HELPER.Register(user_email, first, last, pass, cell, new JsonHttpResponseHandler(){
 			@Override
 			public void onStart() {
 				progress.show();

@@ -84,7 +84,7 @@ public class Account {
 
     // Register the user, and call the handler
     public void Register(String email, String first_name, String last_name, String password,
-                         String address, String cell, AsyncHttpResponseHandler handler) {
+                         String cell, AsyncHttpResponseHandler handler) {
 
         JSONObject params = new JSONObject();
 
@@ -93,8 +93,7 @@ public class Account {
             params.put("first_name", first_name);
             params.put("last_name", last_name);
             params.put("pwd", password);
-            params.put("address", address);
-            params.put("cell", cell);
+            params.put("phone", cell);
         } catch (JSONException e) {
             e.printStackTrace();
         }

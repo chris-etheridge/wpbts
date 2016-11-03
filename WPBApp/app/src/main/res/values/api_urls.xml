@@ -5,9 +5,8 @@
     <string name="API_BASE">http://www.idfs.co.za/wpbts</string>
 
     <!-- user api endpoints -->
-    <string name="USER_REGISTER">/api/users/create_user.php</string>
+    <string name="USER_REGISTER">/api/users/register_user.php</string>
     <string name="USER_LOGIN">/api/users/login.php</string>
-    <string name="USER_UPDATE">/api/users/create_user.php</string>
 
     <!-- events api endpoints -->
     <string name="ALL_EVENTS">/api/events/view_events.php</string>

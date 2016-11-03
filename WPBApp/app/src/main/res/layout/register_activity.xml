@@ -160,37 +160,6 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/register_txt_address"
-            android:hint="Address"
-            android:textAlignment="center"
-            android:textColorHint="@color/colorAccent"
-            android:textColor="@color/colorPrimary"
-            android:layout_weight="1"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"/>
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/info_address"
-            android:layout_gravity="center_vertical"
-            android:background="@android:drawable/ic_menu_help"
-            android:backgroundTint="@color/colorPrimary"
-            android:backgroundTintMode="multiply"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/register_txt_cell"
             android:hint="Cell Number"
             android:textAlignment="center"
@@ -233,6 +202,7 @@
             android:layout_height="wrap_content"
             android:text="Cancel"
             android:id="@+id/BTN_cancel"
+            android:onClick="onCancelButtonClicked"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:layout_marginLeft="5dp"
