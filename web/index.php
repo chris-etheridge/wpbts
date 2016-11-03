@@ -123,7 +123,7 @@ if ($userID == null) {
                             <div class="large">
                                 <?php
                                 //get upcoming events
-                                $sql = "SELECT * FROM TBL_ALERTS;";
+                                $sql = "SELECT * FROM TBL_ALERT;";
                                 $QueryResult = $mysqli->query($sql);
                                 if ($QueryResult == TRUE) {
                                     echo $QueryResult->num_rows;
