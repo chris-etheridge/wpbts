@@ -288,6 +288,22 @@ $arrPastEvents = getAllPastEvents($mysqli);
                                 <span id="moEventAreaCode"></span>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Longitude</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moEventLongtidude"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Latitude</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moEventLatitude"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -457,6 +473,8 @@ $arrPastEvents = getAllPastEvents($mysqli);
         $('#modal-view-event .modal-body #moEventArea').html(objEvent.area);
         $('#modal-view-event .modal-body #moEventCity').html(objEvent.city);
         $('#modal-view-event .modal-body #moEventAreaCode').html(objEvent.area_code);
+        $('#modal-view-event .modal-body #moEventLongtitude').html(objEvent.longitude);
+        $('#modal-view-event .modal-body #moEventLatitude').html(objEvent.latitude);
         $('#modal-view-event .modal-body #moEventImage').html('<img class="media-object img-responsive" src="img/events/' + objEvent.event_id + '.jpg" alt=""/>');
 
         $('#modal-view-event').modal('show', {backdrop: 'static'});

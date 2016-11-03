@@ -55,11 +55,16 @@ $city = $mysqli->real_escape_string($_POST['city']);
 $zip = $mysqli->real_escape_string($_POST['area_code']);
 $office = $mysqli->real_escape_string($_POST['office']);
 $buildingno = $mysqli->real_escape_string($_POST['building_number']);
+$longitude = $mysqli->real_escape_string($_POST['longitude']);
+$latitude = $mysqli->real_escape_string($_POST['latitude']);
+
 $buildingno = (!$buildingno) ? "NULL" : $buildingno; //so db lets us ommit building number
+$longitude = (!$longitude) ? "NULL" : $longitude; //so db lets us ommit longitude
+$latitude = (!$latitude) ? "NULL" : $latitude; //so db lets us ommit latitude
 
 /* INSERT/ UPDATE ADDRESS*/
 
-$sql = "INSERT INTO TBL_ADDRESS (STREET_NO, STREET, AREA, CITY, AREA_CODE, OFFICE, BUILDING_NUMBER) VALUES($streetno, '$street', '$suburb', '$city', '$zip', '$office', $buildingno)";
+$sql = "INSERT INTO TBL_ADDRESS (STREET_NO, STREET, AREA, CITY, AREA_CODE, OFFICE, BUILDING_NUMBER, LONGITUDE, LATITUDE) VALUES($streetno, '$street', '$suburb', '$city', '$zip', '$office', $buildingno, $longitude, $latitude)";
 
 $mysqli->query($sql);
 $insertedAddressID = $mysqli->insert_id;

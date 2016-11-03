@@ -53,26 +53,26 @@ require_once('php/DBConn_Dave.php');
             <h3>Notification Details:</h3>
             <form action="php/form-handler-notification-create.php" method="POST">
                 <div class="col-md-6">
-                    <label>Title:</label>
+                    <label>Title*</label>
                     <input required type="text"
                            class="form-control" name="TITLE" value="<?php echo $_SESSION['NOTIFICATION']['TITLE']; ?>"
                            style="margin-bottom:2%">
                 </div>
 
                 <div class="col-md-12">
-                    <label>Body</label>
+                    <label>Body*</label>
                     <textarea required class="form-control" rows="6"
                               name="BODY"><?php echo $_SESSION['NOTIFICATION']['BODY']; ?></textarea>
                 </div>
 
                 <div class="col-md-12">
-                    <label>Description</label>
+                    <label>Description*</label>
                     <textarea required class="form-control" rows="6" name="DESCRIPTION"
                               style="margin-bottom: 7%"><?php echo $_SESSION['NOTIFICATION']['DESCRIPTION']; ?></textarea>
                 </div>
 
                 <div class="col-md-12" align="right" style="margin-bottom: 5%">
-                    <button type="submit" class="btn btn-info">Save Notification</button>
+                    <span>* denotes a required field </span> <button type="submit" class="btn btn-info">Save Notification</button>
                 </div>
             </form>
         </div>

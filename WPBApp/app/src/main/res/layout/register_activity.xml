@@ -33,8 +33,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/register_txt_username"
-            android:hint="Username"
+            android:id="@+id/register_txt_fname"
+            android:hint="First Name"
             android:textAlignment="center"
             android:textColorHint="@color/colorAccent"
             android:textColor="@color/colorPrimary"
@@ -45,7 +45,38 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/info_user"
+            android:id="@+id/info_fName"
+            android:layout_gravity="center_vertical"
+            android:background="@android:drawable/ic_menu_help"
+            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTintMode="multiply"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/register_txt_surname"
+            android:hint="Surname"
+            android:textAlignment="center"
+            android:textColorHint="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/info_surname"
             android:layout_gravity="center_vertical"
             android:background="@android:drawable/ic_menu_help"
             android:backgroundTint="@color/colorPrimary"
