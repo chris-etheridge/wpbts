@@ -1,30 +1,17 @@
 package com.peachtree.wpbapp.Core;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.peachtree.wpbapp.Core.impl.Core;
 import com.peachtree.wpbapp.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.message.BasicHeader;
@@ -36,32 +23,46 @@ import cz.msebera.android.httpclient.protocol.HTTP;
  */
 public class Networking {
 
+    // internal base API url
     private String INTERNAL_HOST_URL;
 
+    // current calling context
     private static Context CURRENT_CONTEXT;
 
+    // creates a new networking helper
     public Networking(Context ctx) {
         CURRENT_CONTEXT = ctx;
 
         INTERNAL_HOST_URL = ctx.getResources().getString(R.string.API_BASE);
-
     }
 
+    // returns the base API url
     public String GetApiBaseUrl() {
         return INTERNAL_HOST_URL;
     }
 
+    // HTTP client, for http requests
     private static AsyncHttpClient HTTP_CLIENT = new AsyncHttpClient();
 
+    // performs a GET request URL
+    // with params
+    // calls the AsyncResponseHandler during the request
     public static void Get(String url, RequestParams params, AsyncHttpResponseHandler response_handler) {
+        // log our request with the url
         Log.d("API", "Performing _GET_ to URL => " + url);
 
+        // perform the GET
         HTTP_CLIENT.get(url, params, response_handler);
     }
 
+    // performs a POST request to URL
+    // with JSON params
+    // calls the AsyncResponseHandler during the request
     public static void Post(String url, JSONObject params, AsyncHttpResponseHandler response_handler) {
+        // log our request with the URL
         Log.d("API", "Performing _POST_ to URL => " + url);
 
+        // parse the JSON object into a string entity
         StringEntity e = null;
         try {
             e = new StringEntity(params.toString());
@@ -69,80 +70,20 @@ public class Networking {
             e1.printStackTrace();
         }
 
+        // set the content type headers to application/json
         e.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
+        // POST with the entity, the URL, the headers, and the response handler
         HTTP_CLIENT.post(null, url, e, "application/json", response_handler);
     }
 
-    // checks if a response okay
-    public static boolean ResponseIsOkay(JSONObject response) {
-        String d = "";
-        boolean passed = false;
-
-        try {
-            d = response.getString("status");
-        } catch (JSONException e) {
-            passed = false;
-
-            return passed;
-        }
-
-        passed = !d.equals("error");
-
-        return passed;
-    }
-
+    // basic networking errors helper class
     public static class NetworkingErrors {
-
-        // generic event codes
-        public static int ERROR_UNKNOWN_DB_ERROR = 222;
-        public static int ERROR_INCORRECT_STRING_FORMAT = 155;
-        public static int ERROR_DATABASE_UNAVALIABLE = 113;
-
-        public static int LOGIN_ERROR_USER_DOES_NOT_EXIST = 111;
-        public static int LOGIN_ERROR_SCRIPT_NOT_IMPLEMENTED = 114;
-        public static int LOGIN_ERROR_AUTHENTICATION_FAILURE = 181;
-        public static int REG_ERROR_USER_EMAIL_EXISTS = 111;
-        public static int PROFILE_ERROR_GENERIC = 111;
-        public static int RSVP_ERROR_NOT_ALL_VALUES_PROVIDED = 443;
-        public static int RSVP_ERROR_ILLEGAL_OPT_IN_VALUE = 444;
-        public static int RSVP_ERROR_UNKNOWN_DB_ERROR = 445;
-        public static int EVENT_ERROR_NO_ID_SPECIFIED = 223;
-        public static int CLINIC_GET_NO_ID_SPECIFIED = 333;
-
-        // build a hashmap that contains errors -> human-readable messaages
-        private static final HashMap<Integer, String> ERRORS_INDEX = new HashMap<>();
-
-        static {
-            ERRORS_INDEX.put(ERROR_UNKNOWN_DB_ERROR, "Unknown database error occured.");
-            ERRORS_INDEX.put(ERROR_INCORRECT_STRING_FORMAT, "Incorrect string format provided.");
-            ERRORS_INDEX.put(ERROR_DATABASE_UNAVALIABLE, "Database is not avaliable.");
-            ERRORS_INDEX.put(LOGIN_ERROR_USER_DOES_NOT_EXIST, "The user specified does not exist.");
-            ERRORS_INDEX.put(LOGIN_ERROR_SCRIPT_NOT_IMPLEMENTED, "Script specified during login is not implemented.");
-            ERRORS_INDEX.put(LOGIN_ERROR_AUTHENTICATION_FAILURE, "Failed to authenticate the user.");
-            ERRORS_INDEX.put(REG_ERROR_USER_EMAIL_EXISTS, "A user with that email already exists.");
-            ERRORS_INDEX.put(PROFILE_ERROR_GENERIC, "There was a problem updating your profile.");
-            ERRORS_INDEX.put(RSVP_ERROR_NOT_ALL_VALUES_PROVIDED, "Some information required for RSVP was blank.");
-            ERRORS_INDEX.put(RSVP_ERROR_ILLEGAL_OPT_IN_VALUE, "The wrong value to opt in for the RSVP was given.");
-            ERRORS_INDEX.put(RSVP_ERROR_UNKNOWN_DB_ERROR, "During the RSVP, an uknown database error ocurred.");
-            ERRORS_INDEX.put(EVENT_ERROR_NO_ID_SPECIFIED, "No ID for the event was specified.");
-            ERRORS_INDEX.put(CLINIC_GET_NO_ID_SPECIFIED, "No ID for the clinic was specified.");
-        }
-
-        public static String GetErrorMessageForCode(int code) {
-            String msg = "";
-
-            try {
-                msg = ERRORS_INDEX.get(code);
-            } catch(Exception e) {
-                msg = "Unknown error occurred.";
-            }
-
-            return msg;
-        }
-
+        // shows a generic networking error toast
         public static void GenericNetworkingErrorToast(Context ctx, int duration) {
-            Toast.makeText(ctx, "There was a networking error, please try again in a few moments.", duration).show();
+            Toast.makeText(ctx,
+                    "There was a networking error, please try again in a few moments.",
+                    duration).show();
         }
     }
 

@@ -1,5 +1,8 @@
 package com.peachtree.wpbapp.Entities;
 
+/**
+ * Address entity class
+ */
 public class Address {
 
 	private int id;
@@ -19,6 +22,7 @@ public class Address {
 		this.number = number;
 	}
 
+	// - Getters and setters -
 	public int getId()
 	{
 		return id;

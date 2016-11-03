@@ -88,15 +88,18 @@ public class Event_Info_Fragment extends DialogFragment
 			TextView desc = (TextView) view.findViewById(R.id.TXT_details);
 			TextView date = (TextView) view.findViewById(R.id.TXT_date);
 			TextView address = (TextView) view.findViewById(R.id.TXT_Address);
+
 			ImageView image = (ImageView) view.findViewById(R.id.event_img);
+
 			ProgressBar loaderView = (ProgressBar) view.findViewById(R.id.event_info_loader_view);
+
 			Button going = (Button) view.findViewById(R.id.BTN_going);
 			Button map = (Button) view.findViewById(R.id.BTN_map);
 
 			title.setText(event.getTitle());
 			desc.setText(event.getDescription());
 			date.setText("Date: " + Event.getDateString(event.getDate()));
-			address.setText("Address: " + event.getAddress());
+			//address.setText("Address: " + event.getAddress());
 
 			event.loadImage(getContext().getString(R.string.API_BASE), image, loaderView);
 
@@ -112,7 +115,7 @@ public class Event_Info_Fragment extends DialogFragment
 							intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
 							intent.putExtra(CalendarContract.Events.TITLE, event.getTitle());
 							intent.putExtra(CalendarContract.Events.DESCRIPTION, event.getDescription());
-							intent.putExtra(CalendarContract.Events.EVENT_LOCATION, event.getAddress());
+							//intent.putExtra(CalendarContract.Events.EVENT_LOCATION, event.getAddress());
 							startActivity(intent);
 							Toast.makeText(parent, "Event Added To Calendar", Toast.LENGTH_SHORT);
 						}catch (ActivityNotFoundException e){
@@ -122,7 +125,7 @@ public class Event_Info_Fragment extends DialogFragment
 				}
 			});
 		}else{
-			Toast.makeText(getActivity(), "Could Not Load Event.", Toast.LENGTH_SHORT);
+			Toast.makeText(getActivity(), "Could not load event, please try again in a few moments.", Toast.LENGTH_SHORT);
 			dismiss();
 		}
 		view.findViewById(R.id.pull_grip).setOnTouchListener(new View.OnTouchListener()

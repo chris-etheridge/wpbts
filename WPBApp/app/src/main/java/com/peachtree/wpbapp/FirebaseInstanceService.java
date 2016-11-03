@@ -1,21 +1,15 @@
 package com.peachtree.wpbapp;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.peachtree.wpbapp.Core.Networking;
-import com.peachtree.wpbapp.Entities.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.text.ParseException;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -60,10 +54,9 @@ public class FirebaseInstanceService extends FirebaseInstanceIdService {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject o) {
                 try {
-                    int code = o.getInt("code");
                     String message = o.getString("message");
 
-                    //something else here ??? handle message in case of error -> try again
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
 
                 } catch (JSONException e) {
 
@@ -72,17 +65,15 @@ public class FirebaseInstanceService extends FirebaseInstanceIdService {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
-                // handle the error here
-                int code = -1;
+                String msg = "";
 
                 try {
-                    code = Integer.parseInt(response.getString("code"));
+                    msg = response.getString("message");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                // parse the error
-                String message = Networking.NetworkingErrors.GetErrorMessageForCode(code);
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG);
 
             }
         });

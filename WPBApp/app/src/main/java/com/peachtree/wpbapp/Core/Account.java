@@ -24,32 +24,41 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
- * Functions to manage the user account.
+ * Account API helper.
  * Default constructor will try log the user in, or get the currently logged in user.
  */
 public class Account {
 
+    // stores the current user
     private User CURRENT_USER = null;
 
+    // API helper
     private static Networking API_HELPER;
 
+    // current calling context
     private Context CURRENT_CONTEXT;
 
     private String USER_LOGIN_API_URL;
     private String USER_REGISTER_API_URL;
 
+    // creates a new Account helper
     public Account(Context ctx, String email, String password, JsonHttpResponseHandler handler) {
         CURRENT_CONTEXT = ctx;
         API_HELPER = new Networking(CURRENT_CONTEXT);
 
+        // setup the API urls
         USER_LOGIN_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.USER_LOGIN);
         USER_REGISTER_API_URL = API_HELPER.GetApiBaseUrl() + CURRENT_CONTEXT.getString(R.string.USER_REGISTER);
 
+        // log the user in
         logIn(email, password, handler);
     }
 
+    // logs the user in, with email and password, and calls the handler
     public void logIn(String email, String password, JsonHttpResponseHandler handler) {
+        // first make sure the user is not logged in
         if(!logged_in_q()) {
+            // set up our params
             JSONObject params = new JSONObject();
 
             try {
@@ -59,23 +68,9 @@ public class Account {
                 e.printStackTrace();
             }
 
+            // do a post with the params and handler
             Networking.Post(USER_LOGIN_API_URL, params, handler);
-
         }
-    }
-
-    // log the current user out
-    public void LogOut(String email) {
-
-    }
-
-    public void LogOut(String email, AsyncHttpResponseHandler handler) {
-
-    }
-
-    // check if a user is logged in
-    public boolean IsLoggedIn(String email) {
-        return CURRENT_USER != null;
     }
 
     // update the user account profile
@@ -90,22 +85,9 @@ public class Account {
         }
     }
 
-    // register a new user
-    public User Register(String email) {
-        if(logged_in_q()) {
-            return CURRENT_USER;
-        } else {
-            // create account and log the user in
-            return new User();
-        }
-    }
-
-    public User Register(String email, AsyncHttpResponseHandler handler) {
-        if(logged_in_q()) {
-            return CURRENT_USER;
-        } else {
-            return new User();
-        }
+    // Register the user, and call the handler
+    public void Register(String email, AsyncHttpResponseHandler handler) {
+        Networking.Post(USER_REGISTER_API_URL, null, handler);
     }
 
     // is the user logged in?

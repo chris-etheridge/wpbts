@@ -16,11 +16,10 @@ import java.io.InputStream;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
- * Created by tyron_000 on 8/26/2016.
- */
+* Clinic entity class
+*/
 public class Clinic {
 
 	private int id;
@@ -58,37 +57,6 @@ public class Clinic {
 		String name = "Clinic";
 
 		return new Clinic(desc, name);
-	}
-
-	public int getId() {
-		return this.id;
-	}
-
-	public String getAddress() {
-
-		return this.address;
-	}
-
-	public String getDescription() {
-		return this.description;
-	}
-
-	public String getContact1(){return this.contact1;}
-
-	public String getContact2(){return this.contact2;}
-
-	public URL getImg_url(){return this.img_url;}
-
-	public String getName(){
-		return name;
-	}
-
-	public double getLat(){
-		return lat;
-	}
-
-	public double getLng(){
-		return lng;
 	}
 
 	public void loadImage(String baseUrl, ImageView view, ProgressBar loaderView) {
@@ -130,4 +98,37 @@ public class Clinic {
 			loaderView.setVisibility(View.GONE);
 		}
 	}
+
+	// - Getters and setters -
+	public int getId() {
+		return this.id;
+	}
+
+	public String getAddress() {
+
+		return this.address;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public String getContact1(){return this.contact1;}
+
+	public String getContact2(){return this.contact2;}
+
+	public URL getImg_url(){return this.img_url;}
+
+	public String getName(){
+		return name;
+	}
+
+	public double getLat(){
+		return lat;
+	}
+
+	public double getLng(){
+		return lng;
+	}
+
 }
