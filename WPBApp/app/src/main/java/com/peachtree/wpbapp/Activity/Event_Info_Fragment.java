@@ -99,7 +99,7 @@ public class Event_Info_Fragment extends DialogFragment
 			date.setText("Date: " + Event.getDateString(event.getDate()));
 			address.setText("Address: " + event.getAddress());
 
-			event.loadImage(getContext().getString(R.string.API_BASE), image, loaderView);
+			event.loadImage(parent.getString(R.string.API_BASE), image, loaderView);
 
 			going.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -113,12 +113,25 @@ public class Event_Info_Fragment extends DialogFragment
 							intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
 							intent.putExtra(CalendarContract.Events.TITLE, event.getTitle());
 							intent.putExtra(CalendarContract.Events.DESCRIPTION, event.getDescription());
-							//intent.putExtra(CalendarContract.Events.EVENT_LOCATION, event.getAddress());
+							intent.putExtra(CalendarContract.Events.EVENT_LOCATION, event.getAddress());
 							startActivity(intent);
 							Toast.makeText(parent, "Event Added To Calendar", Toast.LENGTH_SHORT);
 						}catch (ActivityNotFoundException e){
 							Toast.makeText(parent, "Could not add event.", Toast.LENGTH_SHORT).show();
 						}
+					}
+				}
+			});
+
+			map.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if(event != null){
+						Event_Map_Fragment map = Event_Map_Fragment.init(1);
+						map.setEvents(events);
+						map.centerOn(array_index);
+						((Home_Activity)parent).loadCenteredMap(map);
+						dismiss();
 					}
 				}
 			});
@@ -180,9 +193,9 @@ public class Event_Info_Fragment extends DialogFragment
 	protected void switch_event(int direction){
 
 		int new_index = array_index + direction;
-		if (array_index > 0){
+		if (new_index <= 0){
 			new_index = events.size() - 1;
-		}else if(array_index == events.size()){
+		}else if(new_index == events.size()){
 			new_index = 0;
 		}
 
@@ -201,6 +214,12 @@ public class Event_Info_Fragment extends DialogFragment
 		getDialog().getWindow().setBackgroundDrawable(null);
 		getDialog().getWindow().setLayout(display.getWidth() - 50, display.getHeight() - 50);
 
+	}
+
+	@Override
+	public void onPause(){
+		super.onPause();
+		dismiss();
 	}
 
 	public void loadEvents(ArrayList<Event> ev){

@@ -218,6 +218,22 @@ $arrClinics = getAllClinics($mysqli);
                                 <span id="moClinicAreaCode"></span>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Longitude</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moClinicLongitude"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="control-label">Latitude</label>
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="moClinicLatitude"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -322,6 +338,8 @@ $arrClinics = getAllClinics($mysqli);
         $('#modal-view-clinic .modal-body #moClinicArea').html(objClinic.area);
         $('#modal-view-clinic .modal-body #moClinicCity').html(objClinic.city);
         $('#modal-view-clinic .modal-body #moClinicAreaCode').html(objClinic.area_code);
+        $('#modal-view-clinic .modal-body #moClinicLongitude').html(objClinic.longitude);
+        $('#modal-view-clinic .modal-body #moClinicLatitude').html(objClinic.latitude);
         $('#modal-view-clinic .modal-body #moClinicImage').html('<img class="media-object img-responsive" src="img/clinics/' + objClinic.clinic_id + '.jpg" alt="">');
 
         $('#modal-view-clinic').modal('show', {backdrop: 'static'});

@@ -26,12 +26,15 @@ $_SESSION['event']['city'] = $_POST['city'];
 $_SESSION['event']['area_code'] = $_POST['area_code'];
 $_SESSION['event']['office'] = $_POST['office'];
 $_SESSION['event']['building_number'] = $_POST['building_number'];
+$_SESSION['event']['longitude'] = $_POST['longitude'];
+$_SESSION['event']['latitude'] = $_POST['latitude'];
 $_SESSION['event']['creator_id'] = $_POST['creator_id'];
 
 if(        !isset($_POST['creator_id']) || !isset($_POST['title'])
         || !isset($_POST['description']) || !isset($_POST['event_date']) || !isset($_POST['type_id'])
         || !isset($_POST['event_admin']) || !isset($_POST['street_no']) || !isset($_POST['street'])
-        || !isset($_POST['area']) || !isset($_POST['city']) || !isset($_POST['area_code'])) //verify everything crucial was posted
+        || !isset($_POST['area']) || !isset($_POST['city']) || !isset($_POST['area_code'])
+        || !isset($_POST['longitude']) || !isset($_POST['latitude'])) //verify everything crucial was posted
 {
     $_SESSION['alert']['message_type'] = "alert-danger";
     $_SESSION['alert']['message_title'] = "Error!";

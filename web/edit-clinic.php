@@ -63,7 +63,7 @@ if(!isset($_SESSION['clinic']))
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <label class="control-label">Description</label>
+                                <label class="control-label">Description*</label>
                                 <textarea required class="form-control" rows="6" name="description"><?php echo $clinic['description']; ?></textarea>
                             </div>
                         </div>
@@ -82,19 +82,19 @@ if(!isset($_SESSION['clinic']))
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <label class="control-label">Contact No. 1</label>
+                        <label class="control-label">Contact No. 1*</label>
                         <input required class="form-control" onkeypress="validateNumberIn(event)" type="text" name="contact_1" value="<?php echo $clinic['contact_1']; ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <label class="control-label">Contact No. 2</label>
+                        <label class="control-label">Contact No. 2*</label>
                         <input required class="form-control" onkeypress="validateNumberIn(event)" type="text" name="contact_2" value="<?php echo $clinic['contact_2']; ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <label class="control-label">Operating Hours</label>
+                        <label class="control-label">Operating Hours*</label>
                         <input required class="form-control" type="text" name="operating_hours" value="<?php echo $clinic['operating_hours']; ?>">
                     </div>
                 </div>
@@ -103,23 +103,23 @@ if(!isset($_SESSION['clinic']))
                         <label class="control-label">Address</label>
                         <input type="hidden" name="address_id" value="<?php echo $clinic['address_id']; ?>">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Street Number</label>
+                            <label class="col-sm-3 control-label">Street Number*</label>
                             <div class="col-sm-9"><input onkeypress="validateNumberIn(event)" required type="number" class="form-control" name="street_no" value="<?php echo $clinic['street_no']; ?>"></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Street</label>
+                            <label class="col-sm-3 control-label">Street*</label>
                             <div class="col-sm-9"><input required type="text" class="form-control" name="street" value="<?php echo $clinic['street']; ?>"></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Suburb</label>
+                            <label class="col-sm-3 control-label">Suburb*</label>
                             <div class="col-sm-9"><input required type="text" class="form-control" name="area" value="<?php echo $clinic['area']; ?>"></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">City</label>
+                            <label class="col-sm-3 control-label">City*</label>
                             <div class="col-sm-9"><input required type="text" class="form-control" name="city" value="<?php echo $clinic['city']; ?>"></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Zip Code</label>
+                            <label class="col-sm-3 control-label">Zip Code*</label>
                             <div class="col-sm-9"><input required type="text" class="form-control" name="area_code" value="<?php echo $clinic['area_code']; ?>"></div>
                         </div>
                         <div class="form-group">
@@ -130,12 +130,20 @@ if(!isset($_SESSION['clinic']))
                             <label class="col-sm-3 control-label">Building Number</label>
                             <div class="col-sm-9"><input type="number" class="form-control" name="building_number" value="<?php echo $clinic['building_number']; ?>"></div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Latitude*</label>
+                            <div class="col-sm-9"><input required type="number" min="-90" max="90" step="0.000001" class="form-control" name="latitude" value="<?php echo $clinic['latitude']; ?>"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Longitude*</label>
+                            <div class="col-sm-9"><input required type="number" min="-180" max="180" step="0.000001" class="form-control" name="longitude" value="<?php echo $clinic['longitude']; ?>"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-6 text-right">
                         <br/>
-                        <button type="submit" class="btn btn-info">Save Clinic</button>
+                        <span>* denotes a required field </span> <button type="submit" class="btn btn-info">Save Clinic</button>
                     </div>
                 </div>
             </form>
