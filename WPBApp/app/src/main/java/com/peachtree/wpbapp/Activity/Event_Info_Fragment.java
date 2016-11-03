@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -108,9 +109,11 @@ public class Event_Info_Fragment extends DialogFragment {
 
             Button map = (Button) view.findViewById(R.id.BTN_map);
 
+            ImageButton add = (ImageButton) view.findViewById(R.id.BTN_add);
+
             title.setText(event.getTitle());
             desc.setText(event.getDescription());
-            date.setText("Date: " + event.getDate());
+            date.setText("Date: " + event.getDateString());
             address.setText("Address: " + event.getAddress());
 
             event.loadImage(parent.getString(R.string.API_BASE), image, loaderView);
@@ -175,6 +178,12 @@ public class Event_Info_Fragment extends DialogFragment {
 
             });
 
+            add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addEventToCalender(event);
+                }
+            });
             map.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
