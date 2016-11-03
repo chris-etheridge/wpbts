@@ -111,25 +111,25 @@ function getAddressID($email)
 function getHashedPassword($userEmail)
 {
     global $dbConn;
-    $sql = "SELECT PWD FROM TBL_USER WHERE EMAIL = ?";
+    $sql = "SELECT PWD, USER_ID FROM TBL_USER WHERE EMAIL = ?";
     $stmt = $dbConn->prepare($sql);
     $stmt->bindParam(1, $userEmail);
     if ($stmt->execute() == false) {
         print_r($stmt->errorInfo());
         issueError('113');
     }
-    $res = $stmt->fetch(PDO::FETCH_ASSOC);
+    $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $res;
 }
 
 function doesEmailAddressExist($email)
 {
     $res = getUserEmailAddress($email);
-//    var_dump($res);
+    //var_dump($res);
     if ($res == null) {
         return false;
     } else {
-        return true;
+        return $res;
     }
 }
 
@@ -137,7 +137,7 @@ function getUserEmailAddress($emailAddress)
 {
     global $dbConn;
 
-    $sql = "SELECT EMAIL FROM TBL_USER WHERE EMAIL = ?";
+    $sql = "SELECT EMAIL, USER_ID FROM TBL_USER WHERE EMAIL = ?";
     $stmt = $dbConn->prepare($sql);
     $stmt->bindParam(1, $emailAddress);
     if ($stmt->execute() == false) {
