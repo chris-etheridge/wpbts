@@ -78,7 +78,7 @@ public class Clinic {
 
 		public DownloadImageTask(ImageView bmImage, ProgressBar loaderView) {
 			view = bmImage;
-
+			this.loaderView = loaderView;
 			// hide our image view & show loader
 			view.setVisibility(View.INVISIBLE);
 			loaderView.setVisibility(View.VISIBLE);

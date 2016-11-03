@@ -55,6 +55,13 @@ public class Clinic_Info_Fragment extends DialogFragment implements OnMapReadyCa
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		mMap = googleMap;
+		if(clinic != null){
+			LatLng co_ord = new LatLng(clinic.getLat(), clinic.getLng());
+			mMap.addMarker(new MarkerOptions().title(clinic.getName()).position(co_ord).draggable(false));
+			mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(co_ord, 10));
+		}else{
+			Toast.makeText(parent, "Clinic Location could not be found", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	@Override
@@ -85,9 +92,7 @@ public class Clinic_Info_Fragment extends DialogFragment implements OnMapReadyCa
 		transaction.add(R.id.map_layout, mapFragment, "map").commit();
 		mapFragment.getMapAsync(this);
 
-		LatLng co_ord = new LatLng(clinic.getLat(), clinic.getLng());
-		mMap.addMarker(new MarkerOptions().title(clinic.getName()).position(co_ord).draggable(false));
-		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(co_ord,10));
+
 
 		mCurrenty = view.getY();
 		final float originalY = mCurrenty;
@@ -95,10 +100,12 @@ public class Clinic_Info_Fragment extends DialogFragment implements OnMapReadyCa
 
 		if(clinic != null){
 
-			TextView title = (TextView)view.findViewById(R.id.TXT_title);
+			TextView title = (TextView)view.findViewById(R.id.clinic_title);
+			TextView details = (TextView)view.findViewById(R.id.TXT_details);
 			Button get_directions = ((Button)view.findViewById(R.id.BTN_directions));
 
 			title.setText(clinic.getName());
+			details.setText(generateDetails());
 			get_directions.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -158,5 +165,13 @@ public class Clinic_Info_Fragment extends DialogFragment implements OnMapReadyCa
 
 	public void loadClinics(ArrayList<Clinic> c){
 		clinics = c;
+	}
+
+	private String generateDetails(){
+		String output;
+
+		output = String.format("Contact 1: %s\nContact 2%s\n\n%s", clinic.getContact1(), clinic.getContact2(), clinic.getDescription());
+
+		return output;
 	}
 }

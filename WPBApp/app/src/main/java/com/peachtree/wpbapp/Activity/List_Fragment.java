@@ -144,12 +144,12 @@ public class List_Fragment extends DialogFragment {
         for (Object item : ALL_ITEMS) {
             switch (type) {
                 case EVENT:
-                    if (((Event) item).getTitle().contains(search) || ((Event) item).getDescription().contains(search)) {
+                    if (((Event) item).getTitle().toLowerCase().contains(search.toString().toLowerCase()) || ((Event) item).getDescription().toLowerCase().contains(search.toString().toLowerCase())) {
                         FILTERED_ITEMS.add(item);
                     }
                     break;
                 case CLINIC:
-                    if (((Clinic) item).getName().contains(search) || ((Clinic) item).getDescription().contains(search)) {
+                    if (((Clinic) item).getName().toLowerCase().contains(search.toString().toLowerCase()) || ((Clinic) item).getDescription().toLowerCase().contains(search.toString().toLowerCase())) {
                         FILTERED_ITEMS.add(item);
                     }
             }

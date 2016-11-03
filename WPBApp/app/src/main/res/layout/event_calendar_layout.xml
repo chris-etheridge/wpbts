@@ -10,7 +10,7 @@
     <com.peachtree.wpbapp.layout_Handlers.WBCalendar
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="bottom"
+        android:gravity="top"
         android:id="@+id/calendar"/>
 
 </LinearLayout>
