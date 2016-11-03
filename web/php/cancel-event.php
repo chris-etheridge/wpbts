@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 1);
+//ini_set('display_errors', 1);
 require_once("DBConn.php");
 //require_once("../api/events/functions.php");
 require_once ('notification_functions.php');
