@@ -21,6 +21,9 @@ function createUser($userData, $addressID = null)
     }
     $lastUserID = (int)getLastIDForTable("TBL_USER", "USER_ID") + 1;
 
+//    echo $userData['PWD'];
+//    echo sha1($userData['PWD']);
+
     $userData['PWD'] = sha1($userData['PWD']);
     $userData['ADDRESS_ID'] = $addressID;
 
@@ -38,9 +41,12 @@ function createUser($userData, $addressID = null)
     $stmt->bindParam(6, $userData['ADDRESS_ID']);
     $stmt->bindParam(7, $userData['PHONE']);
 
-    if ($stmt->execute()) {
-        issueError('112');//OK
 
+    if ($stmt->execute()) {
+        //To get user IDE we get use email and ID using the email specified:
+        $userDetails = getUserEmailAddress($userData['EMAIL']);
+        $userID = $userDetails['USER_ID'];
+        echo json_encode(array('code' => "112", 'message' => "Registration Accepted", 'userID' => $userID));
     } else {
         //print_r($stmt->errorInfo());
         issueError('113');
@@ -58,7 +64,6 @@ function registerUser($userData)
         issueError('115');
     }
     $userData = prepareData($userData);
-
 
     if (doesUserExist($userData[0]['EMAIL']) == true) {
         issueError('111');
