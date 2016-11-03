@@ -36,237 +36,254 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class Event_Info_Fragment extends DialogFragment
-{
+public class Event_Info_Fragment extends DialogFragment {
 
-	private Activity parent;
-	private int id, array_index;
-	private ArrayList<Event> events;
-	private Event event;
-	private float mCurrenty;
+    private Activity parent;
+    private int id, array_index;
+    private ArrayList<Event> events;
+    private Event event;
+    private float mCurrenty;
 
-	private Context CURRENT_CONTEXT;
+    private Context CURRENT_CONTEXT;
 
-	private Events EVENTS_HELPER;
+    private Events EVENTS_HELPER;
 
-	public static Event_Info_Fragment init(int id){
-		Event_Info_Fragment fragment = new Event_Info_Fragment();
+    public static Event_Info_Fragment init(int id) {
+        Event_Info_Fragment fragment = new Event_Info_Fragment();
 
-		Bundle args = new Bundle();
-		args.putInt("id", id);
-		fragment.setArguments(args);
+        Bundle args = new Bundle();
+        args.putInt("id", id);
+        fragment.setArguments(args);
 
-		return fragment;
-	}
+        return fragment;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-	@Override
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-		parent = getActivity();
+        parent = getActivity();
 
-		id = getArguments().getInt("id");
+        id = getArguments().getInt("id");
 
-		if(events!=null){
-			int i = 0;
-			while (i < events.size() && event == null){
-				if(events.get(i).getId() == id){
-					event = events.get(i);
-					array_index = i;
-				}
-				i++;
-			}
-		}
+        if (events != null) {
+            int i = 0;
+            while (i < events.size() && event == null) {
+                if (events.get(i).getId() == id) {
+                    event = events.get(i);
+                    array_index = i;
+                }
+                i++;
+            }
+        }
 
-		EVENTS_HELPER = new Events(this.getContext());
+        EVENTS_HELPER = new Events(this.getContext());
     }
 
-	@RequiresApi(api = Build.VERSION_CODES.M)
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-		super.onCreateView(inflater, container, savedInstanceState);
-		final View view = inflater.inflate(R.layout.event_info_layout, container, false);
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        final View view = inflater.inflate(R.layout.event_info_layout, container, false);
 
-		mCurrenty = view.getY();
-		final float originalY = mCurrenty;
+        mCurrenty = view.getY();
+        final float originalY = mCurrenty;
 
 
-		if(event != null) {
-			// get all of our fields
-			TextView title = (TextView) view.findViewById(R.id.event_title);
-			TextView desc = (TextView) view.findViewById(R.id.TXT_details);
-			TextView date = (TextView) view.findViewById(R.id.TXT_date);
-			TextView address = (TextView) view.findViewById(R.id.TXT_Address);
+        if (event != null) {
+            // get all of our fields
+            TextView title = (TextView) view.findViewById(R.id.event_title);
+            TextView desc = (TextView) view.findViewById(R.id.TXT_details);
+            TextView date = (TextView) view.findViewById(R.id.TXT_date);
+            TextView address = (TextView) view.findViewById(R.id.TXT_Address);
 
-			ImageView image = (ImageView) view.findViewById(R.id.event_img);
+            ImageView image = (ImageView) view.findViewById(R.id.event_img);
 
-			ProgressBar loaderView = (ProgressBar) view.findViewById(R.id.event_info_loader_view);
+            ProgressBar loaderView = (ProgressBar) view.findViewById(R.id.event_info_loader_view);
 
-			Button going = (Button) view.findViewById(R.id.BTN_going);
-			Button map = (Button) view.findViewById(R.id.BTN_map);
+            Button going = (Button) view.findViewById(R.id.BTN_going);
 
-			title.setText(event.getTitle());
-			desc.setText(event.getDescription());
-			date.setText("Date: " + Event.getDateString(event.getDate()));
-			address.setText("Address: " + event.getAddress());
+            Button map = (Button) view.findViewById(R.id.BTN_map);
 
-			event.loadImage(getContext().getString(R.string.API_BASE), image, loaderView);
+            title.setText(event.getTitle());
+            desc.setText(event.getDescription());
+            date.setText("Date: " + Event.getDateString(event.getDate()));
+            address.setText("Address: " + event.getAddress());
 
-			going.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-				if(event != null) {
+            event.loadImage(parent.getString(R.string.API_BASE), image, loaderView);
 
-					// get our user id from shared preferences
-					String key = CURRENT_CONTEXT.getString(R.string.user_id_perference_key);
-					SharedPreferences prefs =
-							CURRENT_CONTEXT.getSharedPreferences(CURRENT_CONTEXT.getString(R.string.shared_preferences_key), Context.MODE_PRIVATE);
+            going.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (event != null) {
 
-					// get the value out
-					int id = prefs.getInt(key, 0);
+                        // get our user id from shared preferences
+                        String key = CURRENT_CONTEXT.getString(R.string.user_id_perference_key);
+                        SharedPreferences prefs =
+                                CURRENT_CONTEXT.getSharedPreferences(CURRENT_CONTEXT.getString(R.string.shared_preferences_key), Context.MODE_PRIVATE);
 
-					EVENTS_HELPER.RSVPToEvent(event.getId(), id, 1, new JsonHttpResponseHandler() {
-						@Override
-						public void onSuccess(int statusCode, Header[] headers, JSONObject o) {
-							boolean error = o.has("error");
+                        // get the value out
+                        int id = prefs.getInt(key, 0);
 
-							// make sure our account is not null
-							if(error != true) {
-								Toast.makeText(CURRENT_CONTEXT, "Successfully RSVP'ed to the event.", Toast.LENGTH_SHORT);
-							}
-							// else, there was an internal or network error
-							else {
-								Networking.NetworkingErrors.GenericNetworkingErrorToast(CURRENT_CONTEXT, Toast.LENGTH_SHORT);
-							}
-						}
 
-						@Override
-						public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
-							// make sure response is not null, meaing we got something
-							if(response != null) {
-								try {
-									String msg = response.getString("message");
+                        EVENTS_HELPER.RSVPToEvent(event.getId(), id, 1, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject o) {
+                                boolean error = o.has("error");
 
-									Toast.makeText(CURRENT_CONTEXT, msg, Toast.LENGTH_SHORT).show();
-								} catch (JSONException e) {
-									e.printStackTrace();
-								}
+                                // make sure our account is not null
+                                if (error != true) {
+                                    Toast.makeText(CURRENT_CONTEXT, "Successfully RSVP'ed to the event.", Toast.LENGTH_SHORT);
+                                }
+                                // else, there was an internal or network error
+                                else {
+                                    Networking.NetworkingErrors.GenericNetworkingErrorToast(CURRENT_CONTEXT, Toast.LENGTH_SHORT);
+                                }
 
-							}
-							// else, we could not connect at all
-							else {
-								// show a generic networking error
-								Networking.NetworkingErrors.GenericNetworkingErrorToast(CURRENT_CONTEXT, Toast.LENGTH_SHORT);
-							}
-						}
-					});
+                                if (event != null) {
+                                    try {
+                                        addEventToCalender(event);
+                                    } catch (ActivityNotFoundException e) {
+                                        Toast.makeText(parent, "Could not add event.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
 
-					try {
-						addEventToCalender(event);
-					} catch (ActivityNotFoundException e) {
-						Toast.makeText(parent, "Could not add event.", Toast.LENGTH_SHORT).show();
-					}
-				}
-				}
-			});
-		} else {
-			Toast.makeText(getActivity(), "Could not load event, please try again in a few moments.", Toast.LENGTH_SHORT);
-			dismiss();
-		}
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+                                // make sure response is not null, meaing we got something
+                                if (response != null) {
+                                    try {
+                                        String msg = response.getString("message");
 
-		view.findViewById(R.id.pull_grip).setOnTouchListener(new View.OnTouchListener()
-		{
-			private float offset;
-			private int threshold = (int)(getDialog().getWindow().getWindowManager().getDefaultDisplay().getHeight() * 2/3.0);
+                                        Toast.makeText(CURRENT_CONTEXT, msg, Toast.LENGTH_SHORT).show();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
 
-			@Override
-			public boolean onTouch(View v, MotionEvent event)
-			{
-				int action = event.getAction();
-				if(action == MotionEvent.ACTION_DOWN) {
-					offset= mCurrenty - event.getRawY();
-				} else if(action == MotionEvent.ACTION_MOVE) {
-					mCurrenty = (int)(event.getRawY() + offset);
-					if(mCurrenty > originalY)
-					{
-						view.setY(mCurrenty);
-					}
-				} else if(action == MotionEvent.ACTION_UP) {
+                                }
+                                // else, we could not connect at all
+                                else {
+                                    // show a generic networking error
+                                    Networking.NetworkingErrors.GenericNetworkingErrorToast(CURRENT_CONTEXT, Toast.LENGTH_SHORT);
+                                }
+                            }
+                        });
+                    }
+                }
 
-					if(mCurrenty > originalY + threshold) {
-						dismiss();
-					} else {
-						mCurrenty = originalY;
-						view.setY(mCurrenty);
-					}
-				}
-				return true;
-			}
-		});
+            });
 
-		view.findViewById(R.id.arrow_right).setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				switch_event(1);
-			}
-		});
+            map.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (event != null) {
+                        Event_Map_Fragment map = Event_Map_Fragment.init(1);
+                        map.setEvents(events);
+                        map.centerOn(array_index);
+                        ((Home_Activity) parent).loadCenteredMap(map);
+                        dismiss();
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(getActivity(), "Could not load event, please try again in a few moments.", Toast.LENGTH_SHORT);
+            dismiss();
+        }
 
-		view.findViewById(R.id.arrow_left).setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				switch_event(-1);
-			}
-		});
+        view.findViewById(R.id.pull_grip).setOnTouchListener(new View.OnTouchListener() {
+            private float offset;
+            private int threshold = (int) (getDialog().getWindow().getWindowManager().getDefaultDisplay().getHeight() * 2 / 3.0);
 
-		return view;
-	}
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                if (action == MotionEvent.ACTION_DOWN) {
+                    offset = mCurrenty - event.getRawY();
+                } else if (action == MotionEvent.ACTION_MOVE) {
+                    mCurrenty = (int) (event.getRawY() + offset);
+                    if (mCurrenty > originalY) {
+                        view.setY(mCurrenty);
+                    }
+                } else if (action == MotionEvent.ACTION_UP) {
 
-	protected void switch_event(int direction){
+                    if (mCurrenty > originalY + threshold) {
+                        dismiss();
+                    } else {
+                        mCurrenty = originalY;
+                        view.setY(mCurrenty);
+                    }
+                }
+                return true;
+            }
+        });
 
-		int new_index = array_index + direction;
-		if (array_index > 0){
-			new_index = events.size() - 1;
-		}else if(array_index == events.size()){
-			new_index = 0;
-		}
+        view.findViewById(R.id.arrow_right).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch_event(1);
+            }
+        });
 
-		Event_Info_Fragment newFragment = Event_Info_Fragment.init(events.get(new_index).getId());
-		newFragment.loadEvents(events);
-		FragmentTransaction transaction = parent.getFragmentManager().beginTransaction();
-		newFragment.show(transaction, "dialog");
+        view.findViewById(R.id.arrow_left).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch_event(-1);
+            }
+        });
 
-		dismiss();
-	}
+        return view;
+    }
 
-	@Override
-	public void onStart(){
-		super.onStart();
-		WindowManager wm = (WindowManager)parent.getSystemService(Context.WINDOW_SERVICE);
-		Display display = wm.getDefaultDisplay();
-		getDialog().getWindow().setBackgroundDrawable(null);
-		getDialog().getWindow().setLayout(display.getWidth() - 50, display.getHeight() - 50);
+    protected void switch_event(int direction) {
 
-	}
+        int new_index = array_index + direction;
+        if (new_index <= 0) {
+            new_index = events.size() - 1;
+        } else if (new_index == events.size()) {
+            new_index = 0;
+        }
 
-	public void addEventToCalender(Event event) {
-		Intent intent = new Intent(Intent.ACTION_EDIT);
-		intent.setType("vnd.android.cursor.item/event");
-		intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.getDate());
-		intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, event.getDate());
-		intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
-		intent.putExtra(CalendarContract.Events.TITLE, event.getTitle());
-		intent.putExtra(CalendarContract.Events.DESCRIPTION, event.getDescription());
-		//intent.putExtra(CalendarContract.Events.EVENT_LOCATION, event.getAddress());
-		startActivity(intent);
-		Toast.makeText(parent, "Event Added To Calendar", Toast.LENGTH_SHORT);
-	}
+        Event_Info_Fragment newFragment = Event_Info_Fragment.init(events.get(new_index).getId());
+        newFragment.loadEvents(events);
+        FragmentTransaction transaction = parent.getFragmentManager().beginTransaction();
+        newFragment.show(transaction, "dialog");
 
-	public void loadEvents(ArrayList<Event> ev){
-		events = ev;
-	}
+        dismiss();
+    }
+
+    public void addEventToCalender(Event event) {
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setType("vnd.android.cursor.item/event");
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.getDate());
+        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, event.getDate());
+        intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
+        intent.putExtra(CalendarContract.Events.TITLE, event.getTitle());
+        intent.putExtra(CalendarContract.Events.DESCRIPTION, event.getDescription());
+        //intent.putExtra(CalendarContract.Events.EVENT_LOCATION, event.getAddress());
+        startActivity(intent);
+        Toast.makeText(parent, "Event Added To Calendar", Toast.LENGTH_SHORT);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        WindowManager wm = (WindowManager) parent.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        getDialog().getWindow().setBackgroundDrawable(null);
+        getDialog().getWindow().setLayout(display.getWidth() - 50, display.getHeight() - 50);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        dismiss();
+    }
+
+    public void loadEvents(ArrayList<Event> ev) {
+        events = ev;
+    }
 }
