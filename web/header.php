@@ -1,5 +1,5 @@
-<!-- author: Kyle Burton -->
 <?php
+	//author: Kyle Burton
     session_start();
     $adminid = $_SESSION['AUTH_USER_ID'];
     if ($adminid == null) {

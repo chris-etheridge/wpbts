@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  * Created by PhpStorm.
  * User: dave
@@ -7,10 +8,10 @@
  */
 
 require_once('../php/DBConn_Dave.php');
-include_once("users_functions.php");
-include_once("address_functions.php");
+require_once("../users_functions.php");
+require_once("../address_functions.php");
 
-session_start();
+
 
 //SETUP SESSION VARIABLES:
 $_SESSION['USER']['USER_ID'] = $_POST['USER_ID'];
@@ -68,7 +69,12 @@ $stmt->bindParam(12, $_SESSION['USER']['PWD']);
 $stmt->bindParam(13, $_SESSION['USER']['LAST_EMAIL']);
 
 if ($stmt->execute()) {
-    echo "UPDATES";
+    //echo "UPDATES";
+	$_SESSION['alert']['message_type'] = "alert-success";
+    $_SESSION['alert']['message_title'] = "Update success.";
+    $_SESSION['alert']['message'] = " User update.";
+    header('Location: ../users.php');
+    exit();
 } else {
     $_SESSION['alert']['message_type'] = "alert-danger";
     $_SESSION['alert']['message_title'] = "Update failed.";
