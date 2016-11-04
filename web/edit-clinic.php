@@ -1,5 +1,5 @@
-<!-- author: Kyle Burton -->
 <?php
+//author: Kyle Burton
 $_TITLE = "WPBTS - Edit Clinic";
 $_PARENT['clinics'] = time();
 if(!isset($_GET['clinicid']))

@@ -1,5 +1,5 @@
-<!-- author: Kyle Burton -->
 <?php
+//author: Kyle Burton
 $_TITLE = "WPBTS - Event Management";
 $_PARENT['events'] = time();
 

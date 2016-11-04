@@ -1,5 +1,5 @@
-<!-- author: Kyle Burton -->
 <?php
+//author: Kyle Burton
 $_TITLE = "WPBTS - Edit Event";
 $_PARENT['events'] = time();
 if(!isset($_GET['eventid']))

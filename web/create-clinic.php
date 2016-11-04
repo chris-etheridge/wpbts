@@ -1,5 +1,5 @@
-<!-- author: Kyle Burton -->
 <?php
+//author: Kyle Burton
 $_TITLE = "WPBTS - Create Clinic";
 $_PARENT['clinics'] = time();
 

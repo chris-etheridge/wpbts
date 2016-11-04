@@ -1,5 +1,5 @@
-<!-- author: Kyle Burton + David Abrahams-->
 <?php
+//author: Kyle Burton
 $_TITLE = "WPBTS - Notification Management";
 $_PARENT['notifications'] = time();
 

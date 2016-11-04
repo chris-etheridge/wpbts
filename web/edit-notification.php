@@ -1,5 +1,5 @@
-<!-- author: Kyle Burton -->
 <?php
+//author: Kyle Burton
 //ini_set('display_errors', 1);
 $_TITLE = "WPBTS - Edit Notification";
 $_PARENT['notifications'] = time();
