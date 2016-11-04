@@ -132,7 +132,8 @@ $_SESSION['USER']['LAST_EMAIL'] = $userData[1][0]['EMAIL'];
                 <div class="col-md-6">
 
                     <label>Date of Birth</label>
-                    <input required type="date" class="form-control daterange hasDatepicker" id="DATE_OF_BIRTH"
+                    <input required type="date" onkeydown="return false" class="form-control daterange hasDatepicker"
+                           id="DATE_OF_BIRTH"
                            name="DATE_OF_BIRTH"
                            value="<?php echo date_format(date_create($_SESSION['USER']['DATE_OF_BIRTH']), 'Y-m-d') ?>"
                            style="margin-bottom: 2%">
@@ -143,14 +144,38 @@ $_SESSION['USER']['LAST_EMAIL'] = $userData[1][0]['EMAIL'];
                             class="form-control" name="BLOOD_TYPE"
                             style="margin-bottom:2%">
                         <option value="-1" disabled>Select one--</option>
-                        <option value="O-" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "O-") { echo "selected"; } ?>> O- </option>
-                        <option value="O+" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "O+") { echo "selected"; } ?>> O+ </option>
-                        <option value="A" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "A") { echo "selected"; } ?>> A </option>
-                        <option value="A+" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "A+") { echo "selected"; } ?>> A+ </option>
-                        <option value="AB" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "AB") { echo "selected"; } ?>> AB </option>
-                        <option value="AB+" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "AB+") { echo "selected"; } ?>> AB+ </option>
-                        <option value="B-" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "B-") { echo "selected"; } ?>> B- </option>
-                        <option value="OB" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "OB") { echo "selected"; } ?>> OB </option>
+                        <option value="O-" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "O-") {
+                            echo "selected";
+                        } ?>> O-
+                        </option>
+                        <option value="O+" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "O+") {
+                            echo "selected";
+                        } ?>> O+
+                        </option>
+                        <option value="A" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "A") {
+                            echo "selected";
+                        } ?>> A
+                        </option>
+                        <option value="A+" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "A+") {
+                            echo "selected";
+                        } ?>> A+
+                        </option>
+                        <option value="AB" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "AB") {
+                            echo "selected";
+                        } ?>> AB
+                        </option>
+                        <option value="AB+" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "AB+") {
+                            echo "selected";
+                        } ?>> AB+
+                        </option>
+                        <option value="B-" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "B-") {
+                            echo "selected";
+                        } ?>> B-
+                        </option>
+                        <option value="OB" <?php if ($_SESSION['USER']['BLOOD_TYPE'] == "OB") {
+                            echo "selected";
+                        } ?>> OB
+                        </option>
                     </select>
 
 
@@ -287,7 +312,7 @@ $_SESSION['USER']['LAST_EMAIL'] = $userData[1][0]['EMAIL'];
                            class="form-control" name="CITY" value="<?php echo $_SESSION['USER']['CITY'] ?>"
                            style="margin-bottom:2%">
 
-                    
+
                     <div class="col-md-12" align="right" style="margin-bottom: 5%">
                         <button type="submit" class="btn btn-info">Save User</button>
                     </div>
